@@ -87,4 +87,5 @@ Every `templates/**/*.html` has a TSX twin at the same path under `src/templates
 
 - `tsconfig.app.json` is strict about `noUnusedLocals`/`noUnusedParameters`, `verbatimModuleSyntax`, `erasableSyntaxOnly` (no enums/namespaces/param properties).
 - `"type": "module"` in package.json: root config files using `require` need `.cjs` (see `stencil.conf.cjs`); `jest.config.js` and `webpack.*.js` still use CommonJS, so check they load before touching them.
-- Upstream Cornerstone conventions apply: Conventional Commits with ticket ids (e.g. `feat(storefront): TRAC-1023 ...`), CHANGELOG.md entry for user-visible changes.
+- Upstream Cornerstone conventions apply: Conventional Commits with ticket ids (e.g. `feat(storefront): TRAC-1023 ...`).
+- **Every commit updates `CHANGELOG.md`.** Entries go under `## Draft` (the pending batch for the next release); the heading is renamed to the version and date only when a release is cut, so a normal commit never creates a version section. Link the PR as `[#XXXX](...)` until its number exists.

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support Node 24 ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 - Show a wallet badge (Apple Pay / Google Pay) on stored cards vaulted through a wallet on the My Account payment methods page [#2742](https://github.com/bigcommerce/cornerstone/pull/2742)
 - Add missing card brands (Bancontact, Carte Bancaire, Dankort, Maestro) with logos and payment method mappings [#2748](https://github.com/bigcommerce/cornerstone/pull/2748)
+- Port every Handlebars template (`templates/**/*.html`, 210 files) to the HBX TSX toolchain under `src/templates/` at the same paths; a TSX replaces the `.html` of the same path at build. Compiled output matches the originals for 192 files; the 18 that differ and the 23 files that use raw Handlebars are listed in `DEVIATIONS.md` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Add `react`, `react-dom` and `@types/react` as devDependencies and generate `src/theme-types.d.ts` from `config.json`, `schema.json` and `lang/en.json` during `vite build` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 
 ## 6.22.0 (09-21-2026)
 - Fix pointer cursor on PDP stock/backorder message text [#2737](https://github.com/bigcommerce/cornerstone/pull/2737)
