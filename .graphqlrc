@@ -1,0 +1,7 @@
+# graphql-config file: tells WebStorm which schema to validate against
+# and which files should be treated as containing GraphQL operations.
+schema: schema.graphql        # the file `npm run pull-graphql` generates
+
+documents:                      # where you write queries (globs, relative to this file)
+  - "src/**/*.{graphql,gql}"    # standalone query files
+  - "src/**/*.{js,jsx,ts,tsx}"  # queries embedded in tagged templates, e.g. gql`...`
