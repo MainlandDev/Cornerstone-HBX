@@ -43,6 +43,12 @@ export default defineConfig({
             templates: "./src/templates",
             includeInBuildSourceJSX: true,
             templateEngine: "handlebars-v4",
+            themeTypes: {
+                config: "./config.json",
+                schema: "./schema.json",
+                lang: "./lang/en.json",
+                out: "./src/theme-types.d.ts",
+            },
         })
     ],
     resolve: {
