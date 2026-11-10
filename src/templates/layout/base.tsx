@@ -9,10 +9,7 @@ import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {
     $cdn,
     $getFontsCollection,
-    $inject,
     $jsContext,
-    $lang,
-    $langJson,
     $_langJson,
     $nonce,
     $_resourceHints,
@@ -109,34 +106,21 @@ export default $layout({
                     {/* html L35: {{{head.scripts}}} */}
                     {$unescaped(ctx.head.scripts)}
 
-                    {/* html L37: {{~inject 'zoomSize' theme_settings.zoom_size}} */}
-                    {$inject($string('zoomSize'), ctx.theme_settings.zoom_size)}
-                    {/* html L38: {{~inject 'productSize' theme_settings.product_size}} */}
-                    {$inject($string('productSize'), ctx.theme_settings.product_size)}
-                    {/* html L39: {{~inject 'genericError' (lang 'common.generic_error')}} */}
-                    {$inject($string('genericError'), $lang($string('common.generic_error')))}
-                    {/* html L40: {{~inject 'urls' urls}} */}
-                    {$inject($string('urls'), ctx.urls)}
-                    {/* html L41: {{~inject 'secureBaseUrl' settings.secure_base_url}} */}
-                    {$inject($string('secureBaseUrl'), ctx.settings.secure_base_url)}
-                    {/* html L42: {{~inject 'cartId' cart_id}} */}
-                    {$inject($string('cartId'), ctx.cart_id)}
-                    {/* html L43: {{~inject 'template' template}} */}
-                    {$inject($string('template'), ctx.template)}
-                    {/* html L44: {{~inject 'validationDictionaryJSON' (langJson 'validation_messages')}} */}
-                    {$inject($string('validationDictionaryJSON'), $langJson($string('validation_messages')))}
-                    {/* html L45: {{~inject 'validationFallbackDictionaryJSON' (langJson 'validation_fallback_messages')}} */}
-                    {$inject($string('validationFallbackDictionaryJSON'), $langJson($string('validation_fallback_messages')))}
-                    {/* html L46: {{~inject 'validationDefaultDictionaryJSON' (langJson 'validation_default_messages')}} */}
-                    {$inject($string('validationDefaultDictionaryJSON'), $langJson($string('validation_default_messages')))}
-                    {/* html L47: {{~inject 'carouselArrowAndDotAriaLabel' (lang 'carousel.arrow_and_dot_aria_label')}} */}
-                    {$inject($string('carouselArrowAndDotAriaLabel'), $lang($string('carousel.arrow_and_dot_aria_label')))}
-                    {/* html L48: {{~inject 'carouselActiveDotAriaLabel' (lang 'carousel.active_dot_aria_label')}} */}
-                    {$inject($string('carouselActiveDotAriaLabel'), $lang($string('carousel.active_dot_aria_label')))}
-                    {/* html L49: {{~inject 'carouselContentAnnounceMessage' (lang 'carousel.content_announce_message')}} */}
-                    {$inject($string('carouselContentAnnounceMessage'), $lang($string('carousel.content_announce_message')))}
-                    {/* html L50: {{~inject 'giftWrappingRemoveMessage' (lang 'cart.gift_wrapping.remove_confirm')}} */}
-                    {$inject($string('giftWrappingRemoveMessage'), $lang($string('cart.gift_wrapping.remove_confirm')))}
+                    {/* html L37-L50: the 14 `{{~inject ...}}` lines. Raw because `~` (whitespace control) has no HBX equivalent. */}
+                    {$parseHandlebarsDangerously(`{{~inject 'zoomSize' theme_settings.zoom_size}}
+                    {{~inject 'productSize' theme_settings.product_size}}
+                    {{~inject 'genericError' (lang 'common.generic_error')}}
+                    {{~inject 'urls' urls}}
+                    {{~inject 'secureBaseUrl' settings.secure_base_url}}
+                    {{~inject 'cartId' cart_id}}
+                    {{~inject 'template' template}}
+                    {{~inject 'validationDictionaryJSON' (langJson 'validation_messages')}}
+                    {{~inject 'validationFallbackDictionaryJSON' (langJson 'validation_fallback_messages')}}
+                    {{~inject 'validationDefaultDictionaryJSON' (langJson 'validation_default_messages')}}
+                    {{~inject 'carouselArrowAndDotAriaLabel' (lang 'carousel.arrow_and_dot_aria_label')}}
+                    {{~inject 'carouselActiveDotAriaLabel' (lang 'carousel.active_dot_aria_label')}}
+                    {{~inject 'carouselContentAnnounceMessage' (lang 'carousel.content_announce_message')}}
+                    {{~inject 'giftWrappingRemoveMessage' (lang 'cart.gift_wrapping.remove_confirm')}}`)}
                 </head>
                 {/* html L52: <body> */}
                 <body>

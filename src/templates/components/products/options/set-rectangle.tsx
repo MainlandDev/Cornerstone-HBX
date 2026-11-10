@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/products/options/set-rectangle.html (43 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$Each, $Partial, $Unless, $if, $string, $this} from '@mainlanddev/bigcommerce-react';
+import {$Each, $Partial, $Unless, $if, $parseHandlebarsDangerously, $string, $this} from '@mainlanddev/bigcommerce-react';
 import {$$raw, $$when} from '@mainlanddev/bigcommerce-react/internal';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$dynamic} from '@mainlanddev/bigcommerce-react/theme';
@@ -44,7 +44,7 @@ export default $dynamic('set-rectangle', () => {
                             id={`attribute_rectangle__${option.id}_none`}
                             name={`attribute[${option.id}]`}
                             value=""
-                            $$={[$$raw('checked="'), $if(option.defaultValue, '==', $string('')).then(() => $$raw('checked')), $$raw('"')]}
+                            $$={$parseHandlebarsDangerously(`checked="{{#if defaultValue '==' ''}}checked{{/if}}"`)}
                         />
                         {/* html L18: <label class="form-option" for="attribute_rectangle__{{id}}_none"> */}
                         <label className="form-option" htmlFor={`attribute_rectangle__${option.id}_none`}>

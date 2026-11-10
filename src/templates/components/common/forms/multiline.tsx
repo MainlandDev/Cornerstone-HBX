@@ -1,10 +1,9 @@
 /**
  * Source: templates/components/common/forms/multiline.html (19 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$If, $if, $string, $this} from '@mainlanddev/bigcommerce-react';
+import {$If, $parseHandlebarsDangerously, $string, $this} from '@mainlanddev/bigcommerce-react';
 import {$dynamic} from '@mainlanddev/bigcommerce-react/theme';
 import {$Lang} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import type {ExtendedFormField} from '@/context-account';
 
 export default $dynamic('multiline', () => {
@@ -52,12 +51,7 @@ export default $dynamic('multiline', () => {
                 data-input=""
                 className="form-input"
                 defaultValue={field.value}
-                $$={[
-                    $$raw('rows="'),
-                    field.rows,
-                    $$raw('" '),
-                    $if(field.private_id).then(() => [$$raw('data-field-type="'), field.private_id, $$raw('"')]),
-                ]}
+                $$={$parseHandlebarsDangerously(`rows="{{rows}}" {{#if private_id}}data-field-type="{{private_id}}"{{/if}}`)}
             />
         </div>
     );

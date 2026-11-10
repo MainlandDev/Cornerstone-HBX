@@ -1,9 +1,8 @@
 /**
  * Source: templates/components/common/channel-selector-mobile.html (43 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$Each, $If, $each, $if, $number, $string, $unescaped} from '@mainlanddev/bigcommerce-react';
+import {$Each, $If, $number, $parseHandlebarsDangerously, $string, $unescaped} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
-import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$Lang} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import type {Hint} from '@/context-common';
@@ -35,13 +34,13 @@ export default $asPartial<{theme_settings: Hint['theme_settings']}>(({theme_sett
                     data-collapsible="navPages-channel"
                     aria-controls="navPages-channel"
                     aria-expanded="false"
-                    $$={[
-                        $$raw('aria-label="'),
-                        $each(theme_settings.channels).then((channel) =>
-                            $if(channel.is_active).then(() => $lang($string('common.channel'), {code: channel.code})),
-                        ),
-                        $$raw('"'),
-                    ]}
+                    $$={$parseHandlebarsDangerously(`aria-label="
+    {{#each theme_settings.channels}}
+        {{#if is_active}}
+            {{lang 'common.channel' code=code}}
+        {{/if}}
+    {{/each}}
+   "`)}
                 >
                     {/* html L15: {{#each theme_settings.channels}} */}
                     <$Each

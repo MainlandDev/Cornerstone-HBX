@@ -1,12 +1,11 @@
 /**
  * Source: templates/components/products/list-item.html (123 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$Or} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$If, $Partial, $Unless, $each, $if, $number, $string, $unescaped, $unless} from '@mainlanddev/bigcommerce-react';
+import {$If, $Partial, $Unless, $number, $parseHandlebarsDangerously, $string, $unescaped, $unless} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$_Region} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$lang, $or} from '@mainlanddev/bigcommerce-react/bigcommerce';
+import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import type {HandlebarsInlineValueToken} from '@mainlanddev/bigcommerce-react';
 import ProductBadge from '@/templates/components/products/product-badge';
 import ProductInfo from '@/templates/components/products/product-info';
@@ -59,7 +58,6 @@ export default $asPartial<{
     url,
     image,
     brand,
-    category,
     price,
     stock_level,
     rating,
@@ -72,8 +70,6 @@ export default $asPartial<{
     out_of_stock_message,
     hide_product_quick_view,
     featured_promotions,
-    event,
-    position,
     show_compare,
     show_rating,
     customer,
@@ -94,16 +90,16 @@ export default $asPartial<{
            {{/or}}">
     */
     <article
-        className="listItem"
-        data-event-type={event}
-        data-entity-id={id}
-        data-position={position}
-        data-name={name}
-        data-product-category={`${$each(category).then((item, loop) => $if(loop['@last']).then(() => item).else(() => [item, $$raw(', ')]))} `}
-        data-product-brand={brand.name}
-        data-product-price={` ${$or(customer, $unless(settings.hide_price_from_guests))
-            .then(() => $if(price.with_tax).then(() => price.with_tax.value).else(() => price.without_tax.value))
-            .else(() => $lang($string('common.login_for_pricing')))} `}
+        $$={$parseHandlebarsDangerously(`class="listItem" data-event-type="{{event}}" data-entity-id="{{id}}" data-position="{{position}}" data-name="{{name}}" data-product-category="{{#each category}}{{#if @last}}{{this}}{{else}}{{this}}, {{/if}}{{/each}}" data-product-brand="{{brand.name}}" data-product-price="
+    {{#or customer (unless settings.hide_price_from_guests)}}
+        {{#if price.with_tax}}
+            {{price.with_tax.value}}
+        {{else}}
+            {{price.without_tax.value}}
+        {{/if}}
+    {{else}}
+        {{lang 'common.login_for_pricing'}}
+    {{/or}}"`)}
     >
         {/* html L11: <figure class="listItem-figure"> */}
         <figure className="listItem-figure">

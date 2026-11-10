@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/common/cart-preview.html (91 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$Each, $If, $Partial, $number, $string, $unescaped, $unless, $if, $this} from '@mainlanddev/bigcommerce-react';
+import {$Each, $If, $Partial, $number, $parseHandlebarsDangerously, $string, $unescaped, $unless, $if, $this} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$Lang, $Or} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
@@ -83,7 +83,7 @@ export default $asPartial<{
                                             {/* html L28: <h6 class="previewCartItem-name"> */}
                                             <h6 className="previewCartItem-name">
                                                 {/* html L29: <a href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a> */}
-                                                <a href={item.url} $$={[$$raw('alt="'), item.name, $$raw('"')]} title={item.name}>
+                                                <a href={item.url} $$={$parseHandlebarsDangerously('alt="{{name}}"')} title={item.name}>
                                                     {/* html L29: {{name}} */}
                                                     {item.name}
                                                 </a>

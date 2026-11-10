@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/products/price-range.html (116 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$If, $if, $string} from '@mainlanddev/bigcommerce-react';
+import {$If, $if, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$And} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
@@ -238,7 +238,7 @@ export default $asPartial<{
                         </span>
                     </div>
                     {/* html L91: <div class="price-section price-section--withoutTax price--withoutTax{{#and price_range.min.with_tax price_range.max.with_tax}} price-section--minor{{/and}}"> */}
-                    <div className="price-section price-section--withoutTax price--withoutTax">
+                    <div $$={$parseHandlebarsDangerously('class="price-section price-section--withoutTax price--withoutTax{{#and price_range.min.with_tax price_range.max.with_tax}} price-section--minor{{/and}}"')}>
                         {/* html L92: <span class="price-label">{{theme_settings.pdp-price-label}}</span> */}
                         <span className="price-label">{/* html L92: {{theme_settings.pdp-price-label}} */}{theme_settings['pdp-price-label']}</span>
                         {/* html L93: <span class="price-now-label" style="display: none;"> */}

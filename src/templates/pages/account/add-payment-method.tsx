@@ -1,10 +1,10 @@
 /**
  * Source: templates/pages/account/add-payment-method.html (125 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$boolean, $Each, $If, $Partial, $string, $unescaped} from '@mainlanddev/bigcommerce-react';
+import {$boolean, $If, $Partial, $parseHandlebarsDangerously, $string, $unescaped} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import {$Inject, $Lang, $StencilPartial} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$cdn, $concat, $lang, $nonce} from '@mainlanddev/bigcommerce-react/bigcommerce';
+import {$lang, $nonce} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import Breadcrumbs from '@/templates/components/common/breadcrumbs';
 import type {ExtendedThemePageAddPaymentMethod} from '@/context-pagesAccount';
@@ -138,18 +138,9 @@ export default $page<ExtendedThemePageAddPaymentMethod>({
                                                 {/* html L60: <span class="paymentMethodForm-cards"> */}
                                                 <span className="paymentMethodForm-cards">
                                                     {/* html L61: {{#each ../theme_settings.supported_card_type_icons}} */}
-                                                    <$Each
-                                                        list={ctx.theme_settings.supported_card_type_icons}
-                                                        $then={(icon) => (
-                                                            /* html L62: <img class="paymentMethodForm-cards-icon" src="{{cdn (concat (concat 'img/payment-methods/' this) '.svg')}}" alt="{{lang (concat 'account.payment_methods.card_types.' this)}}" title="{{lang (concat 'account.payment_methods.card_types.' this)}}"> */
-                                                            <img
-                                                                className="paymentMethodForm-cards-icon"
-                                                                src={$cdn($concat($concat($string('img/payment-methods/'), icon), $string('.svg')))}
-                                                                alt={$lang($concat($string('account.payment_methods.card_types.'), icon))}
-                                                                title={$lang($concat($string('account.payment_methods.card_types.'), icon))}
-                                                            />
-                                                        )}
-                                                    />
+                                                    {$parseHandlebarsDangerously(`{{#each ../theme_settings.supported_card_type_icons}}
+<img class="paymentMethodForm-cards-icon" src="{{cdn (concat (concat 'img/payment-methods/' this) '.svg')}}" alt="{{lang (concat 'account.payment_methods.card_types.' this)}}" title="{{lang (concat 'account.payment_methods.card_types.' this)}}">
+{{/each}}`)}
                                                 </span>
                                             </p>
                                             {/* html L66: <fieldset class="form-fieldset"> */}

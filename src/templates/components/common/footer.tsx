@@ -40,7 +40,7 @@ export default $asPartial<{
                                 data-entity-id={banner.id}
                                 data-name={banner['banner-name']}
                                 data-position={banner.location}
-                                $$={[$$raw('data-name="'), banner['banner-name'], $$raw('"')]}
+                                $$={$parseHandlebarsDangerously('data-name="{{banner-name}}"')}
                             >
                                 {/* html L5: <div data-event-type="promotion-click"> */}
                                 <div data-event-type="promotion-click">{/* html L6: {{{this.content}}} */}{$unescaped(banner.content)}</div>

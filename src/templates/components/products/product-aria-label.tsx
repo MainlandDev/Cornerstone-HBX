@@ -1,128 +1,59 @@
 /**
- * Source: templates/components/products/product-aria-label.html (42 lines). Per-element comments below quote the original lines (`html L<n>`).
+ * Source: templates/components/products/product-aria-label.html (42 lines).
+ *
+ * The whole template is one raw fragment, copied verbatim. The output is an `aria-label` string, so the original's
+ * line breaks and spaces (`Was: $15, Now: $12`) are part of the result and JSX cannot reproduce them (DEVIATIONS.md section 8.2).
+ * Context keys it reads (`price`, `theme_settings`) are the explicit props below.
  */
-import {$If, $boolean, $if, $string} from '@mainlanddev/bigcommerce-react';
+import {$parseHandlebarsDangerously} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
-import {$And} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
-import PriceLabel from '@/templates/components/products/price-label';
 import type {ProductPriceHint, ThemeSettingsHint} from '@/context-products';
 
 export default $asPartial<{
     price: ProductPriceHint;
     theme_settings: ThemeSettingsHint;
-}>(({price, theme_settings}) => (
-    /* html L1: {{#and price.price_range (if theme_settings.price_ranges '==' true)}} */
-    <$And
-        a={price.price_range}
-        b={$if(theme_settings.price_ranges, '==', $boolean(true))}
-        $then={() => (
-            /* html L2: {{#and price.price_range.min.with_tax price.price_range.max.with_tax}} */
-            <$And
-                a={price.price_range.min.with_tax}
-                b={price.price_range.max.with_tax}
-                $then={() => (
-                    <>{/* html L3-6:
-                         {{lang 'category.shop_by_price_range_aria'
-                                from=price.price_range.min.with_tax.formatted
-                                to=price.price_range.max.with_tax.formatted
-                         }}
-                      */}{$lang($string('category.shop_by_price_range_aria'), {from: price.price_range.min.with_tax.formatted, to: price.price_range.max.with_tax.formatted})}</>
-                )}
-                $else={() => (
-                    <>{/* html L7: {{else}}
-                                                  html L8-11:
-                         {{lang 'category.shop_by_price_range_aria'
-                                from=price.price_range.min.without_tax.formatted
-                                to=price.price_range.max.without_tax.formatted
-                         }}
-                      */}{$lang($string('category.shop_by_price_range_aria'), {from: price.price_range.min.without_tax.formatted, to: price.price_range.max.without_tax.formatted})}</>
-                )}
-            />
-        )}
-        $else={() => (
-            /* html L13: {{else}}
-                              html L14: {{#if price.with_tax}}
-            */
-            <$If
-                query={[price.with_tax]}
-                $then={() => (
-                    /* html L15: {{#if price.non_sale_price_with_tax}} */
-                    <$If
-                        query={[price.non_sale_price_with_tax]}
-                        $then={() => (
-                            <>
-                                {/* html L16-19:
-                                   {{> components/products/price-label
-                                       label_value=theme_settings.pdp-non-sale-price-label
-                                       fallback=(lang "page_builder.pdp-non-sale-price-label")
-                                   }}{{price.non_sale_price_with_tax.formatted}},
-                                */}
-                                <PriceLabel
-                                    label_value={theme_settings['pdp-non-sale-price-label']}
-                                    fallback={$lang($string('page_builder.pdp-non-sale-price-label'))}
-                                />
-                                {/* html L19: {{price.non_sale_price_with_tax.formatted}} */}
-                                {price.non_sale_price_with_tax.formatted},
-                                {/* html L20-23:
-                                   {{> components/products/price-label
-                                       label_value=theme_settings.pdp-sale-price-label
-                                       fallback=(lang "page_builder.pdp-sale-price-label")
-                                   }}{{price.with_tax.formatted}}
-                                */}
-                                <PriceLabel
-                                    label_value={theme_settings['pdp-sale-price-label']}
-                                    fallback={$lang($string('page_builder.pdp-sale-price-label'))}
-                                />
-                                {/* html L23: {{price.with_tax.formatted}} */}
-                                {price.with_tax.formatted}
-                            </>
-                        )}
-                        $else={() => <>{/* html L24: {{else}}
-                                                                                    html L25: {{price.with_tax.formatted}}
-                                       */}{price.with_tax.formatted}</>}
-                    />
-                )}
-                $else={() => (
-                    /* html L27: {{else}}
-                                              html L28: {{#if price.non_sale_price_without_tax}}
-                    */
-                    <$If
-                        query={[price.non_sale_price_without_tax]}
-                        $then={() => (
-                            <>
-                                {/* html L29-32:
-                                   {{> components/products/price-label
-                                       label_value=theme_settings.pdp-non-sale-price-label
-                                       fallback=(lang "page_builder.pdp-non-sale-price-label")
-                                   }}{{price.non_sale_price_without_tax.formatted}},
-                                */}
-                                <PriceLabel
-                                    label_value={theme_settings['pdp-non-sale-price-label']}
-                                    fallback={$lang($string('page_builder.pdp-non-sale-price-label'))}
-                                />
-                                {/* html L32: {{price.non_sale_price_without_tax.formatted}} */}
-                                {price.non_sale_price_without_tax.formatted},
-                                {/* html L33-36:
-                                   {{> components/products/price-label
-                                       label_value=theme_settings.pdp-sale-price-label
-                                       fallback=(lang "page_builder.pdp-sale-price-label")
-                                   }}{{price.without_tax.formatted}}
-                                */}
-                                <PriceLabel
-                                    label_value={theme_settings['pdp-sale-price-label']}
-                                    fallback={$lang($string('page_builder.pdp-sale-price-label'))}
-                                />
-                                {/* html L36: {{price.without_tax.formatted}} */}
-                                {price.without_tax.formatted}
-                            </>
-                        )}
-                        $else={() => <>{/* html L37: {{else}}
-                                                                                    html L38: {{price.without_tax.formatted}}
-                                       */}{price.without_tax.formatted}</>}
-                    />
-                )}
-            />
-        )}
-    />
+}>(() => (
+    <>
+        {$parseHandlebarsDangerously(`{{#and price.price_range (if theme_settings.price_ranges '==' true)}}
+    {{#and price.price_range.min.with_tax price.price_range.max.with_tax}}
+{{lang 'category.shop_by_price_range_aria'
+       from=price.price_range.min.with_tax.formatted
+       to=price.price_range.max.with_tax.formatted
+}}
+    {{else}}
+{{lang 'category.shop_by_price_range_aria'
+       from=price.price_range.min.without_tax.formatted
+       to=price.price_range.max.without_tax.formatted
+}}
+    {{/and}}
+{{else}}
+    {{#if price.with_tax}}
+        {{#if price.non_sale_price_with_tax}}
+{{> components/products/price-label
+    label_value=theme_settings.pdp-non-sale-price-label
+    fallback=(lang "page_builder.pdp-non-sale-price-label")
+}}{{price.non_sale_price_with_tax.formatted}},
+{{> components/products/price-label
+    label_value=theme_settings.pdp-sale-price-label
+    fallback=(lang "page_builder.pdp-sale-price-label")
+}}{{price.with_tax.formatted}}
+        {{else}}
+{{price.with_tax.formatted}}
+        {{/if}}
+    {{else}}
+        {{#if price.non_sale_price_without_tax}}
+{{> components/products/price-label
+    label_value=theme_settings.pdp-non-sale-price-label
+    fallback=(lang "page_builder.pdp-non-sale-price-label")
+}}{{price.non_sale_price_without_tax.formatted}},
+{{> components/products/price-label
+    label_value=theme_settings.pdp-sale-price-label
+    fallback=(lang "page_builder.pdp-sale-price-label")
+}}{{price.without_tax.formatted}}
+        {{else}}
+{{price.without_tax.formatted}}
+        {{/if}}
+    {{/if}}
+{{/and}}`)}
+    </>
 ));

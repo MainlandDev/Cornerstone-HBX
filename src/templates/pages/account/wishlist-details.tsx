@@ -1,10 +1,10 @@
 /**
  * Source: templates/pages/account/wishlist-details.html (32 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$If, $Partial, $number, $string} from '@mainlanddev/bigcommerce-react';
+import {$If, $Partial, $number, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$page, type ThemePageAccountWishlistDetails} from '@mainlanddev/bigcommerce-react/theme';
 import {$Lang, $StencilPartial} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$concat, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
+import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import Breadcrumbs from '@/templates/components/common/breadcrumbs';
 
 export default $page<ThemePageAccountWishlistDetails>({
@@ -62,7 +62,7 @@ export default $page<ThemePageAccountWishlistDetails>({
                                                 {/* html L17: <input class="form-input" value="{{settings.base_url}}{{wishlist.share_url}}" readonly> */}
                                                 <input
                                                     className="form-input"
-                                                    value={$concat(ctx.settings.base_url, ctx.wishlist.share_url)}
+                                                    $$={$parseHandlebarsDangerously('value="{{settings.base_url}}{{wishlist.share_url}}"')}
                                                     readOnly
                                                 />
                                             </div>

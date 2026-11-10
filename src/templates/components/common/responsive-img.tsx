@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/common/responsive-img.html (62 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$if, $string, $unless, $boolean, type HandlebarsInlineValueToken} from '@mainlanddev/bigcommerce-react';
+import {$if, $parseHandlebarsDangerously, $string, $unless, $boolean, type HandlebarsInlineValueToken} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$cdn, $default, $getImageSrcset, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
@@ -21,7 +21,7 @@ export default $asPartial<{
     class: Str;
     lqip_size: Str;
     otherAttributes: Str;
-}>(({image, fallback_size, lazyload, default_image, class: className, lqip_size, otherAttributes}) => (
+}>(({image, fallback_size, lazyload, default_image, lqip_size, otherAttributes}) => (
     /* html L1-37:
        {{!--
        This file implements the lazysizes srcset pattern (as seen on
@@ -118,10 +118,8 @@ export default $asPartial<{
                     $lang($string('products.card_default_image_alt')),
                     $$raw('" '),
                 ]),
-            $$raw('class="'),
-            $unless(lazyload, '==', $string('disabled')).then(() => $$raw('lazyload')),
-            $if(className).then(() => [$$raw(' '), className]),
-            $$raw('" '),
+            $parseHandlebarsDangerously(`class="{{#unless lazyload '==' 'disabled'}}lazyload{{/unless}}{{#if class}} {{class}}{{/if}}"`),
+            $$raw(' '),
             $if(lazyload, '==', $string('lazyload')).then(() => $$raw('loading="lazy" ')),
             otherAttributes,
         ]}

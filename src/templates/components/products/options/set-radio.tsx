@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/products/options/set-radio.html (35 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$Each, $Partial, $Unless, $if, $string, $this} from '@mainlanddev/bigcommerce-react';
+import {$Each, $Partial, $Unless, $if, $parseHandlebarsDangerously, $string, $this} from '@mainlanddev/bigcommerce-react';
 import {$$raw, $$when} from '@mainlanddev/bigcommerce-react/internal';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$dynamic} from '@mainlanddev/bigcommerce-react/theme';
@@ -42,7 +42,7 @@ export default $dynamic('set-radio', () => {
                             id={`attribute_radio_${option.id}_none`}
                             name={`attribute[${option.id}]`}
                             value=""
-                            $$={[$$raw('checked="'), $if(option.defaultValue, '==', $string('')).then(() => $$raw('checked')), $$raw('"')]}
+                            $$={$parseHandlebarsDangerously(`checked="{{#if defaultValue '==' ''}}checked{{/if}}"`)}
                         />
                         {/* html L17: <label class="form-label" for="attribute_radio_{{id}}_none">{{lang 'products.none'}}</label> */}
                         <label className="form-label" htmlFor={`attribute_radio_${option.id}_none`}>{/* html L17: {{lang 'products.none'}} */}{$lang($string('products.none'))}</label>

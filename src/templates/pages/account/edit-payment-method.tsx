@@ -1,10 +1,10 @@
 /**
  * Source: templates/pages/account/edit-payment-method.html (71 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$If, $Each, $Partial, $string, $With, $if} from '@mainlanddev/bigcommerce-react';
+import {$If, $Partial, $parseHandlebarsDangerously, $string, $With, $if} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import {$Inject, $Lang, $StencilPartial} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
-import {$_dynamicComponent, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
+import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$$when} from '@mainlanddev/bigcommerce-react/internal';
 import Breadcrumbs from '@/templates/components/common/breadcrumbs';
 import type {ExtendedThemePageEditPaymentMethod} from '@/context-pagesAccount';
@@ -46,7 +46,7 @@ export default $page<ExtendedThemePageEditPaymentMethod>({
                                 context={ctx.customer.edit_stored_instrument}
                                 $then={(instrument) => (
                                     /* html L15: <form action="{{forms.action}}" data-address-form class="form" method="post"> */
-                                    <form action={ctx.forms.action} data-address-form="" className="form" method="post">
+                                    <form $$={$parseHandlebarsDangerously('action="{{forms.action}}"')} data-address-form="" className="form" method="post">
                                         {/* html L16: <input type="hidden" name="token" value="{{token}}"> */}
                                         <input type="hidden" name="token" value={instrument.token}/>
                                         {/* html L17: <input type="hidden" name="currency_code" value="{{../currency_selector.active_currency_code}}"> */}
@@ -149,10 +149,9 @@ export default $page<ExtendedThemePageEditPaymentMethod>({
                                                         {/* html L53: <div class="form-row form-row--half"> */}
                                                         <div className="form-row form-row--half">
                                                             {/* html L54: {{#each forms.billing_fields}} */}
-                                                            <$Each
-                                                                list={ctx.forms.billing_fields}
-                                                                $then={() => $_dynamicComponent($string('components/common/forms'))}
-                                                            />
+                                                            {$parseHandlebarsDangerously(`{{#each forms.billing_fields}}
+                                {{{dynamicComponent 'components/common/forms'}}}
+                            {{/each}}`)}
                                                         </div>
                                                     </fieldset>
                                                 </>

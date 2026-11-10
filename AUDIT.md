@@ -4,6 +4,14 @@ Independent audit of the Cornerstone -> HBX port (commits `4ae4290`, `ea53edf`, 
 `claude/cornerstone-hbx-conversion-audit-moid24`. It complements `DEVIATIONS.md` (the porting agents' own record): this file records what an
 **independent** check of the build output found, what was fixed, and what still needs a decision.
 
+> **Update (exact-parity pass).** After this audit the port was re-checked by rendering the original and the compiled templates with
+> `@bigcommerce/stencil-paper-handlebars` 6.6.4. That found four behaviour differences the static compare could not see:
+> `navigation` hid the language selector for one language (an `$if` replaced the helper's ignored operands), `add-payment-method` showed
+> card icons the original never renders, `edit-payment-method` rendered the page-level `forms.action`, and `product-aria-label` lost the
+> spaces in its label text. All four, plus the padded attributes (`alt=" {{x}} "`), `price-range` L91, `related`, `layout/base` `{{~inject`
+> and `wishlist-details` `value`, are now verbatim raw fragments. Rows below that call those files "unverified" or "verify at runtime"
+> are superseded; see `DEVIATIONS.md` section 9 for what still differs (mainly whitespace-only text between tags).
+
 ## 1. Verdict
 
 | Check | Result |

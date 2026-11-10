@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Draft
+- Port the remaining TSX templates 1-1 with the originals: restore original attribute whitespace, scope behaviour of `add-payment-method` / `edit-payment-method`, `price-range`, `related`, `product-aria-label`, and the language selector condition in `navigation`
 - Display product attributes on the PDP (inline, or in the Additional Information tab via the new `show_attributes_tabs` theme setting), shown before custom fields ([#2746](https://github.com/bigcommerce/cornerstone/pull/2746))
 - Fix the Additional Information tab having no title when its label setting is empty, and not opening when it is the first tab on the PDP ([#2746](https://github.com/bigcommerce/cornerstone/pull/2746))
 - Add support Node 24 ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
