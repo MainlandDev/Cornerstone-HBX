@@ -1,4 +1,5 @@
 import {$Each, $If, $Partial, $string, $Unless} from '@mainlanddev/bigcommerce-react';
+import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$asPartial, type ThemeContextHint, type ThemePageAccountAddresses} from '@mainlanddev/bigcommerce-react/theme';
 import {$Lang} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
@@ -62,7 +63,7 @@ export default $asPartial<{ customer: Hint['customer']; urls: Hint['urls'] }>(({
                 <a className="panel panel--address panel--newAddress" href={urls.account.add_address}>
                     <span className="panel-body">
                         <span className="address-addNew">
-                            <span className="address-symbol">&plus;</span>
+                            <span className="address-symbol">{$$raw('&plus;')}</span>
                             <h5 className="address-title">
                                 <$Lang translationKey={$string('account.addresses.new_address')}/>
                             </h5>

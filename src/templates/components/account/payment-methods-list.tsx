@@ -1,4 +1,5 @@
 import {$Each, $If, $Partial, $string, $Unless} from '@mainlanddev/bigcommerce-react';
+import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
 import {$asPartial, type ThemeContextHint, type ThemePageAccountPaymentMethods} from '@mainlanddev/bigcommerce-react/theme';
 import {$Lang, $InArray} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
 import {$cdn, $concat, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
@@ -297,7 +298,7 @@ export default $asPartial<{
                                             <div className="paymentMethod">
                                                 <div className="paymentMethod-row">
                                                     <a className="newPaymentMethod" href={method.add_url}>
-                                                        <div className="newPaymentMethod-icon">&plus;</div>
+                                                        <div className="newPaymentMethod-icon">{$$raw('&plus;')}</div>
                                                         <h5 className="newPaymentMethod-title">
                                                             <$Lang translationKey={$string('account.payment_methods.new_payment_method')}/>
                                                         </h5>
