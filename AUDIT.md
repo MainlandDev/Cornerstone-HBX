@@ -11,9 +11,9 @@ Independent audit of the Cornerstone -> HBX port (commits `4ae4290`, `ea53edf`, 
 | Templates with a TSX twin | 210 / 210, none missing |
 | `vite build` / `tsc` on `src/` | exit 0 / no errors in `src/` (see 6. Limits for `vite.config.ts`) |
 | Compiled output vs original, after normalisation (3.) | **186 identical**, 24 differ |
-| Of the 24: equivalent / cosmetic | 22 |
-| Of the 24: behaviour change needing a decision | **2** (`navigation`, `navigation-menu`: section 4.1) |
-| Defects found that were **fixed in this branch** | 1 (`&plus;`, section 4.2; 2 files) |
+| Of the 24: equivalent / cosmetic | 24 (after the correction below; `price-range` is the only unverified one) |
+| Behaviour changes found | 1, **fixed** (`navigation`, `navigation-menu`: section 4.1) |
+| Defects found that were **fixed in this branch** | 2 (`&plus;` section 4.2, 2 files; `and` operands section 4.1, 2 files) |
 | Dangling `{{> partial}}` references in compiled output | 0 |
 | Partials requested by `assets/js` that have no compiled template | 0 |
 | Dropped Handlebars comments (`{{! }}`, 28 in 7 files) | none lost: now quoted in the TSX comments (section 5) |
@@ -42,7 +42,7 @@ Per `CLAUDE.md` every partial call gains explicit named arguments, e.g. `{{> com
 
 ## 4. Findings
 
-### 4.1 Behaviour change: `{{#and a b '>' 1}}` (needs a decision)
+### 4.1 Behaviour change, **fixed**: `{{#and a b '>' 1}}`
 
 | File | Original | TSX output |
 |---|---|---|
@@ -52,8 +52,7 @@ Per `CLAUDE.md` every partial call gains explicit named arguments, e.g. `{{> com
 Stencil's helper is `helpers.and = function(a, b) { ... if (a && b) ... }`. It reads **two** operands; the trailing `'>' 1` of the original are ignored.
 So the original shows the language selector whenever `languages.length` is truthy (**1 or more languages**). The TSX shows it only when there are
 **more than one**. A store with exactly one language loses the selector. `DEVIATIONS.md` calls this "equivalent intent"; it is not equivalent output.
-Options: (a) keep parity by emitting `{{#and language_selector language_selector.languages.length}}` (drop the dead operands, log it), or (b) keep the TSX
-and record it as an intentional fix. Not changed here because the 1-1 rule means that is the owner's call.
+**Fix applied:** `b={language_selector.languages.length}`, which compiles to `{{#and language_selector language_selector.languages.length}}` and matches the original's behaviour (the dead `'>' 1` operands are dropped). If you actually want "more than one language", that is a deliberate change to make separately.
 
 ### 4.2 Defect, **fixed**: `&plus;` rendered literally
 

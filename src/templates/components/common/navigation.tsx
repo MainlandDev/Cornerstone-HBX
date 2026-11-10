@@ -1,7 +1,7 @@
 /**
  * Source: templates/components/common/navigation.html (119 lines). Per-element comments below quote the original lines (`html L<n>`).
  */
-import {$If, $if, $number, $string, $unless} from '@mainlanddev/bigcommerce-react';
+import {$If, $number, $string, $unless} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$And, $Lang, $Or} from '@mainlanddev/bigcommerce-react/bigcommerce/jsx';
 import {$_lang, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
@@ -36,7 +36,7 @@ export default $asPartial<{
         {/* html L2: {{#and language_selector language_selector.languages.length '>' 1}} */}
         <$And
             a={language_selector}
-            b={$if(language_selector.languages.length, '>', $number(1))}
+            b={language_selector.languages.length}
             $then={() => /* html L3: {{> components/common/language-selector}} */ <LanguageSelector language_selector={language_selector}/>}
         />
 

@@ -101,7 +101,7 @@ export default $asPartial<
             {/* html L30: {{#and language_selector language_selector.languages.length '>' 1}} */}
             <$And
                 a={language_selector}
-                b={$if(language_selector.languages.length, '>', $number(1))}
+                b={language_selector.languages.length}
                 $then={() => (
                     /* html L31: <li class="navPages-item"> */
                     <li className="navPages-item">
