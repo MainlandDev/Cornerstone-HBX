@@ -1,9 +1,13 @@
+/**
+ * Source: templates/components/products/schema.html (62 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$parseHandlebarsDangerously} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 
 // The JSON-LD body is raw Handlebars (escape hatch): it mixes `getImage` on an unsized image, `json`/`ellipsis`/`moment` hash forms,
 // `else if` chains and `and` with a `.length` operand, none of which the typed helpers express. The <script> shell is typed.
 export default $asPartial(() => (
+    /* html L1: <script type="application/ld+json"> */
     <script type="application/ld+json">
         {$parseHandlebarsDangerously(`
     {

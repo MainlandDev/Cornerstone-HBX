@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/product-view.html (309 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$If, $Partial, $parseHandlebarsDangerously} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import type {ExtendedThemePageProduct} from '@/context-pagesA';
@@ -17,6 +20,7 @@ export default $asPartial<{
     backorder_messages: Hint['backorder_messages'];
 }>(({theme_settings}) => (
     <>
+        {/* html L1: {{inject 'outOfStockDefaultMessage' (lang 'products.out_of_stock_default_message')}} */}
         {$parseHandlebarsDangerously(`{{inject 'outOfStockDefaultMessage' (lang 'products.out_of_stock_default_message')}}
 {{inject 'availableOnHand' product.available_on_hand}}
 {{inject 'availableForBackorder' product.available_for_backorder}}
@@ -310,18 +314,26 @@ export default $asPartial<{
         </div>
         {{> components/common/share url=product.url}}
     </section>`)}
+        {/* html L295: <article class="productView-description"> */}
         <article className="productView-description">
+            {/* html L296: {{#if theme_settings.show_product_details_tabs}} */}
             <$If
                 query={[theme_settings.show_product_details_tabs]}
-                $then={() => <$Partial name="components/products/description-tabs"/>}
-                $else={() => <$Partial name="components/products/description"/>}
+                $then={() => /* html L297: {{> components/products/description-tabs}} */ <$Partial name="components/products/description-tabs"/>}
+                $else={() => /* html L298: {{else}}
+                                                                html L299: {{> components/products/description}}
+                             */ <$Partial name="components/products/description"/>}
             />
         </article>
         {$parseHandlebarsDangerously('</div>')}
 
+        {/* html L304: <div id="previewModal" class="modal modal--large" data-reveal> */}
         <div id="previewModal" className="modal modal--large" data-reveal="">
+            {/* html L305: {{> components/common/modal/modal-close-btn }} */}
             <$Partial name="components/common/modal/modal-close-btn"/>
+            {/* html L306: <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-header-title"></div> */}
             <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-header-title"></div>
+            {/* html L307: <div class="loadingOverlay"></div> */}
             <div className="loadingOverlay"></div>
         </div>
     </>

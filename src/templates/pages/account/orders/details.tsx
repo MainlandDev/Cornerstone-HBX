@@ -1,3 +1,6 @@
+/**
+ * Source: templates/pages/account/orders/details.html (199 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Partial, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import type {ThemePageAccountOrdersDetails} from '@mainlanddev/bigcommerce-react/theme';
@@ -10,12 +13,16 @@ export default $page<ThemePageAccountOrdersDetails>({
     frontmatter: {},
     content: (ctx) => (
         <>
+            {/* html L1: {{#partial "page"}} */}
             <$StencilPartial
                 name={$string('page')}
                 $then={() => (
                     <>
+                        {/* html L2: {{inject 'selectItem' (lang 'forms.validate.account.reorder.select_item')}} */}
                         <$Inject keyName={$string('selectItem')} value={$lang($string('forms.validate.account.reorder.select_item'))}/>
+                        {/* html L4: {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} */}
                         <Breadcrumbs breadcrumbs={ctx.breadcrumbs} theme_settings={ctx.theme_settings}/>
+                        {/* html L5: <h2 class="page-heading title">{{lang 'account.orders.details.heading' number=order.id}}</h2> */}
                         {$parseHandlebarsDangerously(`<h2 class="page-heading title">{{lang 'account.orders.details.heading' number=order.id}}</h2>
 {{> components/account/navigation account_page='orders'}}
 
@@ -211,6 +218,7 @@ export default $page<ThemePageAccountOrdersDetails>({
                     </>
                 )}
             />
+            {/* html L198: {{> layout/base}} */}
             <$Partial name="layout/base"/>
         </>
     ),

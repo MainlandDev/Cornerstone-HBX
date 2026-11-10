@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/related.html (9 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Each, $number, $string} from '@mainlanddev/bigcommerce-react';
 import {$add, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
@@ -16,12 +19,17 @@ export default $asPartial<{
     page_type: ProductPageHint['page_type'];
 }>(({products, settings, theme_settings, customer, page_type}) => (
     <>
-        <h4>{$lang($string('products.related_products'))}</h4>
+        {/* html L1: <h4>{{lang 'products.related_products' }}</h4> */}
+        <h4>{/* html L1: {{lang 'products.related_products' }} */}{$lang($string('products.related_products'))}</h4>
+        {/* html L2: <ul class="product-list" data-list-name="Related Products"> */}
         <ul className="product-list" data-list-name="Related Products">
+            {/* html L3: {{#each this}} */}
             <$Each
                 list={products}
                 $then={(item, loop) => (
+                    /* html L4: <li class="product-card"> */
                     <li className="product-card">
+                        {/* html L5: {{>components/products/card settings=../settings theme_settings=../theme_settings event="list" position=(add @index 1)}} */}
                         <Card
                             id={item.id}
                             name={item.name}

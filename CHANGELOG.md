@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Port every Handlebars template (`templates/**/*.html`, 210 files) to the HBX TSX toolchain under `src/templates/` at the same paths; a TSX replaces the `.html` of the same path at build. Compiled output matches the originals for 192 files; the 18 that differ and the 23 files that use raw Handlebars are listed in `DEVIATIONS.md` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 - Add `react`, `react-dom` and `@types/react` as devDependencies and generate `src/theme-types.d.ts` from `config.json`, `schema.json` and `lang/en.json` during `vite build` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 - Fix the TSX ports of `components/account/address-list` and `components/account/payment-methods-list` rendering the literal text `&plus;` (JSX does not decode that entity and the output was double-escaped); now emitted with `$$raw` like the original ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Annotate all 210 TSX templates with the original Handlebars/HTML source (file header with front matter, and an `html L<n>` comment before every element, helper component and child expression); compiled output is byte-identical ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 
 ## 6.22.0 (09-21-2026)
 - Fix pointer cursor on PDP stock/backorder message text [#2737](https://github.com/bigcommerce/cornerstone/pull/2737)

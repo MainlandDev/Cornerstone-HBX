@@ -1,3 +1,6 @@
+/**
+ * Source: templates/pages/account/add-return.html (107 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Partial, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import type {ThemePageAccountAddAddress} from '@mainlanddev/bigcommerce-react/theme';
@@ -9,11 +12,14 @@ export default $page<ThemePageAccountAddAddress>({
     frontmatter: {},
     content: (ctx) => (
         <>
+            {/* html L1: {{#partial "page"}} */}
             <$StencilPartial
                 name={$string('page')}
                 $then={() => (
                     <>
+                        {/* html L3: {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} */}
                         <Breadcrumbs breadcrumbs={ctx.breadcrumbs} theme_settings={ctx.theme_settings}/>
+                        {/* html L4: <h1 class="page-heading">{{lang 'account.returns.new_return' }}</h1> */}
                         {$parseHandlebarsDangerously(`<h1 class="page-heading">{{lang 'account.returns.new_return' }}</h1>
 {{> components/account/navigation account_page='returns'}}
 
@@ -117,6 +123,7 @@ export default $page<ThemePageAccountAddAddress>({
                     </>
                 )}
             />
+            {/* html L106: {{> layout/base}} */}
             <$Partial name="layout/base"/>
         </>
     ),
