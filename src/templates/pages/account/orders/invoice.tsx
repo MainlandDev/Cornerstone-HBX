@@ -1,3 +1,6 @@
+/**
+ * Source: templates/pages/account/orders/invoice.html (220 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Partial, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import type {ThemePageAccountOrdersDetails} from '@mainlanddev/bigcommerce-react/theme';
@@ -8,14 +11,17 @@ export default $page<ThemePageAccountOrdersDetails>({
     frontmatter: {},
     content: () => (
         <>
+            {/* html L1: {{#partial "head"}} */}
             <$StencilPartial
                 name={$string('head')}
-                $then={() => <$_Stylesheet assetPath={$string('/assets/css/invoice.css')}/>}
+                $then={() => /* html L2: {{{ stylesheet '/assets/css/invoice.css' }}} */ <$_Stylesheet assetPath={$string('/assets/css/invoice.css')}/>}
             />
+            {/* html L5: {{#partial "page"}} */}
             <$StencilPartial
                 name={$string('page')}
                 $then={() => (
                     <>
+                        {/* html L21: {{lang 'invoice.for_order' name=settings.store_name id=order.id}} */}
                         {$parseHandlebarsDangerously(`    <div class="Invoice">
         <h1>
             {{#if settings.store_logo.image}}
@@ -231,6 +237,7 @@ export default $page<ThemePageAccountOrdersDetails>({
                     </>
                 )}
             />
+            {/* html L219: {{> layout/empty}} */}
             <$Partial name="layout/empty"/>
         </>
     ),

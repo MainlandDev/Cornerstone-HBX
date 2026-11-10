@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/options/swatch.html (66 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Partial, $parseHandlebarsDangerously, $string, $this} from '@mainlanddev/bigcommerce-react';
 import {$lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$dynamic} from '@mainlanddev/bigcommerce-react/theme';
@@ -8,16 +11,26 @@ import type {ProductOptionHint} from '@/context-products';
 export default $dynamic('swatch', () => {
     const option = $this<ProductOptionHint>();
     return (
+        /* html L1: <div class="form-field" data-product-attribute="swatch" role="radiogroup" aria-labelledby="swatchGroup_{{id}}"> */
         <div className="form-field" data-product-attribute="swatch" role="radiogroup" aria-labelledby={`swatchGroup_${option.id}`}>
+            {/* html L2: <label class="form-label form-label--alternate form-label--inlineSmall" id="swatchGroup_{{id}}"> */}
             <label className="form-label form-label--alternate form-label--inlineSmall" id={`swatchGroup_${option.id}`}>
-                {option.display_name}:<span data-option-value=""></span>
+                {/* html L3: {{this.display_name}}: */}
+                {option.display_name}:{/* html L4: <span data-option-value></span> */}<span data-option-value=""></span>
 
+                {/* html L6: {{> components/common/requireness-msg}} */}
                 <$Partial name="components/common/requireness-msg"/>
             </label>
+            {/* html L8-9:
+               <span
+                   class="swatch-option-message aria-description--hidden u-hidden">
+            */}
             <span className="swatch-option-message aria-description--hidden u-hidden">
+                {/* html L10: {{ lang 'products.swatch_option_announcement' swatch_name=this.display_name}} */}
                 {$lang($string('products.swatch_option_announcement'), {swatch_name: option.display_name})}
             </span>
 
+            {/* html L24: <span class='form-option-variant form-option-variant--none' title="{{lang 'products.none'}}">{{lang 'products.none'}}</span> */}
             {$parseHandlebarsDangerously(`{{#unless required}}
         <input
             class="form-radio"

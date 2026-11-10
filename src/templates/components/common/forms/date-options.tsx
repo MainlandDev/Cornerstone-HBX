@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/common/forms/date-options.html (14 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Each, $if, $this, $Unless, type HandlebarsInlineValueToken} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$$when} from '@mainlanddev/bigcommerce-react/internal';
@@ -12,21 +15,30 @@ type DateOptionsContext = {
 export default $asPartial(() => {
     const self = $this<DateOptionsContext>();
     return (
+        /* html L1: {{#unless this.value}} */
         <$Unless
             query={[self.value]}
             $then={() => (
                 <>
+                    {/* html L2: <option value="">---</option> */}
                     <option value="">---</option>
-                    <$Each list={self.items} $then={(item) => <option value={item.value}>{item.label}</option>}/>
+                    {/* html L3: {{#each this.items}} */}
+                    <$Each list={self.items} $then={(item) => /* html L4: <option value="{{value}}">{{label}}</option> */ <option value={item.value}>{/* html L4: {{label}} */}{item.label}</option>}/>
                 </>
             )}
             $else={() => (
                 <>
-                    <$Unless query={[self.isRequired]} $then={() => <option value="">---</option>}/>
+                    {/* html L6: {{else}}
+                                              html L7: {{#unless this.isRequired}}
+                    */}
+                    <$Unless query={[self.isRequired]} $then={() => /* html L8: <option value="">---</option> */ <option value="">---</option>}/>
+                    {/* html L10: {{#each this.items}} */}
                     <$Each
                         list={self.items}
                         $then={(item) => (
+                            /* html L11: <option {{#if ../this.value '==' value}} selected {{/if}}value="{{value}}">{{label}}</option> */
                             <option selected={$$when($if(self.value, '==', item.value))} value={item.value}>
+                                {/* html L11: {{label}} */}
                                 {item.label}
                             </option>
                         )}

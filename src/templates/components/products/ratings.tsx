@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/ratings.html (24 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$number, $string, $if} from '@mainlanddev/bigcommerce-react';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
 import {$$raw} from '@mainlanddev/bigcommerce-react/internal';
@@ -8,6 +11,15 @@ export default $asPartial<{
     rating_target?: ProductCardHint['name'];
     rating: ProductCardHint['rating'];
 }>(({rating_target, rating}) => (
+    /* html L1-7:
+       <span role="img"
+           {{#if rating_target}}
+             aria-label="{{lang 'products.reviews.rating_aria_label' rating_target=rating_target current_rating=rating max_rating=5}}"
+           {{else}}
+             aria-label="{{lang 'products.reviews.rating_aria_label' rating_target='Product' current_rating=rating max_rating=5}}"
+           {{/if}}
+       >
+    */
     <span
         role="img"
         $$={$if(rating_target)

@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/carousel.html (36 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Each, $If, $Partial, $number, $string} from '@mainlanddev/bigcommerce-react';
 import {$add} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
@@ -14,6 +17,34 @@ export default $asPartial<{
     customer: CustomerHint;
     page_type: ProductPageHint['page_type'];
 }>(({products, list, columns, settings, theme_settings, customer, page_type}) => (
+    /* html L1-26:
+       <section class="productCarousel"
+           data-list-name="{{list}}"
+           data-slick='{
+               "infinite": false,
+               "mobileFirst": true,
+               "slidesToShow": 2,
+               "slidesToScroll": 2,
+               "slide": "[data-product-slide]",
+               "responsive": [
+                   {
+                       "breakpoint": 800,
+                       "settings": {
+                           "slidesToShow": {{ columns }},
+                           "slidesToScroll": {{ columns }}
+                       }
+                   },
+                   {
+                       "breakpoint": 550,
+                       "settings": {
+                           "slidesToShow": 3,
+                           "slidesToScroll": 3
+                       }
+                   }
+               ]
+           }'
+       >
+    */
     <section
         className="productCarousel"
         data-list-name={list}
@@ -41,10 +72,13 @@ export default $asPartial<{
         ]
     }`}
     >
+        {/* html L27: {{#each products}} */}
         <$Each
             list={products}
             $then={(item, loop) => (
+                /* html L28: <div data-product-slide class="productCarousel-slide"> */
                 <div data-product-slide="" className="productCarousel-slide">
+                    {/* html L29: {{> components/products/card settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}} */}
                     <Card
                         id={item.id}
                         name={item.name}
@@ -73,9 +107,10 @@ export default $asPartial<{
                 </div>
             )}
         />
+        {/* html L32: {{#if products.length '>' 1}} */}
         <$If
             query={[products.length, '>', $number(1)]}
-            $then={() => <$Partial name="components/carousel-content-announcement"/>}
+            $then={() => /* html L33: {{> components/carousel-content-announcement}} */ <$Partial name="components/carousel-content-announcement"/>}
         />
     </section>
 ));

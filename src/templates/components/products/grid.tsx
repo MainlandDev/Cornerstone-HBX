@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/grid.html (8 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Each, $number} from '@mainlanddev/bigcommerce-react';
 import {$add} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
@@ -14,11 +17,15 @@ export default $asPartial<{
     event: HandlebarsInlineValueToken<string>;
     page_type: ProductPageHint['page_type'];
 }>(({products, settings, show_compare, theme_settings, customer, event, page_type}) => (
+    /* html L1: <ul class="productGrid"> */
     <ul className="productGrid">
+        {/* html L2: {{#each products}} */}
         <$Each
             list={products}
             $then={(item, loop) => (
+                /* html L3: <li class="product"> */
                 <li className="product">
+                    {/* html L4: {{>components/products/card settings=../settings show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event position=(add @index 1)}} */}
                     <Card
                         id={item.id}
                         name={item.name}

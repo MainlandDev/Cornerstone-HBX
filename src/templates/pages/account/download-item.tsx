@@ -1,3 +1,6 @@
+/**
+ * Source: templates/pages/account/download-item.html (59 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Partial, $parseHandlebarsDangerously, $string} from '@mainlanddev/bigcommerce-react';
 import {$page} from '@mainlanddev/bigcommerce-react/theme';
 import type {ThemePageAccountDownloadItem} from '@mainlanddev/bigcommerce-react/theme';
@@ -9,11 +12,14 @@ export default $page<ThemePageAccountDownloadItem>({
     frontmatter: {},
     content: (ctx) => (
         <>
+            {/* html L1: {{#partial "page"}} */}
             <$StencilPartial
                 name={$string('page')}
                 $then={() => (
                     <>
+                        {/* html L3: {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}} */}
                         <Breadcrumbs breadcrumbs={ctx.breadcrumbs} theme_settings={ctx.theme_settings}/>
+                        {/* html L4: <h1 class="page-heading">{{lang 'account.orders.downloads.heading' number=downloads.order_id}}</h1> */}
                         {$parseHandlebarsDangerously(`    <h1 class="page-heading">{{lang 'account.orders.downloads.heading' number=downloads.order_id}}</h1>
     {{> components/account/navigation account_page='orders'}}
 
@@ -69,6 +75,7 @@ export default $page<ThemePageAccountDownloadItem>({
                     </>
                 )}
             />
+            {/* html L58: {{> layout/base}} */}
             <$Partial name="layout/base"/>
         </>
     ),

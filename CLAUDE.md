@@ -75,6 +75,7 @@ Every `templates/**/*.html` has a TSX twin at the same path under `src/templates
   names or open/close tag pairs, `{{#for}}` with `$index`, array `this`, `getImage` on unsized images, front-matter keys the types reject,
   `<title>`/`<meta>` hoisting by React 19). Keep fragments as small as possible, copy the original text verbatim, and list the file and reason in
   `DEVIATIONS.md` section 8.2. Raw fragments are not checked by `tsc`.
+- Each TSX quotes its original source: a header (`Source: templates/<path>.html`, plus the front matter) and an `html L<n>: ...` comment before every element, helper component and child expression (`{/* */}` in JSX child position, `/* */` in expression position). Keep them current when you edit a node; they never affect compiled output. Original `{{!-- --}}` comments that were dropped by the port survive only in these comments.
 - Write TSX with the Write/Edit tools; shell heredocs and `node -e` break on `$`, backticks and quotes.
 
 ### Known library limits (unverified at runtime; keep working around, log, do not fight)

@@ -1,3 +1,6 @@
+/**
+ * Source: templates/components/products/top.html (10 lines). Per-element comments below quote the original lines (`html L<n>`).
+ */
 import {$Each, $number, $string} from '@mainlanddev/bigcommerce-react';
 import {$add, $lang} from '@mainlanddev/bigcommerce-react/bigcommerce';
 import {$asPartial} from '@mainlanddev/bigcommerce-react/theme';
@@ -14,13 +17,18 @@ export default $asPartial<{
     page_type: ProductPageHint['page_type'];
 }>(({columns, products, settings, theme_settings, customer, page_type}) => (
     <>
-        <h2 className="page-heading">{$lang($string('products.top'))}</h2>
+        {/* html L1: <h2 class="page-heading">{{lang 'products.top' }}</h2> */}
+        <h2 className="page-heading">{/* html L1: {{lang 'products.top' }} */}{$lang($string('products.top'))}</h2>
 
+        {/* html L3: <ul class="productGrid productGrid--maxCol{{ columns }}" data-product-type="top_sellers" data-list-name="Most Popular Products"> */}
         <ul className={`productGrid productGrid--maxCol${columns}`} data-product-type="top_sellers" data-list-name="Most Popular Products">
+            {/* html L4: {{#each products}} */}
             <$Each
                 list={products}
                 $then={(item, loop) => (
+                    /* html L5: <li class="product"> */
                     <li className="product">
+                        {/* html L6: {{>components/products/card settings=../settings theme_settings=../theme_settings customer=../customer event="list" position=(add @index 1)}} */}
                         <Card
                             id={item.id}
                             name={item.name}
