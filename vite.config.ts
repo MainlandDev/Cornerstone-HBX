@@ -1,12 +1,14 @@
 import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
 import path from "node:path";
-import {BigcommerceReact} from "@mainlanddev/bigcommerce-react/plugin";
 import {BigcommerceStencil} from "@mainlanddev/bigcommerce-stencil";
+import {HBXBigCommerce} from "../../../@mainlanddev/_vite/HBX/bigcommerce/src/plugin.ts";
 
 
 export default defineConfig({
     plugins: [
-        ...BigcommerceStencil({
+        react(),
+        BigcommerceStencil({
             paths: {
                 // assetsScss: "./temp_assets_external_test/scss",
                 templates: "./templates"
@@ -17,7 +19,7 @@ export default defineConfig({
                 // frontmatter: true
             },
             system: {
-                variantIndex: 3,
+                variantIndex: 0,
                 bundleMode: "flat",
                 alwaysBuildLike: "bundle",
                 // Mirrors webpack.common.js `entry`; keys are the output names (assets/dist/<key>.js), matching the
@@ -39,16 +41,8 @@ export default defineConfig({
                 buildWith: "vite",
             }
         }),
-        BigcommerceReact({
-            templates: "./src/templates",
-            includeInBuildSourceJSX: true,
-            templateEngine: "handlebars-v4",
-            themeTypes: {
-                config: "./config.json",
-                schema: "./schema.json",
-                lang: "./lang/en.json",
-                out: "./src/theme-types.d.ts",
-            },
+        HBXBigCommerce({
+            hints: "./.hbx"
         })
     ],
     resolve: {

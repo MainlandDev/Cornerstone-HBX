@@ -24,11 +24,11 @@
             window.lazySizesConfig = window.lazySizesConfig || {};
             window.lazySizesConfig.loadMode = 1;
         </script>
-        <script nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.head_async.js' resourceHint='preload' as='script'}}"></script>
+        <script type="module" nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.head_async.js' resourceHint='preload' as='script'}}"></script>
         
         {{getFontsCollection font-display='block'}}
         
-        <script nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.font.js' resourceHint='preload' as='script'}}"></script>
+        <script type="module" nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.font.js' resourceHint='preload' as='script'}}"></script>
 
         {{{stylesheet '/assets/css/theme.css'}}}
 
@@ -80,7 +80,7 @@
                 }
             }
         </script>
-        <script id="theme-bundle-main" nonce="{{nonce}}" async defer src="{{cdn 'assets/dist/theme-bundle.main.js' resourceHint='preload' as='script'}}"></script>
+        <script type="module" id="theme-bundle-main" nonce="{{nonce}}" async defer src="{{cdn 'assets/dist/theme-bundle.main.js' resourceHint='preload' as='script'}}"></script>
         <script nonce="{{nonce}}">
             const scriptElement = document.getElementById('theme-bundle-main');
 

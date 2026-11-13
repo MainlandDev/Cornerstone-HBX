@@ -1,4 +1,4 @@
-const WebFont = require('webfontloader');
+import WebFont from 'webfontloader';
 
 const linkEl = document.querySelector('link[href*="https://fonts.googleapis.com/css"]');
 const fontUrl = linkEl.getAttribute('href');

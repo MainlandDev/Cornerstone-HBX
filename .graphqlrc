@@ -1,6 +1,6 @@
 # graphql-config file: tells WebStorm which schema to validate against
 # and which files should be treated as containing GraphQL operations.
-schema: schema.graphql        # the file `npm run pull-graphql` generates
+schema: .hbx/graphql/schema.graphql   # written by `npm run pull-graphql` (live store) or `npm run hbx-hints` (bundled copy)
 
 documents:                      # where you write queries (globs, relative to this file)
   - "src/**/*.{graphql,gql}"    # standalone query files
