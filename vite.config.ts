@@ -42,7 +42,8 @@ export default defineConfig({
             }
         }),
         HBXBigCommerce({
-            hints: "./.hbx"
+            hints: "./.hbx",
+            templates: "./src/templates"
         })
     ],
     resolve: {

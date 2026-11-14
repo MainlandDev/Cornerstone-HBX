@@ -15,7 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@mainlanddev/bigcommerce-react",
+    "jsxImportSource": "@mainlanddev/hbx-handlebars-v4",
 
     /* Linting */
     "noUnusedLocals": true,
@@ -25,7 +25,9 @@
 
     /* Alias Pathing */
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      // The JSX runtime the templates compile against: a dependency of hbx-bigcommerce, not of the theme.
+      "@mainlanddev/hbx-handlebars-v4/*": ["./node_modules/@mainlanddev/hbx-bigcommerce/node_modules/@mainlanddev/hbx-handlebars-v4/dist/*"]
     }
   },
   "include": ["src", ".hbx/**/*.d.ts"]

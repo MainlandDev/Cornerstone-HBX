@@ -2,21 +2,13 @@
     <form class="form" data-url="{{urls.search}}" data-quick-search-form>
         <fieldset class="form-fieldset">
             <div class="form-field">
-                {{#if semantic_search_enabled}}
-                <label class="is-srOnly" for="{{name}}">{{lang "search.quick_search.input_label_semantic"}}</label>
-                {{else}}
                 <label class="is-srOnly" for="{{name}}">{{lang "search.quick_search.input_label"}}</label>
-                {{/if}}
                 <input class="form-input"
                        data-search-quick
                        name="{{name}}"
                        id="{{name}}"
                        data-error-message="{{lang 'search.error.empty_field'}}"
-                       {{#if semantic_search_enabled}}
-                       placeholder="{{lang 'search.quick_search.input_placeholder_semantic'}}"
-                       {{else}}
                        placeholder="{{lang 'search.quick_search.input_placeholder'}}"
-                       {{/if}}
                        autocomplete="off"
                 >
             </div>
