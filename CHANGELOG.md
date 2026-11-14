@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Draft
+- Port the remaining TSX templates 1-1 with the originals: restore original attribute whitespace, scope behaviour of `add-payment-method` / `edit-payment-method`, `price-range`, `related`, `product-aria-label`, and the language selector condition in `navigation`
 - Display product attributes on the PDP (inline, or in the Additional Information tab via the new `show_attributes_tabs` theme setting), shown before custom fields ([#2746](https://github.com/bigcommerce/cornerstone/pull/2746))
 - Fix the Additional Information tab having no title when its label setting is empty, and not opening when it is the first tab on the PDP ([#2746](https://github.com/bigcommerce/cornerstone/pull/2746))
 - Add support Node 24 ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
@@ -12,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add missing card brands (Bancontact, Carte Bancaire, Dankort, Maestro) with logos and payment method mappings [#2748](https://github.com/bigcommerce/cornerstone/pull/2748)
 - Port every Handlebars template (`templates/**/*.html`, 210 files) to the HBX TSX toolchain under `src/templates/` at the same paths; a TSX replaces the `.html` of the same path at build. Compiled output matches the originals for 192 files; the 18 that differ and the 23 files that use raw Handlebars are listed in `DEVIATIONS.md` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 - Add `react`, `react-dom` and `@types/react` as devDependencies and generate `src/theme-types.d.ts` from `config.json`, `schema.json` and `lang/en.json` during `vite build` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Fix the TSX ports of `components/account/address-list` and `components/account/payment-methods-list` rendering the literal text `&plus;` (JSX does not decode that entity and the output was double-escaped); now emitted with `$$raw` like the original ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Annotate all 210 TSX templates with the original Handlebars/HTML source (file header with front matter, and an `html L<n>` comment before every element, helper component and child expression); compiled output is byte-identical ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Add `AUDIT.md`, an independent compiled-vs-original parity audit of the TSX port (186/210 identical after normalisation; one behaviour change in the language selector condition flagged for a decision) ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
+- Fix the TSX ports of `components/common/navigation` and `navigation-menu` hiding the language selector when a store has exactly one language: the original `{{#and a b '>' 1}}` ignores the extra operands, so the condition is again just `languages.length` ([#XXXX](https://github.com/bigcommerce/cornerstone/pull/XXXX))
 
 ## 6.22.0 (09-21-2026)
 - Fix pointer cursor on PDP stock/backorder message text [#2737](https://github.com/bigcommerce/cornerstone/pull/2737)
