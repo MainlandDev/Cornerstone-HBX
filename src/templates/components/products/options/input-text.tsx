@@ -1,0 +1,18 @@
+import {$If, $partial, $pointer, $raw, place} from "@mainlanddev/hbx-bigcommerce";
+
+export default () => (
+    <div className="form-field" data-product-attribute="input-text">
+        <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_text_${$pointer("id")}`}>
+            {$pointer("display_name")}:{" "}
+            {place($partial("components/common/requireness-msg"))}
+        </label>
+        <input
+            className="form-input form-input--small"
+            type="text"
+            id={`attribute_text_${$pointer("id")}`}
+            dangerouslyInlineAttributes={{
+                attributes: `name="attribute[${$pointer("id")}]" value="${$pointer("prefill")}" ${$If({test: $pointer("required"), $then: () => "required"})} ${$If({test: $pointer("max_length"), $then: () => `${$raw('maxlength="')}${$pointer("max_length")}${$raw('"')}`})}`,
+            }}
+        />
+    </div>
+);

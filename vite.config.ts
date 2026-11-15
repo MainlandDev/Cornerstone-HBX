@@ -1,8 +1,8 @@
-import {defineConfig} from 'vite';
+import {defineConfig, type PluginOption} from 'vite';
 import react from '@vitejs/plugin-react';
 import path from "node:path";
 import {BigcommerceStencil} from "@mainlanddev/bigcommerce-stencil";
-import {HBXBigCommerce} from "../../../@mainlanddev/_vite/HBX/bigcommerce/src/plugin.ts";
+import {HBXBigCommerce} from "@mainlanddev/hbx-bigcommerce/plugin";
 
 
 export default defineConfig({
@@ -41,10 +41,11 @@ export default defineConfig({
                 buildWith: "vite",
             }
         }),
+        // The linked package resolves its own copy of vite (and rolldown), whose Plugin type tsc cannot compare with this one.
         HBXBigCommerce({
             hints: "./.hbx",
             templates: "./src/templates"
-        })
+        }) as unknown as PluginOption
     ],
     resolve: {
         // Mirrors webpack.common.js `resolve.alias`
