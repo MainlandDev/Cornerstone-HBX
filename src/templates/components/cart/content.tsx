@@ -1,3 +1,6 @@
+"use server";
+import CartItemGiftwrap from "./item-giftwrap.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
 import LoginForPricing from "../common/login-for-pricing.tsx";
@@ -12,7 +15,6 @@ import {
     $lang,
     $number,
     $Or,
-    $partial,
     $pointer,
     $raw,
     $string,
@@ -62,7 +64,7 @@ const assignBranch = (key: string, test: Parameters<typeof $All>[0]["values"]) =
     />
 );
 
-export default () => (
+export default (_props: PartialProps) => (
     <table className="cart" data-cart-quantity={$pointer("cart.quantity")}>
         <thead className="cart-header">
             <tr>
@@ -175,7 +177,7 @@ export default () => (
                                     </>
                                 )}
                             />
-                            {$partial("components/cart/item-giftwrap", item)}
+                            <CartItemGiftwrap $positionalHash={item} />
                             <$If
                                 test={item.event_date}
                                 $then={() => (

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$getImage, $If, $Each, $For, $Lang, $number, $pointer, $raw, $string, $this, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface GiftWrapping {
@@ -9,7 +11,7 @@ interface GiftWrapping {
     price: {formatted: string};
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <div className="modal-header">
             <h2 className="modal-header-title">

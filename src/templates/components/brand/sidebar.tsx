@@ -1,15 +1,18 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchIndex from "../faceted-search/index.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface ShopByBrand {
     url: string;
     name: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <nav>
         <$If
             test={$pointer("brand.faceted_search_enabled")}
-            $then={() => $partial("components/faceted-search/index", $pointer("brand"))}
+            $then={() => <FacetedSearchIndex $positionalHash={$pointer("brand")} />}
             $else={() => (
                 <$If
                     test={$pointer("shop_by_brand")}

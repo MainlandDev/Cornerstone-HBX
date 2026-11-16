@@ -1,6 +1,9 @@
-import {$$themeSettings, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchRangeForm from "../faceted-search/range-form.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const settings = $$themeSettings();
     return (
         <$If
@@ -11,7 +14,7 @@ export default () => {
                         <$Lang keyName={$string("category.shop_by_price")} />
                     </h2>
 
-                    {$partial("components/faceted-search/range-form", {shop_by_price: settings.shop_by_price_visibility})}
+                    <FacetedSearchRangeForm shop_by_price={settings.shop_by_price_visibility} />
 
                     <div className="reset-filters">
                         <a href={$pointer("category.url")} className="navList-action reset-btn">

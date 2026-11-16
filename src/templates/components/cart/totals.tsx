@@ -1,3 +1,10 @@
+"use server";
+import CartShippingEstimatorTrigger from "./shipping-estimator-trigger.tsx";
+import CartShippingEstimator from "./shipping-estimator.tsx";
+import CartCouponInput from "./coupon-input.tsx";
+import CartGiftCertificate from "./gift-certificate.tsx";
+import CartGiftCertificateInput from "./gift-certificate-input.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $All,
@@ -11,7 +18,6 @@ import {
     $Neither,
     $number,
     $Or,
-    $partial,
     $pointer,
     $raw,
     $string,
@@ -77,7 +83,7 @@ interface Cart {
 /** The trailing colon the original prints when `multi_coupon_ui_enabled` is off. */
 const colon = (multi: ReturnType<typeof $pointer<boolean>>) => <$Unless test={multi} $then={() => ":"} />;
 
-export default () => {
+export default (_props: PartialProps) => {
     const cart = $pointer<Cart>("cart");
     const multi = cart.multi_coupon_ui_enabled;
     return (
@@ -278,10 +284,10 @@ export default () => {
                                     <$Lang keyName={$string("cart.checkout.shipping")} />
                                     {colon(multi)}
                                 </strong>
-                                <$If test={multi} $then={() => $partial("components/cart/shipping-estimator-trigger")} />
+                                <$If test={multi} $then={() => <CartShippingEstimatorTrigger />} />
                             </div>
-                            <$Neither a={multi} b={cart.shipping_handling.shipping_cost} $then={() => $partial("components/cart/shipping-estimator-trigger")} />
-                            {$partial("components/cart/shipping-estimator", cart.shipping_handling, {multi_coupon_ui_enabled: multi})}
+                            <$Neither a={multi} b={cart.shipping_handling.shipping_cost} $then={() => <CartShippingEstimatorTrigger />} />
+                            <CartShippingEstimator $positionalHash={cart.shipping_handling} multi_coupon_ui_enabled={multi} />
                             <$All
                                 values={[cart.inventory_settings.show_default_shipping_expectation_prompt, $getVar($string("hasBackorderedItem"))]}
                                 $then={() => <p className="cart-shipping-expectation-message">{cart.inventory_settings.default_shipping_expectation_prompt}</p>}
@@ -359,7 +365,7 @@ export default () => {
                                             <$Lang keyName={$string("cart.coupon_code")} />:
                                         </strong>
                                     </div>
-                                    {$partial("components/cart/coupon-input")}
+                                    <CartCouponInput />
                                 </li>
                             )}
                         />
@@ -400,10 +406,10 @@ export default () => {
                                     <$Lang keyName={$string("cart.gift_certificates.gift_certificate")} />
                                     {colon(multi)}
                                 </strong>
-                                <$If test={multi} $then={() => $partial("components/cart/gift-certificate")} />
+                                <$If test={multi} $then={() => <CartGiftCertificate />} />
                             </div>
-                            <$Unless test={multi} $then={() => $partial("components/cart/gift-certificate")} />
-                            {$partial("components/cart/gift-certificate-input")}
+                            <$Unless test={multi} $then={() => <CartGiftCertificate />} />
+                            <CartGiftCertificateInput />
                         </li>
                         <$If
                             test={multi}

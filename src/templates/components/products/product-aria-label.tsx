@@ -1,4 +1,7 @@
-import {$$themeSettings, $And, $If, $Lang, $lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import ProductsPriceLabel from "./price-label.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $And, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
     formatted: string;
@@ -17,14 +20,11 @@ interface Price {
     non_sale_price_without_tax: Money;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     const settings = $$themeSettings();
     const price = $pointer<Price>("price");
     const label = (themeValue: "pdp-non-sale-price-label" | "pdp-sale-price-label", fallback: string) =>
-        $partial("components/products/price-label", {
-                label_value: settings[themeValue],
-                fallback: $lang($string(fallback)),
-            });
+        <ProductsPriceLabel label_value={settings[themeValue]} fallback={$lang($string(fallback))} />;
     return (
         <>
             {$raw("{{#and price.price_range (if theme_settings.price_ranges '==' true)}}")}

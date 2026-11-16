@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$add, $If, $lang, $number, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className={`heroCarousel-content${$raw("{{#and (if heading '==' false) (if text '==' false)}}")} heroCarousel-content--empty${$raw("{{/and}}")}`}>
         <$If
             test={$pointer("heading")}

@@ -1,5 +1,6 @@
+import PageContactUsForm from "../components/page/contact-us-form.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
-import {$$themeSettings, $Each, $If, $lang, $Page, $partial, $pointer, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $Each, $If, $lang, $Page, $pointer, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface SubPage {
     url: string;
@@ -50,7 +51,7 @@ export default () => {
                                     $else={() => (
                                         <>
                                             <p>{$unescaped($pointer("page.content"))}</p>
-                                            {$partial("components/page/contact-us-form")}
+                                            <PageContactUsForm />
                                         </>
                                     )}
                                 />

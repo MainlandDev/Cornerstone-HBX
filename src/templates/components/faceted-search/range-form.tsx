@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $lang, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <form id="facet-range-form" className="form" method="get" data-faceted-search-range={""} noValidate={true}>
         <input type="hidden" name="search_query" value={$pointer("search_query")} />
         <$If

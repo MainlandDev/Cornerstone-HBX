@@ -1,6 +1,9 @@
-import {$If, $Lang, $number, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import ProductsCarousel from "./carousel.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $number, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const relatedProducts = $pointer("product.related_products");
     const similarByViews = $pointer("product.similar_by_views");
     return (
@@ -41,11 +44,7 @@ export default () => {
                     test={relatedProducts}
                     $then={() => (
                         <div role="tabpanel" aria-hidden="false" className="tab-content has-jsContent is-active" id="tab-related">
-                            {$partial("components/products/carousel", {
-                                    products: $pointer("product.related_products"),
-                                    columns: $number(6),
-                                    list: $string("Related Products"),
-                                })}
+                            <ProductsCarousel products={$pointer("product.related_products")} columns={$number(6)} list={$string("Related Products")} />
                         </div>
                     )}
                 />
@@ -61,11 +60,7 @@ export default () => {
                                 attributes: `aria-hidden="${$If({test: relatedProducts, $then: () => "true", $else: () => "false"})}"`,
                             }}
                         >
-                            {$partial("components/products/carousel", {
-                                    products: $pointer("product.similar_by_views"),
-                                    columns: $number(6),
-                                    list: $string("Customers Also Viewed"),
-                                })}
+                            <ProductsCarousel products={$pointer("product.similar_by_views")} columns={$number(6)} list={$string("Customers Also Viewed")} />
                         </div>
                     )}
                 />

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import RequirenessMsg from "../../common/requireness-msg.tsx";
 import ResponsiveImg from "../../common/responsive-img.tsx";
 import {$Each, $If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
@@ -9,7 +11,7 @@ interface Value {
     image: {data: string};
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     // Read outside the loops, so inside them the path gains `../` (`{{../id}}`, `{{../required}}`).
     const id = $pointer("id");
     const required = $pointer("required");

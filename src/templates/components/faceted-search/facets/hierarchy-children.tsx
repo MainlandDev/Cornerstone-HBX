@@ -1,4 +1,7 @@
-import {$Each, $If, $partial, $pointer, $sanitize, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchFacetsHierarchyChildren from "./hierarchy-children.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $pointer, $sanitize, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface ChildFacet {
     id: string;
@@ -10,7 +13,7 @@ interface ChildFacet {
     children: ChildFacet[];
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <ul className="navList navList--inner">
         <$Each
             list={$this<ChildFacet[]>()}
@@ -31,7 +34,7 @@ export default () => (
                     </a>
                     <$If
                         test={item.children}
-                        $then={() => $partial("components/faceted-search/facets/hierarchy-children", item.children)}
+                        $then={() => <FacetedSearchFacetsHierarchyChildren $positionalHash={item.children} />}
                     />
                 </li>
             )}

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 /** The label is printed twice in the original (visible text and the hidden copy), so it is written once and called twice. */
@@ -15,7 +17,7 @@ const shippingLabel = () => (
     />
 );
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className={`${$Unless({test: $pointer("cart.multi_coupon_ui_enabled"), $then: () => "cart-total-value"})}`}>
         <button data-collapsible="add-shipping" className="shipping-estimate-show" aria-labelledby="estimator-add">
             <span className="shipping-estimate-show__btn-name">{shippingLabel()}</span>

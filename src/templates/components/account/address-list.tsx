@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../common/alert/alert-info.tsx";
 import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
@@ -16,7 +18,7 @@ interface Address {
     edit_url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Unless
             test={$pointer("customer.addresses")}

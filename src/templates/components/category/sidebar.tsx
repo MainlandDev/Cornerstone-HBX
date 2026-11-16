@@ -1,11 +1,15 @@
-import {$Each, $If, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchIndex from "../faceted-search/index.tsx";
+import CategoryShopByPrice from "./shop-by-price.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 interface Subcategory {
     url: string;
     name: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <nav>
         <$If
             test={$pointer("category.subcategories")}
@@ -30,8 +34,8 @@ export default () => (
 
         <$If
             test={$pointer("category.faceted_search_enabled")}
-            $then={() => $partial("components/faceted-search/index", $pointer("category"))}
-            $else={() => $partial("components/category/shop-by-price")}
+            $then={() => <FacetedSearchIndex $positionalHash={$pointer("category")} />}
+            $else={() => <CategoryShopByPrice />}
         />
     </nav>
 );

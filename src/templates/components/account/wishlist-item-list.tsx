@@ -1,19 +1,22 @@
+"use server";
+import ProductsCard from "../products/card.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import Paginator from "../common/paginator.tsx";
-import {$Each, $If, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface WishlistItem {
     product_id: string;
     remove_url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <ul className="productGrid">
             <$Each
                 list={$pointer<WishlistItem[]>("wishlist.items")}
                 $then={(item) => (
                     <li className="product">
-                        {$partial("components/products/card", {id: item.product_id, theme_settings: $pointer("../theme_settings")})}
+                        <ProductsCard id={item.product_id} theme_settings={$pointer("../theme_settings")} />
 
                         <$If
                             test={$pointer("../show_remove")}

@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const description = $pointer<string>("product.description");
     const warranty = $pointer<string>("product.warranty");
     return (

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../common/alert/alert-info.tsx";
 import {$pointer, $Each, $If, $Inject, $Lang, $lang, $string} from "@mainlanddev/hbx-bigcommerce";
 
@@ -7,7 +9,7 @@ interface InboxOrder {
     amount: {formatted: string};
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("customer.inbox.orders")}
         $then={() => (

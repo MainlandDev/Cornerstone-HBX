@@ -1,3 +1,5 @@
+import BrandSidebar from "../components/brand/sidebar.tsx";
+import BrandProductListing from "../components/brand/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
@@ -7,7 +9,6 @@ import {
     $Inject,
     $Lang,
     $Page,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -60,7 +61,7 @@ export default () => {
                             {region("brand_below_header")}
                             <div className="page">
                                 <aside className="page-sidebar" id="faceted-search-container">
-                                    {$partial("components/brand/sidebar")}
+                                    <BrandSidebar />
                                 </aside>
                                 <main className="page-content" id="product-listing-container">
                                     <$If
@@ -74,7 +75,7 @@ export default () => {
                                             <>
                                                 <$If
                                                     test={$pointer("brand.products")}
-                                                    $then={() => $partial("components/brand/product-listing")}
+                                                    $then={() => <BrandProductListing />}
                                                     $else={() => (
                                                         <p>
                                                             <$Lang keyName={$string("brands.no_products")} />

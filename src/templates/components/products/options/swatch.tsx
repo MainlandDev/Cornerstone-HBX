@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import RequirenessMsg from "../../common/requireness-msg.tsx";
 import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
@@ -9,7 +11,7 @@ interface Value {
     pattern: boolean;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     // Read outside the loop, so inside it the path gains `../` (`{{../id}}`, `{{../required}}`).
     const id = $pointer("id");
     const required = $pointer("required");

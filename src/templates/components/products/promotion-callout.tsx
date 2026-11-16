@@ -1,10 +1,12 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $lang, $number, $pointer, $string, $subtract} from "@mainlanddev/hbx-bigcommerce";
 
 interface Promotion {
     text: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("promotions.length")}
         $then={() => (

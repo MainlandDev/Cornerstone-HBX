@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
 import {$Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $Unless, $cdn} from "@mainlanddev/hbx-bigcommerce";
@@ -42,7 +44,7 @@ interface OrderItem {
     reorder_message: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <h3 className="account-heading">
             <$Lang keyName={$string("account.orders.details.order_contents")} />

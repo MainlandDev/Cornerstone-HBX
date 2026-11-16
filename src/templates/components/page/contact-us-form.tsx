@@ -1,7 +1,9 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertError from "../common/alert/alert-error.tsx";
 import {$If, $Inject, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <form data-contact-form={""} className="form" action={$pointer("urls.contact_us_submit")} method="post">
         <$Inject keyName={$string("contactEmail")} value={$lang($string("forms.validate.contact.email_address"))} />{" "}
         <$Inject keyName={$string("contactQuestion")} value={$lang($string("forms.validate.contact.question"))} />

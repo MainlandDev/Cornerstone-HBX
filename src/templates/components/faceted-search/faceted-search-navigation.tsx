@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$dashcase, $If, $Lang, $lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <h2 className="accordion-heading accordion-nav-clear-holder">
         <button
             type="button"

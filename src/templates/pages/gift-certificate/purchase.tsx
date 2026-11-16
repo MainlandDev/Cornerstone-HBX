@@ -1,6 +1,7 @@
+import GiftCertificateNavigation from "../../components/gift-certificate/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
-import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 // The original iterates `forms.gift_certificate.themes` and `amount_options`; the library types neither key (see PORT-NOTES.md, Task 8c).
 interface Theme {
@@ -22,7 +23,7 @@ export default () => (
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
-                    {$partial("components/gift-certificate/navigation", {gift_page: $string("purchase")})}
+                    <GiftCertificateNavigation gift_page={$string("purchase")} />
 
                     <main className="account account--fixed">
                         <$Each

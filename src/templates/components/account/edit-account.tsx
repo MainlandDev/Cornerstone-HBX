@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <form action={$pointer("urls.account.update_action")} data-edit-account-form={""} className="form" method="post">
         <$Inject keyName={$string("firstName")} value={$lang($string("forms.validate.account.edit.first_name"))} />{" "}
         <$Inject keyName={$string("lastName")} value={$lang($string("forms.validate.account.edit.last_name"))} />{" "}

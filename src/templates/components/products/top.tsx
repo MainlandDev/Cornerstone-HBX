@@ -1,6 +1,9 @@
-import {$add, $Each, $Lang, $number, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import ProductsCard from "./card.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $Lang, $number, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <h2 className="page-heading">
             <$Lang keyName={$string("products.top")} />
@@ -11,13 +14,7 @@ export default () => (
                 list={$pointer<unknown[]>("products")}
                 $then={() => (
                     <li className="product">
-                        {$partial("components/products/card", {
-                                settings: $pointer("../settings"),
-                                theme_settings: $pointer("../theme_settings"),
-                                customer: $pointer("../customer"),
-                                event: $string("list"),
-                                position: $add($pointer<number>("@index"), $number(1)),
-                            })}
+                        <ProductsCard settings={$pointer("../settings")} theme_settings={$pointer("../theme_settings")} customer={$pointer("../customer")} event={$string("list")} position={$add($pointer<number>("@index"), $number(1))} />
                     </li>
                 )}
             />

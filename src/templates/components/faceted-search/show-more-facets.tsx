@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface FacetOption {
@@ -12,7 +14,7 @@ interface Facet {
     items: FacetOption[];
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="modal-body">
         <h1 className="facet-quick-heading">
             <$If

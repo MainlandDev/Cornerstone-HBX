@@ -1,3 +1,9 @@
+import CartPageTitle from "../components/cart/page-title.tsx";
+import CartStatusMessages from "../components/cart/status-messages.tsx";
+import CartContent from "../components/cart/content.tsx";
+import CartCoupons from "../components/cart/coupons.tsx";
+import CartTotals from "../components/cart/totals.tsx";
+import CartAdditionalCheckoutButtons from "../components/cart/additional-checkout-buttons.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $frontmatter,
@@ -6,7 +12,6 @@ import {
     $Lang,
     $lang,
     $Page,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -31,26 +36,26 @@ export default () => (
                         <div className="page">
                             <div className="page-content" data-cart={""}>
                                 <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
-                                {$partial("components/cart/page-title")}
-                                <div data-cart-status={""}>{$partial("components/cart/status-messages")}</div>
+                                <CartPageTitle />
+                                <div data-cart-status={""}><CartStatusMessages /></div>
                                 <$If
                                     test={$pointer("cart.items.length")}
                                     $then={() => (
                                         <>
                                             <div className="loadingOverlay"></div>
                                             <div data-cart-content={""} className="cart-content-padding-right">
-                                                {$partial("components/cart/content")}
+                                                <CartContent />
                                             </div>
                                             <$If
                                                 test={$pointer("cart.multi_coupon_ui_enabled")}
                                                 $then={() => (
                                                     <div data-cart-coupons={""} className="cart-content-padding-right">
-                                                        {$partial("components/cart/coupons")}
+                                                        <CartCoupons />
                                                     </div>
                                                 )}
                                             />
                                             <div data-cart-totals={""} className="cart-content-padding-right">
-                                                {$partial("components/cart/totals")}
+                                                <CartTotals />
                                             </div>
                                             {region("cart_below_totals")}
                                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
@@ -96,7 +101,7 @@ export default () => (
                                                         data-cart-additional-checkout-buttons={""}
                                                         className="cart-additionalCheckoutButtons cart-content-padding-right"
                                                     >
-                                                        {$partial("components/cart/additional-checkout-buttons")}
+                                                        <CartAdditionalCheckoutButtons />
                                                     </div>
                                                 )}
                                             />

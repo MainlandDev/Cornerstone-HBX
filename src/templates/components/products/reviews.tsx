@@ -1,5 +1,8 @@
+"use server";
+import ProductsRatings from "./ratings.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import Paginator from "../common/paginator.tsx";
-import {$boolean, $Each, $If, $Lang, $lang, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $lang, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
     rating: number;
@@ -9,7 +12,7 @@ interface Review {
     text: string;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     return (
         <$If
             test={$pointer("reviews.total")}
@@ -40,7 +43,7 @@ export default () => {
                                         <article>
                                             <header>
                                                 <span className="productReview-rating rating--small">
-                                                    {$partial("components/products/ratings", {rating: review.rating})}
+                                                    <ProductsRatings rating={review.rating} />
                                                     <span className="productReview-ratingNumber">{review.rating}</span>
                                                 </span>
                                                 <h5 className="productReview-title">{$unescaped($sanitize(review.title))}</h5>

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$cdn, $If, $Each, $Lang, $lang, $pointer, $raw, $string, $this} from "@mainlanddev/hbx-bigcommerce";
 
 interface Quote {
@@ -10,7 +12,7 @@ interface Quote {
     cost_after_discount: {formatted: string};
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("errors")}
         $then={() => (

@@ -1,3 +1,7 @@
+import Carousel from "../components/carousel.tsx";
+import ProductsFeatured from "../components/products/featured.tsx";
+import ProductsTop from "../components/products/top.tsx";
+import ProductsNew from "../components/products/new.tsx";
 import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
     $$themeSettings,
@@ -7,7 +11,6 @@ import {
     $frontmatter,
     $If,
     $Page,
-    $partial,
     $region,
     $string,
     $unescaped,
@@ -42,10 +45,7 @@ export default () => {
                             a={carousel}
                             b={carousel.slides.length}
                             $then={() =>
-                                $partial("components/carousel", {
-                                        arrows: settings.homepage_show_carousel_arrows,
-                                        play_pause_button: settings.homepage_show_carousel_play_pause_button,
-                                    })
+                                <Carousel arrows={settings.homepage_show_carousel_arrows} play_pause_button={settings.homepage_show_carousel_play_pause_button} />
                             }
                         />
                         {region("home_below_carousel")}
@@ -61,30 +61,21 @@ export default () => {
                             <$If
                                 test={products.featured}
                                 $then={() =>
-                                    $partial("components/products/featured", {
-                                            products: products.featured,
-                                            columns: settings.homepage_featured_products_column_count,
-                                        })
+                                    <ProductsFeatured products={products.featured} columns={settings.homepage_featured_products_column_count} />
                                 }
                             />
                             {region("home_below_featured_products")}
                             <$If
                                 test={products.top_sellers}
                                 $then={() =>
-                                    $partial("components/products/top", {
-                                            products: products.top_sellers,
-                                            columns: settings.homepage_top_products_column_count,
-                                        })
+                                    <ProductsTop products={products.top_sellers} columns={settings.homepage_top_products_column_count} />
                                 }
                             />
                             {region("home_below_top_products")}
                             <$If
                                 test={products.new}
                                 $then={() =>
-                                    $partial("components/products/new", {
-                                            products: products.new,
-                                            columns: settings.homepage_new_products_column_count,
-                                        })
+                                    <ProductsNew products={products.new} columns={settings.homepage_new_products_column_count} />
                                 }
                             />
                             {region("home_below_new_products")}

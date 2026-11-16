@@ -1,10 +1,12 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ModalModalCloseBtn from "../../common/modal/modal-close-btn.tsx";
 import ResponsiveImg from "../../common/responsive-img.tsx";
 import FormsText from "../../common/forms/text.tsx";
 import FormsMultiline from "../../common/forms/multiline.tsx";
 import {$concat, $For, $If, $Inject, $Lang, $lang, $number, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div id="modal-review-form" className="modal" data-reveal={""}>
         <$Inject keyName={$string("reviewRating")} value={$lang($string("forms.validate.reviews.rating"))} />{" "}
         <$Inject keyName={$string("reviewSubject")} value={$lang($string("forms.validate.reviews.title"))} />{" "}

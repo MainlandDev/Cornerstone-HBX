@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../common/alert/alert-info.tsx";
 import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
@@ -30,7 +32,7 @@ interface PaymentMethod {
     stored_instruments: Instrument[];
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Unless
             test={$pointer("customer.payment_methods")}

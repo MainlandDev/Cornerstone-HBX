@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Message {
@@ -8,7 +10,7 @@ interface Message {
     message: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <h3 className="account-heading">
             <$Lang keyName={$string("account.messages.heading")} />

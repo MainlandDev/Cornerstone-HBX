@@ -1,6 +1,8 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
+import ProductsGrid from "../../components/products/grid.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertInfo from "../../components/common/alert/alert-info.tsx";
-import {$lang, $Lang, $Page, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$lang, $Lang, $Page, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -11,7 +13,7 @@ export default () => (
                     <h2 className="page-heading">
                         <$Lang keyName={$string("account.recent_items.heading")} />
                     </h2>
-                    {$partial("components/account/navigation", {account_page: $string("recent_items")})}
+                    <AccountNavigation account_page={$string("recent_items")} />
 
                     <$Unless
                         test={$pointer("customer.recently_viewed_products.items")}
@@ -19,10 +21,7 @@ export default () => (
                     />
 
                     <div>
-                        {$partial("components/products/grid", {
-                                products: $pointer("customer.recently_viewed_products.items"),
-                                show_compare: $pointer("customer.recently_viewed_products.show_compare"),
-                            })}
+                        <ProductsGrid products={$pointer("customer.recently_viewed_products.items")} show_compare={$pointer("customer.recently_viewed_products.show_compare")} />
                     </div>
                 </div>
             ),

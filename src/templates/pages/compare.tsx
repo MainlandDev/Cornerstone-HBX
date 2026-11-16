@@ -1,3 +1,6 @@
+import ProductsPriceRange from "../components/products/price-range.tsx";
+import ProductsPrice from "../components/products/price.tsx";
+import ProductsRatings from "../components/products/ratings.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import ResponsiveImg from "../components/common/responsive-img.tsx";
 import LoginForPricing from "../components/common/login-for-pricing.tsx";
@@ -9,7 +12,6 @@ import {
     $Inject,
     $Lang,
     $lang,
-    $partial,
     $pointer,
     $string,
     $unescaped,
@@ -96,8 +98,8 @@ export default () => (
                                                         {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
                                                         <$If
                                                             test={product.price_range}
-                                                            $then={() => $partial("components/products/price-range")}
-                                                            $else={() => $partial("components/products/price", {price: product.price})}
+                                                            $then={() => <ProductsPriceRange />}
+                                                            $else={() => <ProductsPrice price={product.price} />}
                                                         />
                                                         {$raw("{{else}}")}
                                                         <LoginForPricing />
@@ -200,7 +202,7 @@ export default () => (
                                                     <td className="compareTable-item">
                                                         <$If
                                                             test={product.rating}
-                                                            $then={() => $partial("components/products/ratings", {rating: product.rating})}
+                                                            $then={() => <ProductsRatings rating={product.rating} />}
                                                             $else={() => <$Lang keyName={$string("products.reviews.no_reviews")} />}
                                                         />
                                                     </td>

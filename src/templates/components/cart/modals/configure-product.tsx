@@ -1,7 +1,9 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../../common/alert/alert-info.tsx";
 import {$dynamicComponent, $Each, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <div className="modal-header">
             <h2 className="modal-header-title" data-product-variant={""} data-name={$pointer("product_name")}>

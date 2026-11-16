@@ -1,13 +1,16 @@
-import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $partial, $pluck, $pointer, $string, $toLowerCase, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchSelectedFacets from "./selected-facets.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $pluck, $pointer, $string, $toLowerCase, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
 
 interface Facet {
     title: string;
     visible: boolean;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div id="facetedSearch" className="facetedSearch sidebarBlock" role="region" aria-label={$lang($string("search.faceted.label"))}>
-        {$partial("components/faceted-search/selected-facets", $pointer("selected"))}
+        <FacetedSearchSelectedFacets $positionalHash={$pointer("selected")} />
 
         <a href="#facetedSearch-navList" role="button" className="facetedSearch-toggle toggleLink" data-collapsible={""}>
             <span className="facetedSearch-toggle-text">

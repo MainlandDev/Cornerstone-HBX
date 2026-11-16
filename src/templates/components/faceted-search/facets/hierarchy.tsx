@@ -1,4 +1,8 @@
-import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchFacetedSearchNavigation from "../faceted-search-navigation.tsx";
+import FacetedSearchFacetsHierarchyChildren from "./hierarchy-children.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$dashcase, $Each, $If, $Lang, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Facet {
     id: string;
@@ -10,12 +14,12 @@ interface Facet {
     children: Facet[];
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("items")}
         $then={() => (
             <div className="accordion-block">
-                {$partial("components/faceted-search/faceted-search-navigation")}
+                <FacetedSearchFacetedSearchNavigation />
 
                 <div
                     id={`facetedSearch-content--${$dashcase($pointer("facet"))}`}
@@ -46,7 +50,7 @@ export default () => (
                                     </a>
                                     <$If
                                         test={item.children}
-                                        $then={() => $partial("components/faceted-search/facets/hierarchy-children", item.children)}
+                                        $then={() => <FacetedSearchFacetsHierarchyChildren $positionalHash={item.children} />}
                                     />
                                 </li>
                             )}

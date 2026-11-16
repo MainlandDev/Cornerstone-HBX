@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Each, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Option {
@@ -6,7 +8,7 @@ interface Option {
     selected: boolean;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Inject keyName={$string("shippingCountryErrorMessage")} value={$lang($string("cart.shipping_estimator.empty_country_error"))} />{" "}
         <$Inject keyName={$string("shippingProvinceErrorMessage")} value={$lang($string("cart.shipping_estimator.empty_province_error"))} />

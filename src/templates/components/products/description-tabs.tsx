@@ -1,6 +1,10 @@
-import {$$themeSettings, $All, $dashcase, $If, $Lang, $lowercase, $partial, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import ProductsCustomFields from "./custom-fields.tsx";
+import ProductsReviews from "./reviews.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $All, $dashcase, $If, $Lang, $lowercase, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     const product = $pointer<{description: string; warranty: string; reviews: {total: number}}>("product");
     const customFieldsTab = $pointer<string>("theme_settings.pdp-custom-fields-tab-label");
@@ -71,7 +75,7 @@ export default () => {
                     values={[$pointer("product.custom_fields"), theme.show_custom_fields_tabs]}
                     $then={() => (
                         <div className="tab-content" id={`tab-${customFieldsTabId}`}>
-                            <dl className="productView-info">{$partial("components/products/custom-fields")}</dl>
+                            <dl className="productView-info"><ProductsCustomFields /></dl>
                         </div>
                     )}
                 />
@@ -79,11 +83,7 @@ export default () => {
                     values={[$pointer("settings.show_product_reviews"), theme.show_product_reviews]}
                     $then={() => (
                         <div className="tab-content" id="tab-reviews">
-                            {$partial("components/products/reviews", {
-                                    reviews: $pointer("product.reviews"),
-                                    product: $pointer("product"),
-                                    urls: $pointer("urls"),
-                                })}
+                            <ProductsReviews reviews={$pointer("product.reviews")} product={$pointer("product")} urls={$pointer("urls")} />
                         </div>
                     )}
                 />

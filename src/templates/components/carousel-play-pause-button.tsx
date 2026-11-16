@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Inject, $lang, $Lang, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Inject keyName={$string("carouselPlayPauseButtonPlay")} value={$lang($string("carousel.play_pause_button_play"))} />{" "}
         <$Inject keyName={$string("carouselPlayPauseButtonPause")} value={$lang($string("carousel.play_pause_button_pause"))} />{" "}

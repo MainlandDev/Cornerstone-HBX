@@ -1,10 +1,10 @@
+import PageRssFeed from "../components/page/rss_feed.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $$themeSettings,
     $Each,
     $If,
     $Page,
-    $partial,
     $pointer,
     $Replace,
     $region,
@@ -67,7 +67,7 @@ export default () => {
                                 <$Replace
                                     needle={$string("%%Syndicate%%")}
                                     haystack={$pointer<string>("page.content")}
-                                    $then={() => $partial("components/page/rss_feed")}
+                                    $then={() => <PageRssFeed />}
                                     $else={() => (
                                         <p>{$unescaped($pointer("page.content"))}</p>
                                     )}

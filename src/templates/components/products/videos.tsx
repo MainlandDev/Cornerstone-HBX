@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$cdn, $Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Video {
@@ -6,7 +8,7 @@ interface Video {
     description_short: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <section className="toggle videoGallery" data-video-gallery={""}>
         <h4 className="toggle-title">
             <$Lang keyName={$string("products.videos.header")} />

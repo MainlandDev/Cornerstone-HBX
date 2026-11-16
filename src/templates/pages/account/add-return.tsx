@@ -1,5 +1,6 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
-import {$Each, $For, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $sanitize, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $For, $If, $Lang, $lang, $number, $Page, $pointer, $sanitize, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // The library's context types have no `forms.return` key yet; these shapes type the pointers used here.
 interface ReturnOption {
@@ -24,7 +25,7 @@ export default () => (
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.returns.new_return")} />
                     </h1>
-                    {$partial("components/account/navigation", {account_page: $string("returns")})}
+                    <AccountNavigation account_page={$string("returns")} />
 
                     <main className="account account--fixed account--addReturn">
                         <div className="account-body">

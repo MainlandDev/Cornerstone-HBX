@@ -1,4 +1,7 @@
-import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchFacetedSearchNavigation from "../faceted-search-navigation.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$dashcase, $Each, $If, $Lang, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface FacetOption {
     id: string;
@@ -8,12 +11,12 @@ interface FacetOption {
     selected: boolean;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("items")}
         $then={() => (
             <div className="accordion-block">
-                {$partial("components/faceted-search/faceted-search-navigation")}
+                <FacetedSearchFacetedSearchNavigation />
 
                 <div
                     id={`facetedSearch-content--${$dashcase($pointer("facet"))}`}

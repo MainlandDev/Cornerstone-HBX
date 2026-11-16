@@ -1,7 +1,10 @@
+"use server";
+import ProductsCard from "../products/card.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
-import {$boolean, $Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 interface AddedItem {
     name: string;
@@ -11,7 +14,7 @@ interface AddedItem {
     options: Array<{name: string}>;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <div className="modal-header">
             <h1 id="modal-header-title" className="modal-header-title">
@@ -124,11 +127,7 @@ export default () => (
                                 list={$pointer<unknown[]>("cart.suggested_products")}
                                 $then={() => (
                                     <li className="product">
-                                        {$partial("components/products/card", {
-                                                settings: $pointer("../settings"),
-                                                hide_product_quick_view: $boolean(true),
-                                                theme_settings: $pointer("../theme_settings"),
-                                            })}
+                                        <ProductsCard settings={$pointer("../settings")} hide_product_quick_view={$boolean(true)} theme_settings={$pointer("../theme_settings")} />
                                     </li>
                                 )}
                             />

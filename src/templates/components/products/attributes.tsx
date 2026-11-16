@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 interface Attribute {
@@ -5,7 +7,7 @@ interface Attribute {
     value: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$Each
         list={$pointer<Attribute[]>("product.attributes")}
         $then={(attribute) => (

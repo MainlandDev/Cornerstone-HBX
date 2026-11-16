@@ -1,7 +1,9 @@
+import AccountNavigation from "../../../components/account/navigation.tsx";
+import AccountOrdersList from "../../../components/account/orders-list.tsx";
 import Breadcrumbs from "../../../components/common/breadcrumbs.tsx";
 import SmallPaginator from "../../../components/common/small-paginator.tsx";
 import AlertAlertInfo from "../../../components/common/alert/alert-info.tsx";
-import {$frontmatter, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$frontmatter, $If, $Lang, $lang, $number, $Page, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({customer: {orders: {limit: 10}}});
 
@@ -14,7 +16,7 @@ export default () => (
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.orders.heading")} />
                     </h1>
-                    {$partial("components/account/navigation", {account_page: $string("orders")})}
+                    <AccountNavigation account_page={$string("orders")} />
 
                     <main className="account account--fixed">
                         <div className="account-head">
@@ -39,7 +41,7 @@ export default () => (
                                     test={$pointer("customer.orders.length")}
                                     $then={() => (
                                         <>
-                                            {$partial("components/account/orders-list", {orders: $pointer("customer.orders")})}
+                                            <AccountOrdersList orders={$pointer("customer.orders")} />
                                             <SmallPaginator $positionalHash={$pointer("pagination.orders")} />
                                         </>
                                     )}

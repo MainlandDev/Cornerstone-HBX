@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $string, $sanitize, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface SelectedFacet {
@@ -5,7 +7,7 @@ interface SelectedFacet {
     title: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="facetedSearch-refineFilters sidebarBlock" role="region" aria-label={$lang($string("search.faceted.selected.facet-label"))}>
         <h2 className="sidebarBlock-heading">
             <$Lang keyName={$string("search.faceted.selected.title")} />

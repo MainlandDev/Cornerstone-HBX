@@ -1,6 +1,10 @@
-import {$add, $Each, $If, $number, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import ProductsCard from "./card.tsx";
+import CarouselContentAnnouncement from "../carousel-content-announcement.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $number, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <section
         className="productCarousel"
         data-list-name={$pointer("list")}
@@ -12,13 +16,7 @@ export default () => (
             list={$pointer<unknown[]>("products")}
             $then={() => (
                 <div data-product-slide={""} className="productCarousel-slide">
-                    {$partial("components/products/card", {
-                            settings: $pointer("../settings"),
-                            theme_settings: $pointer("../theme_settings"),
-                            customer: $pointer("../customer"),
-                            event: $string("list"),
-                            position: $add($pointer<number>("@index"), $number(1)),
-                        })}
+                    <ProductsCard settings={$pointer("../settings")} theme_settings={$pointer("../theme_settings")} customer={$pointer("../customer")} event={$string("list")} position={$add($pointer<number>("@index"), $number(1))} />
                 </div>
             )}
         />
@@ -26,7 +24,7 @@ export default () => (
             test={$pointer("products.length")}
             operator={$string(">")}
             rvalue={$number(1)}
-            $then={() => $partial("components/carousel-content-announcement")}
+            $then={() => <CarouselContentAnnouncement />}
         />
     </section>
 );

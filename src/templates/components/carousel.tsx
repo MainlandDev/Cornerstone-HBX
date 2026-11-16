@@ -1,5 +1,10 @@
+"use server";
+import CarouselContent from "./carousel-content.tsx";
+import CarouselContentAnnouncement from "./carousel-content-announcement.tsx";
+import CarouselPlayPauseButton from "./carousel-play-pause-button.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "./common/responsive-img.tsx";
-import {$add, $Each, $If, $Or, $lang, $number, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $Or, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Slide {
     url: string;
@@ -10,7 +15,7 @@ interface Slide {
     stencil_image: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <section
         className="heroCarousel"
         dangerouslyInlineAttributes={{
@@ -52,7 +57,7 @@ export default () => (
                         {$raw("{{#if button_text}}</a>{{else}}</div>{{/if}}")}
                         <$Or
                             values={[slide.heading, slide.text, slide.button_text]}
-                            $then={() => $partial("components/carousel-content")}
+                            $then={() => <CarouselContent />}
                         />
                     </div>
                     {$raw("{{#if button_text}}</div>{{else}}</a>{{/if}}")}
@@ -65,8 +70,8 @@ export default () => (
             rvalue={$number(1)}
             $then={() => (
                 <>
-                    {$partial("components/carousel-content-announcement")}
-                    <$If test={$pointer("play_pause_button")} $then={() => $partial("components/carousel-play-pause-button")} />
+                    <CarouselContentAnnouncement />
+                    <$If test={$pointer("play_pause_button")} $then={() => <CarouselPlayPauseButton />} />
                 </>
             )}
         />

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$For, $If, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 const star = () => (
@@ -6,7 +8,7 @@ const star = () => (
     </svg>
 );
 
-export default () => (
+export default (_props: PartialProps) => (
     <span
         role="img"
         dangerouslyInlineAttributes={{

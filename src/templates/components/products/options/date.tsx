@@ -1,7 +1,9 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import RequirenessMsg from "../../common/requireness-msg.tsx";
 import {$concat, $For, $If, $Lang, $pointer, $raw, $string, $number} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const earliestYear = $pointer<number>("earliest_year");
     const latestYear = $pointer<number>("latest_year");
     return (

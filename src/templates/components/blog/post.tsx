@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import Share from "../common/share.tsx";
 import {$$themeSettings, $Each, $If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
@@ -7,7 +9,7 @@ interface Tag {
     name: string;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     const settings = $$themeSettings();
     return (
         <article className="blog">

@@ -1,6 +1,8 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
+import AccountWishlistItemList from "../../components/account/wishlist-item-list.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertInfo from "../../components/common/alert/alert-info.tsx";
-import {$If, $Lang, $lang, $number, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -16,7 +18,7 @@ export default () => (
                     </h2>
                     <$If
                         test={$pointer("wishlist.is_editable")}
-                        $then={() => $partial("components/account/navigation", {account_page: $string("wishlists")})}
+                        $then={() => <AccountNavigation account_page={$string("wishlists")} />}
                     />
 
                     <$If
@@ -46,7 +48,7 @@ export default () => (
 
                     <$If
                         test={$pointer("wishlist.items")}
-                        $then={() => $partial("components/account/wishlist-item-list", {show_remove: $pointer("wishlist.is_editable")})}
+                        $then={() => <AccountWishlistItemList show_remove={$pointer("wishlist.is_editable")} />}
                         $else={() => <AlertAlertInfo $positionalHash={$lang($string("account.wishlists.empty_wishlist"))} />}
                     />
                 </div>

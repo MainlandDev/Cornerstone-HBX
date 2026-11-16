@@ -1,7 +1,10 @@
+"use server";
+import ProductsCard from "../products/card.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
-import {$add, $boolean, $Each, $If, $lang, $number, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $boolean, $Each, $If, $lang, $number, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("product_results.products")}
         $then={() => (
@@ -12,15 +15,7 @@ export default () => (
                         list={$pointer<unknown[]>("product_results.products")}
                         $then={() => (
                             <li className="product">
-                                {$partial("components/products/card", {
-                                        settings: $pointer("../settings"),
-                                        alternate: $boolean(true),
-                                        show_compare: $pointer("../show_compare"),
-                                        theme_settings: $pointer("../theme_settings"),
-                                        customer: $pointer("../customer"),
-                                        event: $string("list"),
-                                        position: $add($pointer<number>("@index"), $number(1)),
-                                    })}
+                                <ProductsCard settings={$pointer("../settings")} alternate={$boolean(true)} show_compare={$pointer("../show_compare")} theme_settings={$pointer("../theme_settings")} customer={$pointer("../customer")} event={$string("list")} position={$add($pointer<number>("@index"), $number(1))} />
                             </li>
                         )}
                     />

@@ -1,7 +1,12 @@
+"use server";
+import ProductsFilter from "../products/filter.tsx";
+import ProductsGrid from "../products/grid.tsx";
+import ProductsList from "../products/list.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import Paginator from "../common/paginator.tsx";
-import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Inject keyName={$string("noCompareMessage")} value={$lang($string("compare.no_compare"))} />
 
@@ -9,7 +14,7 @@ export default () => (
             test={$pointer("category.products")}
             $then={() => (
                 <>
-                    {$partial("components/products/filter", {sort: $pointer("pagination.category.sort")})}
+                    <ProductsFilter sort={$pointer("pagination.category.sort")} />
 
                     <div data-list-name={`Category: ${$pointer("category.name")}`} role="region" aria-label={$lang($string("category.product_label"))}>
                         <$If
@@ -18,22 +23,12 @@ export default () => (
                             rvalue={$string("grid")}
                             $then={() => (
                                 <>
-                                    {$partial("components/products/grid", {
-                                            products: $pointer("category.products"),
-                                            show_compare: $pointer("category.show_compare"),
-                                            theme_settings: $pointer("theme_settings"),
-                                            event: $string("list"),
-                                        })}
+                                    <ProductsGrid products={$pointer("category.products")} show_compare={$pointer("category.show_compare")} theme_settings={$pointer("theme_settings")} event={$string("list")} />
                                 </>
                             )}
                             $else={() => (
                                 <>
-                                    {$partial("components/products/list", {
-                                            products: $pointer("category.products"),
-                                            show_compare: $pointer("category.show_compare"),
-                                            theme_settings: $pointer("theme_settings"),
-                                            event: $string("list"),
-                                        })}
+                                    <ProductsList products={$pointer("category.products")} show_compare={$pointer("category.show_compare")} theme_settings={$pointer("theme_settings")} event={$string("list")} />
                                 </>
                             )}
                         />

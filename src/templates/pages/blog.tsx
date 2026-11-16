@@ -1,3 +1,4 @@
+import BlogPost from "../components/blog/post.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import Paginator from "../components/common/paginator.tsx";
 import {
@@ -6,7 +7,6 @@ import {
     $frontmatter,
     $If,
     $Page,
-    $partial,
     $pointer,
     $raw,
     $this,
@@ -47,10 +47,7 @@ export default () => {
                             <$Each
                                 list={$pointer<unknown[]>("blog.posts")}
                                 $then={() =>
-                                    $partial("components/blog/post", {
-                                            post: $this(),
-                                            theme_settings: $pointer("../theme_settings"),
-                                        })
+                                    <BlogPost post={$this()} theme_settings={$pointer("../theme_settings")} />
                                 }
                             />
                             <Paginator $positionalHash={$pointer("pagination.blog")} />

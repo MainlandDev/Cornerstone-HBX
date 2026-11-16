@@ -1,3 +1,8 @@
+import ProductsProductView from "../components/products/product-view.tsx";
+import ProductsVideos from "../components/products/videos.tsx";
+import ProductsReviews from "../components/products/reviews.tsx";
+import ProductsTabs from "../components/products/tabs.tsx";
+import ProductsSchema from "../components/products/schema.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
@@ -7,7 +12,6 @@ import {
     $frontmatter,
     $If,
     $Inject,
-    $partial,
     $pointer,
     $region,
     $string,
@@ -46,22 +50,18 @@ export default () => {
                                 $then={(item) => <AlertAlertInfo $positionalHash={item.message} />}
                             />
                             <div>
-                                {$partial("components/products/product-view")}
+                                <ProductsProductView />
                                 {region("product_below_content")}
                                 <$If
                                     test={$pointer("product.videos.list.length")}
-                                    $then={() => $partial("components/products/videos", $pointer("product.videos"))}
+                                    $then={() => <ProductsVideos $positionalHash={$pointer("product.videos")} />}
                                 />
                                 {$raw("{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}")}
-                                {$partial("components/products/reviews", {
-                                        reviews: $pointer("product.reviews"),
-                                        product: $pointer("product"),
-                                        urls: $pointer("urls"),
-                                    })}
+                                <ProductsReviews reviews={$pointer("product.reviews")} product={$pointer("product")} urls={$pointer("urls")} />
                                 {$raw("{{/all}}")}
-                                {$partial("components/products/tabs")}
+                                <ProductsTabs />
                             </div>
-                            {$partial("components/products/schema")}
+                            <ProductsSchema />
                         </>
                     ),
                 }}

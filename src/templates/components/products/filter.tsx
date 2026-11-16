@@ -1,7 +1,10 @@
-import {$partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import CategorySortBox from "../category/sort-box.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$pointer} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <form className="actionBar" method="get" data-sort-by="product">
-        {$partial("components/category/sort-box", {sort: $pointer("sort")})}
+        <CategorySortBox sort={$pointer("sort")} />
     </form>
 );

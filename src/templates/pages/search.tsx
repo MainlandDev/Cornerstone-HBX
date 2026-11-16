@@ -1,3 +1,10 @@
+import SearchHeading from "../components/search/heading.tsx";
+import SearchProductCount from "../components/search/product-count.tsx";
+import SearchContentCount from "../components/search/content-count.tsx";
+import SearchAdvancedSearch from "../components/search/advanced-search.tsx";
+import FacetedSearchIndex from "../components/faceted-search/index.tsx";
+import SearchContentListing from "../components/search/content-listing.tsx";
+import SearchProductListing from "../components/search/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $$themeSettings,
@@ -9,7 +16,6 @@ import {
     $lang,
     $number,
     $Page,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -75,7 +81,7 @@ export default () => {
                                 <$If
                                     test={$pointer("forms.search.query")}
                                     $then={() => (
-                                        <div id="search-results-heading">{$partial("components/search/heading")}</div>
+                                        <div id="search-results-heading"><SearchHeading /></div>
                                     )}
                                 />
                                 <nav className="navBar navBar--sub search-nav">
@@ -93,7 +99,7 @@ export default () => {
                                                 href={$pointer("forms.search.product_url")}
                                                 data-product-results-toggle={""}
                                             >
-                                                {" "}{$partial("components/search/product-count")}{" "}
+                                                {" "}<SearchProductCount />{" "}
                                             </a>
                                         </li>
                                         <li role="presentation" className="navBar-item">
@@ -106,7 +112,7 @@ export default () => {
                                                 href={$pointer("forms.search.content_url")}
                                                 data-content-results-toggle={""}
                                             >
-                                                {" "}{$partial("components/search/content-count")}{" "}
+                                                {" "}<SearchContentCount />{" "}
                                             </a>
                                         </li>
                                         <$Unless
@@ -134,7 +140,7 @@ export default () => {
                                 </nav>
                                 <$Unless
                                     test={$pointer("product_results.faceted_search_enabled")}
-                                    $then={() => $partial("components/search/advanced-search")}
+                                    $then={() => <SearchAdvancedSearch />}
                                 />
                             </section>
                             <section className="page">
@@ -145,7 +151,7 @@ export default () => {
                                             className={`page-sidebar${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("product"), $then: () => " u-hiddenVisually"})}`}
                                             id="faceted-search-container"
                                         >
-                                            {$partial("components/faceted-search/index", $pointer("product_results"))}
+                                            <FacetedSearchIndex $positionalHash={$pointer("product_results")} />
                                         </aside>
                                     )}
                                 />
@@ -271,7 +277,7 @@ export default () => {
                                             attributes: `${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("content"), $then: () => $raw('class="u-hidden"')})}`,
                                         }}
                                     >
-                                        {$partial("components/search/content-listing")}
+                                        <SearchContentListing />
                                     </div>
                                     <div
                                         role="tabpanel"
@@ -281,7 +287,7 @@ export default () => {
                                             attributes: `${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("product"), $then: () => $raw('class="u-hidden"')})}`,
                                         }}
                                     >
-                                        {$partial("components/search/product-listing")}
+                                        <SearchProductListing />
                                     </div>
                                     {region("search_below_content")}
                                 </main>

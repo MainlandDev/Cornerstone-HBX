@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../common/alert/alert-info.tsx";
 import {$Each, $If, $Inject, $Lang, $lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
@@ -12,7 +14,7 @@ interface Wishlist {
     edit_url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <table className="table table--line wishlists-table">
             <thead className="table-thead">

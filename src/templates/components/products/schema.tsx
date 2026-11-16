@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$$themeSettings, $And, $boolean, $cdn, $Each, $ellipsis, $getImage, $If, $json, $length, $number, $pointer, $raw, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
@@ -29,7 +31,7 @@ interface Product {
 }
 
 /* Quoted JSON text goes through `$raw`: a plain string body would have its `"` escaped. */
-export default () => {
+export default (_props: PartialProps) => {
     const settings = $$themeSettings();
     const product = $pointer<Product>("product");
     return (

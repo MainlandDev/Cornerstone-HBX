@@ -1,8 +1,11 @@
-import {$If, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchShowMoreFacets from "../faceted-search/show-more-facets.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("category")}
-        $then={() => $partial("components/faceted-search/show-more-facets", $pointer("category"))}
+        $then={() => <FacetedSearchShowMoreFacets $positionalHash={$pointer("category")} />}
     />
 );

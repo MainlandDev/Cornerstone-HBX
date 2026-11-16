@@ -1,6 +1,7 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
-import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $pointer, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/customer.ts:21 types `customer.edit_stored_instrument` as `string`, but the original reads
 // `token`, `type`, `last_4`, `expiry_month`, `expiry_year`, `email` and `is_default` from it (edit-payment-method.html: the
@@ -23,7 +24,7 @@ export default () => (
                         <$Lang keyName={$string("forms.payment_methods.edit.heading")} />
                     </h2>
 
-                    {$partial("components/account/navigation", {account_page: $string("payment_methods")})}
+                    <AccountNavigation account_page={$string("payment_methods")} />
 
                     <div className="account account--fixed">
                         <$If

@@ -1,7 +1,10 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
+import AccountMessagesList from "../../components/account/messages-list.tsx";
+import AccountMessagesForm from "../../components/account/messages-form.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import AlertAlertSuccess from "../../components/common/alert/alert-success.tsx";
-import {$If, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -12,7 +15,7 @@ export default () => (
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.messages.heading")} />
                     </h1>
-                    {$partial("components/account/navigation", {account_page: $string("messages")})}
+                    <AccountNavigation account_page={$string("messages")} />
 
                     <main className="account account--fixed">
                         <div className="account-body">
@@ -25,8 +28,8 @@ export default () => (
                                     test={$pointer("forms.inbox.success")}
                                     $then={() => <AlertAlertSuccess $positionalHash={$pointer("forms.inbox.success")} />}
                                 />
-                                {$partial("components/account/messages-list", {messages: $pointer("customer.inbox.messages")})}
-                                {$partial("components/account/messages-form")}
+                                <AccountMessagesList messages={$pointer("customer.inbox.messages")} />
+                                <AccountMessagesForm />
                             </section>
                         </div>
                     </main>

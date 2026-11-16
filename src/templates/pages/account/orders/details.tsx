@@ -1,6 +1,8 @@
+import AccountNavigation from "../../../components/account/navigation.tsx";
+import AccountOrderContents from "../../../components/account/order-contents.tsx";
 import Breadcrumbs from "../../../components/common/breadcrumbs.tsx";
 import AlertAlertInfo from "../../../components/common/alert/alert-info.tsx";
-import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $partial, $pointer, $raw, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $pointer, $raw, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` lacks these keys and types `shipments` as Record<string, unknown>.
 // Fields are read from details.html, not from the API docs.
@@ -103,7 +105,7 @@ export default () => {
                         <h2 className="page-heading title">
                             <$Lang keyName={$string("account.orders.details.heading")} number={order.id} />
                         </h2>
-                        {$partial("components/account/navigation", {account_page: $string("orders")})}
+                        <AccountNavigation account_page={$string("orders")} />
 
                         <div className="account">
                             <div className="account-body">
@@ -112,7 +114,7 @@ export default () => {
                                     $then={(status) => <AlertAlertInfo $positionalHash={status.message} />}
                                 />
                                 <div className="account-content account-content--fixedSmall">
-                                    {$partial("components/account/order-contents", {order: order})}
+                                    <AccountOrderContents order={order} />
 
                                     <dl className="account-orderTotal">
                                         <$Each

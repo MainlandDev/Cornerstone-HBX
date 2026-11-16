@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertError from "../common/alert/alert-error.tsx";
 import WalletButtons from "../common/wallet-buttons.tsx";
 import {$If, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
@@ -14,7 +16,7 @@ interface Product {
     pre_order: boolean;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     const product = $pointer<Product>("product");
     return (
         <div

@@ -1,6 +1,7 @@
+import GiftCertificateNavigation from "../../components/gift-certificate/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
-import {$If, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -11,7 +12,7 @@ export default () => (
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
-                    {$partial("components/gift-certificate/navigation", {gift_page: $string("balance")})}
+                    <GiftCertificateNavigation gift_page={$string("balance")} />
 
                     <main className="account account--fixed">
                         <h3>

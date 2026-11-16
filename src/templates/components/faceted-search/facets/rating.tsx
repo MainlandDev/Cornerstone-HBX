@@ -1,4 +1,8 @@
-import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FacetedSearchFacetedSearchNavigation from "../faceted-search-navigation.tsx";
+import ProductsRatings from "../../products/ratings.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$dashcase, $Each, $If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface RatingOption {
     url: string;
@@ -7,12 +11,12 @@ interface RatingOption {
     selected: boolean;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("items")}
         $then={() => (
             <div className="accordion-block">
-                {$partial("components/faceted-search/faceted-search-navigation")}
+                <FacetedSearchFacetedSearchNavigation />
 
                 <div
                     id={`facetedSearch-content--${$dashcase($pointer("facet"))}`}
@@ -30,7 +34,7 @@ export default () => (
                                         data-faceted-search-facet={""}
                                     >
                                         <span className="rating--small">
-                                            {$partial("components/products/ratings", {rating: item.title})}
+                                            <ProductsRatings rating={item.title} />
                                         </span>{" "}
                                         <$Lang keyName={$string("search.faceted.rating.and-up")} />{" "}
                                         <$If

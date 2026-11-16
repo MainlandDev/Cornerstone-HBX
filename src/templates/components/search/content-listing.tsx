@@ -1,5 +1,8 @@
+"use server";
+import SearchContentSortBox from "./content-sort-box.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import Paginator from "../common/paginator.tsx";
-import {$Each, $If, $partial, $pointer, $unescaped, $boolean} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $pointer, $unescaped, $boolean} from "@mainlanddev/hbx-bigcommerce";
 
 interface ContentResult {
     url: string;
@@ -8,12 +11,12 @@ interface ContentResult {
     content: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("content_results")}
         $then={() => (
             <>
-                {$partial("components/search/content-sort-box", {sort: $pointer("pagination.content_results.sort")})}
+                <SearchContentSortBox sort={$pointer("pagination.content_results.sort")} />
                 <ul>
                     <$Each
                         list={$pointer<ContentResult[]>("content_results")}

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import {$cdn, $Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
@@ -13,7 +15,7 @@ interface Order {
     image: unknown;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <h3 className="account-heading">
             <$Lang keyName={$string("account.orders.heading")} />

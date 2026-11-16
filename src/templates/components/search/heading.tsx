@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Lang, $lang, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <h1 className="page-heading">
         <$If
             test={$pointer("forms.search.search_error")}

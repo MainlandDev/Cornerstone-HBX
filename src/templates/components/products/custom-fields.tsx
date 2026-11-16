@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $pointer, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface CustomField {
@@ -5,7 +7,7 @@ interface CustomField {
     value: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$Each
         list={$pointer<CustomField[]>("product.custom_fields")}
         $then={(field) => (

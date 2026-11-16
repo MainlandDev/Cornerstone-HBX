@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Brand {
@@ -5,7 +7,7 @@ interface Brand {
     name: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="page">
         <div className="page-content page-content--centered">
             <form

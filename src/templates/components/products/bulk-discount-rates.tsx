@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
 import {$Each, $If, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
@@ -9,7 +11,7 @@ interface Rate {
     discount_inc_tax: {formatted: string};
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     const id = $pointer<number>("id");
     const product = $pointer<{url: string; price: {tax_label: string}}>("product");
     return (

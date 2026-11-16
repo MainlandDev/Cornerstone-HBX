@@ -1,8 +1,9 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import FormsText from "../../components/common/forms/text.tsx";
 import FormsSelect from "../../components/common/forms/select.tsx";
-import {$boolean, $cdn, $concat, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $cdn, $concat, $Each, $If, $Inject, $lang, $Lang, $Page, $pointer, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -44,7 +45,7 @@ export default () => (
                         <$Lang keyName={$string("forms.payment_methods.add.heading")} />
                     </h2>
 
-                    {$partial("components/account/navigation", {account_page: $string("payment_methods")})}
+                    <AccountNavigation account_page={$string("payment_methods")} />
 
                     <div className="account account--fixed">
                         <$If

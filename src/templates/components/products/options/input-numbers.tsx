@@ -1,7 +1,9 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import RequirenessMsg from "../../common/requireness-msg.tsx";
 import {$If, $pointer, $raw, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="form-field" data-product-attribute="input-number">
         <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_number_${$pointer("id")}`}>
             {$pointer("display_name")}:{" "}

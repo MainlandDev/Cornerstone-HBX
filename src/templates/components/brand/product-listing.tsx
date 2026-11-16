@@ -1,11 +1,16 @@
+"use server";
+import ProductsFilter from "../products/filter.tsx";
+import ProductsGrid from "../products/grid.tsx";
+import ProductsList from "../products/list.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import Paginator from "../common/paginator.tsx";
-import {$If, $Inject, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Inject keyName={$string("noCompareMessage")} value={$lang($string("compare.no_compare"))} />
 
-        {$partial("components/products/filter", {sort: $pointer("pagination.brand.sort")})}
+        <ProductsFilter sort={$pointer("pagination.brand.sort")} />
 
         <div data-list-name={`Brand: ${$pointer("brand.name")}`}>
             <$If
@@ -14,22 +19,12 @@ export default () => (
                 rvalue={$string("grid")}
                 $then={() => (
                     <>
-                        {$partial("components/products/grid", {
-                                products: $pointer("brand.products"),
-                                show_compare: $pointer("brand.show_compare"),
-                                theme_settings: $pointer("theme_settings"),
-                                event: $string("list"),
-                            })}
+                        <ProductsGrid products={$pointer("brand.products")} show_compare={$pointer("brand.show_compare")} theme_settings={$pointer("theme_settings")} event={$string("list")} />
                     </>
                 )}
                 $else={() => (
                     <>
-                        {$partial("components/products/list", {
-                                products: $pointer("brand.products"),
-                                show_compare: $pointer("brand.show_compare"),
-                                theme_settings: $pointer("theme_settings"),
-                                event: $string("list"),
-                            })}
+                        <ProductsList products={$pointer("brand.products")} show_compare={$pointer("brand.show_compare")} theme_settings={$pointer("theme_settings")} event={$string("list")} />
                     </>
                 )}
             />

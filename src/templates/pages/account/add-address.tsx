@@ -1,6 +1,7 @@
+import AccountNavigation from "../../components/account/navigation.tsx";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
-import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -21,7 +22,7 @@ export default () => (
                             </h2>
                         )}
                     />
-                    {$partial("components/account/navigation", {account_page: $string("addresses")})}
+                    <AccountNavigation account_page={$string("addresses")} />
 
                     <div className="account account--fixed">
                         <$If

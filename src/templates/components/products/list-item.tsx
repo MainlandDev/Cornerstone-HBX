@@ -1,14 +1,20 @@
+"use server";
+import ProductsProductBadge from "./product-badge.tsx";
+import ProductsRatings from "./ratings.tsx";
+import ProductsPrice from "./price.tsx";
+import ProductsPromotionCallout from "./promotion-callout.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $$themeSettings,
+    $partial,
     $Each,
     $If,
     $Lang,
     $lang,
     $number,
     $Or,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -20,7 +26,7 @@ import {
 /** `{{{region name="…"}}}` */
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
-export default () => {
+export default (_props: PartialProps) => {
     const settings = $$themeSettings();
     const id = $pointer<number>("id");
     const url = $pointer<string>("url");
@@ -63,8 +69,8 @@ export default () => {
                                 test={$pointer("theme_settings.pdp_sold_out_label")}
                                 operator={$string("===")}
                                 rvalue={$string("")}
-                                $then={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))})}
-                                $else={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label})}
+                                $then={() => <ProductsProductBadge badge-type={$string("sold-out")} badge_view={settings.product_sold_out_badges} badge_label={$lang($string("page_builder.pdp_sold_out_label"))} />}
+                                $else={() => <ProductsProductBadge badge-type={$string("sold-out")} badge_view={settings.product_sold_out_badges} badge_label={settings.pdp_sold_out_label} />}
                             />
                         )}
                         $else={() => (
@@ -75,8 +81,8 @@ export default () => {
                                         test={$pointer("theme_settings.pdp_sale_badge_label")}
                                         operator={$string("===")}
                                         rvalue={$string("")}
-                                        $then={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))})}
-                                        $else={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label})}
+                                        $then={() => <ProductsProductBadge badge-type={$string("sale")} badge_view={settings.product_sale_badges} badge_label={$lang($string("page_builder.pdp_sale_badge_label"))} />}
+                                        $else={() => <ProductsProductBadge badge-type={$string("sale")} badge_view={settings.product_sale_badges} badge_label={settings.pdp_sale_badge_label} />}
                                     />
                                 )}
                             />
@@ -107,7 +113,7 @@ export default () => {
                             test={$pointer("show_rating")}
                             $then={() => (
                                 <p className="listItem-rating">
-                                    {$partial("components/products/ratings", {rating_target: name, rating: $pointer("rating")})}
+                                    <ProductsRatings rating_target={name} rating={$pointer("rating")} />
                                 </p>
                             )}
                         />
@@ -129,7 +135,7 @@ export default () => {
                             $then={() => (
                                 <>
                                     <div className="listItem-price">
-                                        {$partial("components/products/price", {price: $pointer("price")})}
+                                        <ProductsPrice price={$pointer("price")} />
                                     </div>
                                     {region("product_item_below_price")}
                                 </>
@@ -141,10 +147,7 @@ export default () => {
                         <$If
                             test={settings.show_featured_promotions}
                             $then={() =>
-                                $partial("components/products/promotion-callout", {
-                                        promotions: $pointer("featured_promotions"),
-                                        mode: $string("compact"),
-                                    })
+                                <ProductsPromotionCallout promotions={$pointer("featured_promotions")} mode={$string("compact")} />
                             }
                         />
                         <$If

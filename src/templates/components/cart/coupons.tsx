@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Each, $lang, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Coupon {
@@ -6,7 +8,7 @@ interface Coupon {
     remove_url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="cart-coupons">
         <div className="cart-coupon-trigger">
             <a href="#" className="cart-coupon-link" data-coupon-trigger={""}>

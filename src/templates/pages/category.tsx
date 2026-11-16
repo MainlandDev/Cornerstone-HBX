@@ -1,3 +1,5 @@
+import CategorySidebar from "../components/category/sidebar.tsx";
+import CategoryProductListing from "../components/category/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
@@ -6,7 +8,6 @@ import {
     $If,
     $Inject,
     $Page,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -26,7 +27,7 @@ export default () => {
     const settings = $$themeSettings();
     const sidebar = () => (
         <aside className="page-sidebar" id="faceted-search-container">
-            {$partial("components/category/sidebar")}
+            <CategorySidebar />
         </aside>
     );
     return (
@@ -79,7 +80,7 @@ export default () => {
                                     ]}
                                 />
                                 <main className="page-content" id="product-listing-container">
-                                    {$partial("components/category/product-listing")}
+                                    <CategoryProductListing />
                                 </main>
                                 <div className="page-region">{region("category_below_content")}</div>
                             </div>

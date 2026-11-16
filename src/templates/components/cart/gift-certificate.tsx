@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Lang, $lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className={`${$Unless({test: $pointer("cart.multi_coupon_ui_enabled"), $then: () => "cart-total-value"})}`}>
         <button
             className="gift-certificate-add"

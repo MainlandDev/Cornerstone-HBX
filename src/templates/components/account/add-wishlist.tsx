@@ -1,7 +1,9 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertError from "../common/alert/alert-error.tsx";
 import {$If, $Inject, $lang, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         <$Inject keyName={$string("enterWishlistNameError")} value={$lang($string("account.wishlists.enter_wishlist_name_error"))} />
         <div className="wishlist-add">

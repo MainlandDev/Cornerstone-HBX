@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <nav className="navBar navBar--sub navBar--account">
         <ul className="navBar-section">
             <li className={`navBar-item ${$If({test: $pointer("account_page"), operator: $string("==="), rvalue: $string("orders"), $then: () => "is-active"})}`}>
