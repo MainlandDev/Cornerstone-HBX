@@ -10,6 +10,7 @@ import {
     $unescaped,
 } from "@mainlanddev/hbx-bigcommerce";
 
+// Key absent from lang/en.json (see LangContentIssues.md); `as string` skips the strict key check, output stays as in the original.
 export default () => (
     <$Page
         blocks={{
@@ -24,7 +25,7 @@ export default () => (
                         nonce={$pointer("nonce")}
                         dangerouslySetInnerHTML={{
                             __html: `
-    window.language = ${$unescaped($langJson($string("optimized_checkout")))};
+    window.language = ${$unescaped($langJson($string("optimized_checkout" as string)))};
 `,
                         }}
                     />

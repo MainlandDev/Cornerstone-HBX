@@ -1,6 +1,7 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import PageContactUsForm from "../components/page/contact-us-form.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
-import {$$themeSettings, $Each, $If, $lang, $Page, $pointer, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $lang, $Page, $pointer, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface SubPage {
     url: string;
@@ -8,7 +9,7 @@ interface SubPage {
 }
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <$Page
             blocks={{

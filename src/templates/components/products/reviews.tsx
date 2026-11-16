@@ -19,7 +19,7 @@ export default (_props: PartialProps) => {
             $then={() => (
                 <section className="toggle productReviews" id="product-reviews" data-product-reviews={""}>
                     <h4 className="toggle-title">
-                        <$Lang keyName={$string("products.reviews.header")} total={$pointer("reviews.total")} />
+                        <$Lang keyName={$string("products.reviews.header")} total={$pointer<number>("reviews.total")} />
                         <$If
                             test={$pointer("theme_settings.show_product_reviews")}
                             $then={() => (

@@ -28,7 +28,7 @@ export default (_props: PartialProps) => (
                                         rvalue={$string("rating")}
                                         $then={() => (
                                             <>
-                                                <$Lang keyName={$string("search.faceted.selected.rating-label")} rating={item.title} />
+                                                <$Lang keyName={$string("search.faceted.selected.rating-label")} rating={$pointer<number>("title")} />
                                             </>
                                         )}
                                         $else={() => (

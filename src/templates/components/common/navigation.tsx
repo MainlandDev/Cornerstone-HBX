@@ -1,14 +1,15 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import LanguageSelector from "./language-selector.tsx";
 import CurrencySelector from "./currency-selector.tsx";
 import ChannelSelector from "./channel-selector.tsx";
 import SocialLinks from "./social-links.tsx";
 import QuickSearch from "./quick-search.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Lang, $lang, $number, $pointer, $$themeSettings, $string, $unescaped, $And, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $pointer, $string, $unescaped, $And, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <nav className="navUser">
             <$And a={$pointer("language_selector")} b={$pointer("language_selector.languages.length")} rest={[$string(">"), $number(1)]} $then={() => (<><LanguageSelector /></>)} />

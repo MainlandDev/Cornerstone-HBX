@@ -1,4 +1,5 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import QuickSearch from "./quick-search.tsx";
 import NavigationList from "./navigation-list.tsx";
 import NavigationListAlternate from "./navigation-list-alternate.tsx";
@@ -6,7 +7,7 @@ import LanguageSelectorMobile from "./language-selector-mobile.tsx";
 import ChannelSelectorMobile from "./channel-selector-mobile.tsx";
 import SocialLinks from "./social-links.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $$themeSettings, $And} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $And} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -31,7 +32,7 @@ const accountLink = (url: string, key: string) => (
 );
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <nav className="navPages">
             <div className="navPages-quickSearch"><QuickSearch name={$string("nav-menu-quick-search")} /></div>

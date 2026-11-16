@@ -1,4 +1,5 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import ProductsProductBadge from "./product-badge.tsx";
 import ProductsRatings from "./ratings.tsx";
 import ProductsPrice from "./price.tsx";
@@ -8,7 +9,6 @@ import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
-    $$themeSettings,
     $partial,
     $And,
     $Each,
@@ -29,7 +29,7 @@ import {
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default (_props: PartialProps) => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     const id = $pointer<number>("id");
     const url = $pointer<string>("url");
     const name = $pointer<string>("name");

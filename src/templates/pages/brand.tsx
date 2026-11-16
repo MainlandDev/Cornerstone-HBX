@@ -1,9 +1,9 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import BrandSidebar from "../components/brand/sidebar.tsx";
 import BrandProductListing from "../components/brand/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
-    $$themeSettings,
     $frontmatter,
     $If,
     $Inject,
@@ -24,7 +24,7 @@ export const frontmatter = $frontmatter.brand({brand: {products: {limit: setting
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <>
             <$Inject keyName={$string("brandProductsPerPage")} value={settings.brandpage_products_per_page} />

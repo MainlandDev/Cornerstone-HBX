@@ -1,3 +1,4 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import SearchHeading from "../components/search/heading.tsx";
 import SearchProductCount from "../components/search/product-count.tsx";
 import SearchContentCount from "../components/search/content-count.tsx";
@@ -7,7 +8,6 @@ import SearchContentListing from "../components/search/content-listing.tsx";
 import SearchProductListing from "../components/search/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
-    $$themeSettings,
     $Each,
     $frontmatter,
     $If,
@@ -45,7 +45,7 @@ interface Brand {
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <>
             <$Inject keyName={$string("categoryTree")} value={$pointer("forms.search.category_options")} />

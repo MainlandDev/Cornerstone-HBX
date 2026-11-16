@@ -1,8 +1,8 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import BlogPost from "../components/blog/post.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import Paginator from "../components/common/paginator.tsx";
 import {
-    $$themeSettings,
     $Each,
     $frontmatter,
     $If,
@@ -16,7 +16,7 @@ import {
 export const frontmatter = $frontmatter.blog({blog: {posts: {limit: 5, pages: 3, summary: 200}}});
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <$Page
             blocks={{

@@ -1,9 +1,9 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$add, $If, $lang, $number, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $And, $boolean, $If, $ifExpression, $lang, $number, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => (
-    <div className={`heroCarousel-content${$raw("{{#and (if heading '==' false) (if text '==' false)}}")} heroCarousel-content--empty${$raw("{{/and}}")}`}>
+    <div className={`heroCarousel-content${$And({a: $ifExpression($pointer("heading"), $string("=="), $boolean(false)), b: $ifExpression($pointer("text"), $string("=="), $boolean(false)), $then: () => " heroCarousel-content--empty"})}`}>
         <$If
             test={$pointer("heading")}
             $then={() => <p className="heroCarousel-title">{$unescaped($pointer("heading"))}</p>}

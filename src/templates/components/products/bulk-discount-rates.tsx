@@ -5,7 +5,7 @@ import {$Each, $If, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/
 
 interface Rate {
     min: string;
-    max: string;
+    max: number;
     type: string;
     discount: {formatted: string};
     discount_inc_tax: {formatted: string};

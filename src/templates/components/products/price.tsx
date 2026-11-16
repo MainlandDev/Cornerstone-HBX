@@ -1,9 +1,9 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import ProductsPriceRange from "./price-range.tsx";
 import ProductsPriceLabel from "./price-label.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {
-    $$themeSettings,
     $If,
     $Lang,
     $lang,
@@ -30,7 +30,7 @@ interface Price {
 }
 
 export default (_props: PartialProps) => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     const price = $pointer<Price>("price");
     return (
         <>

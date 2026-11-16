@@ -1,16 +1,16 @@
+import type {PageContext, ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import Carousel from "../components/carousel.tsx";
 import ProductsFeatured from "../components/products/featured.tsx";
 import ProductsTop from "../components/products/top.tsx";
 import ProductsNew from "../components/products/new.tsx";
 import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
-    $$themeSettings,
     $And,
-    $context,
     $Each,
     $frontmatter,
     $If,
     $Page,
+    $pointer,
     $region,
     $string,
     $unescaped,
@@ -31,10 +31,15 @@ export const frontmatter = $frontmatter.home({
 /** `{{{region name="…"}}}` */
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
+/** The home page context; read through plain pointers (not `@root`), which is what the original template does. */
+type Home = PageContext<"home">;
+
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     // `shipping_messages` is retyped in src/hbx/context.overrides.d.ts: the generated type hides `message`.
-    const {carousel, products, shipping_messages: shippingMessages} = $context("home");
+    const carousel = $pointer<Home["carousel"]>("carousel");
+    const products = $pointer<Home["products"]>("products");
+    const shippingMessages = $pointer<Home["shipping_messages"]>("shipping_messages");
     return (
         <$Page
             blocks={{

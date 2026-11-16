@@ -4,7 +4,7 @@ import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
-import {$boolean, $Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $With, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
 
 interface AddedItem {
     name: string;
@@ -18,7 +18,7 @@ export default (_props: PartialProps) => (
     <>
         <div className="modal-header">
             <h1 id="modal-header-title" className="modal-header-title">
-                <$Lang keyName={$string("cart.added_to_cart.what_next")} num_products={$pointer("cart.quantity")} />
+                <$Lang keyName={$string("cart.added_to_cart.what_next")} num_products={$pointer<number>("cart.quantity")} />
             </h1>
         </div>
 
@@ -52,16 +52,12 @@ export default (_props: PartialProps) => (
                     <div className="previewCartCheckout-subtotal">
                         <$Lang keyName={$string("cart.added_to_cart.order_subtotal")} />{" "}
                         <strong className="previewCartCheckout-price">
-                            {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                            {$pointer("cart.sub_total.formatted")}
-                            {$raw("{{else}}")}
-                            <LoginForPricing />
-                            {$raw("{{/or}}")}
+                            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<>{$pointer("cart.sub_total.formatted")}</>)} $else={() => (<><LoginForPricing /></>)} />
                         </strong>
                     </div>
 
                     <p data-cart-quantity={$pointer("cart.quantity")}>
-                        <$Lang keyName={$string("cart.added_to_cart.your_cart_contains")} num_products={$pointer("cart.quantity")} />
+                        <$Lang keyName={$string("cart.added_to_cart.your_cart_contains")} num_products={$pointer<number>("cart.quantity")} />
                     </p>
 
                     <a href="#" className="button button--primary" role="button" data-reveal-close={""}>
@@ -90,11 +86,7 @@ export default (_props: PartialProps) => (
                                     <div className="productView-brand">{$pointer("brand.name")}</div>
 
                                     <div className="productView-price">
-                                        {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
-                                        {$pointer("quantity")} {$raw("&times;")} {$pointer("price.formatted")}
-                                        {$raw("{{else}}")}
-                                        <LoginForPricing />
-                                        {$raw("{{/or}}")}
+                                        <$Or values={[$pointer("../customer"), $unlessExpression($pointer("../settings.hide_price_from_guests"))]} $then={() => (<>{$pointer("quantity")} {$raw("&times;")} {$pointer("price.formatted")}</>)} $else={() => (<><LoginForPricing /></>)} />
                                     </div>
 
                                     <$Each

@@ -1,6 +1,7 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$$themeSettings, $Each, $pointer, $raw, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $pointer, $raw, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Breadcrumb {
     url: string;
@@ -8,7 +9,7 @@ interface Breadcrumb {
 }
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <>
             <nav aria-label="Breadcrumb">

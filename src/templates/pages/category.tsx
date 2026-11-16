@@ -1,9 +1,9 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import CategorySidebar from "../components/category/sidebar.tsx";
 import CategoryProductListing from "../components/category/product-listing.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
-    $$themeSettings,
     $frontmatter,
     $If,
     $Inject,
@@ -24,7 +24,7 @@ export const frontmatter = $frontmatter.category({category: {products: {limit: s
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     const sidebar = () => (
         <aside className="page-sidebar" id="faceted-search-container">
             <CategorySidebar />

@@ -1,8 +1,9 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import Share from "../common/share.tsx";
-import {$$themeSettings, $Each, $If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Tag {
     url: string;
@@ -10,7 +11,7 @@ interface Tag {
 }
 
 export default (_props: PartialProps) => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <article className="blog">
             <div className="blog-post-figure">
@@ -66,7 +67,7 @@ export default (_props: PartialProps) => {
                                     test={$pointer("post.show_read_more")}
                                     $then={() => (
                                         <>
-                                            {$raw("&hellip; ")}
+                                            {$raw(" &hellip; ")}
                                             <a
                                                 href={$pointer("url")}
                                                 aria-label={`${$pointer("post.title")} ${$lang($string("blog.read_more"))}`}

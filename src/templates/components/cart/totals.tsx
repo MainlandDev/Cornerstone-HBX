@@ -19,7 +19,6 @@ import {
     $number,
     $Or,
     $pointer,
-    $raw,
     $string,
     $Unless, $unlessExpression,
 } from "@mainlanddev/hbx-bigcommerce";
@@ -446,8 +445,7 @@ export default (_props: PartialProps) => {
                                 </strong>
                             </div>
                             <div className="cart-total-value cart-total-grandTotal">
-                                {$raw("{{#or customer (unless settings.hide_price_from_guests) }}")}
-                                <span className="cart-total-amount">{cart.grand_total.formatted}</span>
+                                <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><span className="cart-total-amount">{cart.grand_total.formatted}</span>
                                 <$If
                                     test={cart.total_discount.value}
                                     $then={() => (
@@ -456,10 +454,7 @@ export default (_props: PartialProps) => {
                                             <$Lang keyName={$string("cart.checkout.in_total")} />
                                         </span>
                                     )}
-                                />
-                                {$raw("{{else}}")}
-                                <LoginForPricing />
-                                {$raw("{{/or}}")}
+                                /></>)} $else={() => (<><LoginForPricing /></>)} />
                             </div>
                         </>
                     )}

@@ -1,10 +1,10 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import SocialLinks from "./social-links.tsx";
 import SubscriptionForm from "./subscription-form.tsx";
 import PaymentIcons from "./payment-icons.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {
-    $$themeSettings,
     $And,
     $Each,
     $If,
@@ -35,7 +35,7 @@ interface Link {
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <>
             <$If

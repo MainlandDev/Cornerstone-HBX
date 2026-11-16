@@ -1,15 +1,16 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import ProductsCustomFields from "./custom-fields.tsx";
 import ProductsReviews from "./reviews.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$$themeSettings, $All, $dashcase, $If, $Lang, $lowercase, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$All, $dashcase, $If, $Lang, $lowercase, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     const product = $pointer<{description: string; warranty: string; reviews: {total: number}}>("product");
     const customFieldsTab = $pointer<string>("theme_settings.pdp-custom-fields-tab-label");
     // `theme[...]` is typed string | number | boolean, which `$sanitize` refuses; the same setting as a string prints the same path.
-    const customFieldsTabId = $dashcase($lowercase($sanitize($pointer<string>("@root.theme_settings.pdp-custom-fields-tab-label"))));
+    const customFieldsTabId = $dashcase($lowercase($sanitize($pointer<string>("theme_settings.pdp-custom-fields-tab-label"))));
     return (
         <>
             <ul className="tabs" data-tab={""}>

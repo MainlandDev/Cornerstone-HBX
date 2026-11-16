@@ -4,7 +4,8 @@ import {$Inject, $Lang, $lang, $Page, $pointer, $string, $unescaped, $If} from "
 
 export default () => (
     <>
-        <$Inject keyName={$string("recaptchaTitle")} value={$lang($string("forgot_password.recaptcha_title"))} />
+        {/* Key absent from lang/en.json (see LangContentIssues.md); `as string` skips the strict key check, output stays as in the original. */}
+        <$Inject keyName={$string("recaptchaTitle")} value={$lang($string("forgot_password.recaptcha_title" as string))} />
         <$Page
             blocks={{
                 page: () => (

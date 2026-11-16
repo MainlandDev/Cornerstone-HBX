@@ -1,7 +1,7 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import RequirenessMsg from "../../common/requireness-msg.tsx";
-import {$If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$And, $If, $Lang, $lang, $pointer, $string, $unescaped, $unlessExpression} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => (
     <div className="form-field" data-product-attribute="input-file">
@@ -14,7 +14,7 @@ export default (_props: PartialProps) => (
             type="file"
             id={`attribute_file_${$pointer("id")}`}
             dangerouslyInlineAttributes={{
-                attributes: `name="attribute[${$pointer("id")}]" ${$raw("{{#and required (unless prefill)}}required{{/and}}")}`,
+                attributes: `name="attribute[${$pointer("id")}]" ${$And({a: $pointer("required"), b: $unlessExpression($pointer("prefill")), $then: () => "required"})}`,
             }}
         />
         <$If

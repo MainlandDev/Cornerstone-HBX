@@ -1,4 +1,5 @@
 "use server";
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import CarouselContentAnnouncement from "../carousel-content-announcement.tsx";
 import ProductsPrice from "./price.tsx";
 import ProductsPromotionCallout from "./promotion-callout.tsx";
@@ -18,7 +19,6 @@ import WishlistDropdown from "../common/wishlist-dropdown.tsx";
 import Share from "../common/share.tsx";
 import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
 import {
-    $$themeSettings,
     $All,
     $boolean,
     $cdn,
@@ -100,7 +100,7 @@ interface Settings {
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default (_props: PartialProps) => {
-    const theme = $$themeSettings();
+    const theme = $pointer<ThemeSettingsObject>("theme_settings");
     const product = $pointer<Product>("product");
     const settings = $pointer<Settings>("settings");
     const isAjax = $pointer<boolean>("is_ajax");

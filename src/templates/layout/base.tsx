@@ -1,9 +1,9 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import PolyfillScript from "../components/common/polyfill-script.tsx";
 import Header from "../components/common/header.tsx";
 import Body from "../components/common/body.tsx";
 import Footer from "../components/common/footer.tsx";
 import {
-    $$themeSettings,
     $cdn,
     $getFontsCollection,
     $jsContext,
@@ -21,7 +21,7 @@ import {
 } from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <>
             {$raw("<!DOCTYPE html>")}

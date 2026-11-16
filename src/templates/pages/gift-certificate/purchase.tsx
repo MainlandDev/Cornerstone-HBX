@@ -158,7 +158,7 @@ export default () => (
                                                 <input type="checkbox" className="form-checkbox" name="agree" id="agree" />{" "}
                                                 <label className="form-label" htmlFor="agree">
                                                     {$lang($string("forms.gift_certificate.purchase.agree"), {
-                                                        days: $pointer("forms.gift_certificate.expires_in_days"),
+                                                        days: $pointer<number>("forms.gift_certificate.expires_in_days"),
                                                     })}
                                                 </label>
                                             </div>
@@ -218,7 +218,8 @@ export default () => (
                             </div>
                             <div className="form-actions">
                                 <$Inject keyName={$string("previewError")} value={$lang($string("forms.gift_certificate.purchase.preview_error"))} />{" "}
-                                <$Inject keyName={$string("enterAmount")} value={$lang($string("forms.validate.gift.amount"))} />{" "}
+                                {/* Key absent from lang/en.json (see LangContentIssues.md); `as string` skips the strict key check, output stays as in the original. */}
+                                <$Inject keyName={$string("enterAmount")} value={$lang($string("forms.validate.gift.amount" as string))} />{" "}
                                 <$Inject keyName={$string("toName")} value={$lang($string("forms.validate.gift.to_name"))} />{" "}
                                 <$Inject keyName={$string("toEmail")} value={$lang($string("forms.validate.gift.to_email"))} />{" "}
                                 <$Inject keyName={$string("fromName")} value={$lang($string("forms.validate.gift.from_name"))} />{" "}

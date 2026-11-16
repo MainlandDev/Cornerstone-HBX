@@ -1,7 +1,7 @@
+import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import PageRssFeed from "../components/page/rss_feed.tsx";
 import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
-    $$themeSettings,
     $Each,
     $If,
     $Page,
@@ -28,7 +28,7 @@ interface FeedItem {
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
-    const settings = $$themeSettings();
+    const settings = $pointer<ThemeSettingsObject>("theme_settings");
     return (
         <$Page
             blocks={{
