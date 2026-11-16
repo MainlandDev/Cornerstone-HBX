@@ -14,7 +14,7 @@ export default (_props: PartialProps) => (
             id={`attribute_textarea_${$pointer("id")}`}
             value={$pointer("prefill")}
             dangerouslyInlineAttributes={{
-                attributes: `name="attribute[${$pointer("id")}]" ${$If({test: $pointer("required"), $then: () => "required"})} ${$If({test: $pointer("max_length"), $then: () => `${$raw("maxlength=")}${$pointer("max_length")}`})}`,
+                attributes: `name="attribute[${$pointer("id")}]" ${$If({test: $pointer("required"), $then: () => "required"})} ${$If({test: $pointer("max_length"), $then: () => `${$raw('maxlength="')}${$pointer("max_length")}${$raw('"')}`})}`,
             }}
         />
     </div>

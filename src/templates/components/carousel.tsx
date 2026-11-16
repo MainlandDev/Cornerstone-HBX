@@ -24,45 +24,57 @@ export default (_props: PartialProps) => (
     >
         <$Each
             list={$pointer<Slide[]>("carousel.slides")}
-            $then={(slide, loop) => (
-                <>
-                    {$raw('{{#if button_text}}<div data-hero-slide="{{@index}}">{{else}}')}
-                    {$raw('<a href="')}
-                    {slide.url}
-                    {$raw('" data-hero-slide="{{@index}}" aria-label="')}
+            $then={(slide, loop) => {
+                // A slide with a button is a <div> around a linked image; one without is an <a> around the image. Each branch holds a whole
+                // element, so the template is balanced HTML either way (an open tag in one branch and its close in a later `{{#if}}` is not).
+                const image = (
                     <$If
-                        test={$pointer("this.alt_text.length")}
-                        operator={$string("!=")}
-                        rvalue={$number(0)}
-                        $then={() => slide.alt_text}
-                        $else={() => $lang($string("carousel.slide_number"), {slide_number: $add(loop["@index"], $number(1))})}
+                        test={loop["@first"]}
+                        $then={() =>
+                            <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("disabled")} />
+                        }
+                        $else={() =>
+                            <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("lazyload")} />
+                        }
                     />
-                    {$raw('">{{/if}}')}
+                );
+                const body = (
                     <div
                         className={`heroCarousel-slide ${$raw("{{#if ../theme_settings.homepage_stretch_carousel_images}}stretch{{/if}}")} ${$raw("{{#if @first}}heroCarousel-slide--first{{/if}}")}`}
                     >
-                        {$raw("{{#if button_text}}")}
-                        {$raw('<a href="')}
-                        {slide.url}
-                        {$raw('" class="heroCarousel-image-wrapper">{{else}}<div class="heroCarousel-image-wrapper">{{/if}}')}
                         <$If
-                            test={loop["@first"]}
-                            $then={() =>
-                                <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("disabled")} />
-                            }
-                            $else={() =>
-                                <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("lazyload")} />
-                            }
+                            test={$pointer("button_text")}
+                            $then={() => <a href={slide.url} className="heroCarousel-image-wrapper">{image}</a>}
+                            $else={() => <div className="heroCarousel-image-wrapper">{image}</div>}
                         />
-                        {$raw("{{#if button_text}}</a>{{else}}</div>{{/if}}")}
                         <$Or
                             values={[slide.heading, slide.text, slide.button_text]}
                             $then={() => <CarouselContent />}
                         />
                     </div>
-                    {$raw("{{#if button_text}}</div>{{else}}</a>{{/if}}")}
-                </>
-            )}
+                );
+                return (
+                    <$If
+                        test={$pointer("button_text")}
+                        $then={() => <div data-hero-slide={loop["@index"]}>{body}</div>}
+                        $else={() => (
+                            <a
+                                href={slide.url}
+                                data-hero-slide={loop["@index"]}
+                                aria-label={$If({
+                                    test: $pointer("this.alt_text.length"),
+                                    operator: $string("!="),
+                                    rvalue: $number(0),
+                                    $then: () => slide.alt_text,
+                                    $else: () => $lang($string("carousel.slide_number"), {slide_number: $add(loop["@index"], $number(1))}),
+                                })}
+                            >
+                                {body}
+                            </a>
+                        )}
+                    />
+                );
+            }}
         />
         <$If
             test={$pointer("carousel.slides.length")}
