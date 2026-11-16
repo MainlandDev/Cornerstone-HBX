@@ -1,4 +1,4 @@
-import {$add, $Each, $number, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $number, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <section
@@ -24,8 +24,11 @@ export default () => (
                 </div>
             )}
         />
-        {$raw("{{#if products.length '>' 1}}")}
-        {place($partial("components/carousel-content-announcement"))}
-        {$raw("{{/if}}")}
+        <$If
+            test={$pointer("products.length")}
+            operator={$string(">")}
+            rvalue={$number(1)}
+            $then={() => place($partial("components/carousel-content-announcement"))}
+        />
     </section>
 );

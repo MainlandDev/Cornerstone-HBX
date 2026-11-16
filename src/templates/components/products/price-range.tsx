@@ -164,19 +164,24 @@ export default () => {
                 )}
             />
             {/* Never display the "saving price" element by default if there is a price range on the page to be shown */}
-            {$raw("{{#if page_type '===' 'product'}}")}
-            <div className="price-section price-section--saving price" dangerouslyInlineAttributes={{attributes: hidden}}>
-                <span className="price">
-                    <$Lang keyName={$string("products.you_save_opening_text")} />
-                </span>
-                <span data-product-price-saved={""} className="price price--saving">
-                    {price.saved.formatted}
-                </span>
-                <span className="price">
-                    <$Lang keyName={$string("products.you_save_closing_bracket")} />
-                </span>
-            </div>
-            {$raw("{{/if}}")}
+            <$If
+                test={$pointer("page_type")}
+                operator={$string("===")}
+                rvalue={$string("product")}
+                $then={() => (
+                    <div className="price-section price-section--saving price" dangerouslyInlineAttributes={{attributes: hidden}}>
+                        <span className="price">
+                            <$Lang keyName={$string("products.you_save_opening_text")} />
+                        </span>
+                        <span data-product-price-saved={""} className="price price--saving">
+                            {price.saved.formatted}
+                        </span>
+                        <span className="price">
+                            <$Lang keyName={$string("products.you_save_closing_bracket")} />
+                        </span>
+                    </div>
+                )}
+            />
         </>
     );
 };

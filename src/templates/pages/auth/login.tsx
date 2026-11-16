@@ -1,10 +1,9 @@
-import {$Inject, $Lang, $lang, $partial, $pointer, $StencilPartial, $string, $If, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $If, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <div className="login">
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <h1 className="page-heading">
@@ -84,8 +83,8 @@ export default () => (
                         />
                     </div>
                 </div>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

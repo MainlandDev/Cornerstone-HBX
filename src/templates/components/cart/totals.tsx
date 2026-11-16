@@ -193,7 +193,12 @@ export default () => {
                                                     </span>
                                                 </div>
                                                 <div className="cart-discount-item-value">
-                                                    {$raw("{{#if discount.value '===' 0}}")}-{$raw("{{/if}}")}
+                                                    <$If
+                                                        test={$pointer("discount.value")}
+                                                        operator={$string("===")}
+                                                        rvalue={$number(0)}
+                                                        $then={() => <>-</>}
+                                                    />
                                                     {coupon.discount.formatted}
                                                 </div>
                                             </li>

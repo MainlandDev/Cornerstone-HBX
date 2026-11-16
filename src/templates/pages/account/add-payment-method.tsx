@@ -1,10 +1,9 @@
-import {$boolean, $cdn, $concat, $Each, $If, $Inject, $lang, $Lang, $partial, $pointer, $string, $StencilPartial, $this, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $cdn, $concat, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $this, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     <$Inject keyName={$string("creditCardNumber")} value={$lang($string("forms.validate.payment_method.credit_card_number"))} />{" "}
                     <$Inject keyName={$string("expiration")} value={$lang($string("forms.validate.payment_method.expiration"))} />{" "}
@@ -267,8 +266,8 @@ export default () => (
                         />
                     </div>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

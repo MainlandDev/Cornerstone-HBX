@@ -48,16 +48,21 @@ export default () => (
                                 to={$number(5)}
                                 $then={(ctx) => (
                                     <>
-                                        {/* The operator `if` has no typed form (PORT-NOTES: library gaps); both branches are typed. */}
-                                        {$raw("{{#if ../product.reviews.selected_rating '===' $index}}")}
-                                        <option dangerouslyInlineAttributes={{attributes: `selected value="${ctx.$index}"`}}>
-                                            <$Lang keyName={$concat($string("products.reviews.rating."), ctx.$index)} />
-                                        </option>
-                                        {$raw("{{else}}")}
-                                        <option value={ctx.$index}>
-                                            <$Lang keyName={$concat($string("products.reviews.rating."), ctx.$index)} />
-                                        </option>
-                                        {$raw("{{/if}}")}
+                                        <$If
+                                            test={$pointer("../product.reviews.selected_rating")}
+                                            operator={$string("===")}
+                                            rvalue={$pointer("$index")}
+                                            $then={() => (
+                                                <option dangerouslyInlineAttributes={{attributes: `selected value="${ctx.$index}"`}}>
+                                                    <$Lang keyName={$concat($string("products.reviews.rating."), ctx.$index)} />
+                                                </option>
+                                            )}
+                                            $else={() => (
+                                                <option value={ctx.$index}>
+                                                    <$Lang keyName={$concat($string("products.reviews.rating."), ctx.$index)} />
+                                                </option>
+                                            )}
+                                        />
                                     </>
                                 )}
                             />

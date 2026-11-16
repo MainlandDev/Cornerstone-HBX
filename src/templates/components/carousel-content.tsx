@@ -15,7 +15,13 @@ export default () => (
             $then={() => (
                 <a
                     href={$pointer("url")}
-                    aria-label={`${$raw("{{#if this.alt_text.length '!=' 0}}")}${$pointer("alt_text")}${$raw("{{else}}")}${$lang($string("carousel.slide_number"), {slide_number: $add($pointer<number>("@index"), $number(1))})}${$raw("{{/if}}")}, ${$pointer("button_text")}`}
+                    aria-label={`${$If({
+                        test: $pointer("this.alt_text.length"),
+                        operator: $string("!="),
+                        rvalue: $number(0),
+                        $then: () => `${$pointer("alt_text")}`,
+                        $else: () => `${$lang($string("carousel.slide_number"), {slide_number: $add($pointer<number>("@index"), $number(1))})}`,
+                    })}, ${$pointer("button_text")}`}
                     className="heroCarousel-action button button--primary button--large"
                 >
                     {$unescaped($pointer("button_text"))}

@@ -1,4 +1,4 @@
-import {$cdn, $Each, $If, $Lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$cdn, $Each, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface Order {
     id: string;
@@ -25,19 +25,23 @@ export default () => (
                     <li className="account-listItem">
                         <div className="account-product">
                             <div className="account-product-figure">
-                                {$raw("{{#if items.0.type '===' 'giftcertificate'}}")}
-                                <img alt="GiftCertificate" title="GiftCertificate" src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))} />
-                                {$raw("{{else}}")}
-                                {place(
-                                    $partial("components/common/responsive-img", {
-                                        image: order.image,
-                                        class: $string("account-product-image"),
-                                        fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                        lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                        default_image: $pointer("../theme_settings.default_image_product"),
-                                    }),
-                                )}
-                                {$raw("{{/if}}")}
+                                <$If
+                                    test={$pointer("items.0.type")}
+                                    operator={$string("===")}
+                                    rvalue={$string("giftcertificate")}
+                                    $then={() => <img alt="GiftCertificate" title="GiftCertificate" src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))} />}
+                                    $else={() =>
+                                        place(
+                                            $partial("components/common/responsive-img", {
+                                                image: order.image,
+                                                class: $string("account-product-image"),
+                                                fallback_size: $pointer("../theme_settings.productthumb_size"),
+                                                lazyload: $pointer("../theme_settings.lazyload_mode"),
+                                                default_image: $pointer("../theme_settings.default_image_product"),
+                                            }),
+                                        )
+                                    }
+                                />
                             </div>
                             <div className="account-product-body">
                                 <div className="account-orderStatus">

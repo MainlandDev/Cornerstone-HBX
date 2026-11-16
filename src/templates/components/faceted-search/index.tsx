@@ -1,4 +1,4 @@
-import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $partial, $pluck, $pointer, $raw, $string, $toLowerCase, $unescaped, $dynamicComponent, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $partial, $pluck, $pointer, $string, $toLowerCase, $unescaped, $dynamicComponent, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface Facet {
     title: string;
@@ -11,15 +11,25 @@ export default () => (
 
         <a href="#facetedSearch-navList" role="button" className="facetedSearch-toggle toggleLink" data-collapsible={""}>
             <span className="facetedSearch-toggle-text">
-                {$raw("{{#if facets.length '>' 2}}")}
-                <$Lang keyName={$string("search.faceted.browse-by")} />{" "}
-                {$join($pluck($pointer<Facet[]>("facets"), $string("title")), $string(", "), {limit: $number(2)})}
-                {" & "}
-                {$toLowerCase($lang($string("search.faceted.more")))}
-                {$raw("{{else}}")}
-                <$Lang keyName={$string("search.faceted.browse-by")} />{" "}
-                {$join($pluck($pointer<Facet[]>("facets"), $string("title")), $string(", "), {lastSeparator: $string(" & ")})}
-                {$raw("{{/if}}")}
+                <$If
+                    test={$pointer("facets.length")}
+                    operator={$string(">")}
+                    rvalue={$number(2)}
+                    $then={() => (
+                        <>
+                            <$Lang keyName={$string("search.faceted.browse-by")} />{" "}
+                            {$join($pluck($pointer<Facet[]>("facets"), $string("title")), $string(", "), {limit: $number(2)})}
+                            {" & "}
+                            {$toLowerCase($lang($string("search.faceted.more")))}
+                        </>
+                    )}
+                    $else={() => (
+                        <>
+                            <$Lang keyName={$string("search.faceted.browse-by")} />{" "}
+                            {$join($pluck($pointer<Facet[]>("facets"), $string("title")), $string(", "), {lastSeparator: $string(" & ")})}
+                        </>
+                    )}
+                />
             </span>{" "}
 
             <span className="facetedSearch-toggle-indicator">

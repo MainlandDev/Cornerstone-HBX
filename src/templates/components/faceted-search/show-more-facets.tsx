@@ -1,4 +1,4 @@
-import {$Each, $If, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface FacetOption {
     id: string;
@@ -29,28 +29,35 @@ export default () => (
                 list={$pointer<Facet[]>("facets")}
                 $then={() => (
                     <>
-                        {$raw("{{#if facet '===' ../all_facets}}")}
-                        <$Each
-                            list={$pointer<FacetOption[]>("items")}
-                            $then={(item) => (
-                                <li className="navList-item">
-                                    <a
-                                        href={item.url}
-                                        className={`navList-action${$If({test: item.selected, $then: () => " is-active"})}`}
-                                        rel="nofollow"
-                                        data-id={item.id}
-                                        data-faceted-search-facet={""}
-                                    >
-                                        {$unescaped(item.title)}{" "}
-                                        <$If
-                                            test={$pointer("../show_product_counts")}
-                                            $then={() => <$If test={item.count} $then={() => <span>({item.count})</span>} />}
-                                        />
-                                    </a>
-                                </li>
+                        <$If
+                            test={$pointer("facet")}
+                            operator={$string("===")}
+                            rvalue={$pointer("../all_facets")}
+                            $then={() => (
+                                <>
+                                    <$Each
+                                        list={$pointer<FacetOption[]>("items")}
+                                        $then={(item) => (
+                                            <li className="navList-item">
+                                                <a
+                                                    href={item.url}
+                                                    className={`navList-action${$If({test: item.selected, $then: () => " is-active"})}`}
+                                                    rel="nofollow"
+                                                    data-id={item.id}
+                                                    data-faceted-search-facet={""}
+                                                >
+                                                    {$unescaped(item.title)}{" "}
+                                                    <$If
+                                                        test={$pointer("../show_product_counts")}
+                                                        $then={() => <$If test={item.count} $then={() => <span>({item.count})</span>} />}
+                                                    />
+                                                </a>
+                                            </li>
+                                        )}
+                                    />
+                                </>
                             )}
                         />
-                        {$raw("{{/if}}")}
                     </>
                 )}
             />

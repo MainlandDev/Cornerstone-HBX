@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $partial, $pointer, $raw, $StencilPartial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 // The original iterates `forms.gift_certificate.themes` and `amount_options`; the library types neither key (see PORT-NOTES.md, Task 8c).
 interface Theme {
@@ -12,10 +12,9 @@ interface AmountOption {
 }
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <h1 className="page-heading">
@@ -202,7 +201,7 @@ export default () => (
                                                 <>
                                                     <input
                                                         dangerouslyInlineAttributes={{
-                                                            attributes: `type="radio" class="form-radio" name="certificate_theme" id="theme_${theme.value}" value="${theme.value}"${$raw("{{#if this.value '==' ../forms.gift_certificate.values.theme}} checked{{/if}}")}`,
+                                                            attributes: `type="radio" class="form-radio" name="certificate_theme" id="theme_${theme.value}" value="${theme.value}"${$If({test: $pointer("this.value"), operator: $string("=="), rvalue: $pointer("../forms.gift_certificate.values.theme"), $then: () => " checked"})}`,
                                                         }}
                                                     />{" "}
                                                     <label className="form-label" htmlFor={`theme_${theme.value}`}>
@@ -240,8 +239,8 @@ export default () => (
                         </form>
                     </main>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

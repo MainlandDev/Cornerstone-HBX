@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $limit, $number, $partial, $pointer, $raw, $region, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $limit, $number, $partial, $pointer, $region, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface Banner {
     id: string;
@@ -42,15 +42,21 @@ export default () => {
                 </a>
                 {place($partial("components/common/navigation"))}
 
-                {$raw("{{#if page_type '===' 'default'}}")}
-                <h1 className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                    {place($partial("components/common/store-logo"))}
-                </h1>
-                {$raw("{{else}}")}
-                <div className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                    {place($partial("components/common/store-logo"))}
-                </div>
-                {$raw("{{/if}}")}
+                <$If
+                    test={$pointer("page_type")}
+                    operator={$string("===")}
+                    rvalue={$string("default")}
+                    $then={() => (
+                        <h1 className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
+                            {place($partial("components/common/store-logo"))}
+                        </h1>
+                    )}
+                    $else={() => (
+                        <div className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
+                            {place($partial("components/common/store-logo"))}
+                        </div>
+                    )}
+                />
                 <div className="navPages-container" id="menu" data-menu={""}>
                     {place($partial("components/common/navigation-menu"))}
                 </div>

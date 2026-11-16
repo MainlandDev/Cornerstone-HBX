@@ -24,11 +24,14 @@ export default () => (
                     {$raw('<a href="')}
                     {slide.url}
                     {$raw('" data-hero-slide="{{@index}}" aria-label="')}
-                    {$raw("{{#if this.alt_text.length '!=' 0}}")}
-                    {slide.alt_text}
-                    {$raw("{{else}}")}
-                    {$lang($string("carousel.slide_number"), {slide_number: $add(loop["@index"], $number(1))})}
-                    {$raw('{{/if}}">{{/if}}')}
+                    <$If
+                        test={$pointer("this.alt_text.length")}
+                        operator={$string("!=")}
+                        rvalue={$number(0)}
+                        $then={() => slide.alt_text}
+                        $else={() => $lang($string("carousel.slide_number"), {slide_number: $add(loop["@index"], $number(1))})}
+                    />
+                    {$raw('">{{/if}}')}
                     <div
                         className={`heroCarousel-slide ${$raw("{{#if ../theme_settings.homepage_stretch_carousel_images}}stretch{{/if}}")} ${$raw("{{#if @first}}heroCarousel-slide--first{{/if}}")}`}
                     >
@@ -69,9 +72,16 @@ export default () => (
                 </>
             )}
         />
-        {$raw("{{#if carousel.slides.length '>' 1}}")}
-        {place($partial("components/carousel-content-announcement"))}
-        <$If test={$pointer("play_pause_button")} $then={() => place($partial("components/carousel-play-pause-button"))} />
-        {$raw("{{/if}}")}
+        <$If
+            test={$pointer("carousel.slides.length")}
+            operator={$string(">")}
+            rvalue={$number(1)}
+            $then={() => (
+                <>
+                    {place($partial("components/carousel-content-announcement"))}
+                    <$If test={$pointer("play_pause_button")} $then={() => place($partial("components/carousel-play-pause-button"))} />
+                </>
+            )}
+        />
     </section>
 );

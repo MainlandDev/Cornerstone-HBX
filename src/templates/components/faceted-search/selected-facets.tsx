@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $sanitize, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string, $sanitize, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface SelectedFacet {
     url: string;
@@ -20,11 +20,21 @@ export default () => (
                         $then={(item) => (
                             <li>
                                 <a href={item.url} className="facetLabel" rel="nofollow" data-faceted-search-facet={""}>
-                                    {$raw("{{#if facet '===' 'rating'}}")}
-                                    <$Lang keyName={$string("search.faceted.selected.rating-label")} rating={item.title} />
-                                    {$raw("{{else}}")}
-                                    {$unescaped($sanitize(item.title))}
-                                    {$raw("{{/if}}")}{" "}
+                                    <$If
+                                        test={$pointer("facet")}
+                                        operator={$string("===")}
+                                        rvalue={$string("rating")}
+                                        $then={() => (
+                                            <>
+                                                <$Lang keyName={$string("search.faceted.selected.rating-label")} rating={item.title} />
+                                            </>
+                                        )}
+                                        $else={() => (
+                                            <>
+                                                {$unescaped($sanitize(item.title))}
+                                            </>
+                                        )}
+                                    />{" "}
                                     <svg className="icon">
                                         <use href="#icon-close" />
                                     </svg>

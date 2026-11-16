@@ -3,20 +3,18 @@ import {
     $If,
     $langJson,
     $Lang,
-    $partial,
+    $Page,
     $pointer,
     $stylesheet,
-    $StencilPartial,
     $string,
     $unescaped,
     place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("head")}
-            $then={() => (
+    <$Page
+        blocks={{
+            head: () => (
                 <>
                     {$unescaped($pointer("checkout.checkout_head"))}{" "}
                     {place($unescaped($stylesheet($string("/assets/css/optimized-checkout.css"))))}{" "}
@@ -34,11 +32,8 @@ export default () => (
 
                     {$unescaped($pointer("head.scripts"))}
                 </>
-            )}
-        />
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+            ),
+            page: () => (
                 <>
                     <header className="checkoutHeader optimizedCheckout-header">
                         <div className="checkoutHeader-content">
@@ -70,8 +65,8 @@ export default () => (
 
                     {$unescaped($pointer("footer.scripts"))}
                 </>
-            )}
-        />
-        {place($partial("layout/empty"))}
-    </>
+            ),
+        }}
+        layout="layout/empty"
+    />
 );

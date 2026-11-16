@@ -1,4 +1,4 @@
-import {$getImage, $If, $Each, $For, $Lang, $pointer, $raw, $string, $this, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$getImage, $If, $Each, $For, $Lang, $number, $pointer, $raw, $string, $this, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface GiftWrapping {
     id: string;
@@ -17,17 +17,24 @@ export default () => (
             </h2>
         </div>
         <div className="modal-body">
-            {$raw("{{#if quantity '>' 1}}")}
-            <p>
-                <$Lang keyName={$string("cart.gift_wrapping.choose_how")} />
-            </p>
-            {$raw("{{/if}}")}
+            <$If
+                test={$pointer("quantity")}
+                operator={$string(">")}
+                rvalue={$number(1)}
+                $then={() => (
+                    <>
+                        <p>
+                            <$Lang keyName={$string("cart.gift_wrapping.choose_how")} />
+                        </p>
+                    </>
+                )}
+            />
 
             <form className="form giftWrapping-form" action={$pointer("urls.cart")} method="post">
                 <input type="hidden" name="action" value="save_giftwrapping" />
                 <input type="hidden" name="item_id" value={$pointer("item_id")} />
                 <fieldset className="form-fieldset">
-                    <div dangerouslyInlineAttributes={{attributes: `class="form-field" ${$raw("{{#if quantity '===' 1}}style=\"display:none\"{{/if}}")}`}}>
+                    <div dangerouslyInlineAttributes={{attributes: `class="form-field" ${$If({test: $pointer("quantity"), operator: $string("==="), rvalue: $number(1), $then: () => $raw('style="display:none"')})}`}}>
                         <input
                             type="radio"
                             dangerouslyInlineAttributes={{

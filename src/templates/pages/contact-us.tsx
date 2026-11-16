@@ -1,4 +1,4 @@
-import {$$themeSettings, $Each, $If, $lang, $partial, $pointer, $StencilPartial, $string, $unescaped, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $Each, $If, $lang, $Page, $partial, $pointer, $string, $unescaped, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface SubPage {
     url: string;
@@ -8,10 +8,9 @@ interface SubPage {
 export default () => {
     const settings = $$themeSettings();
     return (
-        <>
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+        <$Page
+            blocks={{
+                page: () => (
                     <>
                         {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
 
@@ -57,10 +56,9 @@ export default () => {
                             </div>
                         </main>
                     </>
-                )}
-            />
-
-            {place($partial("layout/base"))}
-        </>
+                ),
+            }}
+            layout="layout/base"
+        />
     );
 };

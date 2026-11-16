@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $nl2br, $partial, $pointer, $raw, $stylesheet, $StencilPartial, $string, $unescaped, $Unless, $sanitize, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $nl2br, $Page, $pointer, $raw, $stylesheet, $string, $unescaped, $Unless, $sanitize, place} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` / `OrderItemsItem` lack these keys (pickup_addresses, customizations,
 // shipping_discounts, new_address, ...). Fields are read from invoice.html, not from the API docs.
@@ -111,11 +111,10 @@ export default () => {
         </>
     );
     return (
-        <>
-            <$StencilPartial name={$string("head")} $then={() => place($unescaped($stylesheet($string("/assets/css/invoice.css"))))} />
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+        <$Page
+            blocks={{
+                head: () => place($unescaped($stylesheet($string("/assets/css/invoice.css")))),
+                page: () => (
                     <>
                         <div className="Invoice">
                             <h1>
@@ -123,23 +122,33 @@ export default () => {
                                     test={$pointer("settings.store_logo.image")}
                                     $then={() => (
                                         <>
-                                            {$raw("{{#if theme_settings.logo_size '===' 'original'}}")}
-                                            <img
-                                                className="header-logo-image-unknown-size"
-                                                dangerouslyInlineAttributes={{attributes: `src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
-                                                alt={logoTitle}
-                                                title={logoTitle}
+                                            <$If
+                                                test={$pointer("theme_settings.logo_size")}
+                                                operator={$string("===")}
+                                                rvalue={$string("original")}
+                                                $then={() => (
+                                                    <>
+                                                        <img
+                                                            className="header-logo-image-unknown-size"
+                                                            dangerouslyInlineAttributes={{attributes: `src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
+                                                            alt={logoTitle}
+                                                            title={logoTitle}
+                                                        />
+                                                    </>
+                                                )}
+                                                $else={() => (
+                                                    <>
+                                                        <div className="header-logo-image-container">
+                                                            <img
+                                                                className="header-logo-image"
+                                                                dangerouslyInlineAttributes={{attributes: `data-sizes="auto" src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
+                                                                alt={logoTitle}
+                                                                title={logoTitle}
+                                                            />
+                                                        </div>
+                                                    </>
+                                                )}
                                             />
-                                            {$raw("{{else}}")}
-                                            <div className="header-logo-image-container">
-                                                <img
-                                                    className="header-logo-image"
-                                                    dangerouslyInlineAttributes={{attributes: `data-sizes="auto" src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
-                                                    alt={logoTitle}
-                                                    title={logoTitle}
-                                                />
-                                            </div>
-                                            {$raw("{{/if}}")}
                                         </>
                                     )}
                                     $else={() => <span className="header-logo-text">{logoTitle}</span>}
@@ -454,9 +463,9 @@ export default () => {
                         </div>
                         <script dangerouslySetInnerHTML={{__html: "window.print();"}} />
                     </>
-                )}
-            />
-            {place($partial("layout/empty"))}
-        </>
+                ),
+            }}
+            layout="layout/empty"
+        />
     );
 };

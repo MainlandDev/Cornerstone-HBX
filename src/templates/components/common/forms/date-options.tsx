@@ -1,4 +1,4 @@
-import {$Each, $Unless, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Unless, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface DateOption {
     value: string;
@@ -26,7 +26,9 @@ export default () => (
                     list={$pointer<DateOption[]>("items")}
                     $then={(item) => (
                         <option
-                            dangerouslyInlineAttributes={{attributes: `${$raw("{{#if ../this.value '==' value}}selected {{/if}}")}`}}
+                            dangerouslyInlineAttributes={{
+                                attributes: `${$If({test: $pointer("../this.value"), operator: $string("=="), rvalue: $pointer("value"), $then: () => $raw("selected ")})}`,
+                            }}
                             value={item.value}
                         >
                             {item.label}

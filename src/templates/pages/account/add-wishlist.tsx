@@ -1,10 +1,9 @@
-import {$If, $Lang, $partial, $pointer, $StencilPartial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <div className="account">
                     <$If
                         test={$pointer("settings.show_wishlist")}
@@ -30,8 +29,8 @@ export default () => (
                         )}
                     />
                 </div>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

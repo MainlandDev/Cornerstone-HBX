@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $partial, $pointer, $raw, $sanitize, $StencilPartial, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $partial, $pointer, $raw, $sanitize, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` lacks these keys and types `shipments` as Record<string, unknown>.
 // Fields are read from details.html, not from the API docs.
@@ -92,10 +92,9 @@ export default () => {
         </>
     );
     return (
-        <>
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+        <$Page
+            blocks={{
+                page: () => (
                     <>
                         <$Inject keyName={$string("selectItem")} value={$lang($string("forms.validate.account.reorder.select_item"))} />
                         {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
@@ -405,9 +404,9 @@ export default () => {
                             </div>
                         </div>
                     </>
-                )}
-            />
-            {place($partial("layout/base"))}
-        </>
+                ),
+            }}
+            layout="layout/base"
+        />
     );
 };

@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface ReturnOption {
     name: string;
@@ -43,35 +43,78 @@ export default () => (
                             </div>
                             <div className="account-product-body">
                                 <div className="account-orderStatus">
-                                    {$raw("{{#if status '===' 'ReturnStatusPending'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.pending")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusReceived'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.received")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusAuthorized'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.authorized")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusRepaired'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.repaired")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusRefunded'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.refunded")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusRejected'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.rejected")} />
-                                    </h6>
-                                    {$raw("{{else if status '===' 'ReturnStatusCancelled'}}")}
-                                    <h6 className="account-orderStatus-label">
-                                        <$Lang keyName={$string("account.returns.status.cancelled")} />
-                                    </h6>
-                                    {$raw("{{/if}}")}
+                                    <$If
+                                        test={$pointer("status")}
+                                        operator={$string("===")}
+                                        rvalue={$string("ReturnStatusPending")}
+                                        $then={() => (
+                                            <h6 className="account-orderStatus-label">
+                                                <$Lang keyName={$string("account.returns.status.pending")} />
+                                            </h6>
+                                        )}
+                                        $elseThen={[
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusReceived"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.received")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusAuthorized"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.authorized")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusRepaired"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.repaired")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusRefunded"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.refunded")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusRejected"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.rejected")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                            {
+                                                test: $pointer("status"),
+                                                operator: $string("==="),
+                                                rvalue: $string("ReturnStatusCancelled"),
+                                                $then: () => (
+                                                    <h6 className="account-orderStatus-label">
+                                                        <$Lang keyName={$string("account.returns.status.cancelled")} />
+                                                    </h6>
+                                                ),
+                                            },
+                                        ]}
+                                    />
                                 </div>
 
                                 <h5 className="account-product-title">

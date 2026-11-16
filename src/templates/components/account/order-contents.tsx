@@ -94,23 +94,29 @@ export default () => (
                                     />
                                 </div>
                                 <figure className="account-product-figure">
-                                    {$raw("{{#if type '===' 'giftcertificate'}}")}
-                                    <img
-                                        src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
-                                        alt="Gift Certificate"
-                                        title="Gift Certificate"
-                                    />
-                                    {$raw("{{else}}")}
-                                    {place(
-                                        $partial("components/common/responsive-img", {
-                                            image: item.image,
-                                            class: $string("account-product-image"),
-                                            fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                            lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                            default_image: $pointer("../theme_settings.default_image_product"),
-                                        }),
-                                    )}
-                                    {$raw("{{/if}}")}{" "}
+                                    <$If
+                                        test={$pointer("type")}
+                                        operator={$string("===")}
+                                        rvalue={$string("giftcertificate")}
+                                        $then={() => (
+                                            <img
+                                                src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
+                                                alt="Gift Certificate"
+                                                title="Gift Certificate"
+                                            />
+                                        )}
+                                        $else={() =>
+                                            place(
+                                                $partial("components/common/responsive-img", {
+                                                    image: item.image,
+                                                    class: $string("account-product-image"),
+                                                    fallback_size: $pointer("../theme_settings.productthumb_size"),
+                                                    lazyload: $pointer("../theme_settings.lazyload_mode"),
+                                                    default_image: $pointer("../theme_settings.default_image_product"),
+                                                }),
+                                            )
+                                        }
+                                    />{" "}
                                     <$Unless
                                         test={item.refunded}
                                         $then={() => (

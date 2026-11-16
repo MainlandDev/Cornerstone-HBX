@@ -1,4 +1,4 @@
-import {$Each, $frontmatter, $If, $Lang, $partial, $pointer, $region, $StencilPartial, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $frontmatter, $If, $Lang, $Page, $partial, $pointer, $region, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.brands({brands: null});
 
@@ -13,10 +13,9 @@ interface Brand {
 const region = (name: string) => place($unescaped($region({name: $string(name)})));
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <main className="page">
@@ -59,8 +58,8 @@ export default () => (
                         {region("brands_below_content")}
                     </main>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

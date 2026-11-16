@@ -1,10 +1,9 @@
-import {$boolean, $partial, $pointer, $StencilPartial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Page, $partial, $pointer, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     {place(
@@ -15,8 +14,8 @@ export default () => (
                         }),
                     )}
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

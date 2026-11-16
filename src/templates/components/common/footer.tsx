@@ -60,17 +60,22 @@ export default () => {
                     <$Lang keyName={$string("footer.title")} />
                 </h2>
                 <div className="container">
-                    {$raw("{{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}")}
-                    <article
-                        className={`footer-info-col footer-info-col--social footer-info-col--${$raw("{{#if theme_settings.social_icon_placement_bottom '===' 'bottom_left'}}left{{else}}right{{/if}}")}`}
-                        data-section-type="footer-webPages"
-                    >
-                        <h3 className="footer-info-heading">
-                            <$Lang keyName={$string("social.connect")} />
-                        </h3>
-                        {place($partial("components/common/social-links"))}
-                    </article>
-                    {$raw("{{/if}}")}
+                    <$If
+                        test={$pointer("theme_settings.social_icon_placement_bottom")}
+                        operator={$string("!==")}
+                        rvalue={$string("bottom_none")}
+                        $then={() => (
+                            <article
+                                className={`footer-info-col footer-info-col--social footer-info-col--${$If({test: $pointer("theme_settings.social_icon_placement_bottom"), operator: $string("==="), rvalue: $string("bottom_left"), $then: () => "left", $else: () => "right"})}`}
+                                data-section-type="footer-webPages"
+                            >
+                                <h3 className="footer-info-heading">
+                                    <$Lang keyName={$string("social.connect")} />
+                                </h3>
+                                {place($partial("components/common/social-links"))}
+                            </article>
+                        )}
+                    />
 
                     <section className="footer-info">
                         <article className="footer-info-col footer-info-col--small" data-section-type="footer-webPages">

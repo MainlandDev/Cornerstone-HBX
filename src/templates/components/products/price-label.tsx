@@ -1,11 +1,11 @@
-import {$pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        {$raw("{{#if label_value '===' ''}}")}
-        {$pointer("fallback")}
-        {$raw("{{else}}")}
-        {$pointer("label_value")}
-        {$raw("{{/if}}")}
-    </>
+    <$If
+        test={$pointer("label_value")}
+        operator={$string("===")}
+        rvalue={$string("")}
+        $then={() => $pointer("fallback")}
+        $else={() => $pointer("label_value")}
+    />
 );

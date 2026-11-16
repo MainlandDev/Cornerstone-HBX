@@ -1,4 +1,5 @@
 import {
+    $Page,
     $raw,
     $Each,
     $If,
@@ -7,7 +8,6 @@ import {
     $lang,
     $partial,
     $pointer,
-    $StencilPartial,
     $string,
     $unescaped,
     place,
@@ -34,10 +34,9 @@ interface Comparison {
 }
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     <$Inject keyName={$string("comparisons")} value={$pointer("comparisons")} />{" "}
                     <$Inject keyName={$string("compareRemoveMessage")} value={$lang($string("compare.no_remove"))} />
@@ -269,8 +268,8 @@ export default () => (
                         </div>
                     </main>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

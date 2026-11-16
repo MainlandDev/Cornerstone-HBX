@@ -1,4 +1,4 @@
-import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $partial, $pointer, $raw, $StencilPartial, $string, $unescaped, $With, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $unescaped, $With, place} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/customer.ts:21 types `customer.edit_stored_instrument` as `string`, but the original reads
 // `token`, `type`, `last_4`, `expiry_month`, `expiry_year`, `email` and `is_default` from it (edit-payment-method.html: the
@@ -11,10 +11,9 @@ interface StoredInstrument {
 }
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
 
@@ -43,31 +42,45 @@ export default () => (
                                     </h3>
 
                                     <div className="paymentMethodForm">
-                                        {$raw("{{#if type '===' 'stored_card'}}")}
-                                        <dl className="paymentMethodForm-details">
-                                            <dt className="paymentMethodForm-details-term">
-                                                <$Lang keyName={$string("account.payment_methods.credit_card_number")} />
-                                            </dt>
-                                            <dd className="paymentMethodForm-details-description">**** **** **** {$pointer("last_4")}</dd>
-                                        </dl>
-                                        <dl className="paymentMethodForm-details">
-                                            <dt className="paymentMethodForm-details-term">
-                                                <$Lang keyName={$string("account.payment_methods.expiration")} />
-                                            </dt>
-                                            <dd className="paymentMethodForm-details-description">
-                                                {$pointer("expiry_month")}/{$pointer("expiry_year")}
-                                            </dd>
-                                        </dl>
-                                        {$raw("{{/if}}")}
-                                        {$raw("{{#if type '===' 'stored_paypal_account'}}")}
-                                        <div className="form-field">
-                                            <h3 className="paymentMethodForm-heading">
-                                                <$Lang keyName={$string("account.payment_methods.paypal")} />{" "}
-                                                <$Lang keyName={$string("common.account")} />
-                                            </h3>
-                                            <p>{$pointer("email")}</p>
-                                        </div>
-                                        {$raw("{{/if}}")}
+                                        <$If
+                                            test={$pointer("type")}
+                                            operator={$string("===")}
+                                            rvalue={$string("stored_card")}
+                                            $then={() => (
+                                                <>
+                                                    <dl className="paymentMethodForm-details">
+                                                        <dt className="paymentMethodForm-details-term">
+                                                            <$Lang keyName={$string("account.payment_methods.credit_card_number")} />
+                                                        </dt>
+                                                        <dd className="paymentMethodForm-details-description">**** **** **** {$pointer("last_4")}</dd>
+                                                    </dl>
+                                                    <dl className="paymentMethodForm-details">
+                                                        <dt className="paymentMethodForm-details-term">
+                                                            <$Lang keyName={$string("account.payment_methods.expiration")} />
+                                                        </dt>
+                                                        <dd className="paymentMethodForm-details-description">
+                                                            {$pointer("expiry_month")}/{$pointer("expiry_year")}
+                                                        </dd>
+                                                    </dl>
+                                                </>
+                                            )}
+                                        />
+                                        <$If
+                                            test={$pointer("type")}
+                                            operator={$string("===")}
+                                            rvalue={$string("stored_paypal_account")}
+                                            $then={() => (
+                                                <>
+                                                    <div className="form-field">
+                                                        <h3 className="paymentMethodForm-heading">
+                                                            <$Lang keyName={$string("account.payment_methods.paypal")} />{" "}
+                                                            <$Lang keyName={$string("common.account")} />
+                                                        </h3>
+                                                        <p>{$pointer("email")}</p>
+                                                    </div>
+                                                </>
+                                            )}
+                                        />
                                         <div className="form-field">
                                             {/* `checked` is a block in attribute position, so the attributes go in the carrier. */}
                                             <input
@@ -82,20 +95,27 @@ export default () => (
                                         </div>
                                     </div>
 
-                                    {$raw("{{#if type '===' 'stored_card'}}")}
-                                    <h3 className="paymentMethodForm-heading">
-                                        <$Lang keyName={$string("account.payment_methods.billing_address")} />
-                                    </h3>
+                                    <$If
+                                        test={$pointer("type")}
+                                        operator={$string("===")}
+                                        rvalue={$string("stored_card")}
+                                        $then={() => (
+                                            <>
+                                                <h3 className="paymentMethodForm-heading">
+                                                    <$Lang keyName={$string("account.payment_methods.billing_address")} />
+                                                </h3>
 
-                                    <fieldset className="form-fieldset">
-                                        <div className="form-row form-row--half">
-                                            <$Each
-                                                list={$pointer<unknown[]>("forms.billing_fields")}
-                                                $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
-                                            />
-                                        </div>
-                                    </fieldset>
-                                    {$raw("{{/if}}")}
+                                                <fieldset className="form-fieldset">
+                                                    <div className="form-row form-row--half">
+                                                        <$Each
+                                                            list={$pointer<unknown[]>("forms.billing_fields")}
+                                                            $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                                                        />
+                                                    </div>
+                                                </fieldset>
+                                            </>
+                                        )}
+                                    />
 
                                     <div className="form-actions">
                                         <input type="submit" className="button button--primary" value={$lang($string("forms.payment_methods.submit_value"))} />
@@ -110,8 +130,8 @@ export default () => (
                         />
                     </div>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

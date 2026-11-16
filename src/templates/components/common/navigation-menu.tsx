@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $lang, $partial, $pointer, $raw, $string, $Unless, $$themeSettings, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $Unless, $$themeSettings, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -27,17 +27,23 @@ export default () => {
     return (
         <nav className="navPages">
             <div className="navPages-quickSearch">{place($partial("components/common/quick-search", {name: $string("nav-menu-quick-search")}))}</div>
-            <ul className={`navPages-list${$raw("{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}}")}`}>
+            <ul className={`navPages-list${$If({test: $pointer("theme_settings.navigation_design"), operator: $string("!=="), rvalue: $string("simple"), $then: () => " navPages-list-depth-max"})}`}>
                 <$Each
                     list={$pointer<Category[]>("categories")}
                     $then={() => (
                         <li className="navPages-item">
-                            {$raw("{{#if ../theme_settings.navigation_design '===' 'simple'}}")}
-                            {place($partial("components/common/navigation-list"))}
-                            {$raw("{{/if}}")}
-                            {$raw("{{#if ../theme_settings.navigation_design '===' 'alternate'}}")}
-                            {place($partial("components/common/navigation-list-alternate"))}
-                            {$raw("{{/if}}")}
+                            <$If
+                                test={$pointer("../theme_settings.navigation_design")}
+                                operator={$string("===")}
+                                rvalue={$string("simple")}
+                                $then={() => place($partial("components/common/navigation-list"))}
+                            />
+                            <$If
+                                test={$pointer("../theme_settings.navigation_design")}
+                                operator={$string("===")}
+                                rvalue={$string("alternate")}
+                                $then={() => place($partial("components/common/navigation-list-alternate"))}
+                            />
                         </li>
                     )}
                 />
@@ -49,7 +55,7 @@ export default () => {
                             $then={(page) => (
                                 <li className="navPages-item navPages-item-page">
                                     <a
-                                        className={`navPages-action${$raw("{{#if name '==' ../page.title}} activePage{{/if}}")}`}
+                                        className={`navPages-action${$If({test: $pointer("name"), operator: $string("=="), rvalue: $pointer("../page.title"), $then: () => " activePage"})}`}
                                         href={page.url}
                                         aria-label={page.name}
                                     >
@@ -65,7 +71,11 @@ export default () => {
                 {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
                 <li className="navPages-item">{place($partial("components/common/language-selector-mobile"))}</li>
                 {$raw("{{/and}}")}
-                {$raw("{{#if currency_selector.currencies.length '>' 1}}")}
+                <$If
+                    test={$pointer("currency_selector.currencies.length")}
+                    operator={$string(">")}
+                    rvalue={$number(1)}
+                    $then={() => (
                 <li className="navPages-item">
                     <a
                         className="navPages-action has-subMenu"
@@ -102,7 +112,8 @@ export default () => {
                         </ul>
                     </div>
                 </li>
-                {$raw("{{/if}}")}
+                    )}
+                />
                 <$If test={theme.show_channels} $then={() => <li className="navPages-item">{place($partial("components/common/channel-selector-mobile"))}</li>} />
                 <$If
                     test={$pointer("settings.gift_certificates_enabled")}
@@ -114,21 +125,31 @@ export default () => {
                         </li>
                     )}
                 />
-                {$raw("{{#if customer.store_credit.value '>' 0}}")}
+                <$If
+                    test={$pointer("customer.store_credit.value")}
+                    operator={$string(">")}
+                    rvalue={$number(0)}
+                    $then={() => (
                 <li className="navPages-item">
                     <a className="navPages-action navPages-action--storeCredit">
                         <$Lang keyName={$string("common.store_credit_overview")} credit={$pointer("customer.store_credit.formatted")} />
                     </a>
                 </li>
-                {$raw("{{/if}}")}
-                {$raw("{{#if theme_settings.product_list_display_mode '==' 'list'}}")}
+                    )}
+                />
+                <$If
+                    test={$pointer("theme_settings.product_list_display_mode")}
+                    operator={$string("==")}
+                    rvalue={$string("list")}
+                    $then={() => (
                 <li className="navPages-item">
                     <a className="navPages-action navPages-action--compare" href={$pointer("urls.compare")} data-compare-nav={""} aria-label={$lang($string("common.compare"))}>
                         <$Lang keyName={$string("common.compare")} />{" "}
                         <span className="countPill countPill--positive countPill--alt"></span>
                     </a>
                 </li>
-                {$raw("{{/if}}")}
+                    )}
+                />
                 <$If
                     test={$pointer("customer")}
                     $then={() => (

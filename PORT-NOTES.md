@@ -9,12 +9,14 @@ Taken from the pilots `src/templates/pages/home.tsx` and `src/templates/pages/ac
 | Handlebars | TSX |
 | --- | --- |
 | `{{#partial "page"}}…{{/partial}}` | `<$StencilPartial name={$string("page")} $then={() => (<>…</>)} />` |
+| a page template: `{{#partial "head"}}…{{/partial}}{{#partial "page"}}…{{/partial}}{{> layout/empty}}` | `export default () => (<$Page blocks={{head: () => …, page: () => …}} layout="layout/empty" />)`, blocks in source order, the layout last; a top-level element that is not a partial (an inject) goes in a `<>` wrapper before `<$Page>` |
 | `{{> components/x a=b}}` | `place($partial("components/x", {a: b}))` |
 | `{{> components/x item}}` (positional context) | `place($partial("components/x", item))` |
 | `{{> layout/base}}` | `{place($partial("layout/base"))}` |
 | `{{theme_settings.x}}` | `const settings = $$themeSettings();` then `settings.x` |
 | typed data read, e.g. `carousel.slides.length` | `const carousel = $pointer<{slides: {length: number}}>("carousel");` |
 | `{{#if x}}…{{/if}}` | `<$If test={x} $then={() => place(…)} />` |
+| `{{#if x '==' 'y'}}…{{else if x '===' 0}}…{{/if}}` | `<$If test={x} operator={$string("==")} rvalue={$string("y")} $then={() => …} $elseThen={[{test: x, operator: $string("==="), rvalue: $number(0), $then: () => …}]} />`; in a class or attribute string, `${$If({test, operator, rvalue, $then: () => "…"})}` |
 | `{{#each list}}…{{/each}}` | `<$Each list={$pointer<T[]>("list")} $then={(item) => …} />` |
 | `{{#and a b}}…{{/and}}` | `<$And a={a} b={b} $then={() => …} />` |
 | `{{lang 'a.b'}}` | `<$Lang keyName={$string("a.b")} />` |
@@ -25,7 +27,7 @@ Taken from the pilots `src/templates/pages/home.tsx` and `src/templates/pages/ac
 Notes:
 
 - Use `$$themeSettings()` once per template and read keys from it; the original `theme_settings.` prefix maps to that result.
-- Partial bodies go inside `<$StencilPartial>`; the page shell `{place($partial("layout/base"))}` sits after them.
+- Page templates are `<$Page blocks={{…}} layout="…" />`; `<$StencilPartial>` is still the form for a partial the page does not own.
 - The `$frontmatter` call in the pilots uses `.home` for the home page and `.other` for the orders page.
 
 ## Raw fragments
@@ -41,11 +43,9 @@ Template fragments kept as raw Handlebars because no typed equivalent exists yet
 | layout/base.tsx | `<meta name="viewport" …>` | React 19 hoists `<meta>` to the top of `<head>`, ahead of `<title>`; the raw tag keeps the original position |
 | layout/empty.tsx | `<!DOCTYPE html>` | as layout/base.tsx |
 | components/carousel.tsx | `{{#if button_text}}` branches that open or close `<div>` / `<a>` tags, plus the `heroCarousel-image-wrapper` tags | the Handlebars branches open and close different tags, so no single JSX element tree holds them; tag text is raw, slide content is typed |
-| components/carousel.tsx | `{{#if this.alt_text.length '!=' 0}}`, `{{#if carousel.slides.length '>' 1}}` | `if` with an operator (Stencil form) has no typed helper (see Library gaps) |
 | components/carousel.tsx, components/carousel-content.tsx | `{{#if ../theme_settings…}}`, `{{#if @first}}` inside `class`; `{{#and (if …)}}` | conditionals inside attribute values; `$If` prints no attribute text |
 | components/carousel-content.tsx | `{{#and (if heading '==' false) (if text '==' false)}}` and `{{/and}}` | sub-expression `if` with an operator (see Library gaps) |
 | components/common/forms/* (checkbox, date-options, date, multiline, number, password, radio, select, selectortext, text) | `{{#if private_id}}data-…{{/if}}`, `{{#if checked}}checked{{/if}}`, `{{#if selected}} selected {{/if}}`, `{{#if value}}`, `{{#if maxlength}}`, `{{#if placeholder}}` | conditional attributes; written as raw Handlebars inside `dangerouslyInlineAttributes`, the library escape hatch for attribute text |
-| components/common/forms/date-options.tsx | `{{#if ../this.value '==' value}} selected {{/if}}` | `if` with an operator and a `../` hop (see Library gaps) |
 
 ## Notes from Task 1
 
@@ -61,13 +61,74 @@ Features the HBX library does not cover yet, so the port needs a workaround or a
 | --- | --- | --- |
 | components/common/forms/text.tsx:24, select.tsx:28, selectortext.tsx:29, selectortext.tsx:46 | `name` / `value` inside an inline carrier | React moves `name`/`value` on `<input>` and `<select>` after the inline carrier; written in the carrier to keep document order |
 | layout/base.tsx, layout/empty.tsx | `<!DOCTYPE html>` placed before `<html>` | FIXED in hbx-bigcommerce: `renderTemplates` renders with React 19, which moved the text into `<body>`; `hoistDoctype` (`src/runtime/templates/renderTemplates.ts`) now puts it back before `<html>`, covered by `tests/js/templates.test.ts`. The raw `$raw("<!DOCTYPE html>")` stays because JSX text cannot express a doctype. |
-| components/carousel.tsx, components/carousel-content.tsx, components/common/forms/date-options.tsx | `{{#if a 'op' b}}` (operator form) | `$If` has no operator form and `$Compare` prints `{{#compare}}`, a different helper, so tokens differ. Needs operator support in `$If`. |
 | components/common/forms/checkbox.tsx, radio.tsx, number.tsx, password.tsx, multiline.tsx | `name`, `value`, `rows` attributes | React moves `name` and `value` on `<input>` to the end of the start tag, after the inline-attribute carrier; they are written inside `dangerouslyInlineAttributes` to keep document order. Textarea content goes through `value`, since children print `[object Object]`. |
 | layout/base.tsx | `{{~inject …}}` whitespace control | `scripts/hbx-parity.mjs` does not model `~`. The port prints no whitespace between those injects, which matches Handlebars output, so the harness reports whitespace-only TEXT tokens there (reasoned difference). |
 | types/context/customer.ts:21 (edit-payment-method.tsx) | `customer.edit_stored_instrument` typed `string` | the original reads `token`, `type`, `last_4`, `expiry_month`, `expiry_year`, `email`, `is_default` from it. The port types the `$With` context with a local `StoredInstrument` via `$pointer<T>` (no cast). Fix the library type. |
 | types/context/downloads.ts (download-item.tsx) | `downloads` typed `Record<string, unknown>` | `DownloadImage` / `DownloadItem` are read from download-item.html, not from library docs: images[], product_name, order_id, items[] with name, size, url, expired, description, days_remaining, downloads_remaining. Fix the library type. |
 | types/context/forms.ts (add-return.tsx) | `forms.return` absent from `Forms` | `ReturnProduct` / `ReturnOption` are read from add-return.html (order_products[]: id, name, price.formatted, quantity, options[]; reasons[], actions[], order_id). Add the key to the library type. |
 | top-level `return` (return-saved.tsx) | no `return` key in the context types | `return.instructions` is read with a plain `$pointer<string>` and no local shape. |
+
+## Operator if rollout
+
+The typed `$If` / `$Unless` take the operator form (`operator`, `rvalue`, and `operator` / `rvalue` on `$elseThen` entries), in the JSX element and the function form. Batch 1 (components/common/*, carousel.tsx, gift-certificate/navigation.tsx) converted every operator `{{#if}}` / `{{else if}}` there except the two kept raw below. The compiled output is byte-identical to the pre-change build (dist-compare: 210 same, 0 differ; `hbx-parity --ported`: differs=3, the known ones).
+
+Still raw after batch 1:
+
+| file | fragment | reason |
+| --- | --- | --- |
+| currency-selector.tsx, navigation-menu.tsx | `{{#if cart_currency_switch_url.length '>' 0 }}…{{/if}}` in the currency `<a>` attribute | the original tag has a space before `}}`; the typed form prints `0}}`, so the bytes differ. Kept raw rather than accept the diff. |
+| responsive-img.tsx | the whole `<img>` attribute text (`{{#unless lazyload '=='}}`, `{{#if lazyload '=='}}`, `(default …)`) | one verbatim carrier. The operator blocks could become function-form segments, but splitting the text exactly was deferred to a later batch. |
+
+Batch 2 (components/products/*, including options/, modals/, product-view.tsx and schema.tsx) converted every operator `{{#if}}` / `{{else if}}` / `{{else}}` there except one. Output is byte-identical (dist-compare: 210 same, 0 differ; `hbx-parity --ported`: differs=3, the known ones).
+
+Idioms added here:
+
+- A `$For` index on the right-hand side is `rvalue={$pointer("$index")}`: the raw text is the bare `$index`. `ctx.$index` would print `this.$index`.
+- Boolean literals are `$boolean(false)` / `$boolean(true)` (`'===' false` prints `false`).
+- Attribute carriers keep the quotes outside the `${…}`: `checked="${$If({…, $then: () => "checked"})}"`. Plain text bodies need no `$raw`.
+- A chain with an operator branch in a text carrier uses the function form with `$elseThen` (schema.tsx availability).
+- Local interfaces that do not list a field (schema.tsx `Product` has no `pre_order`) use `$pointer("product.pre_order")`, which prints the same path.
+
+Still raw after batch 2:
+
+| file | fragment | reason |
+| --- | --- | --- |
+| product-view.tsx | `{{#if product.images.length '>' 1 }}` … `{{/if}}` | the tag has a space before `}}`; `$number(1)` prints `1}}`, so the bytes differ (same trap as currency-selector.tsx). Kept raw. |
+
+Not operator ifs and left alone: `{{#and … (if … '==' …)}}` heads (price.tsx, product-aria-label.tsx), `{{#or … (unless …)}}` heads, the `{{#all … (if … '!==' …)}}` head in quick-view.tsx.
+
+Batch 3 (components/account, brand, cart, category, faceted-search, search, carousel-content.tsx; the folders batches 1-2 did not touch) converted every operator `{{#if}}` / `{{#unless}}` / `{{else if}}` there, 56 tokens in 19 files. Output is byte-identical (dist-compare: 210 same, 0 differ; `hbx-parity --ported`: differs=3, the known ones). No operator if is left raw in this batch, so the `product-view.tsx` and `currency-selector.tsx` traps did not recur.
+
+Idioms added here:
+
+- A `{{#if (lang 'key') '!==' 'Label'}}` test is `test={$lang($string("key"))}`: `$lang` is an expression operand, so it takes the element form (edit-account.tsx).
+- A seven-branch `{{else if}}` chain is one `$If` with `$elseThen` entries, each carrying `test`, `operator`, `rvalue` and `$then` (returns-list.tsx, payment-methods-list.tsx). A nested block inside a `$then` keeps its own `$elseThen` (the `stored_bank_account` block in payment-methods-list.tsx).
+- A `this.` pointer in a test prints as written: `$pointer("this.alt_text.length")` (carousel-content.tsx). The function form's `$then` and `$else` are template strings there, so the pointer and the `$lang` output print as text.
+- A quoted attribute in a function-form body needs `$raw('style="display:none"')`: a plain string is escaped to `&quot;` (gift-wrapping-form.tsx). The same rule as Task 6 for `$Unless`.
+- `{{#if discount.value '===' 0}}-{{/if}}` is `$If` with a fragment body `<>-</>` (cart/totals.tsx).
+- Converted blocks are re-indented one level for the `$then={() => ( <> … </> )}` wrapper. Bodies keep their JSX whitespace, so no `{" "}` changed.
+
+Still raw after batch 3 (not operator ifs, so out of this rollout):
+
+| file | fragment | reason |
+| --- | --- | --- |
+| carousel-content.tsx | `{{#and (if heading '==' false) (if text '==' false)}}` … `{{/and}}` | `{{#and}}` head with an `if` sub-expression (listed in the task sections) |
+| cart/content.tsx, cart/totals.tsx, cart/preview.tsx | `{{#or … (unless …)}}` and `{{#or … (if type '==' …)}}` heads with their `{{else}}` / `{{/or}}` | `{{#or}}` heads (listed in the task sections) |
+| cart/shipping-estimator.tsx | `{{#and shipping_cost_discounted (if shipping_cost_discounted.formatted '!==' shipping_cost.formatted)}}` | `{{#and}}` head with an operator `if` sub-expression (listed in the task sections) |
+
+
+Batch 4A (`pages/*`, root pages, auth, errors, gift-certificate, unavailable; account and home excluded) converted the operator conditionals there: the theme radio in gift-certificate/purchase.tsx (`this.value '=='` with a `../` hop, function form in a carrier), the aside class and the two tabpanel carriers in search.tsx (`'!='`, with `$raw('class="u-hidden"')` as the quoted body), and the two `result_count '===' 0` blocks in search.tsx (element form, `rvalue={$number(0)}`). Output is byte-identical (dist-compare: 210 same, 0 differ; `hbx-parity --ported`: differs=3, the known ones).
+
+Trap: a `{{#if}}` opened and closed as sibling raw nodes (`{$raw("{{#if …}}")}` … `{$raw("{{/if}}")}`) becomes one `<$If>` only when both raw nodes sit under the same parent. Drop the two raw nodes and move the siblings between them into `$then`.
+
+Still raw in pages (`{{#or}}` and `{{#all}}` heads, out of this rollout): cart.tsx and compare.tsx (`{{#or … (unless …)}}` with `{{else}}` / `{{/or}}`), product.tsx (`{{#all … (if … '!==' true)}}`).
+
+Batch 4B (`pages/account/*`, orders/ included) converted the six operator conditionals there in four files: `orders/all.tsx` (`'>' 0`), `wishlist-details.tsx` (`'>' 0`), `edit-payment-method.tsx` (`'==='` on `stored_card` x2 and `stored_paypal_account`, three blocks) and `orders/invoice.tsx` (`'===' 'original'` with `{{else}}`, two branches of different tags, `$else`). Output is byte-identical (dist-compare: 210 same, 0 differ; `hbx-parity --ported`: differs=3, the known ones). No operator if is left raw in account, and no `{{#or}}` / `{{#all}}` head is left there either.
+
+Idioms added here:
+
+- A sibling `{$raw("{{#if …}}")}` / `{$raw("{{else}}")}` / `{$raw("{{/if}}")}` run under one parent becomes `<$If test operator rvalue $then $else />`, with each body in a `<>` wrapper. `'>' 0` is `rvalue={$number(0)}`; a quoted operand is `$string("…")`, as in 4A.
+- The account `$Page` shape covers 19 of 19 files. `orders/invoice` is the `head` + `page` pair with `layout/empty`. `orders/details` and `orders/invoice` keep their statements before `return` inside the function. `edit.tsx`'s top-level `<$Inject>` stays in a `<>` wrapper before `<$Page>`.
 
 ## Task 2: components/common (raw fragments and gaps)
 
@@ -84,30 +145,25 @@ Idioms added here:
 | --- | --- | --- |
 | navigation.tsx | `{{#and language_selector language_selector.languages.length '>' 1}}` … `{{/and}}` | `$And` takes two operands; Stencil `and` here takes four (`x y '>' 1`). Kept verbatim as the original semantics; no comparison invented. |
 | navigation.tsx | `{{#or customer (unless settings.hide_price_from_guests)}}` … `{{/or}}` | `(unless …)` is a block sub-expression; `$Or` takes expression operands only. |
-| navigation.tsx | `{{#if customer.store_credit.value '>' 0}}` … `{{/if}}` | `if` with an operator (library gap above). |
-| footer.tsx | `{{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}`, `'==='` inside `className`, `{{moment format="YYYY"}}` | `if` with an operator; `$Moment` requires `date`, and a hash-only `moment` is the form the component cannot print without a date. |
+| footer.tsx | `{{moment format="YYYY"}}` | `$Moment` requires `date`, and a hash-only `moment` is the form the component cannot print without a date. |
 | footer.tsx | `&copy;` | JSX text would emit the `©` character, not the entity. |
-| header.tsx | `{{#if page_type '===' 'default'}}` … `{{else}}` … `{{/if}}` | `if` with an operator; branches open different tags (`h1` / `div`). |
-| cart-preview.tsx | `{{#if type '==' 'GiftCertificate'}}`, `{{#if quantity '>' 1}}` | operator `if` (library gap). `{{#if price_discounted}}` (text and `class`) and `{{#unless …}}` in `className` are now `$If` / `$Unless` in function form (see idioms). |
+| cart-preview.tsx | `{{#if price_discounted}}` (text and `class`) and `{{#unless …}}` in `className` | now `$If` / `$Unless` in function form (see idioms). Operator ifs converted in the operator-if rollout. |
 | cart-preview.tsx | `{{#or ../customer (unless …) (if type '==' 'GiftCertificate')}}` … `{{/or}}` | sub-expression `unless` / `if` with an operator inside `or`. |
 | cart-preview.tsx | `&times;` | JSX text would emit `×`, not the entity. |
 | share.tsx | `{{assignVar 'encodedUrl' (encodeURI url)}}`, `{{assignVar 'encodedTitle' …}}` | the value is a sub-expression (`encodeURI url`); `$assignVar` takes only a string or number value, so both lines are raw (the `$getVar` reads are typed). |
-| share.tsx | `{{#if service '===' …}}` / `{{else if …}}` chain, `{{#if settings.facebook_like_button.verb '===' …}}` | operator `if` (library gap); the branches open different `<a>` tags, so each keeps its own element with typed href/text. |
 | share.tsx | `{{getImageSrcset ../product.main_image (cdn …) 1x=…}}` inside the Pinterest `href` | a sub-expression with a `../` hop and a `1x=` hash argument; kept verbatim inside the carrier (not checked whether the typed `$getImageSrcset` covers it). |
 | share.tsx | `{{{annotation}}}`, `{{{capitalize service}}}` in attributes | triple-stash in attribute position; carried in the `dangerouslyInlineAttributes` string. |
 | breadcrumbs.tsx | `{{#if @last}}` in `class` and `aria-current`, `{{#each breadcrumbs}}` / `{{add @index 1}}` / `{{{JSONstringify …}}}` / `{{#unless @last}}` inside the JSON-LD script | `@last`/`@index` are loop data with no typed handle; the JSON-LD body is one script, so its loop is raw inside the template literal. |
-| channel-selector.tsx, channel-selector-mobile.tsx, currency-selector.tsx, language-selector-mobile.tsx | `{{{switch_url}}}`, `{{{code}}}`, `{{#if cart_currency_switch_url.length '>' 0 }}` | triple-stash and an operator `if` in attribute position. |
+| channel-selector.tsx, channel-selector-mobile.tsx, currency-selector.tsx, language-selector-mobile.tsx | `{{{switch_url}}}`, `{{{code}}}` | triple-stash in attribute position (carried in the attribute string). |
+| currency-selector.tsx | `{{#if cart_currency_switch_url.length '>' 0 }}` in the currency `<a>` carrier | operator `if` in an attribute, kept raw: the tag has a space before `}}`, which the typed form cannot print (see Operator if rollout). |
 | channel-selector-mobile.tsx | the `aria-label` multi-line `{{#each theme_settings.channels}}` block | a block inside an attribute value; no typed form prints block output in an attribute. |
-| channel-selector.tsx, channel-selector-mobile.tsx, currency-selector.tsx | `{{#if theme_settings.channels.length '>' 1}}`, `{{#if currency_selector.currencies.length '>' 1}}` | operator `if` (library gap). |
 | navigation-list.tsx | `data-collapsible*` attributes on `<span>` | kept as one carrier so the attribute set prints in document order. |
-| paginator.tsx | `{{#if this.number '==' ../current}}`, `{{#unless reload}}`, `{{lang … total=../links.length}}` inside attributes | operator `if` (library gap); `../` hop from inside the loop (`$pointer` cannot name the parent loop's `current`); conditional attribute text. |
+| paginator.tsx | `{{#unless reload}}`, `{{lang … total=../links.length}}` inside attributes | conditional attribute text (`{{#unless}}` with no operator) and a `../` hop in a `lang` hash argument. The `{{#if this.number '==' ../current}}` parts are typed (see Operator if rollout). |
 | payment-icons.tsx | `{{#with theme_settings}}` … `{{/with}}` | `$With` is not used: the `$Or` under it reads the theme keys relative to `with`, and `$With` would add a frame the original did not. |
-| product-options.tsx | `{{#if value '==' 'Yes'}}`, `{{else if value '==' 'No'}}`, `{{else}}` | operator `if` (library gap). |
 | quick-search.tsx | `{{{lang 'search.results.quick_count_live'}}}` in an attribute | triple-stash in attribute position. |
-| social-links.tsx | `{{#if display_name '===' 'twitter'}}` / `{{else}}` | operator `if` (library gap); the two branches open different `<a>` tags. |
-| store-logo.tsx | `{{#if theme_settings.logo_size '==='  'original'}}` / `{{else}}` / `{{/if}}`; `{{getImage settings.store_logo.image 'logo_size'}}` in `src` | operator `if`; `$getImage` with a preset always prints a trailing `""` default (library behaviour, see below), which the original does not. |
-| wishlist-dropdown.tsx | `{{#if this.num_items '!==' '0'}}button--has-items{{/if}}`, `{{../product.id}}` in `formaction`, `&product_id=` in `href` | operator `if` in `class` (library gap); `../` hop; the literal `&` in `href` must not be escaped to `&amp;` (carrier keeps it). |
-| responsive-img.tsx | the whole `<img>` attribute list and its leading comment, kept verbatim | every attribute has conditionals with operators and sub-expressions (`lazyload '==' …`, `(default …)`), so the tag is one raw carrier. This is the largest raw fragment in Task 2. |
+| store-logo.tsx | `{{getImage settings.store_logo.image 'logo_size'}}` in `src` | `$getImage` with a preset always prints a trailing `""` default (library behaviour, see below), which the original does not. |
+| wishlist-dropdown.tsx | `{{../product.id}}` in `formaction`, `&product_id=` in `href` | `../` hop; the literal `&` in `href` must not be escaped to `&amp;` (carrier keeps it). |
+| responsive-img.tsx | the whole `<img>` attribute list and its leading comment, kept verbatim | still one raw carrier. Its operator blocks (`lazyload '=='`) are expressible as function-form segments, but splitting the verbatim text is deferred (see Operator if rollout). This is the largest raw fragment in Task 2. |
 | polyfill-script.tsx | the `{{!-- … --}}` comment | escaped inside `dangerouslySetInnerHTML` otherwise (see idioms). |
 | login-for-pricing.tsx | `translate` attribute carrier | valueless `translate`; a `translate={""}` prop would print `translate=""`, so the bare name is carried as text. |
 | footer.tsx | the banner `<div class="banner">` attributes (`data-name` appears twice) | JSX cannot repeat a prop, and the original repeats `data-name`; the whole attribute list is one carrier. |
@@ -136,21 +192,12 @@ Idioms added here:
 | file | fragment | reason |
 | --- | --- | --- |
 | price.tsx, product-aria-label.tsx | `{{#and price.price_range (if theme_settings.price_ranges '==' true)}}` … `{{else}}` … `{{/and}}` | operator `if` as an `and` operand (library gap, see Task 2); body stays typed |
-| price.tsx, price-range.tsx | `{{#if page_type '===' 'product'}}` … `{{/if}}` | operator `if` (library gap) |
-| price-label.tsx | `{{#if label_value '===' ''}}` … `{{else}}` … `{{/if}}` | operator `if` (library gap); both branches are typed pointers |
-| product-badge.tsx | `{{#if badge_view '===' 'sash'}}` / `{{else if … 'topleft'}}` / `{{else if … 'burst'}}` | operator `if` chain (library gap); the branches open different tags |
-| card.tsx, list-item.tsx | `{{#if stock_level '===' 0}}`, `{{#if theme_settings.pdp_sold_out_label '==='  ''}}`, `{{#if theme_settings.pdp_sale_badge_label '===' ''}}` and their `{{else}}`/`{{/if}}` | operator `if` (library gap); the badge partials inside are typed |
 | card.tsx, list-item.tsx, product-info.tsx, add-to-cart.tsx | `{{#or customer (unless settings.hide_price_from_guests)}}` … `{{else}}` … `{{/or}}`, and the same head inside `data-product-price` | `(unless …)` sub-expression inside `or`; `$Or` takes expression operands only (as cart-preview.tsx) |
 | card.tsx, list-item.tsx | `" {{else}} "` / `" {{/or}}"` in `data-product-price` | the `or` head and close are raw; the `if price.with_tax` value in between is `$If` in function form |
 | card.tsx | `$raw(" card--alternate")` etc. | not raw Handlebars: literal class text inside a `$If` body |
-| ratings.tsx | `{{#if ../this.rating '>=' $index}}` … `{{else}}` … `{{/if}}` inside `$For` | operator `if` with a `../` hop and the `$index` loop variable (library gap) |
-| promotion-callout.tsx | `{{#if mode '===' 'compact'}}` … `{{else}}` … `{{/if}}` | operator `if` (library gap); both branches typed |
-| bulk-discount-rates.tsx | `{{#if type '===' 'percent'}}` / `{{else if … 'fixed'}}` / `{{else if … 'price'}}` / `{{/if}}` | operator `if` chain (library gap); the `{{#if discount_inc_tax}}` inside is `$If`; `{" "}` kept around the `else if` tokens (harness counts them as expressions) |
-| carousel.tsx | `{{#if products.length '>' 1}}` … `{{/if}}` | operator `if` (library gap) |
 | quick-view.tsx | `{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}` … `{{/all}}` | `if` with an operator as an `all` operand (library gap); the `reviews` partial call is typed |
 | tabs.tsx | `$raw(" is-active")` in `$Unless` bodies | literal text, not Handlebars: a class suffix |
 | schema.tsx | `{{{JSONstringify …}}}` (product.title, brand.name, review name/text/title) | triple-stash JSON helper. `$jsonStringify` is typed `HandlebarsPointer<object>`, so a string title cannot pass; the helper also prints the double-stash form, not the triple-stash one |
-| schema.tsx | `{{else if product.can_purchase '===' false}}` in the availability chain (`{{#if product.pre_order}}…{{else if product.out_of_stock}}…`) | an `else if` with an operator branch (library gap, see Task 2); the chain stays raw. `{{#if product.condition}}`, and the review `{{#if name}}` branch, are typed `$If` with raw JSON branches |
 | schema.tsx | `{{moment (moment add='31536000000') 'YYYY-MM-DD' }}` | `$moment` takes a date; the `add` sub-expression has no typed form here |
 | schema.tsx | JSON punctuation and `"` literal text | written in `$raw` segments (see the idiom above); the JSON structure is otherwise typed, with `$If`/`$And`/`$Each`/`$Unless` |
 | videos.tsx | `webkitAllowFullScreen mozallowfullscreen allowFullScreen` | valueless boolean attributes React would print as `=""`, so they are carried as text |
@@ -173,13 +220,9 @@ Idioms added here:
 
 | file | fragment | reason |
 | --- | --- | --- |
-| options/date.tsx | `{{#if ../selected_date.year '==' $index}}selected="selected"{{/if}}` (month and day alike) in the option carrier | operator `if` with a `../` hop and the `$index` loop variable (library gap) |
-| options/date.tsx | `{{#if earliest_year '==' latest_year}}` … `{{/if}}` around the extra option | operator `if` (library gap); the option itself is typed |
 | options/input-file.tsx | `{{#and required (unless prefill)}}required{{/and}}` | `(unless …)` sub-expression inside `and`; `$And` takes expression operands only (as cart-preview.tsx) |
-| options/set-radio.tsx, options/set-rectangle.tsx, options/swatch.tsx | `checked="{{#if defaultValue '==' ''}}checked{{/if}}"` | operator `if` in attribute position |
 | options/swatch.tsx | `{{getImage image "swatch_option_size"}}`, `{{getImage image 'core-swatch'}}` inside `style` | `$getImage` with a preset adds a trailing `""` default (library gap, as store-logo.tsx) |
 | modals/writeReview.tsx | `<!-- Stars -->`, `<!-- TODO: … -->`, `<!-- Name -->`, `<!-- Email -->`, `<!-- Review Subject -->`, `<!-- Comments -->` | JSX has no HTML comment form (`{/* */}` prints nothing); printed through `$raw`, which the harness compares token by token |
-| modals/writeReview.tsx | `{{#if ../product.reviews.selected_rating '===' $index}}` / `{{else}}` / `{{/if}}` inside `$For` | operator `if` with a `../` hop and `$index` (library gap). Both option branches are typed; the `{{#for 1 5}}` loop itself is `$For` |
 
 Library gaps noted in Task 4: none new. The operator `if` and the `$getImage` preset default are the two already listed in Tasks 2 and 3.
 
@@ -205,8 +248,6 @@ Idioms added here:
 | shipping-estimator.tsx | `{{#and shipping_cost_discounted (if shipping_cost_discounted.formatted '!==' shipping_cost.formatted)}}` … `{{else}}` … `{{/and}}` | `if` with an operator as an `and` operand (library gap); the branches are typed |
 | shipping-estimator.tsx | `selected="selected"` in the country and state `<option>` carriers (lines 66, 95) | conditional attribute with a quoted body, so `$raw` in a carrier; the value stays a typed `${country.id}` |
 | shipping-estimator.tsx | `autoComplete="postal-code"` | original `autocomplete`; React prints the camel-case name, browsers read it the same (as encType above) |
-| modals/gift-wrapping-form.tsx | `{{#if quantity '>' 1}}` … `{{/if}}` | operator `if` (library gap); the body is typed |
-| modals/gift-wrapping-form.tsx | `{{#if quantity '===' 1}}style="display:none"{{/if}}` in the first `form-field` carrier | operator `if` in attribute position; the whole `<div>` attribute list is one carrier (as responsive-img.tsx) |
 | modals/gift-wrapping-form.tsx | `checked="checked"` on the first radio | literal-only; React turns `checked` into a boolean (`checked=""`), so that input's attribute list is one carrier. The second radio is plain props. |
 | modals/gift-wrapping-form.tsx | `{{#unless selected}}style="display:none"{{/unless}}` on the single `<a>`, and `{{#unless selected_wrapping}}` on the single message `<div>` | conditional `style`; a React style object cannot depend on a Handlebars value, so the attribute list is one carrier |
 | modals/gift-wrapping-form.tsx | `{{#if selected}}selected{{/if}}` on each `<option>` (single and multiple) | conditional attribute; carrier with the plain text body `selected ` (no quotes) |
@@ -230,19 +271,10 @@ Idioms added here:
 | account/add-wishlist.tsx | `action` attribute: `{{#if forms.wishlist.id}}…{{else}}…&product_id={{…}}{{/if}}` in a carrier, `$If` function form | truthy block inside an attribute value; the `&product_id=` literal goes through `$raw` so it is not escaped |
 | account/add-wishlist.tsx | checkbox `checked`: `$If` function form in the carrier | conditional attribute with a plain text body |
 | account/address-list.tsx | `&plus;` | JSX text would emit `+` |
-| account/edit-account.tsx | `{{#if (lang 'account.settings.X') '!==' 'Label'}}` … `{{else}}` … `{{/if}}` (first_name, last_name, company, phone) | operator `if` with a `lang` sub-expression (library gap) |
-| account/navigation.tsx | `{{#if account_page '===' 'x'}}is-active{{/if}}` in eight `li` classes | operator `if` in a class (library gap), in a template-literal class |
-| account/order-contents.tsx | `{{#if type '===' 'giftcertificate'}}` / `{{else}}` / `{{/if}}` around the gift-certificate `<img>` and the responsive-img partial | operator `if` (library gap); both branches typed |
 | account/order-contents.tsx | `&#215;` between quantity and name | JSX text would emit `×` |
-| account/orders-list.tsx | `{{#if items.0.type '===' 'giftcertificate'}}` / `{{else}}` / `{{/if}}` | operator `if` with an array index path (library gap) |
-| account/payment-methods-list.tsx | `{{#if type '===' 'stored_card'}}`, `'stored_bank_account'`, `'stored_paypal_account'` blocks | operator `if` (library gap); the branch bodies are typed |
-| account/payment-methods-list.tsx | `{{#if ../methodId '===' 'ach'}}` / `{{else if ../methodId '===' 'ecp'}}` / `{{else if … 'sepa_direct_debit'}}` / `{{else}}` | operator `if` chain with a `../` hop (library gap) |
 | account/payment-methods-list.tsx | `&plus;` in the new-method tile | JSX text |
-| account/returns-list.tsx | `{{#if status '===' 'ReturnStatus…'}}` with six `{{else if}}` branches | operator `if` chain (library gap); each branch is a typed `h6` |
 | blog/post.tsx | heading: `{{#if is_blog_post}}` as `$If` with an `h1` branch and an `h2` branch, each holding the same typed link and title | Reasoned parity difference. The original `<h{{#if}}1{{else}}2{{/if}}>` splits the tag name with a block; `hbx-parity.mjs` reads `1=""` / `2=""` as attributes at token #12, so no typed form can match those tokens. The rendered markup is the same `h1` or `h2` element. |
 | blog/post.tsx | `&hellip; ` before the read-more link | JSX text would emit `…` |
-| brand/product-listing.tsx, category/product-listing.tsx | `{{#if theme_settings.product_list_display_mode '===' 'grid'}}` / `{{else}}` / `{{/if}}` | operator `if` (library gap); both branches are typed partial calls |
-| category/sort-box.tsx | `{{#if sort '==' 'x'}}selected{{/if}}` on eight `<option>` carriers and the `relevance` option | operator `if` in an attribute (library gap); each option is one carrier, the `result_count` truthy block is `$If` |
 | gift-certificate/navigation.tsx | `{{#if gift_page '===' 'purchase'}}`, `'redeem'`, `'balance'` with `{{else}}` / `{{/if}}` | operator `if` (library gap); the `li` bodies are typed |
 
 Library gaps noted in Task 6: none new. The operator `if` (Task 2) accounts for every raw conditional here. The `$If` body escaping (Task 3) and the entity `$raw` form (Tasks 1 and 5) also recur. The blog heading is a `$If` pair with a parity difference at token #12, a harness tokenisation of the split tag name (see the row above), not a helper gap.
@@ -269,15 +301,8 @@ Idioms added here:
 
 | file | fragment | reason |
 | --- | --- | --- |
-| search/advanced-search.tsx | `{{#if ../forms.search.values.brand '==' id}}selected{{/if}}` in the brand option (`value` is a plain prop) | operator `if` with a `../` hop and the loop `id` (library gap) |
-| search/advanced-search.tsx | `{{#if forms.search.values.featured_products '===' '1'}}` (and `'2'`), `{{#if forms.search.values.free_shipping '===' …}}` (and `'2'`) on the option (`value` plain) | operator `if` in attribute position (library gap) |
-| search/content-sort-box.tsx | `{{#if sort '==' …}}selected{{/if}}` on three options (`value` plain) | operator `if` in attribute position (library gap) |
-| search/product-listing.tsx | `{{#if theme_settings.product_list_display_mode '===' 'grid'}}` / `{{else}}` / `{{/if}}` | operator `if` (library gap); both branches are typed partial calls |
-| faceted-search/index.tsx | `{{#if facets.length '>' 2}}` / `{{else}}` / `{{/if}}` around the browse-by text | operator `if` (library gap); the `lang`, `join` and `toLowerCase` in both branches are typed |
 
 Reasoned difference, not raw: React prints `name` after `aria-describedby` on the range-form `<input>`s (the original has it first). Attribute order does not change rendering, and the harness reports the two identical. The `&` in the browse-by text is a plain `" & "` string (dist prints `&amp;`), so it needs no raw.
-| faceted-search/selected-facets.tsx | `{{#if facet '===' 'rating'}}` / `{{else}}` / `{{/if}}` in each item | operator `if` (library gap); both branches are typed |
-| faceted-search/show-more-facets.tsx | `{{#if facet '===' ../all_facets}}` / `{{/if}}` around the inner loop | operator `if` with a `../` hop (library gap); the inner loop is typed |
 
 Library gaps noted in Task 7: none new. The operator `if` (Task 2) accounts for every raw conditional here.
 
@@ -298,9 +323,6 @@ Idioms added here:
 | file | fragment | reason |
 | --- | --- | --- |
 | blog.tsx, brand.tsx, category.tsx | `href="{{{pagination.X.previous}}}"` / `next` on `<link>` | triple-stash in attribute position; carried in `dangerouslyInlineAttributes` (Task 2) |
-| search.tsx | `{{#if forms.search.section '!=' 'product'}} u-hiddenVisually{{/if}}` in the aside `className` | operator `if` (library gap) |
-| search.tsx | `{{#if forms.search.section '!=' 'content'}}class="u-hidden"{{/if}}` and the `'product'` twin on the two tabpanel `<div>`s | operator `if` in attribute position (library gap); carriers |
-| search.tsx | `{{#if result_count '===' 0}}` (two blocks) | operator `if` (library gap); bodies typed |
 | search.tsx | `$raw('"')` around the `<strong>` query; `$raw(" > ")` in the category crumbs | quoted or `>` literal text (not Handlebars); a `"` or `>` in a text body is escaped otherwise |
 | cart.tsx | `{{#or customer (unless settings.hide_price_from_guests)}}` / `{{else}}` / `{{/or}}` | `(unless …)` sub-expression inside `or`; `$Or` takes expression operands only (Task 2). Heads raw, bodies typed |
 | compare.tsx | `{{#or ../customer (unless ../settings.hide_price_from_guests)}}` / `{{else}}` / `{{/or}}` in the product loop | same as cart.tsx, inside a `$Each` with a `../` hop. Heads raw, bodies typed |
@@ -324,14 +346,11 @@ Idioms added here:
 - `{{#for 0 quantity}}` is `<$For from={$number(0)} to={…} $then={(ctx) => … ctx.$index …} />` (add-return).
 - `{{{x}}}` triple-stash as a child is `{$unescaped($x)}`; `{{{sanitize value}}}` is `{$unescaped($sanitize(option.value))}`.
 - Partial hash booleans (`required=true`) are `$boolean(true)` / `$boolean(false)`, not `$string("true")`.
-- Consecutive `{{inject}}` tags keep `{" "}` between them (checked by parity). The `{{inject}}` at top level of `edit.html` (outside `{{#partial}}`) stays before `<$StencilPartial>`.
+- Consecutive `{{inject}}` tags keep `{" "}` between them (checked by parity). The `{{inject}}` at top level of `edit.html` (outside `{{#partial}}`) stays in a `<>` wrapper before `<$Page>` (batch 4B).
 - A plain `checked` in an attribute position (edit-payment-method `is_default`) is a function-form `${$If({test, $then: () => "checked"})}` in the carrier, as in add-wishlist.
 
 | file | fragment | reason |
 | --- | --- | --- |
-| orders/all.tsx | `{{#if customer.store_credit.value '>' 0}}` / `{{/if}}` | operator `if` (library gap, Task 2); body typed |
-| wishlist-details.tsx | `{{#if wishlist.is_public '>' 0}}` / `{{/if}}` | operator `if` (library gap, Task 2); body typed |
-| edit-payment-method.tsx | `{{#if type '===' 'stored_card'}}` (x2) and `{{#if type '===' 'stored_paypal_account'}}` / `{{/if}}` | operator `if` (library gap, Task 2); bodies typed |
 | edit-payment-method.tsx | `is_default` checkbox attributes in `dangerouslyInlineAttributes`, with `${$If(...)}` for `checked` | `{{#if is_default}}checked{{/if}}` is a block in attribute position; `$If` prints no attribute text, so the attributes go in the carrier |
 
 Library types (typed local extensions, not casts):
@@ -356,7 +375,6 @@ Idioms added here:
 | file | fragment | reason |
 | --- | --- | --- |
 | gift-certificate/purchase.tsx | agree2 `<input>` attributes in `dangerouslyInlineAttributes`, with `${$If({test, $then: () => " checked"})}` | `{{#if forms.gift_certificate.editing}} checked{{/if}}` is a block in attribute position; `$If` prints no attribute text (function form, as edit-payment-method.tsx) |
-| gift-certificate/purchase.tsx | theme radio `<input>` attributes in a carrier, with `$raw("{{#if this.value '==' ../forms.gift_certificate.values.theme}} checked{{/if}}")` | operator `if` with a `../` hop in attribute position (library gap, Task 2); the `id` and `value` are typed `${theme.value}` |
 
 Library gaps found in Task 8c:
 
@@ -387,8 +405,7 @@ Idioms added here:
 
 | file | fragment | reason |
 | --- | --- | --- |
-| product-view.tsx | `{{#if product.images.length '>' 1 }}` … `{{/if}}` | operator `if` (library gap, Task 2); the partial inside is typed |
-| product-view.tsx | `{{#if product.num_reviews '>' 0}}` / `{{else}}` / `{{/if}}`; `{{#if product.shipping.price.value '===' 0}}` / `{{else}}` / `{{/if}}`; `{{#if theme_settings.show_custom_fields_tabs '!==' true}}` / `{{/if}}`; `{{#if settings.measurements.length '==' 'Centimeters'}}` / `{{else}}` / `{{/if}}` (x3) | operator `if` (library gap); bodies typed |
+| product-view.tsx | `{{#if product.images.length '>' 1 }}` … `{{/if}}` (space before `}}` kept) | operator `if` with a trailing space in the tag; the typed form prints `1}}`, so it stays raw (see Operator if rollout, batch 2). The partial inside is typed |
 | product-view.tsx | `{{#or customer (unless settings.hide_price_from_guests)}}` / `{{else}}` / `{{/or}}` (price block), and the same head inside `data-product-price` | `(unless …)` sub-expression inside `or` (Task 2); bodies typed, `with_tax` `$If` in function form |
 | product-view.tsx | `$raw('<a href="')` … `$raw('" target="_blank">')` and `$raw("</a>")`, each under a typed `<$If test={product.main_image}>` | the `{{#if}}` opens and closes the `<a>` tag in separate blocks; the tag text is raw, the `$If`, the `getImageSrcset` and the partial are typed |
 | product-view.tsx | `data-slick='{ "infinite": false, … }'` as `$raw` inside `$Gt` in the `<ul>` carrier | quoted JSON attribute value; the block is typed `$Gt`, the JSON is reflowed onto one line (harness collapses whitespace) |
@@ -396,8 +413,6 @@ Idioms added here:
 | product-view.tsx | `data-reveal-id="modal-review-form"` via `$raw` in `$Unless` | conditional attribute with a quoted body |
 | product-view.tsx | the root `<div class="productView">` attribute list from `data-product-category` on, as one carrier | `{{#each}}` and `{{#or}}` blocks inside attribute values (as card.tsx) |
 | cart/totals.tsx | `{{#or customer (unless settings.hide_price_from_guests)}}` / `{{else}}` / `{{/or}}` (subtotal and non-multi total) and `{{#or customer (unless settings.hide_price_from_guests) }}` (multi-coupon total, trailing space kept verbatim) | `(unless …)` sub-expression inside `or` (Task 2); bodies typed |
-| cart/totals.tsx | `{{#if discount.value '===' 0}}-{{/if}}` in each coupon | operator `if` (library gap); the `-` is plain text between the two raws |
-| cart/content.tsx | `{{#if type '==' 'GiftCertificate'}}` / `{{else}}` / `{{/if}}` (figure) and `{{#if type '==' 'GiftCertificate'}}` / `{{/if}}` (change link) | operator `if` (library gap); bodies typed |
 | cart/content.tsx | `{{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}` / `{{else}}` / `{{/or}}` (price and total cells); `{{#or can_modify (if type '==' 'GiftCertificate')}}` / `{{/or}}` (remove button) | `(unless …)` and `(if … '==' …)` sub-expressions inside `or` (Task 2); bodies typed, `--` is plain text |
 | cart/content.tsx | `href="/viewfile.php?attributeId={{id}}&cartitem={{../id}}"` carrier | the literal `&` must not be escaped to `&amp;` (as wishlist-dropdown.tsx); ids typed `$pointer` |
 | cart/content.tsx | `colSpan={2}` | React prints `colSpan`; the original `colspan` (HTML names are case-insensitive, as `encType`) |
@@ -426,11 +441,7 @@ Idioms added here:
 | file | fragment | reason |
 | --- | --- | --- |
 | navigation-menu.tsx | `{{#and language_selector language_selector.languages.length '>' 1}}` … `{{/and}}` | Stencil `and` takes 4 operands here; `$And` takes 2. Kept verbatim, original semantics (as navigation.tsx). Body typed. |
-| navigation-menu.tsx | `{{#if theme_settings.navigation_design '!==' 'simple'}}` in the `ul` class; `{{#if ../theme_settings.navigation_design '===' 'simple'}}` / `'alternate'` around the two partials | operator `if` (library gap, Task 2); partials typed |
-| navigation-menu.tsx | `{{#if name '==' ../page.title}} activePage{{/if}}` in the page link class | operator `if` with a `../` hop in a class (library gap) |
-| navigation-menu.tsx | `{{#if currency_selector.currencies.length '>' 1}}` … `{{/if}}`, `{{#if customer.store_credit.value '>' 0}}`, `{{#if theme_settings.product_list_display_mode '==' 'list'}}` | operator `if` (library gap); bodies typed |
-| navigation-menu.tsx | currency `<a>` carrier: `{{{switch_url}}}`, `{{{code}}}`, `{{#if cart_currency_switch_url.length '>' 0 }}data-cart-currency-switch-url="{{{cart_currency_switch_url}}}"{{/if}}` | triple-stash and operator `if` in attribute position (as currency-selector.tsx); `href` and `aria-label` sit in the carrier to keep document order |
-| orders/invoice.tsx | `{{#if theme_settings.logo_size '===' 'original'}}` / `{{else}}` / `{{/if}}` around the logo `<img>` | operator `if` (library gap); both branches open different tags |
+| navigation-menu.tsx | currency `<a>` carrier: `{{{switch_url}}}`, `{{{code}}}`, `{{#if cart_currency_switch_url.length '>' 0 }}data-cart-currency-switch-url="{{{cart_currency_switch_url}}}"{{/if}}` | triple-stash, and the operator `if` kept raw for the trailing-space reason (as currency-selector.tsx, see Operator if rollout); `href` and `aria-label` sit in the carrier to keep document order |
 | orders/invoice.tsx | `{{getImage settings.store_logo.image 'logo_size'}}` in the `src` carriers | `$getImage` with a preset adds a trailing `""` default (see Task 2 gap, store-logo.tsx) |
 | orders/invoice.tsx | `&nbsp;` x3 via `$raw` | JSX text would emit the U+00A0 character, not the entity |
 | orders/invoice.tsx | `<tr {{#if new_address}}class="NewAddress"{{/if}}>` carrier, `$raw('class="NewAddress"')` | conditional attribute with a quoted body |

@@ -155,19 +155,24 @@ export default () => {
                     )}
                 />
             </div>
-            {$raw("{{#if page_type '===' 'product'}}")}
-            <div className="price-section price-section--saving price" dangerouslyInlineAttributes={{attributes: `${$Unless({test: price.saved, $then: () => $raw('style="display: none;"')})}`}}>
-                <span className="price">
-                    <$Lang keyName={$string("products.you_save_opening_text")} />
-                </span>
-                <span data-product-price-saved={""} className="price price--saving">
-                    {price.saved.formatted}
-                </span>
-                <span className="price">
-                    <$Lang keyName={$string("products.you_save_closing_bracket")} />
-                </span>
-            </div>
-            {$raw("{{/if}}")}
+            <$If
+                test={$pointer("page_type")}
+                operator={$string("===")}
+                rvalue={$string("product")}
+                $then={() => (
+                    <div className="price-section price-section--saving price" dangerouslyInlineAttributes={{attributes: `${$Unless({test: price.saved, $then: () => $raw('style="display: none;"')})}`}}>
+                        <span className="price">
+                            <$Lang keyName={$string("products.you_save_opening_text")} />
+                        </span>
+                        <span data-product-price-saved={""} className="price price--saving">
+                            {price.saved.formatted}
+                        </span>
+                        <span className="price">
+                            <$Lang keyName={$string("products.you_save_closing_bracket")} />
+                        </span>
+                    </div>
+                )}
+            />
             {$raw("{{/and}}")}
         </>
     );

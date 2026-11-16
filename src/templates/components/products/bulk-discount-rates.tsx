@@ -54,32 +54,57 @@ export default () => {
                                     $then={(rate) => (
                                         <li>
                                             <$Lang keyName={$string("products.bulk_pricing.range")} min={rate.min} max={rate.max} />
-                                            {$raw("{{#if type '===' 'percent'}}")}
-                                            <$Lang keyName={$string("products.bulk_pricing.percent")} discount={rate.discount.formatted} />
-                                            {" "}
-                                            {$raw("{{else if type '===' 'fixed'}}")}
-                                            {" "}
                                             <$If
-                                                test={rate.discount_inc_tax}
+                                                test={$pointer("type")}
+                                                operator={$string("===")}
+                                                rvalue={$string("percent")}
                                                 $then={() => (
                                                     <>
-                                                        <$Lang keyName={$string("products.bulk_pricing.fixed_both.prefix")} />
-                                                        <br />
-                                                        {rate.discount_inc_tax.formatted}{" "}
-                                                        <$Lang keyName={$string("products.price_with_tax")} tax_label={$pointer("../product.price.tax_label")} />
-                                                        <br />
-                                                        {rate.discount.formatted}{" "}
-                                                        <$Lang keyName={$string("products.price_without_tax")} tax_label={$pointer("../product.price.tax_label")} />{" "}
-                                                        <$Lang keyName={$string("products.bulk_pricing.fixed_both.suffix")} />
+                                                        <$Lang keyName={$string("products.bulk_pricing.percent")} discount={rate.discount.formatted} />
+                                                        {" "}
                                                     </>
                                                 )}
-                                                $else={() => <$Lang keyName={$string("products.bulk_pricing.fixed")} discount={rate.discount.formatted} />}
+                                                $elseThen={[
+                                                    {
+                                                        test: $pointer("type"),
+                                                        operator: $string("==="),
+                                                        rvalue: $string("fixed"),
+                                                        $then: () => (
+                                                            <>
+                                                                {" "}
+                                                                <$If
+                                                                    test={rate.discount_inc_tax}
+                                                                    $then={() => (
+                                                                        <>
+                                                                            <$Lang keyName={$string("products.bulk_pricing.fixed_both.prefix")} />
+                                                                            <br />
+                                                                            {rate.discount_inc_tax.formatted}{" "}
+                                                                            <$Lang keyName={$string("products.price_with_tax")} tax_label={$pointer("../product.price.tax_label")} />
+                                                                            <br />
+                                                                            {rate.discount.formatted}{" "}
+                                                                            <$Lang keyName={$string("products.price_without_tax")} tax_label={$pointer("../product.price.tax_label")} />{" "}
+                                                                            <$Lang keyName={$string("products.bulk_pricing.fixed_both.suffix")} />
+                                                                        </>
+                                                                    )}
+                                                                    $else={() => <$Lang keyName={$string("products.bulk_pricing.fixed")} discount={rate.discount.formatted} />}
+                                                                />
+                                                                {" "}
+                                                            </>
+                                                        ),
+                                                    },
+                                                    {
+                                                        test: $pointer("type"),
+                                                        operator: $string("==="),
+                                                        rvalue: $string("price"),
+                                                        $then: () => (
+                                                            <>
+                                                                {" "}
+                                                                <$Lang keyName={$string("products.bulk_pricing.price")} discount={rate.discount.formatted} />
+                                                            </>
+                                                        ),
+                                                    },
+                                                ]}
                                             />
-                                            {" "}
-                                            {$raw("{{else if type '===' 'price'}}")}
-                                            {" "}
-                                            <$Lang keyName={$string("products.bulk_pricing.price")} discount={rate.discount.formatted} />
-                                            {$raw("{{/if}}")}
                                         </li>
                                     )}
                                 />

@@ -84,24 +84,34 @@ export default () => (
                 $then={(item) => (
                     <tr className="cart-item" data-item-row={""}>
                         <td className="cart-item-block cart-item-figure">
-                            {$raw("{{#if type '==' 'GiftCertificate'}}")}
-                            <img
-                                className="cart-item-fixed-image"
-                                src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
-                                alt={$lang($string("cart.gift_certificates.gift_certificate"))}
-                                title={$lang($string("cart.gift_certificates.gift_certificate"))}
+                            <$If
+                                test={$pointer("type")}
+                                operator={$string("==")}
+                                rvalue={$string("GiftCertificate")}
+                                $then={() => (
+                                    <>
+                                        <img
+                                            className="cart-item-fixed-image"
+                                            src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
+                                            alt={$lang($string("cart.gift_certificates.gift_certificate"))}
+                                            title={$lang($string("cart.gift_certificates.gift_certificate"))}
+                                        />
+                                    </>
+                                )}
+                                $else={() => (
+                                    <>
+                                        {place(
+                                            $partial("components/common/responsive-img", {
+                                                image: $pointer("image"),
+                                                class: $string("cart-item-image"),
+                                                fallback_size: $pointer("../theme_settings.productthumb_size"),
+                                                lazyload: $string("lazyload"),
+                                                default_image: $pointer("../theme_settings.default_image_product"),
+                                            }),
+                                        )}
+                                    </>
+                                )}
                             />
-                            {$raw("{{else}}")}
-                            {place(
-                                $partial("components/common/responsive-img", {
-                                    image: $pointer("image"),
-                                    class: $string("cart-item-image"),
-                                    fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                    lazyload: $string("lazyload"),
-                                    default_image: $pointer("../theme_settings.default_image_product"),
-                                }),
-                            )}
-                            {$raw("{{/if}}")}
                         </td>
                         <td className="cart-item-block cart-item-title">
                             <$If test={item.brand.name} $then={() => <p className="cart-item-brand">{item.brand.name}</p>} />
@@ -159,11 +169,18 @@ export default () => (
                                 )}
                             />
 
-                            {$raw("{{#if type '==' 'GiftCertificate'}}")}
-                            <a href={item.edit_url} aria-label={$lang($string("cart.gift_certificates.change_gift_certificate"), {certificate_name: item.name})}>
-                                <$Lang keyName={$string("common.change")} />
-                            </a>
-                            {$raw("{{/if}}")}
+                            <$If
+                                test={$pointer("type")}
+                                operator={$string("==")}
+                                rvalue={$string("GiftCertificate")}
+                                $then={() => (
+                                    <>
+                                        <a href={item.edit_url} aria-label={$lang($string("cart.gift_certificates.change_gift_certificate"), {certificate_name: item.name})}>
+                                            <$Lang keyName={$string("common.change")} />
+                                        </a>
+                                    </>
+                                )}
+                            />
                             {place($partial("components/cart/item-giftwrap", item))}
                             <$If
                                 test={item.event_date}

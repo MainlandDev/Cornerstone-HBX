@@ -1,4 +1,4 @@
-import {$Inject, $lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -7,25 +7,35 @@ export default () => (
         {place($partial("components/products/filter", {sort: $pointer("pagination.brand.sort")}))}
 
         <div data-list-name={`Brand: ${$pointer("brand.name")}`}>
-            {$raw("{{#if theme_settings.product_list_display_mode '===' 'grid'}}")}
-            {place(
-                $partial("components/products/grid", {
-                    products: $pointer("brand.products"),
-                    show_compare: $pointer("brand.show_compare"),
-                    theme_settings: $pointer("theme_settings"),
-                    event: $string("list"),
-                }),
-            )}
-            {$raw("{{else}}")}
-            {place(
-                $partial("components/products/list", {
-                    products: $pointer("brand.products"),
-                    show_compare: $pointer("brand.show_compare"),
-                    theme_settings: $pointer("theme_settings"),
-                    event: $string("list"),
-                }),
-            )}
-            {$raw("{{/if}}")}
+            <$If
+                test={$pointer("theme_settings.product_list_display_mode")}
+                operator={$string("===")}
+                rvalue={$string("grid")}
+                $then={() => (
+                    <>
+                        {place(
+                            $partial("components/products/grid", {
+                                products: $pointer("brand.products"),
+                                show_compare: $pointer("brand.show_compare"),
+                                theme_settings: $pointer("theme_settings"),
+                                event: $string("list"),
+                            }),
+                        )}
+                    </>
+                )}
+                $else={() => (
+                    <>
+                        {place(
+                            $partial("components/products/list", {
+                                products: $pointer("brand.products"),
+                                show_compare: $pointer("brand.show_compare"),
+                                theme_settings: $pointer("theme_settings"),
+                                event: $string("list"),
+                            }),
+                        )}
+                    </>
+                )}
+            />
         </div>
 
         {place($partial("components/common/paginator", $pointer("pagination.brand")))}

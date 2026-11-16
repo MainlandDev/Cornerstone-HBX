@@ -32,11 +32,13 @@ export default () => (
             to={$number(5)}
             $then={() => (
                 <>
-                    {$raw("{{#if ../this.rating '>=' $index}}")}
-                    <span className="icon icon--ratingFull">{star()}</span>
-                    {$raw("{{else}}")}
-                    <span className="icon icon--ratingEmpty">{star()}</span>
-                    {$raw("{{/if}}")}
+                    <$If
+                        test={$pointer("../this.rating")}
+                        operator={$string(">=")}
+                        rvalue={$pointer("$index")}
+                        $then={() => <span className="icon icon--ratingFull">{star()}</span>}
+                        $else={() => <span className="icon icon--ratingEmpty">{star()}</span>}
+                    />
                 </>
             )}
         />

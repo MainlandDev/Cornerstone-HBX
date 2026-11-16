@@ -3,11 +3,10 @@ import {
     $Each,
     $frontmatter,
     $If,
+    $Page,
     $partial,
     $pointer,
     $raw,
-    $StencilPartial,
-    $string,
     $this,
     $Unless,
     place,
@@ -18,10 +17,9 @@ export const frontmatter = $frontmatter.blog({blog: {posts: {limit: 5, pages: 3,
 export default () => {
     const settings = $$themeSettings();
     return (
-        <>
-            <$StencilPartial
-                name={$string("head")}
-                $then={() => (
+        <$Page
+            blocks={{
+                head: () => (
                     <>
                         <$If
                             test={$pointer("pagination.blog.previous")}
@@ -36,11 +34,8 @@ export default () => {
                             )}
                         />
                     </>
-                )}
-            />
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+                ),
+                page: () => (
                     <>
                         {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                         <main className="page">
@@ -62,9 +57,9 @@ export default () => {
                             {place($partial("components/common/paginator", $pointer("pagination.blog")))}
                         </main>
                     </>
-                )}
-            />
-            {place($partial("layout/base"))}
-        </>
+                ),
+            }}
+            layout="layout/base"
+        />
     );
 };

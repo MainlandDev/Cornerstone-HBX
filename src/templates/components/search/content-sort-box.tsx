@@ -1,4 +1,4 @@
-import {$Lang, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <form className="actionBar" method="get" data-sort-by="content">
@@ -8,13 +8,13 @@ export default () => (
                     <$Lang keyName={$string("common.sorter.sort_by")} />
                 </label>
                 <select className="form-select form-select--small" name="sort" id="sort">
-                    <option value="relevance" dangerouslyInlineAttributes={{attributes: `${$raw("{{#if sort '==' 'relevance'}}selected{{/if}}")}`}}>
+                    <option value="relevance" dangerouslyInlineAttributes={{attributes: `${$If({test: $pointer("sort"), operator: $string("=="), rvalue: $string("relevance"), $then: () => "selected"})}`}}>
                         <$Lang keyName={$string("common.sorter.relevance")} />
                     </option>
-                    <option value="alphaasc" dangerouslyInlineAttributes={{attributes: `${$raw("{{#if sort '==' 'alphaasc'}}selected{{/if}}")}`}}>
+                    <option value="alphaasc" dangerouslyInlineAttributes={{attributes: `${$If({test: $pointer("sort"), operator: $string("=="), rvalue: $string("alphaasc"), $then: () => "selected"})}`}}>
                         <$Lang keyName={$string("common.sorter.alpha_asc")} />
                     </option>
-                    <option value="alphadesc" dangerouslyInlineAttributes={{attributes: `${$raw("{{#if sort '==' 'alphadesc'}}selected{{/if}}")}`}}>
+                    <option value="alphadesc" dangerouslyInlineAttributes={{attributes: `${$If({test: $pointer("sort"), operator: $string("=="), rvalue: $string("alphadesc"), $then: () => "selected"})}`}}>
                         <$Lang keyName={$string("common.sorter.alpha_desc")} />
                     </option>
                 </select>

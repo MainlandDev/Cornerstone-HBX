@@ -1,4 +1,4 @@
-import {$dynamicComponent, $Each, $Inject, $Lang, $lang, $pointer, $raw, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <form action={$pointer("urls.account.update_action")} data-edit-account-form={""} className="form" method="post">
@@ -10,11 +10,13 @@ export default () => (
             <div className="form-row form-row--half">
                 <div className="form-field" id="account_firstname_id">
                     <label className="form-label" htmlFor="account_firstname">
-                        {$raw("{{#if (lang 'account.settings.first_name') '!==' 'First Name'}}")}
-                        <$Lang keyName={$string("account.settings.first_name")} />
-                        {$raw("{{else}}")}
-                        {$pointer("forms.edit_account.first_name_label")}
-                        {$raw("{{/if}}")}{" "}
+                        <$If
+                            test={$lang($string("account.settings.first_name"))}
+                            operator={$string("!==")}
+                            rvalue={$string("First Name")}
+                            $then={() => <$Lang keyName={$string("account.settings.first_name")} />}
+                            $else={() => <>{$pointer("forms.edit_account.first_name_label")}</>}
+                        />{" "}
                         <small>
                             <$Lang keyName={$string("common.required")} />
                         </small>
@@ -32,11 +34,13 @@ export default () => (
                 </div>
                 <div className="form-field" id="account_lastname_id">
                     <label className="form-label" htmlFor="account_lastname">
-                        {$raw("{{#if (lang 'account.settings.last_name') '!==' 'Last Name'}}")}
-                        <$Lang keyName={$string("account.settings.last_name")} />
-                        {$raw("{{else}}")}
-                        {$pointer("forms.edit_account.last_name_label")}
-                        {$raw("{{/if}}")}{" "}
+                        <$If
+                            test={$lang($string("account.settings.last_name"))}
+                            operator={$string("!==")}
+                            rvalue={$string("Last Name")}
+                            $then={() => <$Lang keyName={$string("account.settings.last_name")} />}
+                            $else={() => <>{$pointer("forms.edit_account.last_name_label")}</>}
+                        />{" "}
                         <small>
                             <$Lang keyName={$string("common.required")} />
                         </small>
@@ -54,11 +58,13 @@ export default () => (
                 </div>
                 <div className="form-field" id="account_companyname_id">
                     <label className="form-label" htmlFor="account_companyname">
-                        {$raw("{{#if (lang 'account.settings.company') '!==' 'Company'}}")}
-                        <$Lang keyName={$string("account.settings.company")} />
-                        {$raw("{{else}}")}
-                        {$pointer("forms.edit_account.company_label")}
-                        {$raw("{{/if}}")}
+                        <$If
+                            test={$lang($string("account.settings.company"))}
+                            operator={$string("!==")}
+                            rvalue={$string("Company")}
+                            $then={() => <$Lang keyName={$string("account.settings.company")} />}
+                            $else={() => <>{$pointer("forms.edit_account.company_label")}</>}
+                        />
                     </label>
                     <input
                         aria-labelledby="account_companyname_id"
@@ -73,11 +79,13 @@ export default () => (
                 </div>
                 <div className="form-field" id="account_phone_id">
                     <label className="form-label" htmlFor="account_phone">
-                        {$raw("{{#if (lang 'account.settings.phone') '!==' 'Phone Number'}}")}
-                        <$Lang keyName={$string("account.settings.phone")} />
-                        {$raw("{{else}}")}
-                        {$pointer("forms.edit_account.phone_label")}
-                        {$raw("{{/if}}")}
+                        <$If
+                            test={$lang($string("account.settings.phone"))}
+                            operator={$string("!==")}
+                            rvalue={$string("Phone Number")}
+                            $then={() => <$Lang keyName={$string("account.settings.phone")} />}
+                            $else={() => <>{$pointer("forms.edit_account.phone_label")}</>}
+                        />
                     </label>
                     <input
                         aria-labelledby="account_phone_id"

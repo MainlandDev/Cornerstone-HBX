@@ -1,12 +1,11 @@
-import {$frontmatter, $If, $Lang, $lang, $partial, $pointer, $raw, $StencilPartial, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$frontmatter, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({customer: {orders: {limit: 10}}});
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <h1 className="page-heading">
@@ -16,13 +15,20 @@ export default () => (
 
                     <main className="account account--fixed">
                         <div className="account-head">
-                            {$raw("{{#if customer.store_credit.value '>' 0}}")}
-                            <div className="alertBox alertBox--storeCredit">
-                                {$unescaped(
-                                    $lang($string("common.store_credit"), {store_credit: $pointer("customer.store_credit.formatted")}),
+                            <$If
+                                test={$pointer("customer.store_credit.value")}
+                                operator={$string(">")}
+                                rvalue={$number(0)}
+                                $then={() => (
+                                    <>
+                                        <div className="alertBox alertBox--storeCredit">
+                                            {$unescaped(
+                                                $lang($string("common.store_credit"), {store_credit: $pointer("customer.store_credit.formatted")}),
+                                            )}
+                                        </div>
+                                    </>
                                 )}
-                            </div>
-                            {$raw("{{/if}}")}
+                            />
                         </div>
                         <div className="account-body">
                             <section className="account-content">
@@ -40,8 +46,8 @@ export default () => (
                         </div>
                     </main>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

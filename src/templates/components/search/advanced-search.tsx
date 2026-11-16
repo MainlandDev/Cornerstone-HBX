@@ -1,4 +1,4 @@
-import {$Each, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Brand {
     id: string;
@@ -52,7 +52,7 @@ export default () => (
                                         <option
                                             value={brand.id}
                                             dangerouslyInlineAttributes={{
-                                                attributes: `${$raw("{{#if ../forms.search.values.brand '==' id}}selected{{/if}}")}`,
+                                                attributes: `${$If({test: $pointer("../forms.search.values.brand"), operator: $string("=="), rvalue: $pointer("id"), $then: () => "selected"})}`,
                                             }}
                                         >
                                             {brand.name}
@@ -143,7 +143,7 @@ export default () => (
                             <option
                                 value="1"
                                 dangerouslyInlineAttributes={{
-                                    attributes: `${$raw("{{#if forms.search.values.featured_products '===' '1'}}selected{{/if}}")}`,
+                                    attributes: `${$If({test: $pointer("forms.search.values.featured_products"), operator: $string("==="), rvalue: $string("1"), $then: () => "selected"})}`,
                                 }}
                             >
                                 <$Lang keyName={$string("forms.search.featured_products.enabled")} />
@@ -151,7 +151,7 @@ export default () => (
                             <option
                                 value="2"
                                 dangerouslyInlineAttributes={{
-                                    attributes: `${$raw("{{#if forms.search.values.featured_products '===' '2'}}selected{{/if}}")}`,
+                                    attributes: `${$If({test: $pointer("forms.search.values.featured_products"), operator: $string("==="), rvalue: $string("2"), $then: () => "selected"})}`,
                                 }}
                             >
                                 <$Lang keyName={$string("forms.search.featured_products.disabled")} />
@@ -169,7 +169,7 @@ export default () => (
                             <option
                                 value="1"
                                 dangerouslyInlineAttributes={{
-                                    attributes: `${$raw("{{#if forms.search.values.free_shipping '===' '1'}}selected{{/if}}")}`,
+                                    attributes: `${$If({test: $pointer("forms.search.values.free_shipping"), operator: $string("==="), rvalue: $string("1"), $then: () => "selected"})}`,
                                 }}
                             >
                                 <$Lang keyName={$string("forms.search.free_shipping.free")} />
@@ -177,7 +177,7 @@ export default () => (
                             <option
                                 value="2"
                                 dangerouslyInlineAttributes={{
-                                    attributes: `${$raw("{{#if forms.search.values.free_shipping '===' '2'}}selected{{/if}}")}`,
+                                    attributes: `${$If({test: $pointer("forms.search.values.free_shipping"), operator: $string("==="), rvalue: $string("2"), $then: () => "selected"})}`,
                                 }}
                             >
                                 <$Lang keyName={$string("forms.search.free_shipping.paid")} />

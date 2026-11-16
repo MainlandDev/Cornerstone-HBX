@@ -1,12 +1,11 @@
-import {$frontmatter, $partial, $pointer, $StencilPartial, $string, $Lang, place} from "@mainlanddev/hbx-bigcommerce";
+import {$frontmatter, $Page, $partial, $pointer, $string, $Lang, place} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({customer: {orders: {limit: 3}}});
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <div className="account">
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <h2 className="account-heading title">
@@ -20,8 +19,8 @@ export default () => (
                         </section>
                     </div>
                 </div>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

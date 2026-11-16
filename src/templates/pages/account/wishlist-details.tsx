@@ -1,10 +1,9 @@
-import {$If, $Lang, $lang, $partial, $pointer, $raw, $StencilPartial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <div className="account" data-pagination-wishlist={""}>
                     <$If
                         test={$pointer("wishlist.is_editable")}
@@ -22,16 +21,23 @@ export default () => (
                         test={$pointer("wishlist.is_editable")}
                         $then={() => (
                             <>
-                                {$raw("{{#if wishlist.is_public '>' 0}}")}
-                                <div className="panel share-wishlist">
-                                    <div className="panel-body">
-                                        <h5>
-                                            <$Lang keyName={$string("account.wishlists.share_intro")} />
-                                        </h5>
-                                        <input className="form-input" value={`${$pointer("settings.base_url")}${$pointer("wishlist.share_url")}`} readOnly={true} />
-                                    </div>
-                                </div>
-                                {$raw("{{/if}}")}
+                                <$If
+                                    test={$pointer("wishlist.is_public")}
+                                    operator={$string(">")}
+                                    rvalue={$number(0)}
+                                    $then={() => (
+                                        <>
+                                            <div className="panel share-wishlist">
+                                                <div className="panel-body">
+                                                    <h5>
+                                                        <$Lang keyName={$string("account.wishlists.share_intro")} />
+                                                    </h5>
+                                                    <input className="form-input" value={`${$pointer("settings.base_url")}${$pointer("wishlist.share_url")}`} readOnly={true} />
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                />
                             </>
                         )}
                     />
@@ -42,8 +48,8 @@ export default () => (
                         $else={() => place($partial("components/common/alert/alert-info", $lang($string("account.wishlists.empty_wishlist"))))}
                     />
                 </div>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

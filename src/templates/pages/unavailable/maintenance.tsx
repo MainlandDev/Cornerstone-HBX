@@ -1,14 +1,10 @@
-import {$Lang, $partial, $pointer, $stylesheet, $StencilPartial, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Lang, $Page, $pointer, $stylesheet, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("head")}
-            $then={() => place($unescaped($stylesheet($string("assets/css/maintenance.css"))))}
-        />
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            head: () => place($unescaped($stylesheet($string("assets/css/maintenance.css")))),
+            page: () => (
                 <main>
                     <header>
                         <h1>
@@ -23,8 +19,8 @@ export default () => (
                         <small></small>
                     </footer>
                 </main>
-            )}
-        />
-        {place($partial("layout/empty"))}
-    </>
+            ),
+        }}
+        layout="layout/empty"
+    />
 );

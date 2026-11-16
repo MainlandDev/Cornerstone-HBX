@@ -5,6 +5,7 @@ import {
     $If,
     $Lang,
     $lang,
+    $number,
     $Or,
     $partial,
     $pointer,
@@ -49,26 +50,34 @@ export default () => {
             }}
         >
             <figure className="card-figure">
-                {$raw("{{#if stock_level '===' 0}}")}
-                {$raw("{{#if theme_settings.pdp_sold_out_label '===' ''}}")}
-                {place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))}))}
-                {$raw("{{else}}")}
-                {place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label}))}
-                {$raw("{{/if}}")}
-                {$raw("{{else}}")}
-                <$Or
-                    values={[price.sale_price_with_tax.value, price.sale_price_without_tax.value]}
+                <$If
+                    test={$pointer("stock_level")}
+                    operator={$string("===")}
+                    rvalue={$number(0)}
                     $then={() => (
-                        <>
-                            {$raw("{{#if theme_settings.pdp_sale_badge_label '===' ''}}")}
-                            {place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))}))}
-                            {$raw("{{else}}")}
-                            {place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label}))}
-                            {$raw("{{/if}}")}
-                        </>
+                        <$If
+                            test={$pointer("theme_settings.pdp_sold_out_label")}
+                            operator={$string("===")}
+                            rvalue={$string("")}
+                            $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))}))}
+                            $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label}))}
+                        />
+                    )}
+                    $else={() => (
+                        <$Or
+                            values={[price.sale_price_with_tax.value, price.sale_price_without_tax.value]}
+                            $then={() => (
+                                <$If
+                                    test={$pointer("theme_settings.pdp_sale_badge_label")}
+                                    operator={$string("===")}
+                                    rvalue={$string("")}
+                                    $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))}))}
+                                    $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label}))}
+                                />
+                            )}
+                        />
                     )}
                 />
-                {$raw("{{/if}}")}
 
                 <a
                     href={url}

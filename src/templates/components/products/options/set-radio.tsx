@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -25,7 +25,7 @@ export default () => {
                             type="radio"
                             id={`attribute_radio_${id}_none`}
                             dangerouslyInlineAttributes={{
-                                attributes: `name="attribute[${id}]" value="" ${$raw("checked=\"{{#if defaultValue '==' ''}}checked{{/if}}\"")}`,
+                                attributes: `name="attribute[${id}]" value="" checked="${$If({test: $pointer("defaultValue"), operator: $string("=="), rvalue: $string(""), $then: () => "checked"})}"`,
                             }}
                         />{" "}
                         <label className="form-label" htmlFor={`attribute_radio_${id}_none`}>

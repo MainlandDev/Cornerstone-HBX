@@ -1,4 +1,4 @@
-import {$If, $Lang, $lang, $partial, $pointer, $raw, $$themeSettings, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $partial, $pointer, $raw, $$themeSettings, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const theme = $$themeSettings();
@@ -15,7 +15,11 @@ export default () => {
             <$If test={theme.show_channels} $then={() => place($partial("components/common/channel-selector"))} />
 
             <ul className="navUser-section navUser-section--alt">
-                {$raw("{{#if customer.store_credit.value '>' 0}}")}
+                <$If
+                    test={$pointer("customer.store_credit.value")}
+                    operator={$string(">")}
+                    rvalue={$number(0)}
+                    $then={() => (
                 <li className="navUser-item">
                     <a
                         className="navUser-action navUser-action--storeCredit"
@@ -32,7 +36,9 @@ export default () => {
                         {$unescaped($lang($string("common.store_credit"), {store_credit: $pointer("customer.store_credit.formatted")}))}
                     </div>
                 </li>
-                {$raw("{{/if}}")}
+                    )}
+                />
+
                 <li className="navUser-item">
                     <a
                         className="navUser-action navUser-item--compare"

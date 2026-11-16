@@ -1,4 +1,4 @@
-import {$partial, $pointer, $StencilPartial, $string, $getImage, $If, $Each, $Lang, $this, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Page, $partial, $pointer, $string, $getImage, $If, $Each, $Lang, $this, place} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/downloads.ts types `downloads` as `Record<string, unknown>`, so the fields below are read from
 // download-item.html, not from library docs: images[] (each item is `this` for getImage), product_name, order_id, and items[]
@@ -18,10 +18,9 @@ interface DownloadItem {
 }
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <h1 className="page-heading">
@@ -123,8 +122,8 @@ export default () => (
                         </div>
                     </div>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

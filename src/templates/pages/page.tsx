@@ -2,11 +2,11 @@ import {
     $$themeSettings,
     $Each,
     $If,
+    $Page,
     $partial,
     $pointer,
     $Replace,
     $region,
-    $StencilPartial,
     $string,
     $unescaped,
     $Unless,
@@ -30,10 +30,9 @@ const region = (name: string) => place($unescaped($region({name: $string(name)})
 export default () => {
     const settings = $$themeSettings();
     return (
-        <>
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+        <$Page
+            blocks={{
+                page: () => (
                     <>
                         {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
 
@@ -97,10 +96,9 @@ export default () => {
                             />
                         </main>
                     </>
-                )}
-            />
-
-            {place($partial("layout/base"))}
-        </>
+                ),
+            }}
+            layout="layout/base"
+        />
     );
 };

@@ -31,7 +31,7 @@ export default () => {
                             type="radio"
                             id={`attribute_swatch_${id}_none`}
                             dangerouslyInlineAttributes={{
-                                attributes: `name="attribute[${id}]" value="" ${$raw("checked=\"{{#if defaultValue '==' ''}}checked{{/if}}\"")} aria-label="${$lang($string("products.none"))}"`,
+                                attributes: `name="attribute[${id}]" value="" checked="${$If({test: $pointer("defaultValue"), operator: $string("=="), rvalue: $string(""), $then: () => "checked"})}" aria-label="${$lang($string("products.none"))}"`,
                             }}
                         />{" "}
                         <label className="form-option form-option-swatch" htmlFor={`attribute_swatch_${id}_none`}>

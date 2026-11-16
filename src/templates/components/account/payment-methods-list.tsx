@@ -54,102 +54,157 @@ export default () => (
                                             <div className="paymentMethod">
                                                 <div className="paymentMethod-row">
                                                     <div className="methodHeader">
-                                                        {$raw("{{#if type '===' 'stored_card'}}")}
                                                         <$If
-                                                            test={inst.brand}
+                                                            test={$pointer("type")}
+                                                            operator={$string("===")}
+                                                            rvalue={$string("stored_card")}
                                                             $then={() => (
                                                                 <>
-                                                                    <$InArray
-                                                                        array={$pointer("../../theme_settings.supported_card_type_icons")}
-                                                                        value={inst.brand}
+                                                                    <$If
+                                                                        test={inst.brand}
                                                                         $then={() => (
-                                                                            <img
-                                                                                className="methodHeader-icon"
-                                                                                src={$cdn($concat($concat($string("img/payment-methods/"), inst.brand), $string(".svg")))}
-                                                                                alt={$lang($concat($string("account.payment_methods.card_types."), inst.brand))}
-                                                                                title={$lang($concat($string("account.payment_methods.card_types."), inst.brand))}
-                                                                            />
+                                                                            <>
+                                                                                <$InArray
+                                                                                    array={$pointer("../../theme_settings.supported_card_type_icons")}
+                                                                                    value={inst.brand}
+                                                                                    $then={() => (
+                                                                                        <img
+                                                                                            className="methodHeader-icon"
+                                                                                            src={$cdn($concat($concat($string("img/payment-methods/"), inst.brand), $string(".svg")))}
+                                                                                            alt={$lang($concat($string("account.payment_methods.card_types."), inst.brand))}
+                                                                                            title={$lang($concat($string("account.payment_methods.card_types."), inst.brand))}
+                                                                                        />
+                                                                                    )}
+                                                                                />{" "}
+                                                                                <span className="methodHeader-brand">
+                                                                                    <$Lang keyName={$concat($string("account.payment_methods.card_types."), inst.brand)} />{" "}
+                                                                                    <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.last_4} />
+                                                                                </span>
+                                                                            </>
                                                                         )}
-                                                                    />{" "}
-                                                                    <span className="methodHeader-brand">
-                                                                        <$Lang keyName={$concat($string("account.payment_methods.card_types."), inst.brand)} />{" "}
-                                                                        <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.last_4} />
-                                                                    </span>
+                                                                        $else={() => (
+                                                                            <>
+                                                                                <img
+                                                                                    className="methodHeader-icon"
+                                                                                    src={$cdn($string("img/payment-methods/card.svg"))}
+                                                                                    alt={$lang($string("account.payment_methods.card_types.credit_card"))}
+                                                                                    title={$lang($string("account.payment_methods.card_types.credit_card"))}
+                                                                                />{" "}
+                                                                                <span className="methodHeader-brand">
+                                                                                    <$Lang keyName={$string("account.payment_methods.card_types.credit_card")} />{" "}
+                                                                                    <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.last_4} />
+                                                                                </span>
+                                                                            </>
+                                                                        )}
+                                                                    />
                                                                 </>
                                                             )}
-                                                            $else={() => (
+                                                        />{" "}
+
+                                                        <$If
+                                                            test={$pointer("type")}
+                                                            operator={$string("===")}
+                                                            rvalue={$string("stored_bank_account")}
+                                                            $then={() => (
+                                                                <>
+                                                                    <$If
+                                                                        test={$pointer("../methodId")}
+                                                                        operator={$string("===")}
+                                                                        rvalue={$string("ach")}
+                                                                        $then={() => (
+                                                                            <>
+                                                                                <img
+                                                                                    className="methodHeader-icon"
+                                                                                    src={$cdn($string("img/payment-methods/ach.svg"))}
+                                                                                    alt={$lang($string("account.payment_methods.ach"))}
+                                                                                    title={$lang($string("account.payment_methods.ach"))}
+                                                                                />{" "}
+                                                                                <span className="methodHeader-brand">
+                                                                                    <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
+                                                                                    <$Lang
+                                                                                        keyName={$string("account.payment_methods.card_ending_in")}
+                                                                                        last_four={inst.masked_account_number}
+                                                                                    />
+                                                                                </span>
+                                                                            </>
+                                                                        )}
+                                                                        $elseThen={[
+                                                                            {
+                                                                                test: $pointer("../methodId"),
+                                                                                operator: $string("==="),
+                                                                                rvalue: $string("ecp"),
+                                                                                $then: () => (
+                                                                                    <>
+                                                                                        <img
+                                                                                            className="methodHeader-icon"
+                                                                                            src={$cdn($string("img/payment-methods/ach.svg"))}
+                                                                                            alt={$lang($string("account.payment_methods.ach"))}
+                                                                                            title={$lang($string("account.payment_methods.ach"))}
+                                                                                        />{" "}
+                                                                                        <span className="methodHeader-brand">
+                                                                                            <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
+                                                                                            <$Lang
+                                                                                                keyName={$string("account.payment_methods.card_ending_in")}
+                                                                                                last_four={inst.masked_account_number}
+                                                                                            />
+                                                                                        </span>
+                                                                                    </>
+                                                                                ),
+                                                                            },
+                                                                            {
+                                                                                test: $pointer("../methodId"),
+                                                                                operator: $string("==="),
+                                                                                rvalue: $string("sepa_direct_debit"),
+                                                                                $then: () => (
+                                                                                    <>
+                                                                                        <img
+                                                                                            className="methodHeader-icon"
+                                                                                            src={$cdn($string("img/payment-methods/sepa.svg"))}
+                                                                                            alt={$lang($string("account.payment_methods.sepa_direct_debit"))}
+                                                                                            title={$lang($string("account.payment_methods.sepa_direct_debit"))}
+                                                                                        />{" "}
+                                                                                        <span className="methodHeader-brand">
+                                                                                            <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
+                                                                                            {inst.masked_account_number}
+                                                                                        </span>
+                                                                                    </>
+                                                                                ),
+                                                                            },
+                                                                        ]}
+                                                                        $else={() => (
+                                                                            <>
+                                                                                <img
+                                                                                    className="methodHeader-icon"
+                                                                                    src={$cdn($string("img/payment-methods/card.svg"))}
+                                                                                    alt={$lang($string("account.payment_methods.card_types.credit_card"))}
+                                                                                    title={$lang($string("account.payment_methods.card_types.credit_card"))}
+                                                                                />{" "}
+                                                                                <span className="methodHeader-brand">
+                                                                                    <$Lang keyName={$string("account.payment_methods.payment_method")} />
+                                                                                </span>
+                                                                            </>
+                                                                        )}
+                                                                    />
+                                                                </>
+                                                            )}
+                                                        />{" "}
+
+                                                        <$If
+                                                            test={$pointer("type")}
+                                                            operator={$string("===")}
+                                                            rvalue={$string("stored_paypal_account")}
+                                                            $then={() => (
                                                                 <>
                                                                     <img
                                                                         className="methodHeader-icon"
-                                                                        src={$cdn($string("img/payment-methods/card.svg"))}
-                                                                        alt={$lang($string("account.payment_methods.card_types.credit_card"))}
-                                                                        title={$lang($string("account.payment_methods.card_types.credit_card"))}
+                                                                        src={$cdn($string("img/payment-methods/paypal.svg"))}
+                                                                        alt={$lang($string("account.payment_methods.paypal"))}
+                                                                        title={$lang($string("account.payment_methods.paypal"))}
                                                                     />{" "}
-                                                                    <span className="methodHeader-brand">
-                                                                        <$Lang keyName={$string("account.payment_methods.card_types.credit_card")} />{" "}
-                                                                        <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.last_4} />
-                                                                    </span>
+                                                                    <span className="methodHeader-brand">{inst.email}</span>
                                                                 </>
                                                             )}
                                                         />
-                                                        {$raw("{{/if}}")}{" "}
-
-                                                        {$raw("{{#if type '===' 'stored_bank_account'}}")}
-                                                        {$raw("{{#if ../methodId '===' 'ach'}}")}
-                                                        <img
-                                                            className="methodHeader-icon"
-                                                            src={$cdn($string("img/payment-methods/ach.svg"))}
-                                                            alt={$lang($string("account.payment_methods.ach"))}
-                                                            title={$lang($string("account.payment_methods.ach"))}
-                                                        />{" "}
-                                                        <span className="methodHeader-brand">
-                                                            <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
-                                                            <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.masked_account_number} />
-                                                        </span>
-                                                        {$raw("{{else if ../methodId '===' 'ecp'}}")}
-                                                        <img
-                                                            className="methodHeader-icon"
-                                                            src={$cdn($string("img/payment-methods/ach.svg"))}
-                                                            alt={$lang($string("account.payment_methods.ach"))}
-                                                            title={$lang($string("account.payment_methods.ach"))}
-                                                        />{" "}
-                                                        <span className="methodHeader-brand">
-                                                            <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
-                                                            <$Lang keyName={$string("account.payment_methods.card_ending_in")} last_four={inst.masked_account_number} />
-                                                        </span>
-                                                        {$raw("{{else if ../methodId '===' 'sepa_direct_debit'}}")}
-                                                        <img
-                                                            className="methodHeader-icon"
-                                                            src={$cdn($string("img/payment-methods/sepa.svg"))}
-                                                            alt={$lang($string("account.payment_methods.sepa_direct_debit"))}
-                                                            title={$lang($string("account.payment_methods.sepa_direct_debit"))}
-                                                        />{" "}
-                                                        <span className="methodHeader-brand">
-                                                            <$Lang keyName={$string("account.payment_methods.bank_account")} />{" "}
-                                                            {inst.masked_account_number}
-                                                        </span>
-                                                        {$raw("{{else}}")}
-                                                        <img
-                                                            className="methodHeader-icon"
-                                                            src={$cdn($string("img/payment-methods/card.svg"))}
-                                                            alt={$lang($string("account.payment_methods.card_types.credit_card"))}
-                                                            title={$lang($string("account.payment_methods.card_types.credit_card"))}
-                                                        />{" "}
-                                                        <span className="methodHeader-brand">
-                                                            <$Lang keyName={$string("account.payment_methods.payment_method")} />
-                                                        </span>
-                                                        {$raw("{{/if}}")}
-                                                        {$raw("{{/if}}")}{" "}
-
-                                                        {$raw("{{#if type '===' 'stored_paypal_account'}}")}
-                                                        <img
-                                                            className="methodHeader-icon"
-                                                            src={$cdn($string("img/payment-methods/paypal.svg"))}
-                                                            alt={$lang($string("account.payment_methods.paypal"))}
-                                                            title={$lang($string("account.payment_methods.paypal"))}
-                                                        />{" "}
-                                                        <span className="methodHeader-brand">{inst.email}</span>
-                                                        {$raw("{{/if}}")}
                                                         <div className="methodHeader-meta">
                                                             <$If
                                                                 test={inst.expiry_year}

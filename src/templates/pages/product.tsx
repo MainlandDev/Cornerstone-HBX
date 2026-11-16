@@ -1,4 +1,5 @@
 import {
+    $Page,
     $raw,
     $Each,
     $frontmatter,
@@ -7,7 +8,6 @@ import {
     $partial,
     $pointer,
     $region,
-    $StencilPartial,
     $string,
     $unescaped,
     place,
@@ -35,46 +35,46 @@ export default () => {
     return (
         <>
             <$Inject keyName={$string("productId")} value={$pointer("product.id")} />
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
-                    <>
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
-
-                        <$Each
-                            list={$pointer<ShippingMessage[]>("product.shipping_messages")}
-                            $then={(item) => place($partial("components/common/alert/alert-info", item.message))}
-                        />
-
-                        <div>
-                            {place($partial("components/products/product-view"))}
-
-                            {region("product_below_content")}
-
-                            <$If
-                                test={$pointer("product.videos.list.length")}
-                                $then={() => place($partial("components/products/videos", $pointer("product.videos")))}
+            <$Page
+                blocks={{
+                    page: () => (
+                        <>
+                            {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+    
+                            <$Each
+                                list={$pointer<ShippingMessage[]>("product.shipping_messages")}
+                                $then={(item) => place($partial("components/common/alert/alert-info", item.message))}
                             />
-
-                            {$raw("{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}")}
-                            {place(
-                                $partial("components/products/reviews", {
-                                    reviews: $pointer("product.reviews"),
-                                    product: $pointer("product"),
-                                    urls: $pointer("urls"),
-                                }),
-                            )}
-                            {$raw("{{/all}}")}
-
-                            {place($partial("components/products/tabs"))}
-                        </div>
-
-                        {place($partial("components/products/schema"))}
-                    </>
-                )}
+    
+                            <div>
+                                {place($partial("components/products/product-view"))}
+    
+                                {region("product_below_content")}
+    
+                                <$If
+                                    test={$pointer("product.videos.list.length")}
+                                    $then={() => place($partial("components/products/videos", $pointer("product.videos")))}
+                                />
+    
+                                {$raw("{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}")}
+                                {place(
+                                    $partial("components/products/reviews", {
+                                        reviews: $pointer("product.reviews"),
+                                        product: $pointer("product"),
+                                        urls: $pointer("urls"),
+                                    }),
+                                )}
+                                {$raw("{{/all}}")}
+    
+                                {place($partial("components/products/tabs"))}
+                            </div>
+    
+                            {place($partial("components/products/schema"))}
+                        </>
+                    ),
+                }}
+                layout="layout/base"
             />
-
-            {place($partial("layout/base"))}
         </>
     );
 };

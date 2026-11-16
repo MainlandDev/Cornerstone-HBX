@@ -24,15 +24,18 @@ export default () => {
                     to={latestYear}
                     $then={(ctx) => (
                         <option
-                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$raw("{{#if ../selected_date.year '==' $index}}selected=\"selected\"{{/if}}")}`}}
+                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$If({test: $pointer("../selected_date.year"), operator: $string("=="), rvalue: $pointer("$index"), $then: () => $raw('selected="selected"')})}`}}
                         >
                             {ctx.$index}
                         </option>
                     )}
                 />
-                {$raw("{{#if earliest_year '==' latest_year}}")}
-                <option dangerouslyInlineAttributes={{attributes: `value="${earliestYear}" selected="selected"`}}>{earliestYear}</option>
-                {$raw("{{/if}}")}
+                <$If
+                    test={earliestYear}
+                    operator={$string("==")}
+                    rvalue={latestYear}
+                    $then={() => <option dangerouslyInlineAttributes={{attributes: `value="${earliestYear}" selected="selected"`}}>{earliestYear}</option>}
+                />
             </select>
             <select
                 className="form-select form-select--date"
@@ -46,7 +49,7 @@ export default () => {
                     to={$number(12)}
                     $then={(ctx) => (
                         <option
-                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$raw("{{#if ../selected_date.month '==' $index}}selected=\"selected\"{{/if}}")}`}}
+                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$If({test: $pointer("../selected_date.month"), operator: $string("=="), rvalue: $pointer("$index"), $then: () => $raw('selected="selected"')})}`}}
                         >
                             <$Lang keyName={$concat($string("common.short_months."), ctx.$index)} />
                         </option>
@@ -65,7 +68,7 @@ export default () => {
                     to={$number(31)}
                     $then={(ctx) => (
                         <option
-                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$raw("{{#if ../selected_date.day '==' $index}}selected=\"selected\"{{/if}}")}`}}
+                            dangerouslyInlineAttributes={{attributes: `value="${ctx.$index}" ${$If({test: $pointer("../selected_date.day"), operator: $string("=="), rvalue: $pointer("$index"), $then: () => $raw('selected="selected"')})}`}}
                         >
                             {ctx.$index}
                         </option>

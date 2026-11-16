@@ -1,4 +1,4 @@
-import {$$themeSettings, $And, $cdn, $Each, $ellipsis, $getImage, $If, $json, $length, $number, $pointer, $raw, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $And, $boolean, $cdn, $Each, $ellipsis, $getImage, $If, $json, $length, $number, $pointer, $raw, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
     name: string;
@@ -80,7 +80,15 @@ export default () => {
             })}${$raw('",')}`,
         })}
         "itemCondition" : "https://schema.org/${$If({test: product.condition, $then: () => `${product.condition}`, $else: () => "New"})}Condition",
-        "availability" : "https://schema.org/${$raw("{{#if product.pre_order}}PreOrder{{else if product.out_of_stock}}OutOfStock{{else if product.can_purchase '===' false}}OutOfStock{{else}}InStock{{/if}}")}",
+        "availability" : "https://schema.org/${$If({
+            test: $pointer("product.pre_order"),
+            $then: () => "PreOrder",
+            $elseThen: [
+                {test: $pointer("product.out_of_stock"), $then: () => "OutOfStock"},
+                {test: $pointer("product.can_purchase"), operator: $string("==="), rvalue: $boolean(false), $then: () => "OutOfStock"},
+            ],
+            $else: () => "InStock",
+        })}",
         "url" : "${product.url}",
         "priceValidUntil": "${$raw("{{moment (moment add='31536000000') 'YYYY-MM-DD' }}")}"
     }

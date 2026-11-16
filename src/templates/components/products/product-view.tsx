@@ -248,15 +248,21 @@ export default () => {
                                 $then={() => (
                                     <>
                                         {place($partial("components/products/ratings", {rating: $pointer("product.rating")}))}{" "}
-                                        {$raw("{{#if product.num_reviews '>' 0}}")}
-                                        <a href={`${product.url}${$If({test: isAjax, $then: () => "#product-reviews"})}`} id="productReview_link">
-                                            <$Lang keyName={$string("products.reviews.link_to_review")} total={product.num_reviews} />
-                                        </a>
-                                        {$raw("{{else}}")}
-                                        <span>
-                                            <$Lang keyName={$string("products.reviews.link_to_review")} total={product.num_reviews} />
-                                        </span>
-                                        {$raw("{{/if}}")}
+                                        <$If
+                                            test={$pointer("product.num_reviews")}
+                                            operator={$string(">")}
+                                            rvalue={$number(0)}
+                                            $then={() => (
+                                                <a href={`${product.url}${$If({test: isAjax, $then: () => "#product-reviews"})}`} id="productReview_link">
+                                                    <$Lang keyName={$string("products.reviews.link_to_review")} total={product.num_reviews} />
+                                                </a>
+                                            )}
+                                            $else={() => (
+                                                <span>
+                                                    <$Lang keyName={$string("products.reviews.link_to_review")} total={product.num_reviews} />
+                                                </span>
+                                            )}
+                                        />
                                     </>
                                 )}
                             />{" "}
@@ -343,27 +349,39 @@ export default () => {
                                         </dt>
                                         <dd className="productView-info-value" data-product-width={""}>
                                             {product.width}{" "}
-                                            {$raw("{{#if settings.measurements.length '==' 'Centimeters'}}")}(<$Lang keyName={$string("products.measurement.metric")} />)
-                                            {$raw("{{else}}")}(<$Lang keyName={$string("products.measurement.imperial")} />)
-                                            {$raw("{{/if}}")}
+                                            <$If
+                                                test={$pointer("settings.measurements.length")}
+                                                operator={$string("==")}
+                                                rvalue={$string("Centimeters")}
+                                                $then={() => <>(<$Lang keyName={$string("products.measurement.metric")} />)</>}
+                                                $else={() => <>(<$Lang keyName={$string("products.measurement.imperial")} />)</>}
+                                            />
                                         </dd>
                                         <dt className="productView-info-name">
                                             <$Lang keyName={$string("products.height")} />
                                         </dt>
                                         <dd className="productView-info-value" data-product-height={""}>
                                             {product.height}{" "}
-                                            {$raw("{{#if settings.measurements.length '==' 'Centimeters'}}")}(<$Lang keyName={$string("products.measurement.metric")} />)
-                                            {$raw("{{else}}")}(<$Lang keyName={$string("products.measurement.imperial")} />)
-                                            {$raw("{{/if}}")}
+                                            <$If
+                                                test={$pointer("settings.measurements.length")}
+                                                operator={$string("==")}
+                                                rvalue={$string("Centimeters")}
+                                                $then={() => <>(<$Lang keyName={$string("products.measurement.metric")} />)</>}
+                                                $else={() => <>(<$Lang keyName={$string("products.measurement.imperial")} />)</>}
+                                            />
                                         </dd>
                                         <dt className="productView-info-name">
                                             <$Lang keyName={$string("products.depth")} />
                                         </dt>
                                         <dd className="productView-info-value" data-product-depth={""}>
                                             {product.depth}{" "}
-                                            {$raw("{{#if settings.measurements.length '==' 'Centimeters'}}")}(<$Lang keyName={$string("products.measurement.metric")} />)
-                                            {$raw("{{else}}")}(<$Lang keyName={$string("products.measurement.imperial")} />)
-                                            {$raw("{{/if}}")}
+                                            <$If
+                                                test={$pointer("settings.measurements.length")}
+                                                operator={$string("==")}
+                                                rvalue={$string("Centimeters")}
+                                                $then={() => <>(<$Lang keyName={$string("products.measurement.metric")} />)</>}
+                                                $else={() => <>(<$Lang keyName={$string("products.measurement.imperial")} />)</>}
+                                            />
                                         </dd>
                                     </>
                                 )}
@@ -424,21 +442,31 @@ export default () => {
                                         )}
                                         $else={() => (
                                             <>
-                                                {$raw("{{#if product.shipping.price.value '===' 0}}")}
-                                                <dt className="productView-info-name">
-                                                    <$Lang keyName={$string("products.shipping")} />
-                                                </dt>
-                                                <dd className="productView-info-value">
-                                                    <$Lang keyName={$string("products.shipping_free")} />
-                                                </dd>
-                                                {$raw("{{else}}")}
-                                                <dt className="productView-info-name">
-                                                    <$Lang keyName={$string("products.shipping")} />
-                                                </dt>
-                                                <dd className="productView-info-value">
-                                                    <$Lang keyName={$string("products.shipping_fixed")} amount={product.shipping.price.formatted} />
-                                                </dd>
-                                                {$raw("{{/if}}")}
+                                                <$If
+                                                    test={$pointer("product.shipping.price.value")}
+                                                    operator={$string("===")}
+                                                    rvalue={$number(0)}
+                                                    $then={() => (
+                                                        <>
+                                                            <dt className="productView-info-name">
+                                                                <$Lang keyName={$string("products.shipping")} />
+                                                            </dt>
+                                                            <dd className="productView-info-value">
+                                                                <$Lang keyName={$string("products.shipping_free")} />
+                                                            </dd>
+                                                        </>
+                                                    )}
+                                                    $else={() => (
+                                                        <>
+                                                            <dt className="productView-info-name">
+                                                                <$Lang keyName={$string("products.shipping")} />
+                                                            </dt>
+                                                            <dd className="productView-info-value">
+                                                                <$Lang keyName={$string("products.shipping_fixed")} amount={product.shipping.price.formatted} />
+                                                            </dd>
+                                                        </>
+                                                    )}
+                                                />
                                             </>
                                         )}
                                     />
@@ -454,9 +482,12 @@ export default () => {
                                 )}
                             />
 
-                            {$raw("{{#if theme_settings.show_custom_fields_tabs '!==' true}}")}
-                            {place($partial("components/products/custom-fields"))}
-                            {$raw("{{/if}}")}
+                            <$If
+                                test={$pointer("theme_settings.show_custom_fields_tabs")}
+                                operator={$string("!==")}
+                                rvalue={$boolean(true)}
+                                $then={() => place($partial("components/products/custom-fields"))}
+                            />
                         </dl>
                     </div>
                 </section>

@@ -38,22 +38,28 @@ export default () => (
                                 $then={(item) => (
                                     <li className="previewCartItem">
                                         <div className="previewCartItem-image">
-                                            {$raw("{{#if type '==' 'GiftCertificate'}}")}
-                                            <img
-                                                alt="GiftCertificate"
-                                                title="GiftCertificate"
-                                                src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
+                                            <$If
+                                                test={$pointer("type")}
+                                                operator={$string("==")}
+                                                rvalue={$string("GiftCertificate")}
+                                                $then={() => (
+                                                    <img
+                                                        alt="GiftCertificate"
+                                                        title="GiftCertificate"
+                                                        src={$cdn($pointer("../theme_settings.default_image_gift_certificate"))}
+                                                    />
+                                                )}
+                                                $else={() =>
+                                                    place(
+                                                        $partial("components/common/responsive-img", {
+                                                            image: item.image,
+                                                            fallback_size: $pointer("../theme_settings.productthumb_size"),
+                                                            lazyload: $pointer("../theme_settings.lazyload_mode"),
+                                                            default_image: $pointer("../theme_settings.default_image_product"),
+                                                        }),
+                                                    )
+                                                }
                                             />
-                                            {$raw("{{else}}")}
-                                            {place(
-                                                $partial("components/common/responsive-img", {
-                                                    image: item.image,
-                                                    fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                                    lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                    default_image: $pointer("../theme_settings.default_image_product"),
-                                                }),
-                                            )}
-                                            {$raw("{{/if}}")}
                                         </div>
                                         <div className="previewCartItem-content">
                                             <span className="previewCartItem-brand">{item.brand.name}</span>
@@ -65,10 +71,17 @@ export default () => (
                                             </h6>
 
                                             <span className="previewCartItem-price">
-                                                {$raw("{{#if quantity '>' 1}}")}
-                                                {item.quantity}
-                                                {$raw(" &times;")}
-                                                {$raw("{{/if}}")}
+                                                <$If
+                                                    test={$pointer("quantity")}
+                                                    operator={$string(">")}
+                                                    rvalue={$number(1)}
+                                                    $then={() => (
+                                                        <>
+                                                            {item.quantity}
+                                                            {$raw(" &times;")}
+                                                        </>
+                                                    )}
+                                                />
                                                 {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}")}
                                                 <span
                                                     dangerouslyInlineAttributes={{

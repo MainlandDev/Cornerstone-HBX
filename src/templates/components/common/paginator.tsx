@@ -32,12 +32,12 @@ export default () => (
             <$Each
                 list={$pointer<PageLink[]>("links")}
                 $then={(link) => (
-                    <li className={`pagination-item ${$raw("{{#if this.number '==' ../current}}pagination-item--current{{/if}}")}`}>
+                    <li className={`pagination-item ${$If({test: $pointer("this.number"), operator: $string("=="), rvalue: $pointer("../current"), $then: () => "pagination-item--current"})}`}>
                         <a
                             className="pagination-link"
                             href={link.url}
                             dangerouslyInlineAttributes={{
-                                attributes: `${$raw("{{#unless reload}}data-faceted-search-facet{{/unless}}")} ${$raw("{{#if this.number '==' ../current}}aria-current=\"page\" data-pagination-current-page-link{{/if}}")} aria-label="${$raw("{{lang 'common.paginator.page_of' current=this.number total=../links.length}}")}"`,
+                                attributes: `${$raw("{{#unless reload}}data-faceted-search-facet{{/unless}}")} ${$If({test: $pointer("this.number"), operator: $string("=="), rvalue: $pointer("../current"), $then: () => $raw('aria-current="page" data-pagination-current-page-link')})} aria-label="${$raw("{{lang 'common.paginator.page_of' current=this.number total=../links.length}}")}"`,
                             }}
                         >
                             {link.number}

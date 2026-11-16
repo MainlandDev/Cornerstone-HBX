@@ -27,7 +27,7 @@ export default () => (
                         $then={(wishlist) => (
                             <li>
                                 <input
-                                    className={`button ${$raw("{{#if this.num_items '!==' '0'}}button--has-items{{/if}}")}`}
+                                    className={`button ${$If({test: $pointer("this.num_items"), operator: $string("!=="), rvalue: $string("0"), $then: () => "button--has-items"})}`}
                                     dangerouslyInlineAttributes={{
                                         attributes: `formaction="${wishlist.add_url}&product_id=${$raw("{{../product.id}}")}"`,
                                     }}

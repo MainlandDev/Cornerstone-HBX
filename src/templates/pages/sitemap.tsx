@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $StencilPartial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
 
 interface SitemapSection {
     label: string;
@@ -10,10 +10,9 @@ interface SitemapLink {
 }
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     <h1>
                         <$Lang keyName={$string("sitemap.page_title")} />
@@ -60,8 +59,8 @@ export default () => (
                         />
                     </ul>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );

@@ -1,10 +1,9 @@
-import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $partial, $pointer, $StencilPartial, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
-    <>
-        <$StencilPartial
-            name={$string("page")}
-            $then={() => (
+    <$Page
+        blocks={{
+            page: () => (
                 <>
                     {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
                     <$If
@@ -58,8 +57,8 @@ export default () => (
                         </div>
                     </div>
                 </>
-            )}
-        />
-        {place($partial("layout/base"))}
-    </>
+            ),
+        }}
+        layout="layout/base"
+    />
 );
