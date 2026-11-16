@@ -27,7 +27,9 @@
     "paths": {
       "@/*": ["./src/*"],
       // The JSX runtime the templates compile against: a dependency of hbx-bigcommerce, not of the theme.
-      "@mainlanddev/hbx-handlebars-v4/*": ["./node_modules/@mainlanddev/hbx-bigcommerce/node_modules/@mainlanddev/hbx-handlebars-v4/dist/*"]
+      "@mainlanddev/hbx-handlebars-v4/*": ["./node_modules/@mainlanddev/hbx-bigcommerce/node_modules/@mainlanddev/hbx-handlebars-v4/dist/*"],
+      // The same for hbx-core, which hbx-bigcommerce's own declaration files import types from.
+      "@mainlanddev/hbx-core/*": ["./node_modules/@mainlanddev/hbx-bigcommerce/node_modules/@mainlanddev/hbx-handlebars-v4/node_modules/@mainlanddev/hbx-core/dist/*"]
     }
   },
   "include": ["src", ".hbx/**/*.d.ts"]

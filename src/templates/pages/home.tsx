@@ -7,7 +7,6 @@ import {
     $If,
     $Page,
     $partial,
-    $pointer,
     $region,
     $string,
     $unescaped,
@@ -31,9 +30,8 @@ const region = (name: string) => place($unescaped($region({name: $string(name)})
 
 export default () => {
     const settings = $$themeSettings();
-    const {carousel, products} = $context("home");
-    // The generated `ShippingMessages` type is `Array<Record<string, unknown>>`, which hides `message`: a local shape until context types can be overridden.
-    const shippingMessages = $pointer<Array<{message: unknown}>>("shipping_messages");
+    // `shipping_messages` is retyped in src/hbx/context.overrides.d.ts: the generated type hides `message`.
+    const {carousel, products, shipping_messages: shippingMessages} = $context("home");
     return (
         <$Page
             blocks={{
