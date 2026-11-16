@@ -1,23 +1,7 @@
 import AccountNavigation from "../../components/account/navigation.tsx";
+import type {DownloadImage, DownloadItem} from "@mainlanddev/hbx-bigcommerce";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$Page, $pointer, $string, $getImage, $If, $Each, $Lang, $this} from "@mainlanddev/hbx-bigcommerce";
-
-// LIBRARY GAP: types/context/downloads.ts types `downloads` as `Record<string, unknown>`, so the fields below are read from
-// download-item.html, not from library docs: images[] (each item is `this` for getImage), product_name, order_id, and items[]
-// with name, size, url, expired, description, days_remaining, downloads_remaining. Typed here so the pointers need no cast.
-interface DownloadImage {
-    readonly data: string;
-}
-
-interface DownloadItem {
-    name: string;
-    size: string;
-    url: string;
-    expired: boolean;
-    description: string;
-    days_remaining: number;
-    downloads_remaining: number;
-}
 
 export default () => (
     <$Page

@@ -1,4 +1,5 @@
 import AccountNavigation from "../../components/account/navigation.tsx";
+import type {StoredInstrument} from "@mainlanddev/hbx-bigcommerce";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $pointer, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
@@ -7,12 +8,6 @@ import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $pointer, $
 // `token`, `type`, `last_4`, `expiry_month`, `expiry_year`, `email` and `is_default` from it (edit-payment-method.html: the
 // hidden inputs, the `type` checks, the card and PayPal details, and the default checkbox). Typed here so the pointers need
 // no cast; fix upstream in the library type.
-interface StoredInstrument {
-    readonly token: string;
-    readonly type: string;
-    readonly is_default: boolean;
-}
-
 export default () => (
     <$Page
         blocks={{

@@ -1,21 +1,9 @@
 import AccountNavigation from "../../components/account/navigation.tsx";
+import type {ReturnProduct} from "@mainlanddev/hbx-bigcommerce";
 import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$Each, $For, $If, $Lang, $lang, $number, $Page, $pointer, $sanitize, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // The library's context types have no `forms.return` key yet; these shapes type the pointers used here.
-interface ReturnOption {
-    name: string;
-    value: string;
-}
-
-interface ReturnProduct {
-    id: number;
-    name: string;
-    price: {formatted: string};
-    quantity: number;
-    options: ReturnOption[];
-}
-
 export default () => (
     <$Page
         blocks={{
