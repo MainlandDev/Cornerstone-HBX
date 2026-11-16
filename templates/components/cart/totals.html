@@ -221,7 +221,7 @@
                 <strong>{{lang 'cart.checkout.total'}}</strong>
             </div>
             <div class="cart-total-value cart-total-grandTotal">
-                {{#or customer (unless settings.hide_price_from_guests) }}
+                {{#or customer (unless settings.hide_price_from_guests)}}
                     <span class="cart-total-amount">{{cart.grand_total.formatted}}</span>
                     {{#if cart.total_discount.value}}
                         <span class="cart-total-savings">{{lang 'cart.checkout.you_saved'}} <span class="cart-savings-amount">{{cart.total_discount.formatted}}</span> {{lang 'cart.checkout.in_total'}}</span>
