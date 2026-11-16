@@ -44,7 +44,7 @@ export default defineConfig({
         // The linked package resolves its own copy of vite (and rolldown), whose Plugin type tsc cannot compare with this one.
         HBXBigCommerce({
             hints: "./.hbx",
-            templates: "./src/templates",
+            templates: {dir: "./src/templates", prettyPrint: true},
             // Off on purpose: templates read plain `theme_settings.x` / `products` like the originals, never `@root.` (which prints empty inside {{#block}} fills).
             forwardRoot: false
         }) as unknown as PluginOption
