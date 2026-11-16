@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Language {
@@ -6,7 +8,7 @@ interface Language {
     is_active: boolean;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <ul className="navUser-section">
         <li className="navUser-item">
             <a

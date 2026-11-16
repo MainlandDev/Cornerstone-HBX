@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$cdn, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 /** Kept as raw Handlebars: a `{{` inside `dangerouslySetInnerHTML` would be escaped, so the comment is printed through `$raw`. */
@@ -10,7 +12,7 @@ const comment = `{{!--
         Inspired by https://philipwalton.com/articles/loading-polyfills-only-when-needed/
             --}}`;
 
-export default () => (
+export default (_props: PartialProps) => (
     <script
         nonce={$pointer("nonce")}
         dangerouslySetInnerHTML={{

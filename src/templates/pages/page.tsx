@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $$themeSettings,
     $Each,
@@ -33,7 +34,7 @@ export default () => {
             blocks={{
                 page: () => (
                     <>
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
 
                         <main className="page">
                             <$Unless

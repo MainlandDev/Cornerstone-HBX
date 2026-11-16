@@ -1,3 +1,4 @@
+import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
     $$themeSettings,
     $And,
@@ -54,7 +55,7 @@ export default () => {
                     <>
                         <$Each
                             list={shippingMessages}
-                            $then={(item) => $partial("components/common/alert/alert-info", item.message)}
+                            $then={(item) => <AlertAlertInfo $positionalHash={item.message} />}
                         />
                         <div className="main full">
                             <$If

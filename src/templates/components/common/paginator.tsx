@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface PageLink {
@@ -5,7 +7,7 @@ interface PageLink {
     url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <nav className="pagination" aria-label="pagination">
         <ul className="pagination-list">
             <$If

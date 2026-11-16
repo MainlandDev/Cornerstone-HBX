@@ -1,3 +1,8 @@
+"use server";
+import SocialLinks from "./social-links.tsx";
+import SubscriptionForm from "./subscription-form.tsx";
+import PaymentIcons from "./payment-icons.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {
     $$themeSettings,
     $And,
@@ -7,7 +12,6 @@ import {
     $limit,
     $Nl2br,
     $number,
-    $partial,
     $pointer,
     $raw,
     $region,
@@ -30,7 +34,7 @@ interface Link {
 /** `{{{region name="…"}}}` */
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
-export default () => {
+export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     return (
         <>
@@ -71,7 +75,7 @@ export default () => {
                                 <h3 className="footer-info-heading">
                                     <$Lang keyName={$string("social.connect")} />
                                 </h3>
-                                {$partial("components/common/social-links")}
+                                <SocialLinks />
                             </article>
                         )}
                     />
@@ -166,9 +170,9 @@ export default () => {
                         <article className="footer-info-col" data-section-type="newsletterSubscription">
                             <$If
                                 test={$pointer("settings.show_newsletter_box")}
-                                $then={() => $partial("components/common/subscription-form")}
+                                $then={() => <SubscriptionForm />}
                             />
-                            {$partial("components/common/payment-icons")}
+                            <PaymentIcons />
                         </article>
                     </section>
                     <$If

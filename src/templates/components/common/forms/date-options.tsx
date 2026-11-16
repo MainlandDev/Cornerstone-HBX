@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Unless, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface DateOption {
@@ -5,7 +7,7 @@ interface DateOption {
     label: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$Unless
         test={$pointer("value")}
         $then={() => (

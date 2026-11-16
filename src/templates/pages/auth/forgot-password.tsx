@@ -1,4 +1,6 @@
-import {$Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, $If} from "@mainlanddev/hbx-bigcommerce";
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
+import {$Inject, $Lang, $lang, $Page, $pointer, $string, $unescaped, $If} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -7,7 +9,7 @@ export default () => (
             blocks={{
                 page: () => (
                     <div className="account account--fixedSmall">
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                         <h2 className="page-heading">
                             <$Lang keyName={$string("reset_password.heading")} />
                         </h2>
@@ -16,7 +18,7 @@ export default () => (
                         </p>
                         <$If
                             test={$pointer("forms.forgot_password.error")}
-                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.forgot_password.error"))}
+                            $then={() => <AlertAlertError $positionalHash={$pointer("forms.forgot_password.error")} />}
                         />
                         <form action={$pointer("urls.auth.send_password_email")} className="form forgot-password-form" method="post">
                             <$Inject keyName={$string("useValidEmail")} value={$lang($string("forms.validate.common.email_address"))} />

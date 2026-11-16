@@ -1,3 +1,6 @@
+import ResponsiveImg from "../common/responsive-img.tsx";
+import ProductOptions from "../common/product-options.tsx";
+import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $All,
     $AssignVar,
@@ -99,13 +102,7 @@ export default () => (
                                 )}
                                 $else={() => (
                                     <>
-                                        {$partial("components/common/responsive-img", {
-                                                image: $pointer("image"),
-                                                class: $string("cart-item-image"),
-                                                fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                                lazyload: $string("lazyload"),
-                                                default_image: $pointer("../theme_settings.default_image_product"),
-                                            })}
+                                        <ResponsiveImg image={$pointer("image")} class={$string("cart-item-image")} fallback_size={$pointer("../theme_settings.productthumb_size")} lazyload={$string("lazyload")} default_image={$pointer("../theme_settings.default_image_product")} />
                                     </>
                                 )}
                             />
@@ -141,7 +138,7 @@ export default () => (
                                                                         {$pointer("value")}
                                                                     </a>
                                                                 )}
-                                                                $else={() => $partial("components/common/product-options")}
+                                                                $else={() => <ProductOptions />}
                                                             />
                                                         </dd>
                                                     </>
@@ -198,7 +195,7 @@ export default () => (
                             <span className={`cart-item-value ${$If({test: item.price_discounted, $then: () => "price--discounted"})}`}>{item.price.formatted}</span>
                             <$If test={item.price_discounted} $then={() => <span className="cart-item-value">{item.price_discounted.formatted}</span>} />
                             {$raw("{{else}}")}
-                            {$partial("components/common/login-for-pricing")}
+                            <LoginForPricing />
                             {$raw("{{/or}}")}
                         </td>
 

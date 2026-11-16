@@ -1,3 +1,5 @@
+import ResponsiveImg from "../common/responsive-img.tsx";
+import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $$themeSettings,
     $And,
@@ -85,13 +87,7 @@ export default () => {
                     data-event-type="product-click"
                 >
                     <div className="card-img-container">
-                        {$partial("components/common/responsive-img", {
-                                image: $pointer("image"),
-                                class: $string("card-image"),
-                                fallback_size: settings.productgallery_size,
-                                lazyload: settings.lazyload_mode,
-                                default_image: settings.default_image_product,
-                            })}
+                        <ResponsiveImg image={$pointer("image")} class={$string("card-image")} fallback_size={settings.productgallery_size} lazyload={settings.lazyload_mode} default_image={settings.default_image_product} />
                     </div>
                 </a>
 
@@ -200,7 +196,7 @@ export default () => {
                     {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                     {$partial("components/products/price", {price: $pointer("price")})}
                     {$raw("{{else}}")}
-                    {$partial("components/common/login-for-pricing")}
+                    <LoginForPricing />
                     {$raw("{{/or}}")}
                 </div>
                 {region("product_item_below_price")}

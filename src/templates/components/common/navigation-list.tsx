@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface NavChild {
@@ -12,7 +14,7 @@ interface NavGrandchild {
     name: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("children")}
         $then={() => (

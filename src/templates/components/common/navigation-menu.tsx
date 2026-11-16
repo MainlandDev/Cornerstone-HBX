@@ -1,4 +1,12 @@
-import {$Each, $If, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $Unless, $$themeSettings} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import QuickSearch from "./quick-search.tsx";
+import NavigationList from "./navigation-list.tsx";
+import NavigationListAlternate from "./navigation-list-alternate.tsx";
+import LanguageSelectorMobile from "./language-selector-mobile.tsx";
+import ChannelSelectorMobile from "./channel-selector-mobile.tsx";
+import SocialLinks from "./social-links.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $$themeSettings} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -22,11 +30,11 @@ const accountLink = (url: string, key: string) => (
     </li>
 );
 
-export default () => {
+export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     return (
         <nav className="navPages">
-            <div className="navPages-quickSearch">{$partial("components/common/quick-search", {name: $string("nav-menu-quick-search")})}</div>
+            <div className="navPages-quickSearch"><QuickSearch name={$string("nav-menu-quick-search")} /></div>
             <ul className={`navPages-list${$If({test: $pointer("theme_settings.navigation_design"), operator: $string("!=="), rvalue: $string("simple"), $then: () => " navPages-list-depth-max"})}`}>
                 <$Each
                     list={$pointer<Category[]>("categories")}
@@ -36,13 +44,13 @@ export default () => {
                                 test={$pointer("../theme_settings.navigation_design")}
                                 operator={$string("===")}
                                 rvalue={$string("simple")}
-                                $then={() => $partial("components/common/navigation-list")}
+                                $then={() => <NavigationList />}
                             />
                             <$If
                                 test={$pointer("../theme_settings.navigation_design")}
                                 operator={$string("===")}
                                 rvalue={$string("alternate")}
-                                $then={() => $partial("components/common/navigation-list-alternate")}
+                                $then={() => <NavigationListAlternate />}
                             />
                         </li>
                     )}
@@ -69,7 +77,7 @@ export default () => {
             </ul>
             <ul className="navPages-list navPages-list--user">
                 {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-                <li className="navPages-item">{$partial("components/common/language-selector-mobile")}</li>
+                <li className="navPages-item"><LanguageSelectorMobile /></li>
                 {$raw("{{/and}}")}
                 <$If
                     test={$pointer("currency_selector.currencies.length")}
@@ -114,7 +122,7 @@ export default () => {
                 </li>
                     )}
                 />
-                <$If test={theme.show_channels} $then={() => <li className="navPages-item">{$partial("components/common/channel-selector-mobile")}</li>} />
+                <$If test={theme.show_channels} $then={() => <li className="navPages-item"><ChannelSelectorMobile /></li>} />
                 <$If
                     test={$pointer("settings.gift_certificates_enabled")}
                     $then={() => (
@@ -210,7 +218,7 @@ export default () => {
                         </li>
                     )}
                 />
-                <$If test={theme.social_icon_placement_top} $then={() => <li className="navPages-item">{$partial("components/common/social-links")}</li>} />
+                <$If test={theme.social_icon_placement_top} $then={() => <li className="navPages-item"><SocialLinks /></li>} />
             </ul>
         </nav>
     );

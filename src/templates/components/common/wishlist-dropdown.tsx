@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Wishlist {
@@ -6,7 +8,7 @@ interface Wishlist {
     num_items: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <form action={$pointer("product.add_to_wishlist_url")} className="form form-wishlist form-action" data-wishlist-add={""} method="post">
         <a aria-controls="wishlist-dropdown" aria-expanded="false" className="button dropdown-menu-button" data-dropdown="wishlist-dropdown" href="#">
             <span>

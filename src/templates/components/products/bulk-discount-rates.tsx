@@ -1,4 +1,5 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
+import {$Each, $If, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Rate {
     min: string;
@@ -42,7 +43,7 @@ export default () => {
                             <h2 className="modal-header-title">
                                 <$Lang keyName={$string("products.bulk_pricing.modal_title")} />
                             </h2>
-                            {$partial("components/common/modal/modal-close-btn")}
+                            <ModalModalCloseBtn />
                         </div>
                         <div className="modal-body">
                             <p>

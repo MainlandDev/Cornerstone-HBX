@@ -1,10 +1,11 @@
-import {$If, $partial, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
+import RequirenessMsg from "../../common/requireness-msg.tsx";
+import {$If, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <div className="form-field" data-product-attribute="textarea">
         <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_textarea_${$pointer("id")}`}>
             {$pointer("display_name")}:{" "}
-            {$partial("components/common/requireness-msg")}
+            <RequirenessMsg />
         </label>
         <textarea
             className="form-input"

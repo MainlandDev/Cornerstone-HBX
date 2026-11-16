@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertInfo from "../../components/common/alert/alert-info.tsx";
 import {$If, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +7,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.returns.heading")} />
                     </h1>
@@ -17,7 +19,7 @@ export default () => (
                                 <$If
                                     test={$pointer("customer.returns")}
                                     $then={() => $partial("components/account/returns-list", {returns: $pointer("customer.returns")})}
-                                    $else={() => $partial("components/common/alert/alert-info", $lang($string("account.returns.none")))}
+                                    $else={() => <AlertAlertInfo $positionalHash={$lang($string("account.returns.none"))} />}
                                 />
                             </section>
                         </div>

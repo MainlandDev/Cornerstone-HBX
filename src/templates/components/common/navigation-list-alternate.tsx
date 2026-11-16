@@ -1,6 +1,9 @@
-import {$If, $partial, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import NavigationDropdown from "./navigation-dropdown.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("children")}
         $then={() => (
@@ -18,7 +21,7 @@ export default () => (
                         </svg>
                     </i>
                 </a>
-                {$partial("components/common/navigation-dropdown")}
+                <NavigationDropdown />
             </>
         )}
         $else={() => (

@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../../components/common/breadcrumbs.tsx";
+import AlertAlertInfo from "../../../components/common/alert/alert-info.tsx";
 import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $partial, $pointer, $raw, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` lacks these keys and types `shipments` as Record<string, unknown>.
@@ -97,7 +99,7 @@ export default () => {
                 page: () => (
                     <>
                         <$Inject keyName={$string("selectItem")} value={$lang($string("forms.validate.account.reorder.select_item"))} />
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                         <h2 className="page-heading title">
                             <$Lang keyName={$string("account.orders.details.heading")} number={order.id} />
                         </h2>
@@ -107,7 +109,7 @@ export default () => {
                             <div className="account-body">
                                 <$Each
                                     list={order.status_messages}
-                                    $then={(status) => $partial("components/common/alert/alert-info", status.message)}
+                                    $then={(status) => <AlertAlertInfo $positionalHash={status.message} />}
                                 />
                                 <div className="account-content account-content--fixedSmall">
                                     {$partial("components/account/order-contents", {order: order})}

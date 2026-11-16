@@ -1,3 +1,10 @@
+import AlertAlertError from "../common/alert/alert-error.tsx";
+import AlertAlertSuccess from "../common/alert/alert-success.tsx";
+import ResponsiveImg from "../common/responsive-img.tsx";
+import LoginForPricing from "../common/login-for-pricing.tsx";
+import WishlistDropdown from "../common/wishlist-dropdown.tsx";
+import Share from "../common/share.tsx";
+import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
 import {
     $$themeSettings,
     $All,
@@ -119,8 +126,8 @@ export default () => {
                     list={$pointer<Message[]>("product.reviews.messages")}
                     $then={(message) => (
                         <>
-                            <$If test={message.error} $then={() => $partial("components/common/alert/alert-error", message.error)} />
-                            <$If test={message.success} $then={() => $partial("components/common/alert/alert-success", message.success)} />
+                            <$If test={message.error} $then={() => <AlertAlertError $positionalHash={message.error} />} />
+                            <$If test={message.success} $then={() => <AlertAlertSuccess $positionalHash={message.success} />} />
                         </>
                     )}
                 />
@@ -147,14 +154,7 @@ export default () => {
                                     </>
                                 )}
                             />
-                            {$partial("components/common/responsive-img", {
-                                    image: product.main_image,
-                                    class: $string("productView-image--default"),
-                                    fallback_size: theme.product_size,
-                                    lazyload: theme.lazyload_mode,
-                                    default_image: theme.default_image_product,
-                                    otherAttributes: $string("data-main-image"),
-                                })}
+                            <ResponsiveImg image={product.main_image} class={$string("productView-image--default")} fallback_size={theme.product_size} lazyload={theme.lazyload_mode} default_image={theme.default_image_product} otherAttributes={$string("data-main-image")} />
                             <$If test={product.main_image} $then={() => $raw("</a>")} />
                         </div>
                     </figure>
@@ -184,11 +184,7 @@ export default () => {
                                             data-image-gallery-new-image-srcset={`${$getImageSrcset(image, {use_default_sizes: $boolean(true)})}`}
                                             data-image-gallery-zoom-image-url={`${$getImageSrcset(image, zoom, defaultImage)}`}
                                         >
-                                            {$partial("components/common/responsive-img", {
-                                                    image,
-                                                    fallback_size: $pointer("../theme_settings.productview_thumb_size"),
-                                                    lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                })}
+                                            <ResponsiveImg image={image} fallback_size={$pointer("../theme_settings.productview_thumb_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} />
                                         </a>
                                     </li>
                                 );
@@ -222,7 +218,7 @@ export default () => {
                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                             {$partial("components/products/price", {price: $pointer("product.price")})}
                             {$raw("{{else}}")}
-                            {$partial("components/common/login-for-pricing")}
+                            <LoginForPricing />
                             {$raw("{{/or}}")}
                         </div>
                         {region("product_below_price")}
@@ -526,9 +522,9 @@ export default () => {
                             </div>
                             {$partial("components/products/add-to-cart", {with_wallet_buttons: $boolean(true)})}
                         </form>
-                        <$If test={settings.show_wishlist} $then={() => $partial("components/common/wishlist-dropdown")} />
+                        <$If test={settings.show_wishlist} $then={() => <WishlistDropdown />} />
                     </div>
-                    {$partial("components/common/share", {url: product.url})}
+                    <Share url={product.url} />
                 </section>
 
                 <article className="productView-description">
@@ -541,7 +537,7 @@ export default () => {
             </div>
 
             <div id="previewModal" className="modal modal--large" data-reveal={""}>
-                {$partial("components/common/modal/modal-close-btn")}
+                <ModalModalCloseBtn />
                 <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-header-title"></div>
                 <div className="loadingOverlay"></div>
             </div>

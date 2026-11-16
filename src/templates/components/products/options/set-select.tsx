@@ -1,4 +1,5 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import RequirenessMsg from "../../common/requireness-msg.tsx";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -10,7 +11,7 @@ export default () => (
     <div className="form-field" data-product-attribute="set-select">
         <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_select_${$pointer("id")}`}>
             {$pointer("display_name")}:{" "}
-            {$partial("components/common/requireness-msg")}
+            <RequirenessMsg />
         </label>
         <select
             className="form-select form-select--small"

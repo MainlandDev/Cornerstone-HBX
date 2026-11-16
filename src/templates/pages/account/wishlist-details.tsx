@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertInfo from "../../components/common/alert/alert-info.tsx";
 import {$If, $Lang, $lang, $number, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -7,7 +9,7 @@ export default () => (
                 <div className="account" data-pagination-wishlist={""}>
                     <$If
                         test={$pointer("wishlist.is_editable")}
-                        $then={() => $partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        $then={() => <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />}
                     />
                     <h2 className="page-heading">
                         <$Lang keyName={$string("account.wishlists.view_heading")} name={$pointer("wishlist.name")} />
@@ -45,7 +47,7 @@ export default () => (
                     <$If
                         test={$pointer("wishlist.items")}
                         $then={() => $partial("components/account/wishlist-item-list", {show_remove: $pointer("wishlist.is_editable")})}
-                        $else={() => $partial("components/common/alert/alert-info", $lang($string("account.wishlists.empty_wishlist")))}
+                        $else={() => <AlertAlertInfo $positionalHash={$lang($string("account.wishlists.empty_wishlist"))} />}
                     />
                 </div>
             ),

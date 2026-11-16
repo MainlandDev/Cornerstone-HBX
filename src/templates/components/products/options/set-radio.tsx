@@ -1,4 +1,5 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import RequirenessMsg from "../../common/requireness-msg.tsx";
+import {$Each, $If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -14,7 +15,7 @@ export default () => {
         <div className="form-field" data-product-attribute="set-radio" role="radiogroup" aria-labelledby={`radio-group-label-${id}`}>
             <label className="form-label form-label--alternate form-label--inlineSmall" id={`radio-group-label-${id}`}>
                 {$pointer("display_name")}:{" "}
-                {$partial("components/common/requireness-msg")}
+                <RequirenessMsg />
             </label>
             <$Unless
                 test={required}

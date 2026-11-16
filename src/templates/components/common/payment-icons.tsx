@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $lang, $Or, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 /** Each theme setting that shows a payment method, with its label and sprite icon. */
@@ -12,7 +14,7 @@ const methods: ReadonlyArray<readonly [flag: string, label: string, icon: string
     ["show_accept_klarna", "Klarna", "icon-logo-klarna"],
 ];
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         {$raw("{{#with theme_settings}}")}
         <$Or

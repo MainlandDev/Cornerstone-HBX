@@ -1,3 +1,7 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
+import FormsText from "../../components/common/forms/text.tsx";
+import FormsSelect from "../../components/common/forms/select.tsx";
 import {$boolean, $cdn, $concat, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -34,7 +38,7 @@ export default () => (
                     <$Inject keyName={$string("storeLocale")} value={$pointer("settings.request.locale")} />{" "}
                     <$Inject keyName={$string("themeSettings")} value={$pointer("theme_settings")} />
 
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
 
                     <h2 className="page-heading">
                         <$Lang keyName={$string("forms.payment_methods.add.heading")} />
@@ -45,7 +49,7 @@ export default () => (
                     <div className="account account--fixed">
                         <$If
                             test={$pointer("forms.error")}
-                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.error"))}
+                            $then={() => <AlertAlertError $positionalHash={$pointer("forms.error")} />}
                         />
 
                         <$If
@@ -92,38 +96,21 @@ export default () => (
                                         <fieldset className="form-fieldset">
                                             <div className="paymentMethodForm-column">
                                                 <div className="paymentMethodForm-inputs">
-                                                    {$partial("components/common/forms/text", {
-                                                            id: $string("credit_card_number"),
-                                                            name: $string("credit_card_number"),
-                                                            label: $lang($string("account.payment_methods.credit_card_number")),
-                                                        })}
+                                                    <FormsText id={$string("credit_card_number")} name={$string("credit_card_number")} label={$lang($string("account.payment_methods.credit_card_number"))} />
                                                     <svg className="paymentMethodForm-inputs-icon icon">
                                                         <use href="#icon-lock" />
                                                     </svg>
                                                 </div>
                                                 <div className="paymentMethodForm-inputs">
-                                                    {$partial("components/common/forms/text", {
-                                                            id: $string("expiration"),
-                                                            name: $string("expiration"),
-                                                            label: $lang($string("account.payment_methods.expiration")),
-                                                            placeholder: $string("MM/YY"),
-                                                        })}
+                                                    <FormsText id={$string("expiration")} name={$string("expiration")} label={$lang($string("account.payment_methods.expiration"))} placeholder={$string("MM/YY")} />
                                                 </div>
                                             </div>
                                             <div className="paymentMethodForm-column">
                                                 <div className="paymentMethodForm-inputs">
-                                                    {$partial("components/common/forms/text", {
-                                                            id: $string("name_on_card"),
-                                                            name: $string("name_on_card"),
-                                                            label: $lang($string("account.payment_methods.name_on_card")),
-                                                        })}
+                                                    <FormsText id={$string("name_on_card")} name={$string("name_on_card")} label={$lang($string("account.payment_methods.name_on_card"))} />
                                                 </div>
                                                 <div className="paymentMethodForm-inputs">
-                                                    {$partial("components/common/forms/text", {
-                                                            id: $string("cvv"),
-                                                            name: $string("cvv"),
-                                                            label: $lang($string("account.payment_methods.cvv")),
-                                                        })}
+                                                    <FormsText id={$string("cvv")} name={$string("cvv")} label={$lang($string("account.payment_methods.cvv"))} />
                                                     <svg className="paymentMethodForm-inputs-icon icon">
                                                         <use href="#icon-lock" />
                                                     </svg>
@@ -150,78 +137,16 @@ export default () => (
 
                                     <fieldset className="form-fieldset">
                                         <div className="form-row form-row--half">
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("FirstName"),
-                                                    required: $boolean(true),
-                                                    id: $string("first_name"),
-                                                    name: $string("first_name"),
-                                                    label: $lang($string("forms.payment_methods.first_name")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("LastName"),
-                                                    required: $boolean(true),
-                                                    id: $string("last_name"),
-                                                    name: $string("last_name"),
-                                                    label: $lang($string("forms.payment_methods.last_name")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("CompanyName"),
-                                                    required: $boolean(false),
-                                                    id: $string("company"),
-                                                    name: $string("company"),
-                                                    label: $lang($string("forms.payment_methods.company")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("Phone"),
-                                                    required: $boolean(false),
-                                                    id: $string("phone"),
-                                                    name: $string("phone"),
-                                                    label: $lang($string("forms.payment_methods.phone")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("AddressLine1"),
-                                                    required: $boolean(true),
-                                                    id: $string("address1"),
-                                                    name: $string("address1"),
-                                                    label: $lang($string("forms.payment_methods.address1")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("AddressLine2"),
-                                                    required: $boolean(false),
-                                                    id: $string("address2"),
-                                                    name: $string("address2"),
-                                                    label: $lang($string("forms.payment_methods.address2")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("City"),
-                                                    required: $boolean(true),
-                                                    id: $string("city"),
-                                                    name: $string("city"),
-                                                    label: $lang($string("forms.payment_methods.city")),
-                                                })}
-                                            {$partial("components/common/forms/select", {
-                                                    private_id: $string("Country"),
-                                                    required: $boolean(true),
-                                                    id: $string("country"),
-                                                    name: $string("country"),
-                                                    label: $lang($string("forms.payment_methods.country")),
-                                                    chooseprefix: $lang($string("forms.payment_methods.choose_country")),
-                                                    options: $pointer("countries"),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("State"),
-                                                    required: $boolean(true),
-                                                    id: $string("state"),
-                                                    name: $string("state"),
-                                                    label: $lang($string("forms.payment_methods.state")),
-                                                })}
-                                            {$partial("components/common/forms/text", {
-                                                    private_id: $string("Zip"),
-                                                    required: $boolean(true),
-                                                    id: $string("postal_code"),
-                                                    name: $string("postal_code"),
-                                                    label: $lang($string("forms.payment_methods.postal_code")),
-                                                })}
+                                            <FormsText private_id={$string("FirstName")} required={$boolean(true)} id={$string("first_name")} name={$string("first_name")} label={$lang($string("forms.payment_methods.first_name"))} />
+                                            <FormsText private_id={$string("LastName")} required={$boolean(true)} id={$string("last_name")} name={$string("last_name")} label={$lang($string("forms.payment_methods.last_name"))} />
+                                            <FormsText private_id={$string("CompanyName")} required={$boolean(false)} id={$string("company")} name={$string("company")} label={$lang($string("forms.payment_methods.company"))} />
+                                            <FormsText private_id={$string("Phone")} required={$boolean(false)} id={$string("phone")} name={$string("phone")} label={$lang($string("forms.payment_methods.phone"))} />
+                                            <FormsText private_id={$string("AddressLine1")} required={$boolean(true)} id={$string("address1")} name={$string("address1")} label={$lang($string("forms.payment_methods.address1"))} />
+                                            <FormsText private_id={$string("AddressLine2")} required={$boolean(false)} id={$string("address2")} name={$string("address2")} label={$lang($string("forms.payment_methods.address2"))} />
+                                            <FormsText private_id={$string("City")} required={$boolean(true)} id={$string("city")} name={$string("city")} label={$lang($string("forms.payment_methods.city"))} />
+                                            <FormsSelect private_id={$string("Country")} required={$boolean(true)} id={$string("country")} name={$string("country")} label={$lang($string("forms.payment_methods.country"))} chooseprefix={$lang($string("forms.payment_methods.choose_country"))} options={$pointer("countries")} />
+                                            <FormsText private_id={$string("State")} required={$boolean(true)} id={$string("state")} name={$string("state")} label={$lang($string("forms.payment_methods.state"))} />
+                                            <FormsText private_id={$string("Zip")} required={$boolean(true)} id={$string("postal_code")} name={$string("postal_code")} label={$lang($string("forms.payment_methods.postal_code"))} />
                                         </div>
                                     </fieldset>
                                     <div className="form-actions">

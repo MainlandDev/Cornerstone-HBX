@@ -1,3 +1,4 @@
+import ModalModalCloseBtn from "../common/modal/modal-close-btn.tsx";
 import {$add, $boolean, $Each, $If, $lang, $number, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +6,7 @@ export default () => (
         test={$pointer("product_results.products")}
         $then={() => (
             <>
-                {$partial("components/common/modal/modal-close-btn", {additional_attr: $string("data-drop-down-close")})}
+                <ModalModalCloseBtn additional_attr={$string("data-drop-down-close")} />
                 <ul className="productGrid" data-list-name="Quick Search Results">
                     <$Each
                         list={$pointer<unknown[]>("product_results.products")}

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Currency {
@@ -7,7 +9,7 @@ interface Currency {
     switch_url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("currency_selector.currencies.length")}
         operator={$string(">")}

@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$getImageSrcset1x2x, $If, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <a href={$pointer("urls.home")} className="header-logo__link" data-header-logo-link={""}>
         <$If
             test={$pointer("settings.store_logo.image")}

@@ -1,4 +1,6 @@
-import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
+import {$Each, $If, $Inject, $Lang, $lang, $Page, $pointer, $string, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -9,7 +11,7 @@ export default () => (
             blocks={{
                 page: () => (
                     <>
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                         <h1 className="page-heading">
                             <$Lang keyName={$string("create_account.heading")} />
                         </h1>
@@ -17,7 +19,7 @@ export default () => (
                             <div className="account-body">
                                 <$If
                                     test={$pointer("forms.create_account.error")}
-                                    $then={() => $partial("components/common/alert/alert-error", $pointer("forms.create_account.error"))}
+                                    $then={() => <AlertAlertError $positionalHash={$pointer("forms.create_account.error")} />}
                                 />
                                 <$If
                                     test={$pointer("settings.account_creation_enabled")}

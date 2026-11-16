@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$If, $Each, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface PageLink {
@@ -5,7 +7,7 @@ interface PageLink {
     number: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="pagination" role="region" aria-label={$lang($string("common.pagination"))}>
         <ul className="pagination-list pagination-list--small">
             <$If

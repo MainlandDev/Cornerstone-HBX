@@ -1,11 +1,13 @@
-import {$Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import SearchBox from "../../components/common/search-box.tsx";
+import {$Lang, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
 
                     <main className="page">
                         <section className="page-content page-content--centered">
@@ -16,7 +18,7 @@ export default () => (
                                 <$Lang keyName={$string("page_not_found.message")} />
                             </p>
 
-                            {$partial("components/common/search-box")}
+                            <SearchBox />
                         </section>
                     </main>
                 </>

@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Checkbox {
@@ -8,7 +10,7 @@ interface Checkbox {
     class: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div
         className="form-field"
         id={$pointer("id")}

@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {$boolean, $Page, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +6,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     {$partial("components/blog/post", {
                             post: $pointer("blog.post"),
                             show_tags: $boolean(true),

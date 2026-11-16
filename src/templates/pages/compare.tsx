@@ -1,3 +1,6 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import ResponsiveImg from "../components/common/responsive-img.tsx";
+import LoginForPricing from "../components/common/login-for-pricing.tsx";
 import {
     $Page,
     $raw,
@@ -39,7 +42,7 @@ export default () => (
                 <>
                     <$Inject keyName={$string("comparisons")} value={$pointer("comparisons")} />{" "}
                     <$Inject keyName={$string("compareRemoveMessage")} value={$lang($string("compare.no_remove"))} />
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("compare.header")} products={$pointer<number>("comparisons.length")} />
                     </h1>
@@ -61,13 +64,7 @@ export default () => (
                                                             data-event-type="product-click"
                                                         >
                                                             <div className="card-img-container">
-                                                                {$partial("components/common/responsive-img", {
-                                                                        image: product.image,
-                                                                        class: $string("card-image"),
-                                                                        fallback_size: $pointer("../theme_settings.product_size"),
-                                                                        lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                                        default_image: $pointer("../theme_settings.default_image_product"),
-                                                                    })}
+                                                                <ResponsiveImg image={product.image} class={$string("card-image")} fallback_size={$pointer("../theme_settings.product_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} default_image={$pointer("../theme_settings.default_image_product")} />
                                                             </div>
                                                         </a>
                                                         <a
@@ -103,7 +100,7 @@ export default () => (
                                                             $else={() => $partial("components/products/price", {price: product.price})}
                                                         />
                                                         {$raw("{{else}}")}
-                                                        {$partial("components/common/login-for-pricing")}
+                                                        <LoginForPricing />
                                                         {$raw("{{/or}}")}
                                                     </div>
                                                 </article>

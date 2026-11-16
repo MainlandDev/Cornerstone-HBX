@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$$themeSettings, $Each, $pointer, $raw, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Breadcrumb {
@@ -5,7 +7,7 @@ interface Breadcrumb {
     name: string;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     return (
         <>

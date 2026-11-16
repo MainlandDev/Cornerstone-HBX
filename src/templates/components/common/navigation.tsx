@@ -1,18 +1,25 @@
-import {$If, $Lang, $lang, $number, $partial, $pointer, $raw, $$themeSettings, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import LanguageSelector from "./language-selector.tsx";
+import CurrencySelector from "./currency-selector.tsx";
+import ChannelSelector from "./channel-selector.tsx";
+import SocialLinks from "./social-links.tsx";
+import QuickSearch from "./quick-search.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $pointer, $raw, $$themeSettings, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => {
+export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     return (
         <nav className="navUser">
             {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-            {$partial("components/common/language-selector")}
+            <LanguageSelector />
             {$raw("{{/and}}")}
 
             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-            {$partial("components/common/currency-selector")}
+            <CurrencySelector />
             {$raw("{{/or}}")}
 
-            <$If test={theme.show_channels} $then={() => $partial("components/common/channel-selector")} />
+            <$If test={theme.show_channels} $then={() => <ChannelSelector />} />
 
             <ul className="navUser-section navUser-section--alt">
                 <$If
@@ -53,7 +60,7 @@ export default () => {
                     test={theme.social_icon_placement_top}
                     $then={() => (
                         <>
-                            <li className="navUser-item navUser-item--social">{$partial("components/common/social-links")}</li>
+                            <li className="navUser-item navUser-item--social"><SocialLinks /></li>
                             <li className="navUser-item navUser-item--divider">|</li>
                         </>
                     )}
@@ -138,7 +145,7 @@ export default () => {
                 </li>
             </ul>
             <div className="dropdown dropdown--quickSearch" id="quickSearch" aria-hidden="true" data-prevent-quick-search-close={""}>
-                {$partial("components/common/quick-search", {name: $string("nav-quick-search")})}
+                <QuickSearch name={$string("nav-quick-search")} />
             </div>
         </nav>
     );

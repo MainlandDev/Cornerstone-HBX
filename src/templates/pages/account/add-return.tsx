@@ -1,3 +1,4 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$Each, $For, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $sanitize, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // The library's context types have no `forms.return` key yet; these shapes type the pointers used here.
@@ -19,7 +20,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.returns.new_return")} />
                     </h1>

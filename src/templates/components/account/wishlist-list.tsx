@@ -1,4 +1,5 @@
-import {$Each, $If, $Inject, $Lang, $lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertInfo from "../common/alert/alert-info.tsx";
+import {$Each, $If, $Inject, $Lang, $lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Wishlist {
     id: string;
@@ -74,7 +75,7 @@ export default () => (
                 test={$pointer("customer.wishlists")}
                 $then={() => (
                     <p className="form-actions">
-                        {$partial("components/common/alert/alert-info", $lang($string("account.wishlists.you_have_none")))}
+                        <AlertAlertInfo $positionalHash={$lang($string("account.wishlists.you_have_none"))} />
                     </p>
                 )}
             />

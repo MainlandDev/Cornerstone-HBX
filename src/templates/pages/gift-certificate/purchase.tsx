@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 // The original iterates `forms.gift_certificate.themes` and `amount_options`; the library types neither key (see PORT-NOTES.md, Task 8c).
@@ -16,7 +18,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
@@ -25,7 +27,7 @@ export default () => (
                     <main className="account account--fixed">
                         <$Each
                             list={$pointer<string[]>("forms.gift_certificate.errors")}
-                            $then={(error) => $partial("components/common/alert/alert-error", error)}
+                            $then={(error) => <AlertAlertError $positionalHash={error} />}
                         />
 
                         <form

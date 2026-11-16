@@ -1,3 +1,4 @@
+import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $All,
     $AssignVar,
@@ -92,7 +93,7 @@ export default () => {
                     {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                     <span>{cart.sub_total.formatted}</span>
                     {$raw("{{else}}")}
-                    {$partial("components/common/login-for-pricing")}
+                    <LoginForPricing />
                     {$raw("{{/or}}")}
                 </div>
             </li>
@@ -455,7 +456,7 @@ export default () => {
                                     )}
                                 />
                                 {$raw("{{else}}")}
-                                {$partial("components/common/login-for-pricing")}
+                                <LoginForPricing />
                                 {$raw("{{/or}}")}
                             </div>
                         </>
@@ -471,7 +472,7 @@ export default () => {
                                 {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                                 <span>{cart.grand_total.formatted}</span>
                                 {$raw("{{else}}")}
-                                {$partial("components/common/login-for-pricing")}
+                                <LoginForPricing />
                                 {$raw("{{/or}}")}
                             </div>
                         </>

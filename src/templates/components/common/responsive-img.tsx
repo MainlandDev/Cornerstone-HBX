@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$raw} from "@mainlanddev/hbx-bigcommerce";
 
 /*
@@ -68,7 +70,7 @@ class="{{#unless lazyload '==' 'disabled'}}lazyload{{/unless}}{{#if class}} {{cl
 {{#if lazyload '==' 'lazyload'}}loading="lazy"{{/if}}
 {{otherAttributes}} `;
 
-export default () => (
+export default (_props: PartialProps) => (
     <>
         {$raw(comment)}
         <img dangerouslyInlineAttributes={{attributes: `${$raw(attributes)}`}} />

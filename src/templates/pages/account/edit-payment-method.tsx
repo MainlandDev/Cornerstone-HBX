@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/customer.ts:21 types `customer.edit_stored_instrument` as `string`, but the original reads
@@ -15,7 +17,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
 
                     <h2 className="page-heading">
                         <$Lang keyName={$string("forms.payment_methods.edit.heading")} />
@@ -26,7 +28,7 @@ export default () => (
                     <div className="account account--fixed">
                         <$If
                             test={$pointer("forms.error")}
-                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.error"))}
+                            $then={() => <AlertAlertError $positionalHash={$pointer("forms.error")} />}
                         />
 
                         <$With

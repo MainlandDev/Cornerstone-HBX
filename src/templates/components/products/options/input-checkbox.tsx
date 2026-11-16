@@ -1,10 +1,11 @@
-import {$If, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
+import RequirenessMsg from "../../common/requireness-msg.tsx";
+import {$If, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <div className="form-field" data-product-attribute="input-checkbox">
         <label className="form-label form-label--alternate form-label--inlineSmall">
             {$pointer("display_name")}:{" "}
-            {$partial("components/common/requireness-msg")}
+            <RequirenessMsg />
         </label>
         <input type="hidden" name={`attribute[${$pointer("id")}]`} value={$pointer("noValue")} />
         <div className="form-option-wrapper">

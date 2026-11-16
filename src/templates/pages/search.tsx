@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $$themeSettings,
     $Each,
@@ -69,7 +70,7 @@ export default () => {
                     page: () => (
                         <>
                             {$unescaped($stylesheet($string("/assets/scss/vendor/jstree/style.css")))}
-                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                            <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                             <section className="nav">
                                 <$If
                                     test={$pointer("forms.search.query")}

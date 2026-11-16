@@ -1,3 +1,5 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
     $$themeSettings,
     $frontmatter,
@@ -50,16 +52,11 @@ export default () => {
                     ),
                     page: () => (
                         <>
-                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                            <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                             <$If
                                 test={$pointer("category.image")}
                                 $then={() =>
-                                    $partial("components/common/responsive-img", {
-                                            image: $pointer("category.image"),
-                                            fallback_size: settings.zoom_size,
-                                            lazyload: settings.lazyload_mode,
-                                            class: $string("category-header-image"),
-                                        })
+                                    <ResponsiveImg image={$pointer("category.image")} fallback_size={settings.zoom_size} lazyload={settings.lazyload_mode} class={$string("category-header-image")} />
                                 }
                             />
                             <$Unless

@@ -1,4 +1,5 @@
-import {$Each, $If, $Lang, $lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertInfo from "../common/alert/alert-info.tsx";
+import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Address {
     first_name: string;
@@ -19,7 +20,7 @@ export default () => (
     <>
         <$Unless
             test={$pointer("customer.addresses")}
-            $then={() => $partial("components/common/alert/alert-info", $lang($string("account.addresses.no_addresses")))}
+            $then={() => <AlertAlertInfo $positionalHash={$lang($string("account.addresses.no_addresses"))} />}
         />
         <ul className="addressList">
             <$Each

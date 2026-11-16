@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="container">
         <form className="form" data-url={$pointer("urls.search")} data-quick-search-form={""}>
             <fieldset className="form-fieldset">

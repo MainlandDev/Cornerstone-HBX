@@ -1,3 +1,4 @@
+import Paginator from "../common/paginator.tsx";
 import {$boolean, $Each, $If, $Lang, $lang, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
@@ -72,7 +73,7 @@ export default () => {
                                 )}
                             />
                         </ul>
-                        {$partial("components/common/paginator", $pointer("pagination.reviews"), {reload: $boolean(true)})}
+                        <Paginator $positionalHash={$pointer("pagination.reviews")} reload={$boolean(true)} />
                     </div>
                 </section>
             )}

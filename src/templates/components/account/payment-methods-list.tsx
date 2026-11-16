@@ -1,4 +1,5 @@
-import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertInfo from "../common/alert/alert-info.tsx";
+import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Instrument {
     type: string;
@@ -33,7 +34,7 @@ export default () => (
     <>
         <$Unless
             test={$pointer("customer.payment_methods")}
-            $then={() => $partial("components/common/alert/alert-info", $lang($string("account.payment_methods.no_methods")))}
+            $then={() => <AlertAlertInfo $positionalHash={$lang($string("account.payment_methods.no_methods"))} />}
         />
 
         <$Each

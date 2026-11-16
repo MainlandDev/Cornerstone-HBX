@@ -1,4 +1,9 @@
-import {$Each, $If, $Lang, $limit, $number, $partial, $pointer, $region, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import Navigation from "./navigation.tsx";
+import StoreLogo from "./store-logo.tsx";
+import NavigationMenu from "./navigation-menu.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $limit, $number, $pointer, $region, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Banner {
     id: string;
@@ -10,7 +15,7 @@ interface Banner {
 /** `{{{region name="…"}}}` */
 const region = (name: string) => $unescaped($region({name: $string(name)}));
 
-export default () => {
+export default (_props: PartialProps) => {
     return (
         <>
             <a href="#main-content" className="skip-to-main-link">
@@ -40,7 +45,7 @@ export default () => {
                 <a href="#" className="mobileMenu-toggle" data-mobile-menu-toggle="menu">
                     <span className="mobileMenu-toggleIcon">Toggle menu</span>
                 </a>
-                {$partial("components/common/navigation")}
+                <Navigation />
 
                 <$If
                     test={$pointer("page_type")}
@@ -48,17 +53,17 @@ export default () => {
                     rvalue={$string("default")}
                     $then={() => (
                         <h1 className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                            {$partial("components/common/store-logo")}
+                            <StoreLogo />
                         </h1>
                     )}
                     $else={() => (
                         <div className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                            {$partial("components/common/store-logo")}
+                            <StoreLogo />
                         </div>
                     )}
                 />
                 <div className="navPages-container" id="menu" data-menu={""}>
-                    {$partial("components/common/navigation-menu")}
+                    <NavigationMenu />
                 </div>
                 {region("header_navigation_bottom--global")}
             </header>

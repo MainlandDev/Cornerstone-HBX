@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$capitalize, $Each, $getVar, $If, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface ShareButton {
@@ -8,7 +10,7 @@ interface ShareButton {
 const encodedUrl = () => $getVar($string("encodedUrl"));
 const encodedTitle = () => $getVar($string("encodedTitle"));
 
-export default () => {
+export default (_props: PartialProps) => {
     return (
         <>
             <$If

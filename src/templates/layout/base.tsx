@@ -1,3 +1,7 @@
+import PolyfillScript from "../components/common/polyfill-script.tsx";
+import Header from "../components/common/header.tsx";
+import Body from "../components/common/body.tsx";
+import Footer from "../components/common/footer.tsx";
 import {
     $$themeSettings,
     $cdn,
@@ -6,7 +10,6 @@ import {
     $langJson,
     $lang,
     $nonce,
-    $partial,
     $pointer,
     $raw,
     $resourceHints,
@@ -42,7 +45,7 @@ export default () => {
                         }}
                     />
 
-                    {$partial("components/common/polyfill-script")}
+                    <PolyfillScript />
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
@@ -85,9 +88,9 @@ export default () => {
                 <body>
                     <svg data-src={$cdn($string("img/icon-sprite.svg"))} className="icons-svg-sprite"></svg>
 
-                    {$partial("components/common/header")}
-                    {$partial("components/common/body")}
-                    {$partial("components/common/footer")}
+                    <Header />
+                    <Body />
+                    <Footer />
 
                     <script
                         nonce={$nonce()}

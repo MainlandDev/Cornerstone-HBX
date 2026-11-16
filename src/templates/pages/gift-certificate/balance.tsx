@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import {$If, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +7,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
@@ -26,7 +28,7 @@ export default () => (
                             $then={() => (
                                 <$If
                                     test={$pointer("gift_certificate.error")}
-                                    $then={() => $partial("components/common/alert/alert-error", $pointer("gift_certificate.error"))}
+                                    $then={() => <AlertAlertError $positionalHash={$pointer("gift_certificate.error")} />}
                                     $else={() => (
                                         <>
                                             <h1>{$pointer("gift_certificate.balance.formatted")}</h1>

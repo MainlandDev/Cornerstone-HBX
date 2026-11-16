@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import {
     $frontmatter,
     $If,
@@ -29,7 +30,7 @@ export default () => (
                         <$Inject keyName={$string("multiCouponUIEnabled")} value={$pointer("cart.multi_coupon_ui_enabled")} />
                         <div className="page">
                             <div className="page-content" data-cart={""}>
-                                {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                                <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                                 {$partial("components/cart/page-title")}
                                 <div data-cart-status={""}>{$partial("components/cart/status-messages")}</div>
                                 <$If

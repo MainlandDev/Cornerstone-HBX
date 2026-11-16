@@ -1,3 +1,5 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import Paginator from "../components/common/paginator.tsx";
 import {
     $$themeSettings,
     $Each,
@@ -36,7 +38,7 @@ export default () => {
                 ),
                 page: () => (
                     <>
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                         <main className="page">
                             <$Unless
                                 test={settings.hide_blog_page_heading}
@@ -51,7 +53,7 @@ export default () => {
                                         })
                                 }
                             />
-                            {$partial("components/common/paginator", $pointer("pagination.blog"))}
+                            <Paginator $positionalHash={$pointer("pagination.blog")} />
                         </main>
                     </>
                 ),

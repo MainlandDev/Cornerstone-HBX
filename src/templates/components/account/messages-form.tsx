@@ -1,4 +1,5 @@
-import {$partial, $pointer, $Each, $If, $Inject, $Lang, $lang, $string} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertInfo from "../common/alert/alert-info.tsx";
+import {$pointer, $Each, $If, $Inject, $Lang, $lang, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface InboxOrder {
     id: string;
@@ -81,6 +82,6 @@ export default () => (
                 </form>
             </>
         )}
-        $else={() => $partial("components/common/alert/alert-info", $lang($string("forms.inbox.no_orders")))}
+        $else={() => <AlertAlertInfo $positionalHash={$lang($string("forms.inbox.no_orders"))} />}
     />
 );

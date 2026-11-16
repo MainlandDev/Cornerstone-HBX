@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="alertBox alertBox--error">
         <div className="alertBox-column alertBox-icon">
             <icon glyph="ic-error" className="icon" aria-hidden="true">

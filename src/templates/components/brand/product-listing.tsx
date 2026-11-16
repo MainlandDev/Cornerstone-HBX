@@ -1,3 +1,4 @@
+import Paginator from "../common/paginator.tsx";
 import {$If, $Inject, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -34,6 +35,6 @@ export default () => (
             />
         </div>
 
-        {$partial("components/common/paginator", $pointer("pagination.brand"))}
+        <Paginator $positionalHash={$pointer("pagination.brand")} />
     </>
 );

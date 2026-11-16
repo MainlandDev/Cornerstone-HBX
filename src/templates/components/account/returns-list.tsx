@@ -1,4 +1,6 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import ResponsiveImg from "../common/responsive-img.tsx";
+import ProductOptions from "../common/product-options.tsx";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface ReturnOption {
     name: string;
@@ -33,11 +35,7 @@ export default () => (
                     <li className="account-listItem">
                         <div className="account-product">
                             <div className="account-product-figure">
-                                {$partial("components/common/responsive-img", {
-                                        image: ret.product.image,
-                                        fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                        lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                    })}
+                                <ResponsiveImg image={ret.product.image} fallback_size={$pointer("../theme_settings.productthumb_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} />
                             </div>
                             <div className="account-product-body">
                                 <div className="account-orderStatus">
@@ -132,7 +130,7 @@ export default () => (
                                                 $then={(option) => (
                                                     <>
                                                         <dt className="definitionList-key">{option.name}:</dt>
-                                                        <dd className="definitionList-value">{$partial("components/common/product-options")}</dd>
+                                                        <dd className="definitionList-value"><ProductOptions /></dd>
                                                     </>
                                                 )}
                                             />

@@ -1,3 +1,6 @@
+import Breadcrumbs from "../../../components/common/breadcrumbs.tsx";
+import SmallPaginator from "../../../components/common/small-paginator.tsx";
+import AlertAlertInfo from "../../../components/common/alert/alert-info.tsx";
 import {$frontmatter, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({customer: {orders: {limit: 10}}});
@@ -7,7 +10,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.orders.heading")} />
                     </h1>
@@ -37,10 +40,10 @@ export default () => (
                                     $then={() => (
                                         <>
                                             {$partial("components/account/orders-list", {orders: $pointer("customer.orders")})}
-                                            {$partial("components/common/small-paginator", $pointer("pagination.orders"))}
+                                            <SmallPaginator $positionalHash={$pointer("pagination.orders")} />
                                         </>
                                     )}
-                                    $else={() => $partial("components/common/alert/alert-info", $lang($string("account.orders.none")))}
+                                    $else={() => <AlertAlertInfo $positionalHash={$lang($string("account.orders.none"))} />}
                                 />
                             </section>
                         </div>

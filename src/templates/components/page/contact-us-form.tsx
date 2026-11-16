@@ -1,4 +1,5 @@
-import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertError from "../common/alert/alert-error.tsx";
+import {$If, $Inject, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <form data-contact-form={""} className="form" action={$pointer("urls.contact_us_submit")} method="post">
@@ -8,7 +9,7 @@ export default () => (
             test={$pointer("forms.contact.error")}
             $then={() => (
                 <div id="contact-us-error">
-                    {$partial("components/common/alert/alert-error", $pointer("forms.contact.error"))}
+                    <AlertAlertError $positionalHash={$pointer("forms.contact.error")} />
                 </div>
             )}
         />

@@ -1,3 +1,7 @@
+"use server";
+import ResponsiveImg from "./responsive-img.tsx";
+import LoginForPricing from "./login-for-pricing.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {
     $cdn,
     $Each,
@@ -5,7 +9,6 @@ import {
     $Lang,
     $limit,
     $number,
-    $partial,
     $pointer,
     $raw,
     $string,
@@ -24,7 +27,7 @@ interface CartItem {
     price_discounted: {formatted: string};
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="previewCartWrapper">
         <div className="previewCart">
             <$If
@@ -49,12 +52,7 @@ export default () => (
                                                     />
                                                 )}
                                                 $else={() =>
-                                                    $partial("components/common/responsive-img", {
-                                                            image: item.image,
-                                                            fallback_size: $pointer("../theme_settings.productthumb_size"),
-                                                            lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                            default_image: $pointer("../theme_settings.default_image_product"),
-                                                        })
+                                                    <ResponsiveImg image={item.image} fallback_size={$pointer("../theme_settings.productthumb_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} default_image={$pointer("../theme_settings.default_image_product")} />
                                                 }
                                             />
                                         </div>
@@ -89,7 +87,7 @@ export default () => (
                                                 </span>
                                                 <$If test={item.price_discounted} $then={() => <>{item.price_discounted.formatted}</>} />
                                                 {$raw("{{else}}")}
-                                                {$partial("components/common/login-for-pricing")}
+                                                <LoginForPricing />
                                                 {$raw("{{/or}}")}
                                             </span>
                                         </div>

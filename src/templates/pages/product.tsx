@@ -1,3 +1,5 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
     $Page,
     $raw,
@@ -38,10 +40,10 @@ export default () => {
                 blocks={{
                     page: () => (
                         <>
-                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                            <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                             <$Each
                                 list={$pointer<ShippingMessage[]>("product.shipping_messages")}
-                                $then={(item) => $partial("components/common/alert/alert-info", item.message)}
+                                $then={(item) => <AlertAlertInfo $positionalHash={item.message} />}
                             />
                             <div>
                                 {$partial("components/products/product-view")}

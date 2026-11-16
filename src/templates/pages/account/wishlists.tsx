@@ -1,3 +1,4 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$If, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -8,7 +9,7 @@ export default () => (
                     test={$pointer("settings.show_wishlist")}
                     $then={() => (
                         <div className="account account--fixedLarge">
-                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                            <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                             <h2 className="page-heading">
                                 <$Lang keyName={$string("account.wishlists.heading")} />
                             </h2>

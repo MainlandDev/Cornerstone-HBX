@@ -1,3 +1,6 @@
+import LoginForPricing from "../common/login-for-pricing.tsx";
+import ResponsiveImg from "../common/responsive-img.tsx";
+import ProductOptions from "../common/product-options.tsx";
 import {$boolean, $Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 interface AddedItem {
@@ -49,7 +52,7 @@ export default () => (
                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                             {$pointer("cart.sub_total.formatted")}
                             {$raw("{{else}}")}
-                            {$partial("components/common/login-for-pricing")}
+                            <LoginForPricing />
                             {$raw("{{/or}}")}
                         </strong>
                     </div>
@@ -74,13 +77,7 @@ export default () => (
                             <>
                                 <figure className="productView-image">
                                     <div className="productView-img-container">
-                                        {$partial("components/common/responsive-img", {
-                                                image: $pointer("image"),
-                                                class: $string("productView-image--cart"),
-                                                fallback_size: $pointer("../theme_settings.product_size"),
-                                                lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                default_image: $pointer("../theme_settings.default_image_product"),
-                                            })}
+                                        <ResponsiveImg image={$pointer("image")} class={$string("productView-image--cart")} fallback_size={$pointer("../theme_settings.product_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} default_image={$pointer("../theme_settings.default_image_product")} />
                                     </div>
                                 </figure>
 
@@ -93,7 +90,7 @@ export default () => (
                                         {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
                                         {$pointer("quantity")} {$raw("&times;")} {$pointer("price.formatted")}
                                         {$raw("{{else}}")}
-                                        {$partial("components/common/login-for-pricing")}
+                                        <LoginForPricing />
                                         {$raw("{{/or}}")}
                                     </div>
 
@@ -102,7 +99,7 @@ export default () => (
                                         $then={() => (
                                             <dl className="productView-info">
                                                 <dt className="productView-info-name">{$pointer("name")}</dt>
-                                                <dd className="productView-info-value">{$partial("components/common/product-options")}</dd>
+                                                <dd className="productView-info-value"><ProductOptions /></dd>
                                             </dl>
                                         )}
                                     />

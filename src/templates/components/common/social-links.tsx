@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$capitalize, $Each, $If, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface SocialMedia {
@@ -5,7 +7,7 @@ interface SocialMedia {
     url: string;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <$If
         test={$pointer("social_media")}
         $then={() => (

@@ -1,3 +1,6 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
+import AlertAlertSuccess from "../../components/common/alert/alert-success.tsx";
 import {$If, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +8,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.messages.heading")} />
                     </h1>
@@ -16,11 +19,11 @@ export default () => (
                             <section className="account-content">
                                 <$If
                                     test={$pointer("forms.inbox.error")}
-                                    $then={() => $partial("components/common/alert/alert-error", $pointer("forms.inbox.error"))}
+                                    $then={() => <AlertAlertError $positionalHash={$pointer("forms.inbox.error")} />}
                                 />
                                 <$If
                                     test={$pointer("forms.inbox.success")}
-                                    $then={() => $partial("components/common/alert/alert-success", $pointer("forms.inbox.success"))}
+                                    $then={() => <AlertAlertSuccess $positionalHash={$pointer("forms.inbox.success")} />}
                                 />
                                 {$partial("components/account/messages-list", {messages: $pointer("customer.inbox.messages")})}
                                 {$partial("components/account/messages-form")}

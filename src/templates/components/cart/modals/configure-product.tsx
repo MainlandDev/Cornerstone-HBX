@@ -1,4 +1,5 @@
-import {$dynamicComponent, $Each, $Lang, $lang, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertInfo from "../../common/alert/alert-info.tsx";
+import {$dynamicComponent, $Each, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -9,7 +10,7 @@ export default () => (
         </div>
         <div className="modal-body" data-product-option-change={""}>
             <div className="alertMessageBox" hidden={true}>
-                {$partial("components/common/alert/alert-info")}
+                <AlertAlertInfo />
             </div>
 
             <form id="CartEditProductFieldsForm" method="post" action="cart.php" encType="multipart/form-data">

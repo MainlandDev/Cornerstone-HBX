@@ -30,6 +30,11 @@ Notes:
 - Page templates are `<$Page blocks={{…}} layout="…" />`; `<$StencilPartial>` is still the form for a partial the page does not own.
 - The `$frontmatter` call in the pilots uses `.home` for the home page and `.other` for the orders page.
 
+
+## Partials as components (`components/common/**` done)
+
+A `.tsx` file under the template root that starts with `"use server";` makes every function export a partial: `export default (_props: PartialProps) => …` renders `components/x.html`, and `import X from "…/components/x.tsx"` then `<X a={b} />` prints `{{> "components/x" a=b}}`. Only HBX values (`$string(..)`, a pointer, any token) may be passed; a JS value throws. The reserved prop `$positionalHash` is the call's positional context: `<AlertInfo $positionalHash={item.message} />` prints `{{> "…" item.message}}`. `$asInline(fn)` opts a small snippet out (no template, inlined where used). Converted with a one-off codemod; `vite build` plus `node scripts/hbx-parity.mjs --ported` is unchanged (204 identical, 3 pre-existing differs). Remaining `$partial("components/<other>/…")` calls are converted folder by folder.
+
 ## Raw fragments
 
 Template fragments kept as raw Handlebars because no typed equivalent exists yet.

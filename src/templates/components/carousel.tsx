@@ -1,3 +1,4 @@
+import ResponsiveImg from "./common/responsive-img.tsx";
 import {$add, $Each, $If, $Or, $lang, $number, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Slide {
@@ -42,20 +43,10 @@ export default () => (
                         <$If
                             test={loop["@first"]}
                             $then={() =>
-                                $partial("components/common/responsive-img", {
-                                        image: slide.stencil_image,
-                                        class: $string("heroCarousel-image"),
-                                        fallback_size: $string("1280w"),
-                                        lazyload: $string("disabled"),
-                                    })
+                                <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("disabled")} />
                             }
                             $else={() =>
-                                $partial("components/common/responsive-img", {
-                                        image: slide.stencil_image,
-                                        class: $string("heroCarousel-image"),
-                                        fallback_size: $string("1280w"),
-                                        lazyload: $string("lazyload"),
-                                    })
+                                <ResponsiveImg image={slide.stencil_image} class={$string("heroCarousel-image")} fallback_size={$string("1280w")} lazyload={$string("lazyload")} />
                             }
                         />
                         {$raw("{{#if button_text}}</a>{{else}}</div>{{/if}}")}

@@ -1,3 +1,5 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
 import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -5,7 +7,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <$If
                         test={$pointer("forms.address.address_id")}
                         $then={() => (
@@ -24,7 +26,7 @@ export default () => (
                     <div className="account account--fixed">
                         <$If
                             test={$pointer("forms.address.error")}
-                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.address.error"))}
+                            $then={() => <AlertAlertError $positionalHash={$pointer("forms.address.error")} />}
                         />
 
                         <div className="account-body">

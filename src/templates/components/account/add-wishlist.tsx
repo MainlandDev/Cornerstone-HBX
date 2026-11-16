@@ -1,4 +1,5 @@
-import {$If, $Inject, $lang, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertError from "../common/alert/alert-error.tsx";
+import {$If, $Inject, $lang, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -25,7 +26,7 @@ export default () => (
                 />
                 <$If
                     test={$pointer("forms.wishlist.errors")}
-                    $then={() => $partial("components/common/alert/alert-error", $pointer("forms.wishlist.errors"))}
+                    $then={() => <AlertAlertError $positionalHash={$pointer("forms.wishlist.errors")} />}
                 />
             </header>
             <form

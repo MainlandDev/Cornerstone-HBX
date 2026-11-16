@@ -1,6 +1,9 @@
-import {$If, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import FormsDateOptions from "./date-options.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="form-field" id={$pointer("id")} data-validation={$pointer("validation")} dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-type="{{private_id}}"{{/if}}')}`}}>
         <label className="form-label" htmlFor={$pointer("id")}>
             {$pointer("label")}
@@ -19,7 +22,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {$partial("components/common/forms/date-options", $pointer("month"), {isRequired: $pointer("required")})}
+                    <FormsDateOptions $positionalHash={$pointer("month")} isRequired={$pointer("required")} />
                 </select>
             </div>
             <div className="form-field">
@@ -34,7 +37,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {$partial("components/common/forms/date-options", $pointer("day"), {isRequired: $pointer("required")})}
+                    <FormsDateOptions $positionalHash={$pointer("day")} isRequired={$pointer("required")} />
                 </select>
             </div>
             <div className="form-field">
@@ -49,7 +52,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {$partial("components/common/forms/date-options", $pointer("year"), {isRequired: $pointer("required")})}
+                    <FormsDateOptions $positionalHash={$pointer("year")} isRequired={$pointer("required")} />
                 </select>
             </div>
         </div>

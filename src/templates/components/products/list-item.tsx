@@ -1,3 +1,5 @@
+import ResponsiveImg from "../common/responsive-img.tsx";
+import LoginForPricing from "../common/login-for-pricing.tsx";
 import {
     $$themeSettings,
     $Each,
@@ -80,13 +82,7 @@ export default () => {
                             />
                         )}
                     />
-                    {$partial("components/common/responsive-img", {
-                            image: $pointer("image"),
-                            class: $string("listItem-image"),
-                            fallback_size: settings.productgallery_size,
-                            lazyload: settings.lazyload_mode,
-                            default_image: settings.default_image_product,
-                        })}
+                    <ResponsiveImg image={$pointer("image")} class={$string("listItem-image")} fallback_size={settings.productgallery_size} lazyload={settings.lazyload_mode} default_image={settings.default_image_product} />
                 </a>
                 <$Unless
                     test={$pointer("hide_product_quick_view")}
@@ -140,7 +136,7 @@ export default () => {
                             )}
                         />
                         {$raw("{{else}}")}
-                        {$partial("components/common/login-for-pricing")}
+                        <LoginForPricing />
                         {$raw("{{/or}}")}
                         <$If
                             test={settings.show_featured_promotions}

@@ -1,4 +1,6 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import RequirenessMsg from "../../common/requireness-msg.tsx";
+import ResponsiveImg from "../../common/responsive-img.tsx";
+import {$Each, $If, $Lang, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -16,7 +18,7 @@ export default () => {
             <label className="form-label form-label--alternate form-label--inlineSmall" id="product-list-label">
                 {$pointer("display_name")}:{" "}
                 <span data-option-value={""} />{" "}
-                {$partial("components/common/requireness-msg")}
+                <RequirenessMsg />
             </label>
             <$If
                 test={$pointer("values.0.image")}
@@ -48,11 +50,7 @@ export default () => {
                                         test={item.image}
                                         $then={() => (
                                             <figure className="productOptions-list-item-figure">
-                                                {$partial("components/common/responsive-img", {
-                                                        image: item.image,
-                                                        class: $string("productOptions-list-item-image"),
-                                                        lazyload: $string("lazyload+lqip"),
-                                                    })}
+                                                <ResponsiveImg image={item.image} class={$string("productOptions-list-item-image")} lazyload={$string("lazyload+lqip")} />
                                             </figure>
                                         )}
                                     />

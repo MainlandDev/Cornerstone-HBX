@@ -1,4 +1,6 @@
-import {$If, $lang, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import AlertAlertError from "../components/common/alert/alert-error.tsx";
+import AlertAlertSuccess from "../components/common/alert/alert-success.tsx";
+import {$If, $lang, $Lang, $Page, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -17,9 +19,9 @@ export default () => (
 
                             <$If
                                 test={$pointer("subscription.error")}
-                                $then={() => $partial("components/common/alert/alert-error", $pointer("subscription.error"))}
+                                $then={() => <AlertAlertError $positionalHash={$pointer("subscription.error")} />}
                                 $else={() =>
-                                    $partial("components/common/alert/alert-success", $lang($string("newsletter.subscribed_message")))
+                                    <AlertAlertSuccess $positionalHash={$lang($string("newsletter.subscribed_message"))} />
                                 }
                             />
                         </div>

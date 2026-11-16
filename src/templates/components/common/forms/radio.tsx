@@ -1,3 +1,5 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Radio {
@@ -7,7 +9,7 @@ interface Radio {
     required: string;
 }
 
-export default () => {
+export default (_props: PartialProps) => {
     // Read outside the loop, so inside it the path gains `../` (`{{../name}}`).
     const name = $pointer("name");
     return (

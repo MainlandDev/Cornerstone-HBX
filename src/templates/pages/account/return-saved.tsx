@@ -1,3 +1,4 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$If, $Lang, $Nl2br, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: `return` is not in the library context types, so `return.instructions` (return-saved.html) is read with a
@@ -7,7 +8,7 @@ export default () => (
         blocks={{
             page: () => (
                 <div className="account">
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h2 className="page-heading">
                         <$Lang keyName={$string("account.returns.heading")} />
                     </h2>

@@ -1,3 +1,5 @@
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import ResponsiveImg from "../components/common/responsive-img.tsx";
 import {
     $$themeSettings,
     $frontmatter,
@@ -45,16 +47,12 @@ export default () => {
                     ),
                     page: () => (
                         <>
-                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                            <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                             <$If
                                 test={$pointer("brand.image")}
                                 $then={() => (
                                     <div className="brand-image-container">
-                                        {$partial("components/common/responsive-img", {
-                                                image: $pointer("brand.image"),
-                                                fallback_size: settings.thumb_size,
-                                                lazyload: $string("disabled"),
-                                            })}
+                                        <ResponsiveImg image={$pointer("brand.image")} fallback_size={settings.thumb_size} lazyload={$string("disabled")} />
                                     </div>
                                 )}
                             />

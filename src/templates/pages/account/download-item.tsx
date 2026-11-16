@@ -1,3 +1,4 @@
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
 import {$Page, $partial, $pointer, $string, $getImage, $If, $Each, $Lang, $this} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/downloads.ts types `downloads` as `Record<string, unknown>`, so the fields below are read from
@@ -22,7 +23,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.orders.downloads.heading")} number={$pointer("downloads.order_id")} />
                     </h1>

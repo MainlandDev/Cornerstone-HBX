@@ -1,4 +1,7 @@
-import {$Each, $frontmatter, $If, $Lang, $Page, $partial, $pointer, $region, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import Breadcrumbs from "../components/common/breadcrumbs.tsx";
+import ResponsiveImg from "../components/common/responsive-img.tsx";
+import Paginator from "../components/common/paginator.tsx";
+import {$Each, $frontmatter, $If, $Lang, $Page, $pointer, $region, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.brands({brands: null});
 
@@ -17,7 +20,7 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                    <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                     <main className="page">
                         <h1 className="page-heading">
                             <$Lang keyName={$string("brand.label")} />
@@ -32,13 +35,7 @@ export default () => (
                                             <figure className="card-figure">
                                                 <a className="card-figure__link" aria-label={brand.name} href={brand.url}>
                                                     <div className="card-img-container">
-                                                        {$partial("components/common/responsive-img", {
-                                                                image: brand.image,
-                                                                class: $string("card-image"),
-                                                                fallback_size: $pointer("../theme_settings.brand_size"),
-                                                                lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                                default_image: $pointer("../theme_settings.default_image_brand"),
-                                                            })}
+                                                        <ResponsiveImg image={brand.image} class={$string("card-image")} fallback_size={$pointer("../theme_settings.brand_size")} lazyload={$pointer("../theme_settings.lazyload_mode")} default_image={$pointer("../theme_settings.default_image_brand")} />
                                                     </div>
                                                 </a>
                                             </figure>
@@ -52,7 +49,7 @@ export default () => (
                                 )}
                             />
                         </ul>
-                        {$partial("components/common/paginator", $pointer("pagination.brands"))}
+                        <Paginator $positionalHash={$pointer("pagination.brands")} />
                         {region("brands_below_content")}
                     </main>
                 </>

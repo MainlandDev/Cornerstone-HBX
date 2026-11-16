@@ -1,3 +1,4 @@
+import Paginator from "../common/paginator.tsx";
 import {$Each, $If, $partial, $pointer, $unescaped, $boolean} from "@mainlanddev/hbx-bigcommerce";
 
 interface ContentResult {
@@ -27,7 +28,7 @@ export default () => (
                         )}
                     />
                 </ul>
-                {$partial("components/common/paginator", $pointer("pagination.content_results"), {reload: $boolean(true)})}
+                <Paginator $positionalHash={$pointer("pagination.content_results")} reload={$boolean(true)} />
             </>
         )}
     />

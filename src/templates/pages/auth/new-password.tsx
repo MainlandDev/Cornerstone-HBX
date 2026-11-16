@@ -1,4 +1,6 @@
-import {$Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $If} from "@mainlanddev/hbx-bigcommerce";
+import Breadcrumbs from "../../components/common/breadcrumbs.tsx";
+import AlertAlertError from "../../components/common/alert/alert-error.tsx";
+import {$Inject, $Lang, $lang, $Page, $pointer, $string, $If} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -7,14 +9,14 @@ export default () => (
             blocks={{
                 page: () => (
                     <div className="account account--fixedSmall">
-                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                        <Breadcrumbs breadcrumbs={$pointer("breadcrumbs")} />
                         <h2 className="page-heading">
                             <$Lang keyName={$string("forms.new_password.heading")} />
                         </h2>
                         <p>{$pointer("forms.new_password.requirements")}</p>
                         <$If
                             test={$pointer("forms.new_password.error")}
-                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.new_password.error"))}
+                            $then={() => <AlertAlertError $positionalHash={$pointer("forms.new_password.error")} />}
                         />
                         <form action={$pointer("forms.new_password.submit_url")} className="form new-password-form" method="post">
                             <div className="form-row">

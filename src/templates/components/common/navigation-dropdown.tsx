@@ -1,4 +1,7 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+"use server";
+import NavigationDropdown from "./navigation-dropdown.tsx";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface NavChild {
     id: string;
@@ -7,7 +10,7 @@ interface NavChild {
     children: unknown;
 }
 
-export default () => (
+export default (_props: PartialProps) => (
     <div className="navPage-subMenu navPage-subMenu-horizontal" id={`navPages-${$pointer("id")}`} aria-hidden="true" tabIndex={-1}>
         <ul className="navPage-subMenu-list">
             <li className="navPage-subMenu-item-parent">
@@ -35,7 +38,7 @@ export default () => (
                                             </svg>
                                         </i>
                                     </a>
-                                    {$partial("components/common/navigation-dropdown")}
+                                    <NavigationDropdown />
                                 </>
                             )}
                             $else={() => (

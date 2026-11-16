@@ -1,6 +1,8 @@
+"use server";
+import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import {$Lang, $string} from "@mainlanddev/hbx-bigcommerce";
 
-export default () => (
+export default (_props: PartialProps) => (
     <div id="alert-modal" className="modal modal--alert modal--small" data-reveal={""} data-prevent-quick-search-close={""}>
         <div className="alert-icon error-icon">
             <span className="icon-content">

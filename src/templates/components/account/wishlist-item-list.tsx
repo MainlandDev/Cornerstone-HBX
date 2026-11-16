@@ -1,3 +1,4 @@
+import Paginator from "../common/paginator.tsx";
 import {$Each, $If, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface WishlistItem {
@@ -26,6 +27,6 @@ export default () => (
                 )}
             />
         </ul>
-        {$partial("components/common/paginator", $pointer("wishlist.pagination"))}
+        <Paginator $positionalHash={$pointer("wishlist.pagination")} />
     </>
 );
