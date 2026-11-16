@@ -1,13 +1,14 @@
 import {
     $$themeSettings,
     $And,
+    $context,
     $Each,
     $frontmatter,
     $If,
+    $Page,
     $partial,
     $pointer,
     $region,
-    $StencilPartial,
     $string,
     $unescaped,
     place,
@@ -30,13 +31,13 @@ const region = (name: string) => place($unescaped($region({name: $string(name)})
 
 export default () => {
     const settings = $$themeSettings();
-    const carousel = $pointer<{slides: {length: number}}>("carousel");
-    const products = $pointer<Record<"featured" | "top_sellers" | "new", unknown>>("products");
+    const {carousel, products} = $context("home");
+    // The generated `ShippingMessages` type is `Array<Record<string, unknown>>`, which hides `message`: a local shape until context types can be overridden.
+    const shippingMessages = $pointer<Array<{message: unknown}>>("shipping_messages");
     return (
-        <>
-            <$StencilPartial
-                name={$string("hero")}
-                $then={() => (
+        <$Page
+            blocks={{
+                hero: () => (
                     <>
                         {region("home_below_menu")}
                         <$And
@@ -53,14 +54,11 @@ export default () => {
                         />
                         {region("home_below_carousel")}
                     </>
-                )}
-            />
-            <$StencilPartial
-                name={$string("page")}
-                $then={() => (
+                ),
+                page: () => (
                     <>
                         <$Each
-                            list={$pointer<Array<{message: unknown}>>("shipping_messages")}
+                            list={shippingMessages}
                             $then={(item) => place($partial("components/common/alert/alert-info", item.message))}
                         />
                         <div className="main full">
@@ -102,9 +100,8 @@ export default () => {
                             {region("home_below_new_products")}
                         </div>
                     </>
-                )}
-            />
-            {place($partial("layout/base"))}
-        </>
+                ),
+            }}
+        />
     );
 };
