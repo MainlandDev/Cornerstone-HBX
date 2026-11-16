@@ -13,7 +13,7 @@ import {
     $raw,
     $string,
     $unescaped,
-    $Unless,
+    $Unless, $unlessExpression, $ifExpression, $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface CartItem {
@@ -77,18 +77,14 @@ export default (_props: PartialProps) => (
                                                         </>
                                                     )}
                                                 />
-                                                {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}")}
-                                                <span
+                                                <$Or values={[$pointer("../customer"), $unlessExpression($pointer("../settings.hide_price_from_guests")), $ifExpression($pointer("type"), $string("=="), $string("GiftCertificate"))]} $then={() => (<><span
                                                     dangerouslyInlineAttributes={{
                                                         attributes: `${$If({test: item.price_discounted, $then: () => $raw(' class="price--discounted"')})}`,
                                                     }}
                                                 >
                                                     {item.price.formatted}
                                                 </span>
-                                                <$If test={item.price_discounted} $then={() => <>{item.price_discounted.formatted}</>} />
-                                                {$raw("{{else}}")}
-                                                <LoginForPricing />
-                                                {$raw("{{/or}}")}
+                                                <$If test={item.price_discounted} $then={() => <>{item.price_discounted.formatted}</>} /></>)} $else={() => (<><LoginForPricing /></>)} />
                                             </span>
                                         </div>
                                     </li>

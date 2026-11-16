@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Each, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Each, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless, $ifExpression, $And} from "@mainlanddev/hbx-bigcommerce";
 
 interface Option {
     id: string;
@@ -22,12 +22,8 @@ export default (_props: PartialProps) => (
                             test={$pointer("multi_coupon_ui_enabled")}
                             $then={() => (
                                 <>
-                                    {$raw("{{#and shipping_cost_discounted (if shipping_cost_discounted.formatted '!==' shipping_cost.formatted)}}")}
-                                    <span className="price--discounted">{$pointer("shipping_cost.formatted")}</span>{" "}
-                                    <span id="shipping-cost-discounted">{$pointer("shipping_cost_discounted.formatted")}</span>
-                                    {$raw("{{else}}")}
-                                    <span id="shipping-cost-discounted">{$pointer("shipping_cost.formatted")}</span>
-                                    {$raw("{{/and}}")}
+                                    <$And a={$pointer("shipping_cost_discounted")} b={$ifExpression($pointer("shipping_cost_discounted.formatted"), $string("!=="), $pointer("shipping_cost.formatted"))} $then={() => (<><span className="price--discounted">{$pointer("shipping_cost.formatted")}</span>{" "}
+                                    <span id="shipping-cost-discounted">{$pointer("shipping_cost_discounted.formatted")}</span></>)} $else={() => (<><span id="shipping-cost-discounted">{$pointer("shipping_cost.formatted")}</span></>)} />
                                 </>
                             )}
                             $else={() => (

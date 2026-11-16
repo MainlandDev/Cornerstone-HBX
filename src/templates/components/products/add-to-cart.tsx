@@ -2,7 +2,7 @@
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertError from "../common/alert/alert-error.tsx";
 import WalletButtons from "../common/wallet-buttons.tsx";
-import {$If, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $Lang, $lang, $pointer, $raw, $string, $Unless, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
 
 interface Product {
     can_purchase: boolean;
@@ -104,8 +104,7 @@ export default (_props: PartialProps) => {
                 </div>
                 <p className="alertBox-column alertBox-message"></p>
             </div>
-            {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-            <div className={`add-to-cart-buttons ${$If({test: product.pre_order, $then: () => $raw("pre-order-buttons")})}`}>
+            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><div className={`add-to-cart-buttons ${$If({test: product.pre_order, $then: () => $raw("pre-order-buttons")})}`}>
                 <div className="form-action">
                     <input
                         id="form-action-addToCart"
@@ -132,8 +131,7 @@ export default (_props: PartialProps) => {
                         </div>
                     )}
                 />
-            </div>
-            {$raw("{{/or}}")}
+            </div></>)} />
         </div>
     );
 };

@@ -36,7 +36,7 @@ import {
     $region,
     $string,
     $unescaped,
-    $Unless,
+    $Unless, $unlessExpression, $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** The size a `getImageSrcset` descriptor accepts; the theme-settings type is a plain string (LIBRARY GAP, see PORT-NOTES.md). */
@@ -226,11 +226,7 @@ export default (_props: PartialProps) => {
                             )}
                         />
                         <div className="productView-price">
-                            {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                            <ProductsPrice price={$pointer("product.price")} />
-                            {$raw("{{else}}")}
-                            <LoginForPricing />
-                            {$raw("{{/or}}")}
+                            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><ProductsPrice price={$pointer("product.price")} /></>)} $else={() => (<><LoginForPricing /></>)} />
                         </div>
                         {region("product_below_price")}
                         <$If

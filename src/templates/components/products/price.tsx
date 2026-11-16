@@ -10,7 +10,7 @@ import {
     $pointer,
     $raw,
     $string,
-    $Unless,
+    $Unless, $boolean, $ifExpression, $And,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
@@ -34,10 +34,7 @@ export default (_props: PartialProps) => {
     const price = $pointer<Price>("price");
     return (
         <>
-            {$raw("{{#and price.price_range (if theme_settings.price_ranges '==' true)}}")}
-            <ProductsPriceRange price={price} />
-            {$raw("{{else}}")}
-            <div
+            <$And a={$pointer("price.price_range")} b={$ifExpression($pointer("theme_settings.price_ranges"), $string("=="), $boolean(true))} $then={() => (<><ProductsPriceRange price={price} /></>)} $else={() => (<><div
                 className="price-section price-section--withTax rrp-price--withTax"
                 dangerouslyInlineAttributes={{
                     attributes: `${$Unless({test: price.rrp_with_tax, $then: () => $raw('style="display: none;"')})}`,
@@ -144,8 +141,7 @@ export default (_props: PartialProps) => {
                         </span>
                     </div>
                 )}
-            />
-            {$raw("{{/and}}")}
+            /></>)} />
         </>
     );
 };

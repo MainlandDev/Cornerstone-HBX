@@ -13,10 +13,9 @@ import {
     $lang,
     $Page,
     $pointer,
-    $raw,
     $region,
     $string,
-    $unescaped,
+    $unescaped, $unlessExpression, $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({cart: true});
@@ -58,8 +57,7 @@ export default () => (
                                                 <CartTotals />
                                             </div>
                                             {region("cart_below_totals")}
-                                            {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                                            <$If
+                                            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><$If
                                                 test={$pointer("cart.show_primary_checkout_button")}
                                                 $then={() => (
                                                     <div className="cart-actions cart-content-padding-right">
@@ -104,9 +102,7 @@ export default () => (
                                                         <CartAdditionalCheckoutButtons />
                                                     </div>
                                                 )}
-                                            />
-                                            {$raw("{{else}}")}
-                                            <div className="cart-actions cart-content-padding-right">
+                                            /></>)} $else={() => (<><div className="cart-actions cart-content-padding-right">
                                                 <a
                                                     className="button"
                                                     href={$pointer("urls.auth.login")}
@@ -114,8 +110,7 @@ export default () => (
                                                 >
                                                     <$Lang keyName={$string("cart.login_to_checkout")} />
                                                 </a>
-                                            </div>
-                                            {$raw("{{/or}}")}
+                                            </div></>)} />
                                         </>
                                     )}
                                     $else={() => (

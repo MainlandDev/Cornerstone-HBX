@@ -21,7 +21,7 @@ import {
     $pointer,
     $raw,
     $string,
-    $Unless,
+    $Unless, $unlessExpression,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
@@ -96,11 +96,7 @@ export default (_props: PartialProps) => {
                     </strong>
                 </div>
                 <div className="cart-total-value">
-                    {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                    <span>{cart.sub_total.formatted}</span>
-                    {$raw("{{else}}")}
-                    <LoginForPricing />
-                    {$raw("{{/or}}")}
+                    <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><span>{cart.sub_total.formatted}</span></>)} $else={() => (<><LoginForPricing /></>)} />
                 </div>
             </li>
             <$If
@@ -475,11 +471,7 @@ export default (_props: PartialProps) => {
                                 </strong>
                             </div>
                             <div className="cart-total-value cart-total-grandTotal">
-                                {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                                <span>{cart.grand_total.formatted}</span>
-                                {$raw("{{else}}")}
-                                <LoginForPricing />
-                                {$raw("{{/or}}")}
+                                <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><span>{cart.grand_total.formatted}</span></>)} $else={() => (<><LoginForPricing /></>)} />
                             </div>
                         </>
                     )}

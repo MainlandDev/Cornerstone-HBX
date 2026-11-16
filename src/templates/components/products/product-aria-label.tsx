@@ -1,7 +1,7 @@
 "use server";
 import ProductsPriceLabel from "./price-label.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$$themeSettings, $And, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $And, $If, $Lang, $lang, $pointer, $string, $boolean, $ifExpression} from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
     formatted: string;
@@ -27,8 +27,7 @@ export default (_props: PartialProps) => {
         <ProductsPriceLabel label_value={settings[themeValue]} fallback={$lang($string(fallback))} />;
     return (
         <>
-            {$raw("{{#and price.price_range (if theme_settings.price_ranges '==' true)}}")}
-            <$And
+            <$And a={$pointer("price.price_range")} b={$ifExpression($pointer("theme_settings.price_ranges"), $string("=="), $boolean(true))} $then={() => (<><$And
                 a={price.price_range.min.with_tax}
                 b={price.price_range.max.with_tax}
                 $then={() => (
@@ -45,9 +44,7 @@ export default (_props: PartialProps) => {
                         to={price.price_range.max.without_tax.formatted}
                     />
                 )}
-            />
-            {$raw("{{else}}")}
-            <$If
+            /></>)} $else={() => (<><$If
                 test={price.with_tax}
                 $then={() => (
                     <$If
@@ -77,8 +74,7 @@ export default (_props: PartialProps) => {
                         $else={() => <>{price.without_tax.formatted}</>}
                     />
                 )}
-            />
-            {$raw("{{/and}}")}
+            /></>)} />
         </>
     );
 };

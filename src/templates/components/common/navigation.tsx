@@ -5,19 +5,15 @@ import ChannelSelector from "./channel-selector.tsx";
 import SocialLinks from "./social-links.tsx";
 import QuickSearch from "./quick-search.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Lang, $lang, $number, $pointer, $raw, $$themeSettings, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $pointer, $$themeSettings, $string, $unescaped, $And, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => {
     const theme = $$themeSettings();
     return (
         <nav className="navUser">
-            {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-            <LanguageSelector />
-            {$raw("{{/and}}")}
+            <$And a={$pointer("language_selector")} b={$pointer("language_selector.languages.length")} rest={[$string(">"), $number(1)]} $then={() => (<><LanguageSelector /></>)} />
 
-            {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-            <CurrencySelector />
-            {$raw("{{/or}}")}
+            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><CurrencySelector /></>)} />
 
             <$If test={theme.show_channels} $then={() => <ChannelSelector />} />
 

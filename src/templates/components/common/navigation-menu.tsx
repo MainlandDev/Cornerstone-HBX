@@ -6,7 +6,7 @@ import LanguageSelectorMobile from "./language-selector-mobile.tsx";
 import ChannelSelectorMobile from "./channel-selector-mobile.tsx";
 import SocialLinks from "./social-links.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $$themeSettings} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $$themeSettings, $And} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -76,9 +76,7 @@ export default (_props: PartialProps) => {
                 />
             </ul>
             <ul className="navPages-list navPages-list--user">
-                {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-                <li className="navPages-item"><LanguageSelectorMobile /></li>
-                {$raw("{{/and}}")}
+                <$And a={$pointer("language_selector")} b={$pointer("language_selector.languages.length")} rest={[$string(">"), $number(1)]} $then={() => (<><li className="navPages-item"><LanguageSelectorMobile /></li></>)} />
                 <$If
                     test={$pointer("currency_selector.currencies.length")}
                     operator={$string(">")}

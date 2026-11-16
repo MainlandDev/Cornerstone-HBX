@@ -6,7 +6,6 @@ import ResponsiveImg from "../components/common/responsive-img.tsx";
 import LoginForPricing from "../components/common/login-for-pricing.tsx";
 import {
     $Page,
-    $raw,
     $Each,
     $If,
     $Inject,
@@ -14,7 +13,7 @@ import {
     $lang,
     $pointer,
     $string,
-    $unescaped,
+    $unescaped, $unlessExpression, $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Comparison {
@@ -95,15 +94,11 @@ export default () => (
                                                         <h3 className="card-title">
                                                             <a href={product.url}>{product.name}</a>
                                                         </h3>
-                                                        {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
-                                                        <$If
+                                                        <$Or values={[$pointer("../customer"), $unlessExpression($pointer("../settings.hide_price_from_guests"))]} $then={() => (<><$If
                                                             test={product.price_range}
                                                             $then={() => <ProductsPriceRange />}
                                                             $else={() => <ProductsPrice price={product.price} />}
-                                                        />
-                                                        {$raw("{{else}}")}
-                                                        <LoginForPricing />
-                                                        {$raw("{{/or}}")}
+                                                        /></>)} $else={() => (<><LoginForPricing /></>)} />
                                                     </div>
                                                 </article>
                                             </th>

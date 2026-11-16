@@ -22,7 +22,7 @@ import {
     $region,
     $string,
     $unescaped,
-    $Unless,
+    $Unless, $unlessExpression,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** `{{{region name="…"}}}` */
@@ -200,11 +200,7 @@ export default (_props: PartialProps) => {
                 </h3>
 
                 <div className="card-text" data-test-info-type="price">
-                    {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                    <ProductsPrice price={$pointer("price")} />
-                    {$raw("{{else}}")}
-                    <LoginForPricing />
-                    {$raw("{{/or}}")}
+                    <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><ProductsPrice price={$pointer("price")} /></>)} $else={() => (<><LoginForPricing /></>)} />
                 </div>
                 {region("product_item_below_price")}
                 <ProductsBulkDiscountRates />

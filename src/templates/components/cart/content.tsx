@@ -16,9 +16,8 @@ import {
     $number,
     $Or,
     $pointer,
-    $raw,
     $string,
-    $Unless,
+    $Unless, $unlessExpression, $ifExpression,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface StockPosition {
@@ -193,12 +192,8 @@ export default (_props: PartialProps) => (
                             <span className="cart-item-label">
                                 <$Lang keyName={$string("cart.checkout.price")} />
                             </span>
-                            {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}")}
-                            <span className={`cart-item-value ${$If({test: item.price_discounted, $then: () => "price--discounted"})}`}>{item.price.formatted}</span>
-                            <$If test={item.price_discounted} $then={() => <span className="cart-item-value">{item.price_discounted.formatted}</span>} />
-                            {$raw("{{else}}")}
-                            <LoginForPricing />
-                            {$raw("{{/or}}")}
+                            <$Or values={[$pointer("../customer"), $unlessExpression($pointer("../settings.hide_price_from_guests")), $ifExpression($pointer("type"), $string("=="), $string("GiftCertificate"))]} $then={() => (<><span className={`cart-item-value ${$If({test: item.price_discounted, $then: () => "price--discounted"})}`}>{item.price.formatted}</span>
+                            <$If test={item.price_discounted} $then={() => <span className="cart-item-value">{item.price_discounted.formatted}</span>} /></>)} $else={() => (<><LoginForPricing /></>)} />
                         </td>
 
                         <td className="cart-item-block cart-item-info cart-item-quantity">
@@ -361,14 +356,9 @@ export default (_props: PartialProps) => (
                             <span className="cart-item-label">
                                 <$Lang keyName={$string("cart.checkout.total")} />
                             </span>
-                            {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}")}
-                            <strong className={`cart-item-value ${$If({test: item.total_discounted, $then: () => "price--discounted"})}`}>{item.total.formatted}</strong>
-                            <$If test={item.total_discounted} $then={() => <strong className="cart-item-value">{item.total_discounted.formatted}</strong>} />
-                            {$raw("{{else}}")}
-                            --
-                            {$raw("{{/or}}")}
-                            {$raw("{{#or can_modify (if type '==' 'GiftCertificate')}}")}
-                            <button
+                            <$Or values={[$pointer("../customer"), $unlessExpression($pointer("../settings.hide_price_from_guests")), $ifExpression($pointer("type"), $string("=="), $string("GiftCertificate"))]} $then={() => (<><strong className={`cart-item-value ${$If({test: item.total_discounted, $then: () => "price--discounted"})}`}>{item.total.formatted}</strong>
+                            <$If test={item.total_discounted} $then={() => <strong className="cart-item-value">{item.total_discounted.formatted}</strong>} /></>)} $else={() => (<>--</>)} />
+                            <$Or values={[$pointer("can_modify"), $ifExpression($pointer("type"), $string("=="), $string("GiftCertificate"))]} $then={() => (<><button
                                 className="cart-remove icon"
                                 data-cart-itemid={item.id}
                                 data-confirm-delete={$lang($string("cart.confirm_delete"))}
@@ -377,8 +367,7 @@ export default (_props: PartialProps) => (
                                 <svg aria-hidden="true">
                                     <use href="#icon-close"></use>
                                 </svg>
-                            </button>
-                            {$raw("{{/or}}")}
+                            </button></>)} />
                         </td>
                     </tr>
                 )}

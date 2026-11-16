@@ -7,7 +7,6 @@ import Breadcrumbs from "../components/common/breadcrumbs.tsx";
 import AlertAlertInfo from "../components/common/alert/alert-info.tsx";
 import {
     $Page,
-    $raw,
     $Each,
     $frontmatter,
     $If,
@@ -15,7 +14,7 @@ import {
     $pointer,
     $region,
     $string,
-    $unescaped,
+    $unescaped, $boolean, $ifExpression, $All,
 } from "@mainlanddev/hbx-bigcommerce";
 
 const {setting} = $frontmatter;
@@ -56,9 +55,7 @@ export default () => {
                                     test={$pointer("product.videos.list.length")}
                                     $then={() => <ProductsVideos $positionalHash={$pointer("product.videos")} />}
                                 />
-                                {$raw("{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}")}
-                                <ProductsReviews reviews={$pointer("product.reviews")} product={$pointer("product")} urls={$pointer("urls")} />
-                                {$raw("{{/all}}")}
+                                <$All values={[$pointer("settings.show_product_reviews"), $pointer("theme_settings.show_product_reviews"), $ifExpression($pointer("theme_settings.show_product_details_tabs"), $string("!=="), $boolean(true))]} $then={() => (<><ProductsReviews reviews={$pointer("product.reviews")} product={$pointer("product")} urls={$pointer("urls")} /></>)} />
                                 <ProductsTabs />
                             </div>
                             <ProductsSchema />
