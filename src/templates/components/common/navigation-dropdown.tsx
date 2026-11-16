@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface NavChild {
     id: string;
@@ -35,7 +35,7 @@ export default () => (
                                             </svg>
                                         </i>
                                     </a>
-                                    {place($partial("components/common/navigation-dropdown"))}
+                                    {$partial("components/common/navigation-dropdown")}
                                 </>
                             )}
                             $else={() => (

@@ -1,4 +1,4 @@
-import {$boolean, $Each, $If, $Lang, $lang, $partial, $pointer, $sanitize, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $lang, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
     rating: number;
@@ -39,7 +39,7 @@ export default () => {
                                         <article>
                                             <header>
                                                 <span className="productReview-rating rating--small">
-                                                    {place($partial("components/products/ratings", {rating: review.rating}))}
+                                                    {$partial("components/products/ratings", {rating: review.rating})}
                                                     <span className="productReview-ratingNumber">{review.rating}</span>
                                                 </span>
                                                 <h5 className="productReview-title">{$unescaped($sanitize(review.title))}</h5>
@@ -72,7 +72,7 @@ export default () => {
                                 )}
                             />
                         </ul>
-                        {place($partial("components/common/paginator", $pointer("pagination.reviews"), {reload: $boolean(true)}))}
+                        {$partial("components/common/paginator", $pointer("pagination.reviews"), {reload: $boolean(true)})}
                     </div>
                 </section>
             )}

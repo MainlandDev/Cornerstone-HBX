@@ -15,7 +15,6 @@ import {
     $stylesheet,
     $unescaped,
     $Inject,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
@@ -43,7 +42,7 @@ export default () => {
                         }}
                     />
 
-                    {place($partial("components/common/polyfill-script"))}
+                    {$partial("components/common/polyfill-script")}
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
@@ -86,9 +85,9 @@ export default () => {
                 <body>
                     <svg data-src={$cdn($string("img/icon-sprite.svg"))} className="icons-svg-sprite"></svg>
 
-                    {place($partial("components/common/header"))}
-                    {place($partial("components/common/body"))}
-                    {place($partial("components/common/footer"))}
+                    {$partial("components/common/header")}
+                    {$partial("components/common/body")}
+                    {$partial("components/common/footer")}
 
                     <script
                         nonce={$nonce()}

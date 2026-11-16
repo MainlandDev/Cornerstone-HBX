@@ -1,4 +1,4 @@
-import {$partial, $pointer, $Each, $If, $Inject, $Lang, $lang, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$partial, $pointer, $Each, $If, $Inject, $Lang, $lang, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface InboxOrder {
     id: string;
@@ -81,6 +81,6 @@ export default () => (
                 </form>
             </>
         )}
-        $else={() => place($partial("components/common/alert/alert-info", $lang($string("forms.inbox.no_orders"))))}
+        $else={() => $partial("components/common/alert/alert-info", $lang($string("forms.inbox.no_orders")))}
     />
 );

@@ -1,4 +1,4 @@
-import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <form action={$pointer("urls.account.update_action")} data-edit-account-form={""} className="form" method="post">
@@ -100,7 +100,7 @@ export default () => (
                 </div>
                 <$Each
                     list={$pointer<unknown[]>("forms.edit_account.fields")}
-                    $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                    $then={() => $unescaped($dynamicComponent($string("components/common/forms")))}
                 />
             </div>
         </fieldset>

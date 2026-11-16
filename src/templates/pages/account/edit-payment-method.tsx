@@ -1,4 +1,4 @@
-import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $unescaped, $With, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $lang, $Lang, $Page, $partial, $pointer, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/customer.ts:21 types `customer.edit_stored_instrument` as `string`, but the original reads
 // `token`, `type`, `last_4`, `expiry_month`, `expiry_year`, `email` and `is_default` from it (edit-payment-method.html: the
@@ -15,18 +15,18 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
 
                     <h2 className="page-heading">
                         <$Lang keyName={$string("forms.payment_methods.edit.heading")} />
                     </h2>
 
-                    {place($partial("components/account/navigation", {account_page: $string("payment_methods")}))}
+                    {$partial("components/account/navigation", {account_page: $string("payment_methods")})}
 
                     <div className="account account--fixed">
                         <$If
                             test={$pointer("forms.error")}
-                            $then={() => place($partial("components/common/alert/alert-error", $pointer("forms.error")))}
+                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.error"))}
                         />
 
                         <$With
@@ -109,7 +109,7 @@ export default () => (
                                                     <div className="form-row form-row--half">
                                                         <$Each
                                                             list={$pointer<unknown[]>("forms.billing_fields")}
-                                                            $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                                                            $then={() => $unescaped($dynamicComponent($string("components/common/forms")))}
                                                         />
                                                     </div>
                                                 </fieldset>

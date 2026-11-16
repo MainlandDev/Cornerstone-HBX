@@ -1,4 +1,4 @@
-import {$Each, $If, $partial, $pointer, $sanitize, $this, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $partial, $pointer, $sanitize, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface ChildFacet {
     id: string;
@@ -31,7 +31,7 @@ export default () => (
                     </a>
                     <$If
                         test={item.children}
-                        $then={() => place($partial("components/faceted-search/facets/hierarchy-children", item.children))}
+                        $then={() => $partial("components/faceted-search/facets/hierarchy-children", item.children)}
                     />
                 </li>
             )}

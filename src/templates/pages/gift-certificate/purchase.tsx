@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 // The original iterates `forms.gift_certificate.themes` and `amount_options`; the library types neither key (see PORT-NOTES.md, Task 8c).
 interface Theme {
@@ -16,16 +16,16 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
-                    {place($partial("components/gift-certificate/navigation", {gift_page: $string("purchase")}))}
+                    {$partial("components/gift-certificate/navigation", {gift_page: $string("purchase")})}
 
                     <main className="account account--fixed">
                         <$Each
                             list={$pointer<string[]>("forms.gift_certificate.errors")}
-                            $then={(error) => place($partial("components/common/alert/alert-error", error))}
+                            $then={(error) => $partial("components/common/alert/alert-error", error)}
                         />
 
                         <form

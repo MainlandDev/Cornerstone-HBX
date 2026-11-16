@@ -1,4 +1,4 @@
-import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface RatingOption {
     url: string;
@@ -12,7 +12,7 @@ export default () => (
         test={$pointer("items")}
         $then={() => (
             <div className="accordion-block">
-                {place($partial("components/faceted-search/faceted-search-navigation"))}
+                {$partial("components/faceted-search/faceted-search-navigation")}
 
                 <div
                     id={`facetedSearch-content--${$dashcase($pointer("facet"))}`}
@@ -30,7 +30,7 @@ export default () => (
                                         data-faceted-search-facet={""}
                                     >
                                         <span className="rating--small">
-                                            {place($partial("components/products/ratings", {rating: item.title}))}
+                                            {$partial("components/products/ratings", {rating: item.title})}
                                         </span>{" "}
                                         <$Lang keyName={$string("search.faceted.rating.and-up")} />{" "}
                                         <$If

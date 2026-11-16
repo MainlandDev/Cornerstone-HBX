@@ -1,4 +1,4 @@
-import {$If, $Inject, $lang, $Lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $lang, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -25,7 +25,7 @@ export default () => (
                 />
                 <$If
                     test={$pointer("forms.wishlist.errors")}
-                    $then={() => place($partial("components/common/alert/alert-error", $pointer("forms.wishlist.errors")))}
+                    $then={() => $partial("components/common/alert/alert-error", $pointer("forms.wishlist.errors"))}
                 />
             </header>
             <form

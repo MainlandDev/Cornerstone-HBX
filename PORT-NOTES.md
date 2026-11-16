@@ -10,18 +10,18 @@ Taken from the pilots `src/templates/pages/home.tsx` and `src/templates/pages/ac
 | --- | --- |
 | `{{#partial "page"}}…{{/partial}}` | `<$StencilPartial name={$string("page")} $then={() => (<>…</>)} />` |
 | a page template: `{{#partial "head"}}…{{/partial}}{{#partial "page"}}…{{/partial}}{{> layout/empty}}` | `export default () => (<$Page blocks={{head: () => …, page: () => …}} layout="layout/empty" />)`, blocks in source order, the layout last; a top-level element that is not a partial (an inject) goes in a `<>` wrapper before `<$Page>` |
-| `{{> components/x a=b}}` | `place($partial("components/x", {a: b}))` |
-| `{{> components/x item}}` (positional context) | `place($partial("components/x", item))` |
-| `{{> layout/base}}` | `{place($partial("layout/base"))}` |
+| `{{> components/x a=b}}` | `$partial("components/x", {a: b})` |
+| `{{> components/x item}}` (positional context) | `$partial("components/x", item)` |
+| `{{> layout/base}}` | `<$Page … />` (it calls the layout) |
 | `{{theme_settings.x}}` | `const settings = $$themeSettings();` then `settings.x` |
 | typed data read, e.g. `carousel.slides.length` | `const carousel = $pointer<{slides: {length: number}}>("carousel");` |
-| `{{#if x}}…{{/if}}` | `<$If test={x} $then={() => place(…)} />` |
+| `{{#if x}}…{{/if}}` | `<$If test={x} $then={() => …} />` |
 | `{{#if x '==' 'y'}}…{{else if x '===' 0}}…{{/if}}` | `<$If test={x} operator={$string("==")} rvalue={$string("y")} $then={() => …} $elseThen={[{test: x, operator: $string("==="), rvalue: $number(0), $then: () => …}]} />`; in a class or attribute string, `${$If({test, operator, rvalue, $then: () => "…"})}` |
 | `{{#each list}}…{{/each}}` | `<$Each list={$pointer<T[]>("list")} $then={(item) => …} />` |
 | `{{#and a b}}…{{/and}}` | `<$And a={a} b={b} $then={() => …} />` |
 | `{{lang 'a.b'}}` | `<$Lang keyName={$string("a.b")} />` |
-| `{{{region name="n"}}}` | `place($unescaped($region({name: $string("n")})))` |
-| `{{{region name="n"}}}` inside JSX | wrap in a local helper, e.g. `const region = (name: string) => place($unescaped($region({name: $string(name)})));` |
+| `{{{region name="n"}}}` | `$unescaped($region({name: $string("n")}))` |
+| `{{{region name="n"}}}` inside JSX | wrap in a local helper, e.g. `const region = (name: string) => $unescaped($region({name: $string(name)}));` |
 | front matter `products: {new: {limit: {{theme_settings.x}}}}` | `export const frontmatter = $frontmatter.home({products: {new: {limit: setting("x")}}});` with `const {setting} = $frontmatter;` |
 
 Notes:
@@ -259,8 +259,8 @@ Idioms added here:
 
 Idioms added here:
 
-- A partial called with no arguments inside a loop inherits the loop item: `place($partial("components/common/product-options"))` (order-contents.tsx, returns-list.tsx) and the recursive `components/sitemap/links` (links.tsx).
-- A dynamic partial in a triple-stash: `place($unescaped($dynamicComponent($string("components/common/forms"))))` (edit-account.tsx).
+- A partial called with no arguments inside a loop inherits the loop item: `$partial("components/common/product-options")` (order-contents.tsx, returns-list.tsx) and the recursive `components/sitemap/links` (links.tsx).
+- A dynamic partial in a triple-stash: `$unescaped($dynamicComponent($string("components/common/forms")))` (edit-account.tsx).
 - A `../../` hop from an inner loop to the root is `$pointer("../../theme_settings.x")`, created inside the inner body (payment-methods-list.tsx), the same rule as the one-level `../` in Task 5.
 - `{{inject}}` expressions that follow each other keep the newline as a space: `{" "}` between them (edit-account.tsx, messages-form.tsx, contact-us-form.tsx).
 - Whitespace the original prints between inline siblings is `{" "}` (checked in dist, e.g. `forms.wishlist.name"}} <small`): a label's text before `<small>`, a checkbox before its label, submit/reset and edit/delete controls, an `<img>` before its brand span, a billing label before its description, and a reset link before its span. Block boundaries (`div`, `li`, `p`, `h*`) get no space.
@@ -286,15 +286,15 @@ Library gaps noted in Task 6: none new. The operator `if` (Task 2) accounts for 
 Idioms added here:
 
 - `{{join (pluck facets 'title') ', ' limit=2}}` is typed: `$join($pluck($pointer<Facet[]>("facets"), $string("title")), $string(", "), {limit: $number(2)})`. `$pluck` is accepted as the array operand (faceted-search/index.tsx).
-- `{{{dynamicComponent '…'}}}` inside a loop body: `place($unescaped($dynamicComponent($string("…"))))` (faceted-search/index.tsx).
-- `{{> partial ctx reload=true}}`: `place($partial(name, ctx, {reload: $boolean(true)}))` (search/content-listing.tsx).
+- `{{{dynamicComponent '…'}}}` inside a loop body: `$unescaped($dynamicComponent($string("…")))` (faceted-search/index.tsx).
+- `{{> partial ctx reload=true}}`: `$partial(name, ctx, {reload: $boolean(true)})` (search/content-listing.tsx).
 - `{{#any list visible=true}}`: `<$Any list predicate={{visible: $boolean(true)}}>` (faceted-search/index.tsx).
 - `{{this.x}}` is `$pointer("this.x")`; `{{#each this}}` is `<$Each list={$this<T[]>()}>` (faceted-search/range-form.tsx, facets/hierarchy-children.tsx).
 - A conditional attribute value on a plain prop uses the function form inside a template literal: `name={`${$If({test, $then: () => "price_min", $else: () => "min_price"})}`}` (faceted-search/range-form.tsx). Plain props replace the attribute carrier there.
 - An `<option>` with a conditional `selected` keeps `value` as a plain prop and carries only `selected` (search/advanced-search.tsx, search/content-sort-box.tsx). The harness reports the same tokens.
 - Count spans (`{{lang}}` alone inside a span with newlines either side) keep `{" "}` on both sides (search/content-count.tsx, product-count.tsx), checked in dist.
 - A conditional class suffix in a `className` template: `${$Unless({test, $then: () => " is-open"})}`. Plain text with no quotes needs no `$raw` (faceted-search/faceted-search-navigation.tsx, facets/*).
-- Recursive partial: `place($partial("components/faceted-search/facets/hierarchy-children", item.children))` (facets/hierarchy-children.tsx, facets/hierarchy.tsx).
+- Recursive partial: `$partial("components/faceted-search/facets/hierarchy-children", item.children)` (facets/hierarchy-children.tsx, facets/hierarchy.tsx).
 - `../` hops from inside a loop: `$pointer("../show_product_counts")` created inside the `$Each` body (facets/hierarchy, multi, rating, hierarchy-children, show-more-facets). In show-more-facets the inner loop's `../` reads the outer facet, as the original does.
 - Valueless booleans: `checked={true}`, `noValidate={true}`; valueless `data-*`: `={""}`.
 - Whitespace between inline siblings is `{" "}`, checked in dist: label text and `<small>` (advanced-search); checkbox and its label; the two price-label spans; the toggle-text, indicator, on and off spans and the `<i>` icons after their labels (faceted-search/index); the accordion-title span and icon spans and the two icon `<svg>`s (faceted-search-navigation); the input and hint span in range-form; the rating `</span>` and its label (facets/rating); the facet title and count, and the count and close span in multi (facets/*); `{{/if}}` and the svg in selected-facets.
@@ -432,7 +432,7 @@ Idioms added here:
 
 - `details.tsx` / `invoice.tsx` read `order` through a local typed shape, `$pointer<Order>("order")`; a helper that takes a part of it (an address) types its parameter as `typeof order.shipping_address` (the pointer type), not the plain interface.
 - `{{{ sanitize x.address_lines.[0] }}}` is `$unescaped($sanitize(address.address_lines[0]))` with `address_lines: string[]`; it prints `address_lines.[0]`.
-- `{{> alert-info message}}` in a loop over objects with a `message` key is `place($partial(name, status.message))`.
+- `{{> alert-info message}}` in a loop over objects with a `message` key is `$partial(name, status.message)`.
 - A tag opened and closed in separate truthy blocks (`<a href="{{shipping_track.url}}">` … `</a>`) is two `<$If>` elements: `$raw('<a href="')` + typed url + `$raw('">')`, and `$raw("</a>")` (as product-view.tsx).
 - `colspan="{{#if ../x}}5{{else}}4{{/if}}"` is a plain `colSpan` template string with `$If` in function form; the `../` pointer is created inside the `$Each` body.
 - `<tr {{#if new_address}}class="NewAddress"{{/if}}>` is a carrier holding `${$If({test, $then: () => $raw('class="NewAddress"')})}`.
@@ -462,3 +462,5 @@ Library gaps found in Task 9 (part B):
 - `$context(route)` reads the page's root as `@root`; a page that uses it prints `{{#each @root.shipping_messages}}` where the original has `{{#each shipping_messages}}` (same value at a page's root context; `pages/home` is the first).
 - Retype a loose generated context key in `src/hbx/context.overrides.d.ts` (`HBXContextOverrides`, tracked); retype theme settings in `src/hbx/theme-settings.overrides.d.ts` (`HBXThemeSettingOverrides`). The `.hbx/` folder is regenerated and git-ignored, so overrides do not live there.
 - LIBRARY GAP (packaging): hbx-bigcommerce's declaration files import types from `@mainlanddev/hbx-core/grammar`, which a consumer cannot resolve (it is nested under hbx-handlebars-v4). Until it is fixed in the library, `tsconfig.app.json` maps `@mainlanddev/hbx-core/*` the way it maps `@mainlanddev/hbx-handlebars-v4/*`. Without the mapping, `$context(...)`, `$$themeSettings()` and other helpers typed through core silently become `any` in the theme (skipLibCheck hides the error). With it, one latent type error appeared (description-tabs `$sanitize(theme[...])`), now fixed.
+
+- NO `place(...)` in templates. The JSX runtime encodes a template element used as a child, as the return of a `$then`/`$else` body, or as an attribute value, so a partial, region or other element is written bare. `place` (from hbx-handlebars-v4) is only for a component *function* that returns an element itself instead of JSX; no theme template does. All 384 calls (copied from the first pilots) were removed with a byte-identical compiled output.

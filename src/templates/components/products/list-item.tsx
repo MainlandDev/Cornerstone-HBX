@@ -13,11 +13,10 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
@@ -50,7 +49,7 @@ export default () => {
                 <a
                     href={url}
                     className="listItem-figure__link"
-                    aria-label={place($partial("components/products/product-info"))}
+                    aria-label={$partial("components/products/product-info")}
                     data-event-type="product-click"
                 >
                     <$If
@@ -62,8 +61,8 @@ export default () => {
                                 test={$pointer("theme_settings.pdp_sold_out_label")}
                                 operator={$string("===")}
                                 rvalue={$string("")}
-                                $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))}))}
-                                $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label}))}
+                                $then={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))})}
+                                $else={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label})}
                             />
                         )}
                         $else={() => (
@@ -74,22 +73,20 @@ export default () => {
                                         test={$pointer("theme_settings.pdp_sale_badge_label")}
                                         operator={$string("===")}
                                         rvalue={$string("")}
-                                        $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))}))}
-                                        $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label}))}
+                                        $then={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))})}
+                                        $else={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label})}
                                     />
                                 )}
                             />
                         )}
                     />
-                    {place(
-                        $partial("components/common/responsive-img", {
+                    {$partial("components/common/responsive-img", {
                             image: $pointer("image"),
                             class: $string("listItem-image"),
                             fallback_size: settings.productgallery_size,
                             lazyload: settings.lazyload_mode,
                             default_image: settings.default_image_product,
-                        }),
-                    )}
+                        })}
                 </a>
                 <$Unless
                     test={$pointer("hide_product_quick_view")}
@@ -114,7 +111,7 @@ export default () => {
                             test={$pointer("show_rating")}
                             $then={() => (
                                 <p className="listItem-rating">
-                                    {place($partial("components/products/ratings", {rating_target: name, rating: $pointer("rating")}))}
+                                    {$partial("components/products/ratings", {rating_target: name, rating: $pointer("rating")})}
                                 </p>
                             )}
                         />
@@ -123,7 +120,7 @@ export default () => {
                             $then={() => <p className="listItem-brand">{brand.name}</p>}
                         />
                         <h4 className="listItem-title">
-                            <a href={url} aria-label={place($partial("components/products/product-info"))} data-event-type="product-click">
+                            <a href={url} aria-label={$partial("components/products/product-info")} data-event-type="product-click">
                                 {name}
                             </a>
                         </h4>
@@ -136,24 +133,22 @@ export default () => {
                             $then={() => (
                                 <>
                                     <div className="listItem-price">
-                                        {place($partial("components/products/price", {price: $pointer("price")}))}
+                                        {$partial("components/products/price", {price: $pointer("price")})}
                                     </div>
                                     {region("product_item_below_price")}
                                 </>
                             )}
                         />
                         {$raw("{{else}}")}
-                        {place($partial("components/common/login-for-pricing"))}
+                        {$partial("components/common/login-for-pricing")}
                         {$raw("{{/or}}")}
                         <$If
                             test={settings.show_featured_promotions}
                             $then={() =>
-                                place(
-                                    $partial("components/products/promotion-callout", {
+                                $partial("components/products/promotion-callout", {
                                         promotions: $pointer("featured_promotions"),
                                         mode: $string("compact"),
-                                    }),
-                                )
+                                    })
                             }
                         />
                         <$If

@@ -1,4 +1,4 @@
-import {$Each, $If, $partial, $pointer, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <li>
@@ -7,7 +7,7 @@ export default () => (
             test={$pointer("children")}
             $then={() => (
                 <ul>
-                    <$Each list={$pointer<unknown[]>("children")} $then={() => place($partial("components/sitemap/links"))} />
+                    <$Each list={$pointer<unknown[]>("children")} $then={() => $partial("components/sitemap/links")} />
                 </ul>
             )}
         />

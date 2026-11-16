@@ -10,7 +10,6 @@ import {
     $pointer,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Comparison {
@@ -40,7 +39,7 @@ export default () => (
                 <>
                     <$Inject keyName={$string("comparisons")} value={$pointer("comparisons")} />{" "}
                     <$Inject keyName={$string("compareRemoveMessage")} value={$lang($string("compare.no_remove"))} />
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("compare.header")} products={$pointer<number>("comparisons.length")} />
                     </h1>
@@ -62,15 +61,13 @@ export default () => (
                                                             data-event-type="product-click"
                                                         >
                                                             <div className="card-img-container">
-                                                                {place(
-                                                                    $partial("components/common/responsive-img", {
+                                                                {$partial("components/common/responsive-img", {
                                                                         image: product.image,
                                                                         class: $string("card-image"),
                                                                         fallback_size: $pointer("../theme_settings.product_size"),
                                                                         lazyload: $pointer("../theme_settings.lazyload_mode"),
                                                                         default_image: $pointer("../theme_settings.default_image_product"),
-                                                                    }),
-                                                                )}
+                                                                    })}
                                                             </div>
                                                         </a>
                                                         <a
@@ -102,11 +99,11 @@ export default () => (
                                                         {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
                                                         <$If
                                                             test={product.price_range}
-                                                            $then={() => place($partial("components/products/price-range"))}
-                                                            $else={() => place($partial("components/products/price", {price: product.price}))}
+                                                            $then={() => $partial("components/products/price-range")}
+                                                            $else={() => $partial("components/products/price", {price: product.price})}
                                                         />
                                                         {$raw("{{else}}")}
-                                                        {place($partial("components/common/login-for-pricing"))}
+                                                        {$partial("components/common/login-for-pricing")}
                                                         {$raw("{{/or}}")}
                                                     </div>
                                                 </article>
@@ -206,7 +203,7 @@ export default () => (
                                                     <td className="compareTable-item">
                                                         <$If
                                                             test={product.rating}
-                                                            $then={() => place($partial("components/products/ratings", {rating: product.rating}))}
+                                                            $then={() => $partial("components/products/ratings", {rating: product.rating})}
                                                             $else={() => <$Lang keyName={$string("products.reviews.no_reviews")} />}
                                                         />
                                                     </td>

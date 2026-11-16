@@ -1,4 +1,4 @@
-import {$Page, $partial, $pointer, $string, $getImage, $If, $Each, $Lang, $this, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Page, $partial, $pointer, $string, $getImage, $If, $Each, $Lang, $this} from "@mainlanddev/hbx-bigcommerce";
 
 // LIBRARY GAP: types/context/downloads.ts types `downloads` as `Record<string, unknown>`, so the fields below are read from
 // download-item.html, not from library docs: images[] (each item is `this` for getImage), product_name, order_id, and items[]
@@ -22,11 +22,11 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.orders.downloads.heading")} number={$pointer("downloads.order_id")} />
                     </h1>
-                    {place($partial("components/account/navigation", {account_page: $string("orders")}))}
+                    {$partial("components/account/navigation", {account_page: $string("orders")})}
 
                     <div className="account account--fixedLarge">
                         <div className="account-body">

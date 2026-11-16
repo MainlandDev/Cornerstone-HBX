@@ -1,4 +1,4 @@
-import {$lang, $Lang, $Page, $partial, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$lang, $Lang, $Page, $partial, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -9,7 +9,7 @@ export default () => (
                         <h1 className="page-heading">
                             <$Lang keyName={$string("unavailable.hibernation_title")} />
                         </h1>
-                        {place($partial("components/common/alert/alert-error", $lang($string("unavailable.hibernation_message"))))}
+                        {$partial("components/common/alert/alert-error", $lang($string("unavailable.hibernation_message")))}
                     </div>
                 </section>
             ),

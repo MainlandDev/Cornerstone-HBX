@@ -1,4 +1,4 @@
-import {$If, $Lang, $number, $partial, $pointer, $raw, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $number, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const relatedProducts = $pointer("product.related_products");
@@ -41,13 +41,11 @@ export default () => {
                     test={relatedProducts}
                     $then={() => (
                         <div role="tabpanel" aria-hidden="false" className="tab-content has-jsContent is-active" id="tab-related">
-                            {place(
-                                $partial("components/products/carousel", {
+                            {$partial("components/products/carousel", {
                                     products: $pointer("product.related_products"),
                                     columns: $number(6),
                                     list: $string("Related Products"),
-                                }),
-                            )}
+                                })}
                         </div>
                     )}
                 />
@@ -63,13 +61,11 @@ export default () => {
                                 attributes: `aria-hidden="${$If({test: relatedProducts, $then: () => "true", $else: () => "false"})}"`,
                             }}
                         >
-                            {place(
-                                $partial("components/products/carousel", {
+                            {$partial("components/products/carousel", {
                                     products: $pointer("product.similar_by_views"),
                                     columns: $number(6),
                                     list: $string("Customers Also Viewed"),
-                                }),
-                            )}
+                                })}
                         </div>
                     )}
                 />

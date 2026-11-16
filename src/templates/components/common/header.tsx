@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $limit, $number, $partial, $pointer, $region, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $limit, $number, $partial, $pointer, $region, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Banner {
     id: string;
@@ -8,7 +8,7 @@ interface Banner {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     return (
@@ -40,7 +40,7 @@ export default () => {
                 <a href="#" className="mobileMenu-toggle" data-mobile-menu-toggle="menu">
                     <span className="mobileMenu-toggleIcon">Toggle menu</span>
                 </a>
-                {place($partial("components/common/navigation"))}
+                {$partial("components/common/navigation")}
 
                 <$If
                     test={$pointer("page_type")}
@@ -48,17 +48,17 @@ export default () => {
                     rvalue={$string("default")}
                     $then={() => (
                         <h1 className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                            {place($partial("components/common/store-logo"))}
+                            {$partial("components/common/store-logo")}
                         </h1>
                     )}
                     $else={() => (
                         <div className={`header-logo header-logo--${$pointer("theme_settings.logo-position")}`}>
-                            {place($partial("components/common/store-logo"))}
+                            {$partial("components/common/store-logo")}
                         </div>
                     )}
                 />
                 <div className="navPages-container" id="menu" data-menu={""}>
-                    {place($partial("components/common/navigation-menu"))}
+                    {$partial("components/common/navigation-menu")}
                 </div>
                 {region("header_navigation_bottom--global")}
             </header>

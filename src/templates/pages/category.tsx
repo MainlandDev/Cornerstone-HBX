@@ -11,7 +11,6 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 const {setting} = $frontmatter;
@@ -19,13 +18,13 @@ const {setting} = $frontmatter;
 export const frontmatter = $frontmatter.category({category: {products: {limit: setting("categorypage_products_per_page")}}});
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
     const sidebar = () => (
         <aside className="page-sidebar" id="faceted-search-container">
-            {place($partial("components/category/sidebar"))}
+            {$partial("components/category/sidebar")}
         </aside>
     );
     return (
@@ -51,18 +50,16 @@ export default () => {
                     ),
                     page: () => (
                         <>
-                            {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                             <$If
                                 test={$pointer("category.image")}
                                 $then={() =>
-                                    place(
-                                        $partial("components/common/responsive-img", {
+                                    $partial("components/common/responsive-img", {
                                             image: $pointer("category.image"),
                                             fallback_size: settings.zoom_size,
                                             lazyload: settings.lazyload_mode,
                                             class: $string("category-header-image"),
-                                        }),
-                                    )
+                                        })
                                 }
                             />
                             <$Unless
@@ -85,7 +82,7 @@ export default () => {
                                     ]}
                                 />
                                 <main className="page-content" id="product-listing-container">
-                                    {place($partial("components/category/product-listing"))}
+                                    {$partial("components/category/product-listing")}
                                 </main>
                                 <div className="page-region">{region("category_below_content")}</div>
                             </div>

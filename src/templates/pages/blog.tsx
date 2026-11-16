@@ -9,7 +9,6 @@ import {
     $raw,
     $this,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.blog({blog: {posts: {limit: 5, pages: 3, summary: 200}}});
@@ -37,7 +36,7 @@ export default () => {
                 ),
                 page: () => (
                     <>
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                         <main className="page">
                             <$Unless
                                 test={settings.hide_blog_page_heading}
@@ -46,15 +45,13 @@ export default () => {
                             <$Each
                                 list={$pointer<unknown[]>("blog.posts")}
                                 $then={() =>
-                                    place(
-                                        $partial("components/blog/post", {
+                                    $partial("components/blog/post", {
                                             post: $this(),
                                             theme_settings: $pointer("../theme_settings"),
-                                        }),
-                                    )
+                                        })
                                 }
                             />
-                            {place($partial("components/common/paginator", $pointer("pagination.blog")))}
+                            {$partial("components/common/paginator", $pointer("pagination.blog"))}
                         </main>
                     </>
                 ),

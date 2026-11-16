@@ -1,4 +1,4 @@
-import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $partial, $pointer, $raw, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Instrument {
     type: string;
@@ -33,7 +33,7 @@ export default () => (
     <>
         <$Unless
             test={$pointer("customer.payment_methods")}
-            $then={() => place($partial("components/common/alert/alert-info", $lang($string("account.payment_methods.no_methods"))))}
+            $then={() => $partial("components/common/alert/alert-info", $lang($string("account.payment_methods.no_methods")))}
         />
 
         <$Each

@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -15,7 +15,7 @@ export default () => {
             <label className="form-label form-label--alternate form-label--inlineSmall" id="rectangle-group-label">
                 {$pointer("display_name")}:{" "}
                 <span data-option-value={""} />{" "}
-                {place($partial("components/common/requireness-msg"))}
+                {$partial("components/common/requireness-msg")}
             </label>
             <$Unless
                 test={required}

@@ -1,15 +1,15 @@
-import {$Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Lang, $lang, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
-                    {place($partial("components/gift-certificate/navigation", {gift_page: $string("redeem")}))}
+                    {$partial("components/gift-certificate/navigation", {gift_page: $string("redeem")})}
 
                     <main className="account account--fixed">
                         <h3>

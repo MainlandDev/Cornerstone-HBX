@@ -1,4 +1,4 @@
-import {$If, $Inject, $Lang, $lang, $partial, $pointer, $raw, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $Lang, $lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Product {
     can_purchase: boolean;
@@ -82,8 +82,8 @@ export default () => {
                         $then={() => (
                             <$If
                                 test={product.out_of_stock_message}
-                                $then={() => place($partial("components/common/alert/alert-error", product.out_of_stock_message))}
-                                $else={() => place($partial("components/common/alert/alert-error", $lang($string("products.sold_out"))))}
+                                $then={() => $partial("components/common/alert/alert-error", product.out_of_stock_message)}
+                                $else={() => $partial("components/common/alert/alert-error", $lang($string("products.sold_out")))}
                             />
                         )}
                     />
@@ -124,7 +124,7 @@ export default () => {
                     test={$pointer("with_wallet_buttons")}
                     $then={() => (
                         <div className="add-to-cart-wallet-buttons" data-add-to-cart-wallet-buttons={""}>
-                            {place($partial("components/common/wallet-buttons"))}
+                            {$partial("components/common/wallet-buttons")}
                         </div>
                     )}
                 />

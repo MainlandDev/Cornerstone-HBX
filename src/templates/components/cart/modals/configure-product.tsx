@@ -1,4 +1,4 @@
-import {$dynamicComponent, $Each, $Lang, $lang, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $Lang, $lang, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -9,7 +9,7 @@ export default () => (
         </div>
         <div className="modal-body" data-product-option-change={""}>
             <div className="alertMessageBox" hidden={true}>
-                {place($partial("components/common/alert/alert-info"))}
+                {$partial("components/common/alert/alert-info")}
             </div>
 
             <form id="CartEditProductFieldsForm" method="post" action="cart.php" encType="multipart/form-data">
@@ -18,7 +18,7 @@ export default () => (
                 <div data-product-attributes-wrapper={""}>
                     <$Each
                         list={$pointer<unknown[]>("options")}
-                        $then={() => place($unescaped($dynamicComponent($string("components/products/options"))))}
+                        $then={() => $unescaped($dynamicComponent($string("components/products/options")))}
                     />
                 </div>
                 <div className="form-actions">

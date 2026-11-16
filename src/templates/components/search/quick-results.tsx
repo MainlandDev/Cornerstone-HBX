@@ -1,18 +1,17 @@
-import {$add, $boolean, $Each, $If, $lang, $number, $partial, $pointer, $sanitize, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $boolean, $Each, $If, $lang, $number, $partial, $pointer, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$If
         test={$pointer("product_results.products")}
         $then={() => (
             <>
-                {place($partial("components/common/modal/modal-close-btn", {additional_attr: $string("data-drop-down-close")}))}
+                {$partial("components/common/modal/modal-close-btn", {additional_attr: $string("data-drop-down-close")})}
                 <ul className="productGrid" data-list-name="Quick Search Results">
                     <$Each
                         list={$pointer<unknown[]>("product_results.products")}
                         $then={() => (
                             <li className="product">
-                                {place(
-                                    $partial("components/products/card", {
+                                {$partial("components/products/card", {
                                         settings: $pointer("../settings"),
                                         alternate: $boolean(true),
                                         show_compare: $pointer("../show_compare"),
@@ -20,8 +19,7 @@ export default () => (
                                         customer: $pointer("../customer"),
                                         event: $string("list"),
                                         position: $add($pointer<number>("@index"), $number(1)),
-                                    }),
-                                )}
+                                    })}
                             </li>
                         )}
                     />

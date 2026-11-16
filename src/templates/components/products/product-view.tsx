@@ -19,7 +19,6 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** The size a `getImageSrcset` descriptor accepts; the theme-settings type is a plain string (LIBRARY GAP, see PORT-NOTES.md). */
@@ -80,7 +79,7 @@ interface Settings {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const theme = $$themeSettings();
@@ -120,15 +119,15 @@ export default () => {
                     list={$pointer<Message[]>("product.reviews.messages")}
                     $then={(message) => (
                         <>
-                            <$If test={message.error} $then={() => place($partial("components/common/alert/alert-error", message.error))} />
-                            <$If test={message.success} $then={() => place($partial("components/common/alert/alert-success", message.success))} />
+                            <$If test={message.error} $then={() => $partial("components/common/alert/alert-error", message.error)} />
+                            <$If test={message.success} $then={() => $partial("components/common/alert/alert-success", message.success)} />
                         </>
                     )}
                 />
 
                 <section className="productView-images" data-image-gallery={""}>
                     {$raw("{{#if product.images.length '>' 1 }}")}
-                    {place($partial("components/carousel-content-announcement"))}
+                    {$partial("components/carousel-content-announcement")}
                     {$raw("{{/if}}")}
                     <figure
                         className="productView-image"
@@ -148,16 +147,14 @@ export default () => {
                                     </>
                                 )}
                             />
-                            {place(
-                                $partial("components/common/responsive-img", {
+                            {$partial("components/common/responsive-img", {
                                     image: product.main_image,
                                     class: $string("productView-image--default"),
                                     fallback_size: theme.product_size,
                                     lazyload: theme.lazyload_mode,
                                     default_image: theme.default_image_product,
                                     otherAttributes: $string("data-main-image"),
-                                }),
-                            )}
+                                })}
                             <$If test={product.main_image} $then={() => $raw("</a>")} />
                         </div>
                     </figure>
@@ -187,13 +184,11 @@ export default () => {
                                             data-image-gallery-new-image-srcset={`${$getImageSrcset(image, {use_default_sizes: $boolean(true)})}`}
                                             data-image-gallery-zoom-image-url={`${$getImageSrcset(image, zoom, defaultImage)}`}
                                         >
-                                            {place(
-                                                $partial("components/common/responsive-img", {
+                                            {$partial("components/common/responsive-img", {
                                                     image,
                                                     fallback_size: $pointer("../theme_settings.productview_thumb_size"),
                                                     lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                                }),
-                                            )}
+                                                })}
                                         </a>
                                     </li>
                                 );
@@ -225,21 +220,19 @@ export default () => {
                         />
                         <div className="productView-price">
                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                            {place($partial("components/products/price", {price: $pointer("product.price")}))}
+                            {$partial("components/products/price", {price: $pointer("product.price")})}
                             {$raw("{{else}}")}
-                            {place($partial("components/common/login-for-pricing"))}
+                            {$partial("components/common/login-for-pricing")}
                             {$raw("{{/or}}")}
                         </div>
                         {region("product_below_price")}
                         <$If
                             test={theme.show_featured_promotions}
                             $then={() =>
-                                place(
-                                    $partial("components/products/promotion-callout", {
+                                $partial("components/products/promotion-callout", {
                                         promotions: $pointer("product.featured_promotions"),
                                         mode: $string("full"),
-                                    }),
-                                )
+                                    })
                             }
                         />
                         <div className="productView-rating">
@@ -247,7 +240,7 @@ export default () => {
                                 test={settings.show_product_rating}
                                 $then={() => (
                                     <>
-                                        {place($partial("components/products/ratings", {rating: $pointer("product.rating")}))}{" "}
+                                        {$partial("components/products/ratings", {rating: $pointer("product.rating")})}{" "}
                                         <$If
                                             test={$pointer("product.num_reviews")}
                                             operator={$string(">")}
@@ -280,7 +273,7 @@ export default () => {
                                         >
                                             <$Lang keyName={$string("products.reviews.new")} />
                                         </a>
-                                        <$Unless test={isAjax} $then={() => place($partial("components/products/modals/writeReview"))} />
+                                        <$Unless test={isAjax} $then={() => $partial("components/products/modals/writeReview")} />
                                     </>
                                 )}
                             />
@@ -477,7 +470,7 @@ export default () => {
                                 test={settings.bulk_discount_enabled}
                                 $then={() => (
                                     <div className="productView-info-bulkPricing">
-                                        {place($partial("components/products/bulk-discount-rates", {bulk_discount_rates: $pointer("product.bulk_discount_rates")}))}
+                                        {$partial("components/products/bulk-discount-rates", {bulk_discount_rates: $pointer("product.bulk_discount_rates")})}
                                     </div>
                                 )}
                             />
@@ -486,7 +479,7 @@ export default () => {
                                 test={$pointer("theme_settings.show_custom_fields_tabs")}
                                 operator={$string("!==")}
                                 rvalue={$boolean(true)}
-                                $then={() => place($partial("components/products/custom-fields"))}
+                                $then={() => $partial("components/products/custom-fields")}
                             />
                         </dl>
                     </div>
@@ -506,7 +499,7 @@ export default () => {
                                 <$Inject keyName={$string("showSwatchNames")} value={theme.show_product_swatch_names} />
                                 <$Each
                                     list={$pointer<unknown[]>("product.options")}
-                                    $then={() => place($unescaped($dynamicComponent($string("components/products/options"))))}
+                                    $then={() => $unescaped($dynamicComponent($string("components/products/options")))}
                                 />
                             </div>
                             <div className={`form-field form-field--stock${$Unless({test: product.stock_level, $then: () => " u-hiddenVisually"})}`}>
@@ -531,24 +524,24 @@ export default () => {
                                 </p>
                                 <ul className="productView-picklist-backorder" data-picklist-backorder-list={""} style={{display: "none"}}></ul>
                             </div>
-                            {place($partial("components/products/add-to-cart", {with_wallet_buttons: $boolean(true)}))}
+                            {$partial("components/products/add-to-cart", {with_wallet_buttons: $boolean(true)})}
                         </form>
-                        <$If test={settings.show_wishlist} $then={() => place($partial("components/common/wishlist-dropdown"))} />
+                        <$If test={settings.show_wishlist} $then={() => $partial("components/common/wishlist-dropdown")} />
                     </div>
-                    {place($partial("components/common/share", {url: product.url}))}
+                    {$partial("components/common/share", {url: product.url})}
                 </section>
 
                 <article className="productView-description">
                     <$If
                         test={theme.show_product_details_tabs}
-                        $then={() => place($partial("components/products/description-tabs"))}
-                        $else={() => place($partial("components/products/description"))}
+                        $then={() => $partial("components/products/description-tabs")}
+                        $else={() => $partial("components/products/description")}
                     />
                 </article>
             </div>
 
             <div id="previewModal" className="modal modal--large" data-reveal={""}>
-                {place($partial("components/common/modal/modal-close-btn"))}
+                {$partial("components/common/modal/modal-close-btn")}
                 <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-header-title"></div>
                 <div className="loadingOverlay"></div>
             </div>

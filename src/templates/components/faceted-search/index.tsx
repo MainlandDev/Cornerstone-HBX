@@ -1,4 +1,4 @@
-import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $partial, $pluck, $pointer, $string, $toLowerCase, $unescaped, $dynamicComponent, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Any, $boolean, $Each, $If, $join, $Lang, $lang, $number, $partial, $pluck, $pointer, $string, $toLowerCase, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
 
 interface Facet {
     title: string;
@@ -7,7 +7,7 @@ interface Facet {
 
 export default () => (
     <div id="facetedSearch" className="facetedSearch sidebarBlock" role="region" aria-label={$lang($string("search.faceted.label"))}>
-        {place($partial("components/faceted-search/selected-facets", $pointer("selected")))}
+        {$partial("components/faceted-search/selected-facets", $pointer("selected"))}
 
         <a href="#facetedSearch-navList" role="button" className="facetedSearch-toggle toggleLink" data-collapsible={""}>
             <span className="facetedSearch-toggle-text">
@@ -66,7 +66,7 @@ export default () => (
                             $then={(facet) => (
                                 <$If
                                     test={facet.visible}
-                                    $then={() => place($unescaped($dynamicComponent($string("components/faceted-search/facets"))))}
+                                    $then={() => $unescaped($dynamicComponent($string("components/faceted-search/facets")))}
                                 />
                             )}
                         />

@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $nl2br, $Page, $pointer, $raw, $stylesheet, $string, $unescaped, $Unless, $sanitize, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $nl2br, $Page, $pointer, $raw, $stylesheet, $string, $unescaped, $Unless, $sanitize} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` / `OrderItemsItem` lack these keys (pickup_addresses, customizations,
 // shipping_discounts, new_address, ...). Fields are read from invoice.html, not from the API docs.
@@ -113,7 +113,7 @@ export default () => {
     return (
         <$Page
             blocks={{
-                head: () => place($unescaped($stylesheet($string("/assets/css/invoice.css")))),
+                head: () => $unescaped($stylesheet($string("/assets/css/invoice.css"))),
                 page: () => (
                     <>
                         <div className="Invoice">

@@ -1,4 +1,4 @@
-import {$$themeSettings, $And, $If, $Lang, $lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $And, $If, $Lang, $lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
     formatted: string;
@@ -21,12 +21,10 @@ export default () => {
     const settings = $$themeSettings();
     const price = $pointer<Price>("price");
     const label = (themeValue: "pdp-non-sale-price-label" | "pdp-sale-price-label", fallback: string) =>
-        place(
-            $partial("components/products/price-label", {
+        $partial("components/products/price-label", {
                 label_value: settings[themeValue],
                 fallback: $lang($string(fallback)),
-            }),
-        );
+            });
     return (
         <>
             {$raw("{{#and price.price_range (if theme_settings.price_ranges '==' true)}}")}

@@ -15,7 +15,6 @@ import {
     $raw,
     $string,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
@@ -93,7 +92,7 @@ export default () => {
                     {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                     <span>{cart.sub_total.formatted}</span>
                     {$raw("{{else}}")}
-                    {place($partial("components/common/login-for-pricing"))}
+                    {$partial("components/common/login-for-pricing")}
                     {$raw("{{/or}}")}
                 </div>
             </li>
@@ -278,10 +277,10 @@ export default () => {
                                     <$Lang keyName={$string("cart.checkout.shipping")} />
                                     {colon(multi)}
                                 </strong>
-                                <$If test={multi} $then={() => place($partial("components/cart/shipping-estimator-trigger"))} />
+                                <$If test={multi} $then={() => $partial("components/cart/shipping-estimator-trigger")} />
                             </div>
-                            <$Neither a={multi} b={cart.shipping_handling.shipping_cost} $then={() => place($partial("components/cart/shipping-estimator-trigger"))} />
-                            {place($partial("components/cart/shipping-estimator", cart.shipping_handling, {multi_coupon_ui_enabled: multi}))}
+                            <$Neither a={multi} b={cart.shipping_handling.shipping_cost} $then={() => $partial("components/cart/shipping-estimator-trigger")} />
+                            {$partial("components/cart/shipping-estimator", cart.shipping_handling, {multi_coupon_ui_enabled: multi})}
                             <$All
                                 values={[cart.inventory_settings.show_default_shipping_expectation_prompt, $getVar($string("hasBackorderedItem"))]}
                                 $then={() => <p className="cart-shipping-expectation-message">{cart.inventory_settings.default_shipping_expectation_prompt}</p>}
@@ -359,7 +358,7 @@ export default () => {
                                             <$Lang keyName={$string("cart.coupon_code")} />:
                                         </strong>
                                     </div>
-                                    {place($partial("components/cart/coupon-input"))}
+                                    {$partial("components/cart/coupon-input")}
                                 </li>
                             )}
                         />
@@ -400,10 +399,10 @@ export default () => {
                                     <$Lang keyName={$string("cart.gift_certificates.gift_certificate")} />
                                     {colon(multi)}
                                 </strong>
-                                <$If test={multi} $then={() => place($partial("components/cart/gift-certificate"))} />
+                                <$If test={multi} $then={() => $partial("components/cart/gift-certificate")} />
                             </div>
-                            <$Unless test={multi} $then={() => place($partial("components/cart/gift-certificate"))} />
-                            {place($partial("components/cart/gift-certificate-input"))}
+                            <$Unless test={multi} $then={() => $partial("components/cart/gift-certificate")} />
+                            {$partial("components/cart/gift-certificate-input")}
                         </li>
                         <$If
                             test={multi}
@@ -456,7 +455,7 @@ export default () => {
                                     )}
                                 />
                                 {$raw("{{else}}")}
-                                {place($partial("components/common/login-for-pricing"))}
+                                {$partial("components/common/login-for-pricing")}
                                 {$raw("{{/or}}")}
                             </div>
                         </>
@@ -472,7 +471,7 @@ export default () => {
                                 {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                                 <span>{cart.grand_total.formatted}</span>
                                 {$raw("{{else}}")}
-                                {place($partial("components/common/login-for-pricing"))}
+                                {$partial("components/common/login-for-pricing")}
                                 {$raw("{{/or}}")}
                             </div>
                         </>

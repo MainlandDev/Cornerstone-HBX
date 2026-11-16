@@ -1,4 +1,4 @@
-import {$boolean, $Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $With, place} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $With} from "@mainlanddev/hbx-bigcommerce";
 
 interface AddedItem {
     name: string;
@@ -49,7 +49,7 @@ export default () => (
                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
                             {$pointer("cart.sub_total.formatted")}
                             {$raw("{{else}}")}
-                            {place($partial("components/common/login-for-pricing"))}
+                            {$partial("components/common/login-for-pricing")}
                             {$raw("{{/or}}")}
                         </strong>
                     </div>
@@ -74,15 +74,13 @@ export default () => (
                             <>
                                 <figure className="productView-image">
                                     <div className="productView-img-container">
-                                        {place(
-                                            $partial("components/common/responsive-img", {
+                                        {$partial("components/common/responsive-img", {
                                                 image: $pointer("image"),
                                                 class: $string("productView-image--cart"),
                                                 fallback_size: $pointer("../theme_settings.product_size"),
                                                 lazyload: $pointer("../theme_settings.lazyload_mode"),
                                                 default_image: $pointer("../theme_settings.default_image_product"),
-                                            }),
-                                        )}
+                                            })}
                                     </div>
                                 </figure>
 
@@ -95,7 +93,7 @@ export default () => (
                                         {$raw("{{#or ../customer (unless ../settings.hide_price_from_guests)}}")}
                                         {$pointer("quantity")} {$raw("&times;")} {$pointer("price.formatted")}
                                         {$raw("{{else}}")}
-                                        {place($partial("components/common/login-for-pricing"))}
+                                        {$partial("components/common/login-for-pricing")}
                                         {$raw("{{/or}}")}
                                     </div>
 
@@ -104,7 +102,7 @@ export default () => (
                                         $then={() => (
                                             <dl className="productView-info">
                                                 <dt className="productView-info-name">{$pointer("name")}</dt>
-                                                <dd className="productView-info-value">{place($partial("components/common/product-options"))}</dd>
+                                                <dd className="productView-info-value">{$partial("components/common/product-options")}</dd>
                                             </dl>
                                         )}
                                     />
@@ -129,13 +127,11 @@ export default () => (
                                 list={$pointer<unknown[]>("cart.suggested_products")}
                                 $then={() => (
                                     <li className="product">
-                                        {place(
-                                            $partial("components/products/card", {
+                                        {$partial("components/products/card", {
                                                 settings: $pointer("../settings"),
                                                 hide_product_quick_view: $boolean(true),
                                                 theme_settings: $pointer("../theme_settings"),
-                                            }),
-                                        )}
+                                            })}
                                     </li>
                                 )}
                             />

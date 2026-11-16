@@ -1,11 +1,11 @@
-import {$Lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
 
                     <main className="page">
                         <section className="page-content page-content--centered">
@@ -19,7 +19,7 @@ export default () => (
                                 </a>{" "}
                                 <$Lang keyName={$string("forbidden.to_continue")} />
                             </p>
-                            {place($partial("components/common/search-box"))}
+                            {$partial("components/common/search-box")}
                         </section>
                     </main>
                 </>

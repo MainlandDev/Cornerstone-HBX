@@ -1,21 +1,21 @@
-import {$Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $If, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $If} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <div className="login">
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("login.heading")} />
                     </h1>
                     <$If
                         test={$pointer("forms.login.error")}
-                        $then={() => place($partial("components/common/alert/alert-error", $pointer("forms.login.error")))}
+                        $then={() => $partial("components/common/alert/alert-error", $pointer("forms.login.error"))}
                     />
                     <$If
                         test={$pointer("forms.login.success")}
-                        $then={() => place($partial("components/common/alert/alert-success", $pointer("forms.login.success")))}
+                        $then={() => $partial("components/common/alert/alert-success", $pointer("forms.login.success"))}
                     />
                     <div className="login-row">
                         <form className="login-form form" action={$pointer("urls.auth.check_login")} method="post">

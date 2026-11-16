@@ -1,9 +1,9 @@
-import {$Lang, $Page, $pointer, $stylesheet, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Lang, $Page, $pointer, $stylesheet, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
-            head: () => place($unescaped($stylesheet($string("assets/css/maintenance.css")))),
+            head: () => $unescaped($stylesheet($string("assets/css/maintenance.css"))),
             page: () => (
                 <main>
                     <header>

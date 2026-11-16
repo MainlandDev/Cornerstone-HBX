@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $Unless, $$themeSettings, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $Unless, $$themeSettings} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -26,7 +26,7 @@ export default () => {
     const theme = $$themeSettings();
     return (
         <nav className="navPages">
-            <div className="navPages-quickSearch">{place($partial("components/common/quick-search", {name: $string("nav-menu-quick-search")}))}</div>
+            <div className="navPages-quickSearch">{$partial("components/common/quick-search", {name: $string("nav-menu-quick-search")})}</div>
             <ul className={`navPages-list${$If({test: $pointer("theme_settings.navigation_design"), operator: $string("!=="), rvalue: $string("simple"), $then: () => " navPages-list-depth-max"})}`}>
                 <$Each
                     list={$pointer<Category[]>("categories")}
@@ -36,13 +36,13 @@ export default () => {
                                 test={$pointer("../theme_settings.navigation_design")}
                                 operator={$string("===")}
                                 rvalue={$string("simple")}
-                                $then={() => place($partial("components/common/navigation-list"))}
+                                $then={() => $partial("components/common/navigation-list")}
                             />
                             <$If
                                 test={$pointer("../theme_settings.navigation_design")}
                                 operator={$string("===")}
                                 rvalue={$string("alternate")}
-                                $then={() => place($partial("components/common/navigation-list-alternate"))}
+                                $then={() => $partial("components/common/navigation-list-alternate")}
                             />
                         </li>
                     )}
@@ -69,7 +69,7 @@ export default () => {
             </ul>
             <ul className="navPages-list navPages-list--user">
                 {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-                <li className="navPages-item">{place($partial("components/common/language-selector-mobile"))}</li>
+                <li className="navPages-item">{$partial("components/common/language-selector-mobile")}</li>
                 {$raw("{{/and}}")}
                 <$If
                     test={$pointer("currency_selector.currencies.length")}
@@ -114,7 +114,7 @@ export default () => {
                 </li>
                     )}
                 />
-                <$If test={theme.show_channels} $then={() => <li className="navPages-item">{place($partial("components/common/channel-selector-mobile"))}</li>} />
+                <$If test={theme.show_channels} $then={() => <li className="navPages-item">{$partial("components/common/channel-selector-mobile")}</li>} />
                 <$If
                     test={$pointer("settings.gift_certificates_enabled")}
                     $then={() => (
@@ -210,7 +210,7 @@ export default () => {
                         </li>
                     )}
                 />
-                <$If test={theme.social_icon_placement_top} $then={() => <li className="navPages-item">{place($partial("components/common/social-links"))}</li>} />
+                <$If test={theme.social_icon_placement_top} $then={() => <li className="navPages-item">{$partial("components/common/social-links")}</li>} />
             </ul>
         </nav>
     );

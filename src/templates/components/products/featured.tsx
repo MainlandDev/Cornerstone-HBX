@@ -1,4 +1,4 @@
-import {$add, $Each, $Lang, $number, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $Lang, $number, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -11,15 +11,13 @@ export default () => (
                 list={$pointer<unknown[]>("products")}
                 $then={() => (
                     <li className="product">
-                        {place(
-                            $partial("components/products/card", {
+                        {$partial("components/products/card", {
                                 settings: $pointer("../settings"),
                                 theme_settings: $pointer("../theme_settings"),
                                 customer: $pointer("../customer"),
                                 event: $string("list"),
                                 position: $add($pointer<number>("@index"), $number(1)),
-                            }),
-                        )}
+                            })}
                     </li>
                 )}
             />

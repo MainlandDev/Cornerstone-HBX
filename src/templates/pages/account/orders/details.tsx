@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $partial, $pointer, $raw, $sanitize, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $nl2br, $Page, $partial, $pointer, $raw, $sanitize, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // Local shapes: the library's `Order` lacks these keys and types `shipments` as Record<string, unknown>.
 // Fields are read from details.html, not from the API docs.
@@ -97,20 +97,20 @@ export default () => {
                 page: () => (
                     <>
                         <$Inject keyName={$string("selectItem")} value={$lang($string("forms.validate.account.reorder.select_item"))} />
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                         <h2 className="page-heading title">
                             <$Lang keyName={$string("account.orders.details.heading")} number={order.id} />
                         </h2>
-                        {place($partial("components/account/navigation", {account_page: $string("orders")}))}
+                        {$partial("components/account/navigation", {account_page: $string("orders")})}
 
                         <div className="account">
                             <div className="account-body">
                                 <$Each
                                     list={order.status_messages}
-                                    $then={(status) => place($partial("components/common/alert/alert-info", status.message))}
+                                    $then={(status) => $partial("components/common/alert/alert-info", status.message)}
                                 />
                                 <div className="account-content account-content--fixedSmall">
-                                    {place($partial("components/account/order-contents", {order: order}))}
+                                    {$partial("components/account/order-contents", {order: order})}
 
                                     <dl className="account-orderTotal">
                                         <$Each

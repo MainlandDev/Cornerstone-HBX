@@ -11,7 +11,6 @@ import {
     $region,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 const {setting} = $frontmatter;
@@ -19,7 +18,7 @@ const {setting} = $frontmatter;
 export const frontmatter = $frontmatter.brand({brand: {products: {limit: setting("brandpage_products_per_page")}}});
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
@@ -46,18 +45,16 @@ export default () => {
                     ),
                     page: () => (
                         <>
-                            {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                             <$If
                                 test={$pointer("brand.image")}
                                 $then={() => (
                                     <div className="brand-image-container">
-                                        {place(
-                                            $partial("components/common/responsive-img", {
+                                        {$partial("components/common/responsive-img", {
                                                 image: $pointer("brand.image"),
                                                 fallback_size: settings.thumb_size,
                                                 lazyload: $string("disabled"),
-                                            }),
-                                        )}
+                                            })}
                                     </div>
                                 )}
                             />
@@ -65,7 +62,7 @@ export default () => {
                             {region("brand_below_header")}
                             <div className="page">
                                 <aside className="page-sidebar" id="faceted-search-container">
-                                    {place($partial("components/brand/sidebar"))}
+                                    {$partial("components/brand/sidebar")}
                                 </aside>
                                 <main className="page-content" id="product-listing-container">
                                     <$If
@@ -79,7 +76,7 @@ export default () => {
                                             <>
                                                 <$If
                                                     test={$pointer("brand.products")}
-                                                    $then={() => place($partial("components/brand/product-listing"))}
+                                                    $then={() => $partial("components/brand/product-listing")}
                                                     $else={() => (
                                                         <p>
                                                             <$Lang keyName={$string("brands.no_products")} />

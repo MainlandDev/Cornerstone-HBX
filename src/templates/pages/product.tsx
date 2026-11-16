@@ -10,7 +10,6 @@ import {
     $region,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 const {setting} = $frontmatter;
@@ -29,7 +28,7 @@ interface ShippingMessage {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     return (
@@ -39,37 +38,28 @@ export default () => {
                 blocks={{
                     page: () => (
                         <>
-                            {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
-    
+                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                             <$Each
                                 list={$pointer<ShippingMessage[]>("product.shipping_messages")}
-                                $then={(item) => place($partial("components/common/alert/alert-info", item.message))}
+                                $then={(item) => $partial("components/common/alert/alert-info", item.message)}
                             />
-    
                             <div>
-                                {place($partial("components/products/product-view"))}
-    
+                                {$partial("components/products/product-view")}
                                 {region("product_below_content")}
-    
                                 <$If
                                     test={$pointer("product.videos.list.length")}
-                                    $then={() => place($partial("components/products/videos", $pointer("product.videos")))}
+                                    $then={() => $partial("components/products/videos", $pointer("product.videos"))}
                                 />
-    
                                 {$raw("{{#all settings.show_product_reviews theme_settings.show_product_reviews (if theme_settings.show_product_details_tabs '!==' true)}}")}
-                                {place(
-                                    $partial("components/products/reviews", {
+                                {$partial("components/products/reviews", {
                                         reviews: $pointer("product.reviews"),
                                         product: $pointer("product"),
                                         urls: $pointer("urls"),
-                                    }),
-                                )}
+                                    })}
                                 {$raw("{{/all}}")}
-    
-                                {place($partial("components/products/tabs"))}
+                                {$partial("components/products/tabs")}
                             </div>
-    
-                            {place($partial("components/products/schema"))}
+                            {$partial("components/products/schema")}
                         </>
                     ),
                 }}

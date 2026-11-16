@@ -1,4 +1,4 @@
-import {$If, $lang, $Lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $lang, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -17,9 +17,9 @@ export default () => (
 
                             <$If
                                 test={$pointer("subscription.error")}
-                                $then={() => place($partial("components/common/alert/alert-error", $pointer("subscription.error")))}
+                                $then={() => $partial("components/common/alert/alert-error", $pointer("subscription.error"))}
                                 $else={() =>
-                                    place($partial("components/common/alert/alert-success", $lang($string("newsletter.subscribed_message"))))
+                                    $partial("components/common/alert/alert-success", $lang($string("newsletter.subscribed_message")))
                                 }
                             />
                         </div>

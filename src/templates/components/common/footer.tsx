@@ -13,7 +13,6 @@ import {
     $region,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Banner {
@@ -29,7 +28,7 @@ interface Link {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const theme = $$themeSettings();
@@ -72,7 +71,7 @@ export default () => {
                                 <h3 className="footer-info-heading">
                                     <$Lang keyName={$string("social.connect")} />
                                 </h3>
-                                {place($partial("components/common/social-links"))}
+                                {$partial("components/common/social-links")}
                             </article>
                         )}
                     />
@@ -167,9 +166,9 @@ export default () => {
                         <article className="footer-info-col" data-section-type="newsletterSubscription">
                             <$If
                                 test={$pointer("settings.show_newsletter_box")}
-                                $then={() => place($partial("components/common/subscription-form"))}
+                                $then={() => $partial("components/common/subscription-form")}
                             />
-                            {place($partial("components/common/payment-icons"))}
+                            {$partial("components/common/payment-icons")}
                         </article>
                     </section>
                     <$If

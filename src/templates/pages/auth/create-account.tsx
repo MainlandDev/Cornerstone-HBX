@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, $dynamicComponent, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, $dynamicComponent} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -9,16 +9,15 @@ export default () => (
             blocks={{
                 page: () => (
                     <>
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                         <h1 className="page-heading">
                             <$Lang keyName={$string("create_account.heading")} />
                         </h1>
-    
                         <div className="account account--fixed">
                             <div className="account-body">
                                 <$If
                                     test={$pointer("forms.create_account.error")}
-                                    $then={() => place($partial("components/common/alert/alert-error", $pointer("forms.create_account.error")))}
+                                    $then={() => $partial("components/common/alert/alert-error", $pointer("forms.create_account.error"))}
                                 />
                                 <$If
                                     test={$pointer("settings.account_creation_enabled")}
@@ -32,11 +31,11 @@ export default () => (
                                             <div className="form-row form-row--half">
                                                 <$Each
                                                     list={$pointer<unknown[]>("forms.create_account.account_fields")}
-                                                    $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                                                    $then={() => $unescaped($dynamicComponent($string("components/common/forms")))}
                                                 />
                                                 <$Each
                                                     list={$pointer<unknown[]>("forms.create_account.address_fields")}
-                                                    $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                                                    $then={() => $unescaped($dynamicComponent($string("components/common/forms")))}
                                                 />
                                                 <$Inject keyName={$string("required")} value={$lang($string("common.required"))} />{" "}
                                                 <$Inject keyName={$string("state_error")} value={$lang($string("errors.state_error"))} />

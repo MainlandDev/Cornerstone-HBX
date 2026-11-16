@@ -1,4 +1,4 @@
-import {$Each, $If, $partial, $pointer, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $partial, $pointer} from "@mainlanddev/hbx-bigcommerce";
 
 interface Subcategory {
     url: string;
@@ -30,8 +30,8 @@ export default () => (
 
         <$If
             test={$pointer("category.faceted_search_enabled")}
-            $then={() => place($partial("components/faceted-search/index", $pointer("category")))}
-            $else={() => place($partial("components/category/shop-by-price"))}
+            $then={() => $partial("components/faceted-search/index", $pointer("category"))}
+            $else={() => $partial("components/category/shop-by-price")}
         />
     </nav>
 );

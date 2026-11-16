@@ -1,4 +1,4 @@
-import {$add, $Each, $If, $number, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $number, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <section
@@ -12,15 +12,13 @@ export default () => (
             list={$pointer<unknown[]>("products")}
             $then={() => (
                 <div data-product-slide={""} className="productCarousel-slide">
-                    {place(
-                        $partial("components/products/card", {
+                    {$partial("components/products/card", {
                             settings: $pointer("../settings"),
                             theme_settings: $pointer("../theme_settings"),
                             customer: $pointer("../customer"),
                             event: $string("list"),
                             position: $add($pointer<number>("@index"), $number(1)),
-                        }),
-                    )}
+                        })}
                 </div>
             )}
         />
@@ -28,7 +26,7 @@ export default () => (
             test={$pointer("products.length")}
             operator={$string(">")}
             rvalue={$number(1)}
-            $then={() => place($partial("components/carousel-content-announcement"))}
+            $then={() => $partial("components/carousel-content-announcement")}
         />
     </section>
 );

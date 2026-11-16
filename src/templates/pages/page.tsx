@@ -10,7 +10,6 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface SubPage {
@@ -25,7 +24,7 @@ interface FeedItem {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
@@ -34,7 +33,7 @@ export default () => {
             blocks={{
                 page: () => (
                     <>
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
 
                         <main className="page">
                             <$Unless
@@ -67,7 +66,7 @@ export default () => {
                                 <$Replace
                                     needle={$string("%%Syndicate%%")}
                                     haystack={$pointer<string>("page.content")}
-                                    $then={() => place($partial("components/page/rss_feed"))}
+                                    $then={() => $partial("components/page/rss_feed")}
                                     $else={() => (
                                         <p>{$unescaped($pointer("page.content"))}</p>
                                     )}

@@ -1,10 +1,10 @@
-import {$If, $partial, $pointer, $raw, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $partial, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <div className="form-field" data-product-attribute="input-text">
         <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_text_${$pointer("id")}`}>
             {$pointer("display_name")}:{" "}
-            {place($partial("components/common/requireness-msg"))}
+            {$partial("components/common/requireness-msg")}
         </label>
         <input
             className="form-input form-input--small"

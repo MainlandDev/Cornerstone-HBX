@@ -1,4 +1,4 @@
-import {$$themeSettings, $Each, $If, $Lang, $lang, $partial, $pointer, $raw, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $Each, $If, $Lang, $lang, $partial, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Tag {
     url: string;
@@ -15,13 +15,11 @@ export default () => {
                     $then={() => (
                         <figure className="blog-thumbnail">
                             <a href={$pointer("post.url")}>
-                                {place(
-                                    $partial("components/common/responsive-img", {
+                                {$partial("components/common/responsive-img", {
                                         image: $pointer("post.thumbnail"),
                                         fallback_size: settings.blog_size,
                                         lazyload: settings.lazyload_mode,
-                                    }),
-                                )}
+                                    })}
                             </a>
                         </figure>
                     )}
@@ -104,7 +102,7 @@ export default () => {
                     )}
                 />
 
-                {place($partial("components/common/share", {url: $pointer("post.url")}))}
+                {$partial("components/common/share", {url: $pointer("post.url")})}
             </div>
         </article>
     );

@@ -1,4 +1,4 @@
-import {$$themeSettings, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const settings = $$themeSettings();
@@ -11,7 +11,7 @@ export default () => {
                         <$Lang keyName={$string("category.shop_by_price")} />
                     </h2>
 
-                    {place($partial("components/faceted-search/range-form", {shop_by_price: settings.shop_by_price_visibility}))}
+                    {$partial("components/faceted-search/range-form", {shop_by_price: settings.shop_by_price_visibility})}
 
                     <div className="reset-filters">
                         <a href={$pointer("category.url")} className="navList-action reset-btn">

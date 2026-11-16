@@ -1,4 +1,4 @@
-import {$concat, $For, $If, $Lang, $partial, $pointer, $raw, $string, $number, place} from "@mainlanddev/hbx-bigcommerce";
+import {$concat, $For, $If, $Lang, $partial, $pointer, $raw, $string, $number} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const earliestYear = $pointer<number>("earliest_year");
@@ -10,7 +10,7 @@ export default () => {
                 dangerouslyInlineAttributes={{attributes: `${$If({test: $pointer("style"), $then: () => `${$raw('style="')}${$pointer("style")}${$raw('" ')}`})}`}}
             >
                 {$pointer("display_name")}:{" "}
-                {place($partial("components/common/requireness-msg"))}
+                {$partial("components/common/requireness-msg")}
             </label>
             <select
                 className="form-select form-select--date"

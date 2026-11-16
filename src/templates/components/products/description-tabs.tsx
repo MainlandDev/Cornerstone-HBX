@@ -1,4 +1,4 @@
-import {$$themeSettings, $All, $dashcase, $If, $Lang, $lowercase, $partial, $pointer, $sanitize, $string, $unescaped, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $All, $dashcase, $If, $Lang, $lowercase, $partial, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const theme = $$themeSettings();
@@ -71,7 +71,7 @@ export default () => {
                     values={[$pointer("product.custom_fields"), theme.show_custom_fields_tabs]}
                     $then={() => (
                         <div className="tab-content" id={`tab-${customFieldsTabId}`}>
-                            <dl className="productView-info">{place($partial("components/products/custom-fields"))}</dl>
+                            <dl className="productView-info">{$partial("components/products/custom-fields")}</dl>
                         </div>
                     )}
                 />
@@ -79,13 +79,11 @@ export default () => {
                     values={[$pointer("settings.show_product_reviews"), theme.show_product_reviews]}
                     $then={() => (
                         <div className="tab-content" id="tab-reviews">
-                            {place(
-                                $partial("components/products/reviews", {
+                            {$partial("components/products/reviews", {
                                     reviews: $pointer("product.reviews"),
                                     product: $pointer("product"),
                                     urls: $pointer("urls"),
-                                }),
-                            )}
+                                })}
                         </div>
                     )}
                 />

@@ -1,4 +1,4 @@
-import {$If, $Lang, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <div className="form-field" id={$pointer("id")} data-validation={$pointer("validation")} dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-type="{{private_id}}"{{/if}}')}`}}>
@@ -19,7 +19,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {place($partial("components/common/forms/date-options", $pointer("month"), {isRequired: $pointer("required")}))}
+                    {$partial("components/common/forms/date-options", $pointer("month"), {isRequired: $pointer("required")})}
                 </select>
             </div>
             <div className="form-field">
@@ -34,7 +34,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {place($partial("components/common/forms/date-options", $pointer("day"), {isRequired: $pointer("required")}))}
+                    {$partial("components/common/forms/date-options", $pointer("day"), {isRequired: $pointer("required")})}
                 </select>
             </div>
             <div className="form-field">
@@ -49,7 +49,7 @@ export default () => (
                     aria-live="polite"
                     dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`}}
                 >
-                    {place($partial("components/common/forms/date-options", $pointer("year"), {isRequired: $pointer("required")}))}
+                    {$partial("components/common/forms/date-options", $pointer("year"), {isRequired: $pointer("required")})}
                 </select>
             </div>
         </div>

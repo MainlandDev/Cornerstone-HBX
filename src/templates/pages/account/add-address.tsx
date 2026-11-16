@@ -1,11 +1,11 @@
-import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dynamicComponent, $Each, $If, $Inject, $Lang, $lang, $Page, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <$If
                         test={$pointer("forms.address.address_id")}
                         $then={() => (
@@ -19,12 +19,12 @@ export default () => (
                             </h2>
                         )}
                     />
-                    {place($partial("components/account/navigation", {account_page: $string("addresses")}))}
+                    {$partial("components/account/navigation", {account_page: $string("addresses")})}
 
                     <div className="account account--fixed">
                         <$If
                             test={$pointer("forms.address.error")}
-                            $then={() => place($partial("components/common/alert/alert-error", $pointer("forms.address.error")))}
+                            $then={() => $partial("components/common/alert/alert-error", $pointer("forms.address.error"))}
                         />
 
                         <div className="account-body">
@@ -40,7 +40,7 @@ export default () => (
                                         <div className="form-row form-row--half">
                                             <$Each
                                                 list={$pointer<unknown[]>("forms.address.shipping_fields")}
-                                                $then={() => place($unescaped($dynamicComponent($string("components/common/forms"))))}
+                                                $then={() => $unescaped($dynamicComponent($string("components/common/forms")))}
                                             />
                                         </div>
                                     </fieldset>

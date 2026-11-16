@@ -1,4 +1,4 @@
-import {$If, $partial, $pointer, $raw, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $partial, $pointer, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$If
@@ -18,7 +18,7 @@ export default () => (
                         </svg>
                     </i>
                 </a>
-                {place($partial("components/common/navigation-dropdown"))}
+                {$partial("components/common/navigation-dropdown")}
             </>
         )}
         $else={() => (

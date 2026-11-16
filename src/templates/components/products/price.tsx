@@ -8,7 +8,6 @@ import {
     $raw,
     $string,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
@@ -33,7 +32,7 @@ export default () => {
     return (
         <>
             {$raw("{{#and price.price_range (if theme_settings.price_ranges '==' true)}}")}
-            {place($partial("components/products/price-range", {price: price}))}
+            {$partial("components/products/price-range", {price: price})}
             {$raw("{{else}}")}
             <div
                 className="price-section price-section--withTax rrp-price--withTax"
@@ -42,12 +41,10 @@ export default () => {
                 }}
             >
                 <span>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-retail-price-label"],
                             fallback: $lang($string("page_builder.pdp-retail-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-rrp-with-tax={""} className="price price--rrp">
                     {price.rrp_with_tax.formatted}
@@ -60,12 +57,10 @@ export default () => {
                 }}
             >
                 <span>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-non-sale-price-label"],
                             fallback: $lang($string("page_builder.pdp-non-sale-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-non-sale-price-with-tax={""} className="price price--non-sale">
                     {price.non_sale_price_with_tax.formatted}
@@ -76,12 +71,10 @@ export default () => {
                     {settings["pdp-price-label"]}
                 </span>
                 <span className="price-now-label" dangerouslyInlineAttributes={{attributes: `${$Unless({test: price.non_sale_price_with_tax, $then: () => $raw('style="display: none;"')})}`}}>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-sale-price-label"],
                             fallback: $lang($string("page_builder.pdp-sale-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-price-with-tax={""} className="price">
                     {price.with_tax.formatted}
@@ -102,12 +95,10 @@ export default () => {
                 }}
             >
                 <span>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-retail-price-label"],
                             fallback: $lang($string("page_builder.pdp-retail-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-rrp-price-without-tax={""} className="price price--rrp">
                     {price.rrp_without_tax.formatted}
@@ -120,12 +111,10 @@ export default () => {
                 }}
             >
                 <span>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-non-sale-price-label"],
                             fallback: $lang($string("page_builder.pdp-non-sale-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-non-sale-price-without-tax={""} className="price price--non-sale">
                     {price.non_sale_price_without_tax.formatted}
@@ -136,12 +125,10 @@ export default () => {
                     {settings["pdp-price-label"]}
                 </span>
                 <span className="price-now-label" dangerouslyInlineAttributes={{attributes: `${$Unless({test: price.non_sale_price_without_tax, $then: () => $raw('style="display: none;"')})}`}}>
-                    {place(
-                        $partial("components/products/price-label", {
+                    {$partial("components/products/price-label", {
                             label_value: settings["pdp-sale-price-label"],
                             fallback: $lang($string("page_builder.pdp-sale-price-label")),
-                        }),
-                    )}
+                        })}
                 </span>
                 <span data-product-price-without-tax={""} className={`price${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}>
                     {price.without_tax.formatted}

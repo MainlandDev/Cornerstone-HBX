@@ -11,7 +11,6 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface CartItem {
@@ -50,14 +49,12 @@ export default () => (
                                                     />
                                                 )}
                                                 $else={() =>
-                                                    place(
-                                                        $partial("components/common/responsive-img", {
+                                                    $partial("components/common/responsive-img", {
                                                             image: item.image,
                                                             fallback_size: $pointer("../theme_settings.productthumb_size"),
                                                             lazyload: $pointer("../theme_settings.lazyload_mode"),
                                                             default_image: $pointer("../theme_settings.default_image_product"),
-                                                        }),
-                                                    )
+                                                        })
                                                 }
                                             />
                                         </div>
@@ -92,7 +89,7 @@ export default () => (
                                                 </span>
                                                 <$If test={item.price_discounted} $then={() => <>{item.price_discounted.formatted}</>} />
                                                 {$raw("{{else}}")}
-                                                {place($partial("components/common/login-for-pricing"))}
+                                                {$partial("components/common/login-for-pricing")}
                                                 {$raw("{{/or}}")}
                                             </span>
                                         </div>

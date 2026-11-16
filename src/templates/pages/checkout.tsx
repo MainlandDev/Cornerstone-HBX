@@ -8,7 +8,6 @@ import {
     $stylesheet,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
@@ -17,7 +16,7 @@ export default () => (
             head: () => (
                 <>
                     {$unescaped($pointer("checkout.checkout_head"))}{" "}
-                    {place($unescaped($stylesheet($string("/assets/css/optimized-checkout.css"))))}{" "}
+                    {$unescaped($stylesheet($string("/assets/css/optimized-checkout.css")))}{" "}
                     {$getFontsCollection()}
 
                     <script

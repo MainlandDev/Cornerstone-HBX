@@ -11,13 +11,12 @@ import {
     $region,
     $string,
     $unescaped,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.other({cart: true});
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => (
     <>
@@ -30,27 +29,27 @@ export default () => (
                         <$Inject keyName={$string("multiCouponUIEnabled")} value={$pointer("cart.multi_coupon_ui_enabled")} />
                         <div className="page">
                             <div className="page-content" data-cart={""}>
-                                {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
-                                {place($partial("components/cart/page-title"))}
-                                <div data-cart-status={""}>{place($partial("components/cart/status-messages"))}</div>
+                                {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
+                                {$partial("components/cart/page-title")}
+                                <div data-cart-status={""}>{$partial("components/cart/status-messages")}</div>
                                 <$If
                                     test={$pointer("cart.items.length")}
                                     $then={() => (
                                         <>
                                             <div className="loadingOverlay"></div>
                                             <div data-cart-content={""} className="cart-content-padding-right">
-                                                {place($partial("components/cart/content"))}
+                                                {$partial("components/cart/content")}
                                             </div>
                                             <$If
                                                 test={$pointer("cart.multi_coupon_ui_enabled")}
                                                 $then={() => (
                                                     <div data-cart-coupons={""} className="cart-content-padding-right">
-                                                        {place($partial("components/cart/coupons"))}
+                                                        {$partial("components/cart/coupons")}
                                                     </div>
                                                 )}
                                             />
                                             <div data-cart-totals={""} className="cart-content-padding-right">
-                                                {place($partial("components/cart/totals"))}
+                                                {$partial("components/cart/totals")}
                                             </div>
                                             {region("cart_below_totals")}
                                             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
@@ -96,7 +95,7 @@ export default () => (
                                                         data-cart-additional-checkout-buttons={""}
                                                         className="cart-additionalCheckoutButtons cart-content-padding-right"
                                                     >
-                                                        {place($partial("components/cart/additional-checkout-buttons"))}
+                                                        {$partial("components/cart/additional-checkout-buttons")}
                                                     </div>
                                                 )}
                                             />

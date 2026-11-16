@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Rate {
     min: string;
@@ -42,7 +42,7 @@ export default () => {
                             <h2 className="modal-header-title">
                                 <$Lang keyName={$string("products.bulk_pricing.modal_title")} />
                             </h2>
-                            {place($partial("components/common/modal/modal-close-btn"))}
+                            {$partial("components/common/modal/modal-close-btn")}
                         </div>
                         <div className="modal-body">
                             <p>

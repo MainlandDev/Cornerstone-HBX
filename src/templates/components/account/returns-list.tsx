@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface ReturnOption {
     name: string;
@@ -33,13 +33,11 @@ export default () => (
                     <li className="account-listItem">
                         <div className="account-product">
                             <div className="account-product-figure">
-                                {place(
-                                    $partial("components/common/responsive-img", {
+                                {$partial("components/common/responsive-img", {
                                         image: ret.product.image,
                                         fallback_size: $pointer("../theme_settings.productthumb_size"),
                                         lazyload: $pointer("../theme_settings.lazyload_mode"),
-                                    }),
-                                )}
+                                    })}
                             </div>
                             <div className="account-product-body">
                                 <div className="account-orderStatus">
@@ -134,7 +132,7 @@ export default () => (
                                                 $then={(option) => (
                                                     <>
                                                         <dt className="definitionList-key">{option.name}:</dt>
-                                                        <dd className="definitionList-value">{place($partial("components/common/product-options"))}</dd>
+                                                        <dd className="definitionList-value">{$partial("components/common/product-options")}</dd>
                                                     </>
                                                 )}
                                             />

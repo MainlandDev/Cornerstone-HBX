@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface SitemapSection {
     label: string;
@@ -35,7 +35,7 @@ export default () => (
                                                             <ul>
                                                                 <$Each
                                                                     list={$pointer<unknown[]>("children")}
-                                                                    $then={() => place($partial("components/sitemap/links"))}
+                                                                    $then={() => $partial("components/sitemap/links")}
                                                                 />
                                                             </ul>
                                                         )}

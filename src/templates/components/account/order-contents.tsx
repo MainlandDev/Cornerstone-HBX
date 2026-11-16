@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $Unless, $cdn, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $raw, $string, $unescaped, $Unless, $cdn} from "@mainlanddev/hbx-bigcommerce";
 
 interface ShippingRow {
     is_shipping: boolean;
@@ -106,15 +106,13 @@ export default () => (
                                             />
                                         )}
                                         $else={() =>
-                                            place(
-                                                $partial("components/common/responsive-img", {
+                                            $partial("components/common/responsive-img", {
                                                     image: item.image,
                                                     class: $string("account-product-image"),
                                                     fallback_size: $pointer("../theme_settings.productthumb_size"),
                                                     lazyload: $pointer("../theme_settings.lazyload_mode"),
                                                     default_image: $pointer("../theme_settings.default_image_product"),
-                                                }),
-                                            )
+                                                })
                                         }
                                     />{" "}
                                     <$Unless
@@ -178,7 +176,7 @@ export default () => (
                                                     $then={(option) => (
                                                         <>
                                                             <dt className="definitionList-key">{option.name}:</dt>
-                                                            <dd className="definitionList-value">{place($partial("components/common/product-options"))}</dd>
+                                                            <dd className="definitionList-value">{$partial("components/common/product-options")}</dd>
                                                             <$If
                                                                 test={option.linked_bundled_item.quantity_ready_to_ship}
                                                                 $then={() => (

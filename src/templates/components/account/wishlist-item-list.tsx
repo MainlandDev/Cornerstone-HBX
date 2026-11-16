@@ -1,4 +1,4 @@
-import {$Each, $If, $lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface WishlistItem {
     product_id: string;
@@ -12,7 +12,7 @@ export default () => (
                 list={$pointer<WishlistItem[]>("wishlist.items")}
                 $then={(item) => (
                     <li className="product">
-                        {place($partial("components/products/card", {id: item.product_id, theme_settings: $pointer("../theme_settings")}))}
+                        {$partial("components/products/card", {id: item.product_id, theme_settings: $pointer("../theme_settings")})}
 
                         <$If
                             test={$pointer("../show_remove")}
@@ -26,6 +26,6 @@ export default () => (
                 )}
             />
         </ul>
-        {place($partial("components/common/paginator", $pointer("wishlist.pagination")))}
+        {$partial("components/common/paginator", $pointer("wishlist.pagination"))}
     </>
 );

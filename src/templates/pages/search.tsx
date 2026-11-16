@@ -18,7 +18,6 @@ import {
     $this,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 const {setting} = $frontmatter;
@@ -36,7 +35,7 @@ interface Brand {
 }
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
@@ -69,13 +68,13 @@ export default () => {
                     ),
                     page: () => (
                         <>
-                            {place($unescaped($stylesheet($string("/assets/scss/vendor/jstree/style.css"))))}
-                            {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                            {$unescaped($stylesheet($string("/assets/scss/vendor/jstree/style.css")))}
+                            {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                             <section className="nav">
                                 <$If
                                     test={$pointer("forms.search.query")}
                                     $then={() => (
-                                        <div id="search-results-heading">{place($partial("components/search/heading"))}</div>
+                                        <div id="search-results-heading">{$partial("components/search/heading")}</div>
                                     )}
                                 />
                                 <nav className="navBar navBar--sub search-nav">
@@ -93,7 +92,7 @@ export default () => {
                                                 href={$pointer("forms.search.product_url")}
                                                 data-product-results-toggle={""}
                                             >
-                                                {" "}{place($partial("components/search/product-count"))}{" "}
+                                                {" "}{$partial("components/search/product-count")}{" "}
                                             </a>
                                         </li>
                                         <li role="presentation" className="navBar-item">
@@ -106,7 +105,7 @@ export default () => {
                                                 href={$pointer("forms.search.content_url")}
                                                 data-content-results-toggle={""}
                                             >
-                                                {" "}{place($partial("components/search/content-count"))}{" "}
+                                                {" "}{$partial("components/search/content-count")}{" "}
                                             </a>
                                         </li>
                                         <$Unless
@@ -134,10 +133,9 @@ export default () => {
                                 </nav>
                                 <$Unless
                                     test={$pointer("product_results.faceted_search_enabled")}
-                                    $then={() => place($partial("components/search/advanced-search"))}
+                                    $then={() => $partial("components/search/advanced-search")}
                                 />
                             </section>
-    
                             <section className="page">
                                 <$If
                                     test={$pointer("product_results.faceted_search_enabled")}
@@ -146,7 +144,7 @@ export default () => {
                                             className={`page-sidebar${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("product"), $then: () => " u-hiddenVisually"})}`}
                                             id="faceted-search-container"
                                         >
-                                            {place($partial("components/faceted-search/index", $pointer("product_results")))}
+                                            {$partial("components/faceted-search/index", $pointer("product_results"))}
                                         </aside>
                                     )}
                                 />
@@ -264,7 +262,6 @@ export default () => {
                                             </div>
                                         )}
                                     />
-    
                                     <div
                                         role="tabpanel"
                                         id="search-results-content"
@@ -273,9 +270,8 @@ export default () => {
                                             attributes: `${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("content"), $then: () => $raw('class="u-hidden"')})}`,
                                         }}
                                     >
-                                        {place($partial("components/search/content-listing"))}
+                                        {$partial("components/search/content-listing")}
                                     </div>
-    
                                     <div
                                         role="tabpanel"
                                         id="product-listing-container"
@@ -284,9 +280,8 @@ export default () => {
                                             attributes: `${$If({test: $pointer("forms.search.section"), operator: $string("!="), rvalue: $string("product"), $then: () => $raw('class="u-hidden"')})}`,
                                         }}
                                     >
-                                        {place($partial("components/search/product-listing"))}
+                                        {$partial("components/search/product-listing")}
                                     </div>
-    
                                     {region("search_below_content")}
                                 </main>
                             </section>

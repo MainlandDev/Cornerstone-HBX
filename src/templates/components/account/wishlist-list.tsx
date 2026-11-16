@@ -1,4 +1,4 @@
-import {$Each, $If, $Inject, $Lang, $lang, $partial, $pointer, $string, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Inject, $Lang, $lang, $partial, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface Wishlist {
     id: string;
@@ -74,7 +74,7 @@ export default () => (
                 test={$pointer("customer.wishlists")}
                 $then={() => (
                     <p className="form-actions">
-                        {place($partial("components/common/alert/alert-info", $lang($string("account.wishlists.you_have_none"))))}
+                        {$partial("components/common/alert/alert-info", $lang($string("account.wishlists.you_have_none")))}
                     </p>
                 )}
             />

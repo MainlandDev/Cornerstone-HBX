@@ -1,4 +1,4 @@
-import {$If, $Lang, $lang, $number, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
@@ -7,14 +7,14 @@ export default () => (
                 <div className="account" data-pagination-wishlist={""}>
                     <$If
                         test={$pointer("wishlist.is_editable")}
-                        $then={() => place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        $then={() => $partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     />
                     <h2 className="page-heading">
                         <$Lang keyName={$string("account.wishlists.view_heading")} name={$pointer("wishlist.name")} />
                     </h2>
                     <$If
                         test={$pointer("wishlist.is_editable")}
-                        $then={() => place($partial("components/account/navigation", {account_page: $string("wishlists")}))}
+                        $then={() => $partial("components/account/navigation", {account_page: $string("wishlists")})}
                     />
 
                     <$If
@@ -44,8 +44,8 @@ export default () => (
 
                     <$If
                         test={$pointer("wishlist.items")}
-                        $then={() => place($partial("components/account/wishlist-item-list", {show_remove: $pointer("wishlist.is_editable")}))}
-                        $else={() => place($partial("components/common/alert/alert-info", $lang($string("account.wishlists.empty_wishlist"))))}
+                        $then={() => $partial("components/account/wishlist-item-list", {show_remove: $pointer("wishlist.is_editable")})}
+                        $else={() => $partial("components/common/alert/alert-info", $lang($string("account.wishlists.empty_wishlist")))}
                     />
                 </div>
             ),

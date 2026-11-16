@@ -1,15 +1,15 @@
-import {$If, $Lang, $lang, $Page, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $Page, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <$Page
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("gift_certificate.heading")} />
                     </h1>
-                    {place($partial("components/gift-certificate/navigation", {gift_page: $string("balance")}))}
+                    {$partial("components/gift-certificate/navigation", {gift_page: $string("balance")})}
 
                     <main className="account account--fixed">
                         <h3>
@@ -26,7 +26,7 @@ export default () => (
                             $then={() => (
                                 <$If
                                     test={$pointer("gift_certificate.error")}
-                                    $then={() => place($partial("components/common/alert/alert-error", $pointer("gift_certificate.error")))}
+                                    $then={() => $partial("components/common/alert/alert-error", $pointer("gift_certificate.error"))}
                                     $else={() => (
                                         <>
                                             <h1>{$pointer("gift_certificate.balance.formatted")}</h1>

@@ -1,4 +1,4 @@
-import {$add, $Each, $If, $Or, $lang, $number, $partial, $pointer, $raw, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $Or, $lang, $number, $partial, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Slide {
     url: string;
@@ -42,30 +42,26 @@ export default () => (
                         <$If
                             test={loop["@first"]}
                             $then={() =>
-                                place(
-                                    $partial("components/common/responsive-img", {
+                                $partial("components/common/responsive-img", {
                                         image: slide.stencil_image,
                                         class: $string("heroCarousel-image"),
                                         fallback_size: $string("1280w"),
                                         lazyload: $string("disabled"),
-                                    }),
-                                )
+                                    })
                             }
                             $else={() =>
-                                place(
-                                    $partial("components/common/responsive-img", {
+                                $partial("components/common/responsive-img", {
                                         image: slide.stencil_image,
                                         class: $string("heroCarousel-image"),
                                         fallback_size: $string("1280w"),
                                         lazyload: $string("lazyload"),
-                                    }),
-                                )
+                                    })
                             }
                         />
                         {$raw("{{#if button_text}}</a>{{else}}</div>{{/if}}")}
                         <$Or
                             values={[slide.heading, slide.text, slide.button_text]}
-                            $then={() => place($partial("components/carousel-content"))}
+                            $then={() => $partial("components/carousel-content")}
                         />
                     </div>
                     {$raw("{{#if button_text}}</div>{{else}}</a>{{/if}}")}
@@ -78,8 +74,8 @@ export default () => (
             rvalue={$number(1)}
             $then={() => (
                 <>
-                    {place($partial("components/carousel-content-announcement"))}
-                    <$If test={$pointer("play_pause_button")} $then={() => place($partial("components/carousel-play-pause-button"))} />
+                    {$partial("components/carousel-content-announcement")}
+                    <$If test={$pointer("play_pause_button")} $then={() => $partial("components/carousel-play-pause-button")} />
                 </>
             )}
         />

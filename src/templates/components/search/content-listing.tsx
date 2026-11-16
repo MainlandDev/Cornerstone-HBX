@@ -1,4 +1,4 @@
-import {$Each, $If, $partial, $pointer, $unescaped, $boolean, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $partial, $pointer, $unescaped, $boolean} from "@mainlanddev/hbx-bigcommerce";
 
 interface ContentResult {
     url: string;
@@ -12,7 +12,7 @@ export default () => (
         test={$pointer("content_results")}
         $then={() => (
             <>
-                {place($partial("components/search/content-sort-box", {sort: $pointer("pagination.content_results.sort")}))}
+                {$partial("components/search/content-sort-box", {sort: $pointer("pagination.content_results.sort")})}
                 <ul>
                     <$Each
                         list={$pointer<ContentResult[]>("content_results")}
@@ -27,7 +27,7 @@ export default () => (
                         )}
                     />
                 </ul>
-                {place($partial("components/common/paginator", $pointer("pagination.content_results"), {reload: $boolean(true)}))}
+                {$partial("components/common/paginator", $pointer("pagination.content_results"), {reload: $boolean(true)})}
             </>
         )}
     />

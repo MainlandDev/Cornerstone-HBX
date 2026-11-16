@@ -1,4 +1,4 @@
-import {$concat, $For, $If, $Inject, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$concat, $For, $If, $Inject, $Lang, $lang, $number, $partial, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <div id="modal-review-form" className="modal" data-reveal={""}>
@@ -11,19 +11,17 @@ export default () => (
             <h2 className="modal-header-title">
                 <$Lang keyName={$string("products.reviews.write_a_review")} />
             </h2>
-            {place($partial("components/common/modal/modal-close-btn"))}
+            {$partial("components/common/modal/modal-close-btn")}
         </div>
         <div className="modal-body">
             <div className="writeReview-productDetails">
                 <div className="writeReview-productImage-container">
-                    {place(
-                        $partial("components/common/responsive-img", {
+                    {$partial("components/common/responsive-img", {
                             image: $pointer("product.main_image"),
                             fallback_size: $pointer("theme_settings.product_size"),
                             lazyload: $pointer("theme_settings.lazyload_mode"),
                             default_image: $pointer("theme_settings.default_image_product"),
-                        }),
-                    )}
+                        })}
                 </div>
                 <h6 className="product-brand">{$pointer("product.brand.name")}</h6>
                 <h5 className="product-title">{$pointer("product.title")}</h5>
@@ -73,26 +71,22 @@ export default () => (
                     <$If
                         test={$pointer("product.reviews.author")}
                         $then={() =>
-                            place(
-                                $partial("components/common/forms/text", {
+                            $partial("components/common/forms/text", {
                                     id: $string("revfromname"),
                                     name: $string("revfromname"),
                                     required: $string("true"),
                                     label: $lang($string("products.reviews.form_write.name")),
                                     value: $pointer("product.reviews.author"),
-                                }),
-                            )
+                                })
                         }
                         $else={() =>
-                            place(
-                                $partial("components/common/forms/text", {
+                            $partial("components/common/forms/text", {
                                     id: $string("revfromname"),
                                     name: $string("revfromname"),
                                     required: $string("true"),
                                     label: $lang($string("products.reviews.form_write.name")),
                                     value: $pointer("customer.name"),
-                                }),
-                            )
+                                })
                         }
                     />
 
@@ -104,26 +98,22 @@ export default () => (
                                 <$If
                                     test={$pointer("product.reviews.email")}
                                     $then={() =>
-                                        place(
-                                            $partial("components/common/forms/text", {
+                                        $partial("components/common/forms/text", {
                                                 id: $string("email"),
                                                 name: $string("email"),
                                                 required: $string("true"),
                                                 label: $lang($string("products.reviews.form_write.email")),
                                                 value: $pointer("product.reviews.email"),
-                                            }),
-                                        )
+                                            })
                                     }
                                     $else={() =>
-                                        place(
-                                            $partial("components/common/forms/text", {
+                                        $partial("components/common/forms/text", {
                                                 id: $string("email"),
                                                 name: $string("email"),
                                                 required: $string("true"),
                                                 label: $lang($string("products.reviews.form_write.email")),
                                                 value: $pointer("customer.email"),
-                                            }),
-                                        )
+                                            })
                                     }
                                 />
                             </>
@@ -131,26 +121,22 @@ export default () => (
                     />
 
                     {$raw("<!-- Review Subject -->")}
-                    {place(
-                        $partial("components/common/forms/text", {
+                    {$partial("components/common/forms/text", {
                             id: $string("revtitle"),
                             name: $string("revtitle"),
                             required: $string("true"),
                             label: $lang($string("products.reviews.form_write.subject")),
                             value: $pointer("product.reviews.title"),
-                        }),
-                    )}
+                        })}
 
                     {$raw("<!-- Comments -->")}
-                    {place(
-                        $partial("components/common/forms/multiline", {
+                    {$partial("components/common/forms/multiline", {
                             id: $string("revtext"),
                             name: $string("revtext"),
                             required: $string("true"),
                             label: $lang($string("products.reviews.form_write.comments")),
                             value: $pointer("product.reviews.text"),
-                        }),
-                    )}
+                        })}
 
                     {$unescaped($pointer("product.reviews.recaptcha.markup"))}
 

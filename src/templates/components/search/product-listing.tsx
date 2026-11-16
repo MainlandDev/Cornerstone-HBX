@@ -1,4 +1,4 @@
-import {$Inject, $If, $lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Inject, $If, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -6,7 +6,7 @@ export default () => (
 
         <$If
             test={$pointer("product_results.products.length")}
-            $then={() => place($partial("components/products/filter", {sort: $pointer("pagination.product_results.sort")}))}
+            $then={() => $partial("components/products/filter", {sort: $pointer("pagination.product_results.sort")})}
         />
         <div data-list-name="Search Results">
             <$If
@@ -15,31 +15,27 @@ export default () => (
                 rvalue={$string("grid")}
                 $then={() => (
                     <>
-                        {place(
-                            $partial("components/products/grid", {
+                        {$partial("components/products/grid", {
                                 products: $pointer("product_results.products"),
                                 show_compare: $pointer("product_results.show_compare"),
                                 event: $string("list"),
                                 theme_settings: $pointer("theme_settings"),
-                            }),
-                        )}
+                            })}
                     </>
                 )}
                 $else={() => (
                     <>
-                        {place(
-                            $partial("components/products/list", {
+                        {$partial("components/products/list", {
                                 products: $pointer("product_results.products"),
                                 show_compare: $pointer("product_results.show_compare"),
                                 event: $string("list"),
                                 theme_settings: $pointer("theme_settings"),
-                            }),
-                        )}
+                            })}
                     </>
                 )}
             />
         </div>
 
-        {place($partial("components/common/paginator", $pointer("pagination.product_results")))}
+        {$partial("components/common/paginator", $pointer("pagination.product_results"))}
     </>
 );

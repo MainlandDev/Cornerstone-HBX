@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Value {
     id: string;
@@ -10,7 +10,7 @@ export default () => (
     <div className="form-field" data-product-attribute="set-select">
         <label className="form-label form-label--alternate form-label--inlineSmall" htmlFor={`attribute_select_${$pointer("id")}`}>
             {$pointer("display_name")}:{" "}
-            {place($partial("components/common/requireness-msg"))}
+            {$partial("components/common/requireness-msg")}
         </label>
         <select
             className="form-select form-select--small"

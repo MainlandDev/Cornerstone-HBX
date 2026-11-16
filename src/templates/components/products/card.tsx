@@ -14,11 +14,10 @@ import {
     $string,
     $unescaped,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** `{{{region name="…"}}}` */
-const region = (name: string) => place($unescaped($region({name: $string(name)})));
+const region = (name: string) => $unescaped($region({name: $string(name)}));
 
 export default () => {
     const settings = $$themeSettings();
@@ -59,8 +58,8 @@ export default () => {
                             test={$pointer("theme_settings.pdp_sold_out_label")}
                             operator={$string("===")}
                             rvalue={$string("")}
-                            $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))}))}
-                            $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label}))}
+                            $then={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: $lang($string("page_builder.pdp_sold_out_label"))})}
+                            $else={() => $partial("components/products/product-badge", {"badge-type": $string("sold-out"), badge_view: settings.product_sold_out_badges, badge_label: settings.pdp_sold_out_label})}
                         />
                     )}
                     $else={() => (
@@ -71,8 +70,8 @@ export default () => {
                                     test={$pointer("theme_settings.pdp_sale_badge_label")}
                                     operator={$string("===")}
                                     rvalue={$string("")}
-                                    $then={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))}))}
-                                    $else={() => place($partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label}))}
+                                    $then={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: $lang($string("page_builder.pdp_sale_badge_label"))})}
+                                    $else={() => $partial("components/products/product-badge", {"badge-type": $string("sale"), badge_view: settings.product_sale_badges, badge_label: settings.pdp_sale_badge_label})}
                                 />
                             )}
                         />
@@ -82,19 +81,17 @@ export default () => {
                 <a
                     href={url}
                     className="card-figure__link"
-                    aria-label={place($partial("components/products/product-info"))}
+                    aria-label={$partial("components/products/product-info")}
                     data-event-type="product-click"
                 >
                     <div className="card-img-container">
-                        {place(
-                            $partial("components/common/responsive-img", {
+                        {$partial("components/common/responsive-img", {
                                 image: $pointer("image"),
                                 class: $string("card-image"),
                                 fallback_size: settings.productgallery_size,
                                 lazyload: settings.lazyload_mode,
                                 default_image: settings.default_image_product,
-                            }),
-                        )}
+                            })}
                     </div>
                 </a>
 
@@ -180,7 +177,7 @@ export default () => {
                     $then={() => (
                         <p className="card-text" data-test-info-type="productRating">
                             <span className="rating--small">
-                                {place($partial("components/products/ratings", {rating_target: name, rating: $pointer("rating")}))}
+                                {$partial("components/products/ratings", {rating_target: name, rating: $pointer("rating")})}
                             </span>
                         </p>
                     )}
@@ -194,29 +191,27 @@ export default () => {
                     )}
                 />
                 <h3 className="card-title">
-                    <a aria-label={place($partial("components/products/product-info"))} href={url} data-event-type="product-click">
+                    <a aria-label={$partial("components/products/product-info")} href={url} data-event-type="product-click">
                         {name}
                     </a>
                 </h3>
 
                 <div className="card-text" data-test-info-type="price">
                     {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-                    {place($partial("components/products/price", {price: $pointer("price")}))}
+                    {$partial("components/products/price", {price: $pointer("price")})}
                     {$raw("{{else}}")}
-                    {place($partial("components/common/login-for-pricing"))}
+                    {$partial("components/common/login-for-pricing")}
                     {$raw("{{/or}}")}
                 </div>
                 {region("product_item_below_price")}
-                {place($partial("components/products/bulk-discount-rates"))}
+                {$partial("components/products/bulk-discount-rates")}
                 <$If
                     test={settings.show_featured_promotions}
                     $then={() =>
-                        place(
-                            $partial("components/products/promotion-callout", {
+                        $partial("components/products/promotion-callout", {
                                 promotions: $pointer("featured_promotions"),
                                 mode: $string("compact"),
-                            }),
-                        )
+                            })
                     }
                 />
             </div>

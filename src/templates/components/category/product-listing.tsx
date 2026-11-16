@@ -1,4 +1,4 @@
-import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <>
@@ -8,7 +8,7 @@ export default () => (
             test={$pointer("category.products")}
             $then={() => (
                 <>
-                    {place($partial("components/products/filter", {sort: $pointer("pagination.category.sort")}))}
+                    {$partial("components/products/filter", {sort: $pointer("pagination.category.sort")})}
 
                     <div data-list-name={`Category: ${$pointer("category.name")}`} role="region" aria-label={$lang($string("category.product_label"))}>
                         <$If
@@ -17,32 +17,28 @@ export default () => (
                             rvalue={$string("grid")}
                             $then={() => (
                                 <>
-                                    {place(
-                                        $partial("components/products/grid", {
+                                    {$partial("components/products/grid", {
                                             products: $pointer("category.products"),
                                             show_compare: $pointer("category.show_compare"),
                                             theme_settings: $pointer("theme_settings"),
                                             event: $string("list"),
-                                        }),
-                                    )}
+                                        })}
                                 </>
                             )}
                             $else={() => (
                                 <>
-                                    {place(
-                                        $partial("components/products/list", {
+                                    {$partial("components/products/list", {
                                             products: $pointer("category.products"),
                                             show_compare: $pointer("category.show_compare"),
                                             theme_settings: $pointer("theme_settings"),
                                             event: $string("list"),
-                                        }),
-                                    )}
+                                        })}
                                 </>
                             )}
                         />
                     </div>
 
-                    {place($partial("components/common/paginator", $pointer("pagination.category")))}
+                    {$partial("components/common/paginator", $pointer("pagination.category"))}
                 </>
             )}
             $else={() => (

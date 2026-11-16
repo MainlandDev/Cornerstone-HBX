@@ -1,4 +1,4 @@
-import {$Each, $If, $Lang, $partial, $pointer, $string, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $partial, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface ShopByBrand {
     url: string;
@@ -9,7 +9,7 @@ export default () => (
     <nav>
         <$If
             test={$pointer("brand.faceted_search_enabled")}
-            $then={() => place($partial("components/faceted-search/index", $pointer("brand")))}
+            $then={() => $partial("components/faceted-search/index", $pointer("brand"))}
             $else={() => (
                 <$If
                     test={$pointer("shop_by_brand")}

@@ -1,4 +1,4 @@
-import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $sanitize, $string, $unescaped, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$dashcase, $Each, $If, $Lang, $partial, $pointer, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface FacetOption {
     id: string;
@@ -13,7 +13,7 @@ export default () => (
         test={$pointer("items")}
         $then={() => (
             <div className="accordion-block">
-                {place($partial("components/faceted-search/faceted-search-navigation"))}
+                {$partial("components/faceted-search/faceted-search-navigation")}
 
                 <div
                     id={`facetedSearch-content--${$dashcase($pointer("facet"))}`}

@@ -1,4 +1,4 @@
-import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Inject, $Lang, $lang, $partial, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => (
     <form data-contact-form={""} className="form" action={$pointer("urls.contact_us_submit")} method="post">
@@ -8,7 +8,7 @@ export default () => (
             test={$pointer("forms.contact.error")}
             $then={() => (
                 <div id="contact-us-error">
-                    {place($partial("components/common/alert/alert-error", $pointer("forms.contact.error")))}
+                    {$partial("components/common/alert/alert-error", $pointer("forms.contact.error"))}
                 </div>
             )}
         />

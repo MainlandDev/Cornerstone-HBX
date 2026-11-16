@@ -1,18 +1,18 @@
-import {$If, $Lang, $lang, $number, $partial, $pointer, $raw, $$themeSettings, $string, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $number, $partial, $pointer, $raw, $$themeSettings, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
     const theme = $$themeSettings();
     return (
         <nav className="navUser">
             {$raw("{{#and language_selector language_selector.languages.length '>' 1}}")}
-            {place($partial("components/common/language-selector"))}
+            {$partial("components/common/language-selector")}
             {$raw("{{/and}}")}
 
             {$raw("{{#or customer (unless settings.hide_price_from_guests)}}")}
-            {place($partial("components/common/currency-selector"))}
+            {$partial("components/common/currency-selector")}
             {$raw("{{/or}}")}
 
-            <$If test={theme.show_channels} $then={() => place($partial("components/common/channel-selector"))} />
+            <$If test={theme.show_channels} $then={() => $partial("components/common/channel-selector")} />
 
             <ul className="navUser-section navUser-section--alt">
                 <$If
@@ -53,7 +53,7 @@ export default () => {
                     test={theme.social_icon_placement_top}
                     $then={() => (
                         <>
-                            <li className="navUser-item navUser-item--social">{place($partial("components/common/social-links"))}</li>
+                            <li className="navUser-item navUser-item--social">{$partial("components/common/social-links")}</li>
                             <li className="navUser-item navUser-item--divider">|</li>
                         </>
                     )}
@@ -138,7 +138,7 @@ export default () => {
                 </li>
             </ul>
             <div className="dropdown dropdown--quickSearch" id="quickSearch" aria-hidden="true" data-prevent-quick-search-close={""}>
-                {place($partial("components/common/quick-search", {name: $string("nav-quick-search")}))}
+                {$partial("components/common/quick-search", {name: $string("nav-quick-search")})}
             </div>
         </nav>
     );

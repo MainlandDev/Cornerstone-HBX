@@ -1,4 +1,4 @@
-import {$$themeSettings, $Each, $If, $lang, $Page, $partial, $pointer, $string, $unescaped, $Unless, place} from "@mainlanddev/hbx-bigcommerce";
+import {$$themeSettings, $Each, $If, $lang, $Page, $partial, $pointer, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface SubPage {
     url: string;
@@ -12,7 +12,7 @@ export default () => {
             blocks={{
                 page: () => (
                     <>
-                        {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                        {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
 
                         <main className="page">
                             <$Unless
@@ -49,7 +49,7 @@ export default () => {
                                     $else={() => (
                                         <>
                                             <p>{$unescaped($pointer("page.content"))}</p>
-                                            {place($partial("components/page/contact-us-form"))}
+                                            {$partial("components/page/contact-us-form")}
                                         </>
                                     )}
                                 />

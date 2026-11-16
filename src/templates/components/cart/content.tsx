@@ -14,7 +14,6 @@ import {
     $raw,
     $string,
     $Unless,
-    place,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface StockPosition {
@@ -100,15 +99,13 @@ export default () => (
                                 )}
                                 $else={() => (
                                     <>
-                                        {place(
-                                            $partial("components/common/responsive-img", {
+                                        {$partial("components/common/responsive-img", {
                                                 image: $pointer("image"),
                                                 class: $string("cart-item-image"),
                                                 fallback_size: $pointer("../theme_settings.productthumb_size"),
                                                 lazyload: $string("lazyload"),
                                                 default_image: $pointer("../theme_settings.default_image_product"),
-                                            }),
-                                        )}
+                                            })}
                                     </>
                                 )}
                             />
@@ -144,7 +141,7 @@ export default () => (
                                                                         {$pointer("value")}
                                                                     </a>
                                                                 )}
-                                                                $else={() => place($partial("components/common/product-options"))}
+                                                                $else={() => $partial("components/common/product-options")}
                                                             />
                                                         </dd>
                                                     </>
@@ -181,7 +178,7 @@ export default () => (
                                     </>
                                 )}
                             />
-                            {place($partial("components/cart/item-giftwrap", item))}
+                            {$partial("components/cart/item-giftwrap", item)}
                             <$If
                                 test={item.event_date}
                                 $then={() => (
@@ -201,7 +198,7 @@ export default () => (
                             <span className={`cart-item-value ${$If({test: item.price_discounted, $then: () => "price--discounted"})}`}>{item.price.formatted}</span>
                             <$If test={item.price_discounted} $then={() => <span className="cart-item-value">{item.price_discounted.formatted}</span>} />
                             {$raw("{{else}}")}
-                            {place($partial("components/common/login-for-pricing"))}
+                            {$partial("components/common/login-for-pricing")}
                             {$raw("{{/or}}")}
                         </td>
 

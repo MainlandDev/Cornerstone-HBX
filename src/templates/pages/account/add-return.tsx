@@ -1,4 +1,4 @@
-import {$Each, $For, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $sanitize, $string, $this, $unescaped, place} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $For, $If, $Lang, $lang, $number, $Page, $partial, $pointer, $sanitize, $string, $this, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 // The library's context types have no `forms.return` key yet; these shapes type the pointers used here.
 interface ReturnOption {
@@ -19,11 +19,11 @@ export default () => (
         blocks={{
             page: () => (
                 <>
-                    {place($partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")}))}
+                    {$partial("components/common/breadcrumbs", {breadcrumbs: $pointer("breadcrumbs")})}
                     <h1 className="page-heading">
                         <$Lang keyName={$string("account.returns.new_return")} />
                     </h1>
-                    {place($partial("components/account/navigation", {account_page: $string("returns")}))}
+                    {$partial("components/account/navigation", {account_page: $string("returns")})}
 
                     <main className="account account--fixed account--addReturn">
                         <div className="account-body">
