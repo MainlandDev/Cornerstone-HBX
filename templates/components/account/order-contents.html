@@ -1,11 +1,12 @@
-<h3 class="account-heading">{{lang 'account.orders.details.order_contents'}}</h3>
-
+<h3 class="account-heading">{{lang "account.orders.details.order_contents"}}</h3>
 <ul class="account-list">
     {{#each order.items}}
         {{#each shipping_rows}}
             {{#if is_shipping}}
                 <li class="account-listShipping">
-                    <h5 class="account-listShipping-title">{{lang 'account.orders.details.ship_to_multi' street=address city=city state=state zip=zip country=country}}</h5>
+                    <h5 class="account-listShipping-title">
+                        {{lang "account.orders.details.ship_to_multi" street=address city=city state=state zip=zip country=country}}
+                    </h5>
                 </li>
             {{/if}}
         {{/each}}

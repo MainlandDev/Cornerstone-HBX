@@ -1,8 +1,7 @@
 {{#partial "page"}}
-
-{{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-<h1 class="page-heading">{{lang 'gift_certificate.heading' }}</h1>
-{{> components/gift-certificate/navigation gift_page='balance'}}
+    {{> "components/common/breadcrumbs" breadcrumbs=breadcrumbs}}
+    <h1 class="page-heading">{{lang "gift_certificate.heading"}}</h1>
+    {{> "components/gift-certificate/navigation" gift_page="balance"}}
 
 <main class="account account--fixed">
     <h3>{{lang 'gift_certificate.balance.heading'}}</h3>
@@ -33,4 +32,4 @@
     </form>
 </main>
 {{/partial}}
-{{> layout/base}}
+{{> "layout/base"}}

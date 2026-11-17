@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ locale_name }}">
+<html class="no-js" lang="{{locale_name}}">
     <head>
-        <title>{{ head.title }}</title>
-        {{{ resourceHints }}}
-        {{{ head.meta_tags }}}
-        {{{ head.config }}}
-        {{#block "head"}} {{/block}}
-
-        <link href="{{{ head.favicon }}}" rel="shortcut icon">
+        <title>{{head.title}}</title>
+        {{{resourceHints}}}
+        {{{head.meta_tags}}}
+        {{{head.config}}}
+        {{#block "head"}}
+        {{/block}}
+        <link href="{{{head.favicon}}}" rel="shortcut icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <script nonce="{{nonce}}">
@@ -25,9 +25,9 @@
             window.lazySizesConfig.loadMode = 1;
         </script>
         <script nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.head_async.js' resourceHint='preload' as='script'}}"></script>
-        
+
         {{getFontsCollection font-display='block'}}
-        
+
         <script nonce="{{nonce}}" async src="{{cdn 'assets/dist/theme-bundle.font.js' resourceHint='preload' as='script'}}"></script>
 
         {{{stylesheet '/assets/css/theme.css'}}}
@@ -63,7 +63,7 @@
                 window.stencilBootstrap("{{page_type}}", {{jsContext}}).load();
 
                 function browserSupportsFormData() {
-                    return typeof FormData !== 'undefined' 
+                    return typeof FormData !== 'undefined'
                         && !!FormData.prototype.keys;
                 }
                 function loadFormDataPolyfillScript(src) {

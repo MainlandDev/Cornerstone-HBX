@@ -1,7 +1,6 @@
 {{#unless customer.addresses}}
-    {{> components/common/alert/alert-info (lang 'account.addresses.no_addresses')}}
+    {{> "components/common/alert/alert-info" (lang "account.addresses.no_addresses")}}
 {{/unless}}
-
 <ul class="addressList">
     {{#each customer.addresses}}
         <li class="address">
@@ -17,14 +16,20 @@
                     </ul>
                     {{#if phone}}
                         <dl class="address-details">
-                            <dt class="address-label">{{lang 'account.addresses.phone' }}</dt>
+                            <dt class="address-label">{{lang "account.addresses.phone"}}</dt>
                             <dd class="address-description">{{phone}}</dd>
                         </dl>
                     {{/if}}
-                    <form action="{{delete_url}}" method="post" data-delete-address="{{lang 'forms.address.confirm_delete'}}">
+                    <form
+                        data-delete-address="{{lang "forms.address.confirm_delete"}}"
+                        action="{{delete_url}}"
+                        method="post"
+                    >
                         <div class="form-actions">
-                            <a class="button button--primary button--small" href="{{edit_url}}">{{lang 'common.edit' }}</a>
-                            <button type="submit" class="button secondary button--small">{{lang 'common.delete' }}</button>
+                            <a class="button button--primary button--small" href="{{edit_url}}">{{lang "common.edit"}}</a>
+                            <button type="submit" class="button secondary button--small">
+                                {{lang "common.delete"}}
+                            </button>
                         </div>
                     </form>
                 </div>

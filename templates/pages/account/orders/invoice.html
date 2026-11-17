@@ -1,7 +1,4 @@
-{{#partial "head"}}
-    {{{ stylesheet '/assets/css/invoice.css' }}}
-{{/partial}}
-
+{{#partial "head"}}{{{stylesheet "/assets/css/invoice.css"}}}{{/partial}}
 {{#partial "page"}}
     <div class="Invoice">
         <h1>
@@ -22,10 +19,9 @@
         </div>
 
         <address><strong>{{nl2br settings.address}}</strong></address>
-
         <div class="AddressRow">
             <div class="BillingAddress">
-                <h3>{{lang 'account.orders.details.bill_to'}}</h3>
+                <h3>{{lang "account.orders.details.bill_to"}}</h3>
                 <ul>
                     <li><strong>{{order.billing_address.full_name}}</strong></li>
                     <li>{{order.billing_address.company}}</li>
@@ -41,7 +37,7 @@
             {{#if order.shipping_address}}
                 {{#unless order.has_multiple_shipping_addresses}}
                     <div class="ShippingAddress">
-                        <h3>{{lang 'account.orders.details.ship_to'}}</h3>
+                        <h3>{{lang "account.orders.details.ship_to"}}</h3>
                         <ul>
                             <li><strong>{{order.shipping_address.full_name}}</strong></li>
                             <li>{{order.shipping_address.company}}</li>

@@ -1,25 +1,27 @@
 <table class="cart" data-cart-quantity="{{cart.quantity}}">
     <thead class="cart-header">
         <tr>
-            <th class="cart-header-item" colspan="2">{{lang 'cart.checkout.item'}}</th>
-            <th class="cart-header-item">{{lang 'cart.checkout.price'}}</th>
-            <th class="cart-header-item cart-header-quantity">{{lang 'cart.checkout.quantity'}}</th>
-            <th class="cart-header-item">{{lang 'cart.checkout.total'}}</th>
+            <th class="cart-header-item" colspan="2">
+                {{lang "cart.checkout.item"}}
+            </th>
+            <th class="cart-header-item">{{lang "cart.checkout.price"}}</th>
+            <th class="cart-header-item cart-header-quantity">{{lang "cart.checkout.quantity"}}</th>
+            <th class="cart-header-item">{{lang "cart.checkout.total"}}</th>
         </tr>
     </thead>
     <tbody class="cart-list">
         {{#each cart.items}}
             <tr class="cart-item" data-item-row>
                 <td class="cart-item-block cart-item-figure">
-                    {{#if type '==' 'GiftCertificate'}}
+                    {{#if type "==" "GiftCertificate"}}
                         <img
                             class="cart-item-fixed-image"
                             src="{{cdn ../theme_settings.default_image_gift_certificate}}"
-                            alt="{{lang 'cart.gift_certificates.gift_certificate'}}"
-                            title="{{lang 'cart.gift_certificates.gift_certificate'}}"
+                            alt="{{lang "cart.gift_certificates.gift_certificate"}}"
+                            title="{{lang "cart.gift_certificates.gift_certificate"}}"
                         >
                     {{else}}
-                        {{> components/common/responsive-img
+                        {{> "components/common/responsive-img"
                             image=image
                             class="cart-item-image"
                             fallback_size=../theme_settings.productthumb_size
@@ -38,7 +40,6 @@
                     {{#if release_date}}
                         <p>({{release_date}})</p>
                     {{/if}}
-
                     {{#if options}}
                         <dl class="definitionList">
                             {{#each options}}
@@ -83,7 +84,6 @@
                             </dd>
                         </dl>
                     {{/if}}
-
                 </td>
                 <td class="cart-item-block cart-item-info">
                     <span class="cart-item-label">{{lang 'cart.checkout.price'}}</span>
@@ -96,7 +96,6 @@
                         {{> components/common/login-for-pricing}}
                     {{/or}}
                 </td>
-
                 <td class="cart-item-block cart-item-info cart-item-quantity">
 
                     <label class="form-label cart-item-label" for="qty-{{id}}">{{lang 'products.quantity'}}</label>
