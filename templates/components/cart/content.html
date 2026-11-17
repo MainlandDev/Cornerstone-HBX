@@ -1,4 +1,7 @@
-<table class="cart" data-cart-quantity="{{cart.quantity}}">
+<table
+    class="cart"
+    data-cart-quantity="{{cart.quantity}}"
+>
     <thead class="cart-header">
         <tr>
             <th class="cart-header-item" colspan="2">
@@ -19,7 +22,7 @@
                             src="{{cdn ../theme_settings.default_image_gift_certificate}}"
                             alt="{{lang "cart.gift_certificates.gift_certificate"}}"
                             title="{{lang "cart.gift_certificates.gift_certificate"}}"
-                        >
+                        />
                     {{else}}
                         {{> "components/common/responsive-img"
                             image=image
