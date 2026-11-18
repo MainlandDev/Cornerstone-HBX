@@ -1,12 +1,12 @@
 <ul class="tabs" data-tab>
     {{#if product.description}}
         <li class="tab is-active">
-            <a class="tab-title" href="#tab-description">{{lang 'products.description'}}</a>
+            <a class="tab-title" href="#tab-description">{{lang "products.description"}}</a>
         </li>
     {{/if}}
     {{#if product.warranty}}
         <li class="tab {{#unless product.description}}is-active{{/unless}}">
-            <a class="tab-title" href="#tab-warranty">{{lang 'products.warranty'}}</a>
+            <a class="tab-title" href="#tab-warranty">{{lang "products.warranty"}}</a>
         </li>
     {{/if}}
     {{#all product.custom_fields theme_settings.show_custom_fields_tabs}}
@@ -20,7 +20,7 @@
     {{/all}}
     {{#all settings.show_product_reviews theme_settings.show_product_reviews product.reviews.total}}
         <li class="tab">
-            <a class="tab-title productView-reviewTabLink" href="#tab-reviews">{{lang 'products.reviews.header' total=product.reviews.total}}</a>
+            <a class="tab-title productView-reviewTabLink" href="#tab-reviews">{{lang "products.reviews.header" total=product.reviews.total}}</a>
         </li>
     {{/all}}
 </ul>

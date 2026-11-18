@@ -9,7 +9,7 @@
            aria-label="{{language_selector.active_language_code}}"
         >
             <span>
-                {{lang 'common.locale'}} <strong>{{language_selector.active_language_code}}</strong>
+                {{lang "common.locale"}} <strong>{{language_selector.active_language_code}}</strong>
             </span>
             <i class="icon" aria-hidden="true">
                 <svg>
@@ -22,7 +22,7 @@
                 <li class="dropdown-menu-item">
                     <a href="{{switch_url}}"
                        data-locale-code="{{code}}"
-                       data-warning="{{lang 'common.locale_switch_warning'}}"
+                       data-warning="{{lang "common.locale_switch_warning"}}"
                        aria-label="{{code}}"
                     >
                         {{#if is_active}}

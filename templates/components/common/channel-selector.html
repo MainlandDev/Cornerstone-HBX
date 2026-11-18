@@ -1,4 +1,4 @@
-{{#if theme_settings.channels.length '>' 1}}
+{{#if theme_settings.channels.length ">" 1}}
 <ul class="navUser-section">
     <li class="navUser-item">
         <a href="#"
@@ -9,7 +9,7 @@
         >
             {{#each theme_settings.channels}}
                 {{#if is_active}}
-                    {{lang 'common.channel' code=code}}
+                    {{lang "common.channel" code=code}}
                 {{/if}}
             {{/each}}
             <i class="icon" aria-hidden="true">
@@ -21,7 +21,7 @@
         <ul class="dropdown-menu" id="channelSelection" data-dropdown-content aria-hidden="true" tabindex="-1">
             {{#each theme_settings.channels}}
                 <li class="dropdown-menu-item">
-                    <a href="{{{switch_url}}}" data-channel-code="{{{code}}}" data-warning="{{lang 'common.channel_switch_warning'}}">
+                    <a href="{{{switch_url}}}" data-channel-code="{{{code}}}" data-warning="{{lang "common.channel_switch_warning"}}">
                         {{#if is_active}}
                             <strong>{{name}}</strong>
                         {{else}}

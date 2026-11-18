@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h1 id="modal-header-title" class="modal-header-title">
-        {{lang 'cart.added_to_cart.what_next' num_products=cart.quantity}}
+        {{lang "cart.added_to_cart.what_next" num_products=cart.quantity}}
     </h1>
 </div>
 
@@ -9,7 +9,7 @@
         <section class="previewCartCheckout">
             {{#if cart.show_primary_checkout_button}}
                 <a href="{{urls.checkout.single_address}}" class="button button--primary" data-primary-checkout-now-action>
-                    {{lang 'cart.added_to_cart.proceed_to_checkout'}}
+                    {{lang "cart.added_to_cart.proceed_to_checkout"}}
                 </a>
             {{/if}}
 
@@ -22,13 +22,13 @@
             {{#if cart.show_multiple_address_shipping}}
                 <div class="previewCartAction-checkoutMultiple">
                     <a href="{{urls.checkout.multiple_address}}">
-                        {{lang 'cart.preview.checkout_multiple'}}
+                        {{lang "cart.preview.checkout_multiple"}}
                     </a>
                 </div>
             {{/if}}
 
             <div class="previewCartCheckout-subtotal">
-                {{lang 'cart.added_to_cart.order_subtotal'}}
+                {{lang "cart.added_to_cart.order_subtotal"}}
 
                 <strong class="previewCartCheckout-price">
                     {{#or customer (unless settings.hide_price_from_guests)}}
@@ -40,15 +40,15 @@
             </div>
 
             <p data-cart-quantity="{{cart.quantity}}">
-                {{lang 'cart.added_to_cart.your_cart_contains' num_products=cart.quantity}}
+                {{lang "cart.added_to_cart.your_cart_contains" num_products=cart.quantity}}
             </p>
 
             <a href="#" class="button button--primary" role="button" data-reveal-close>
-                {{lang 'cart.added_to_cart.continue_shopping'}}
+                {{lang "cart.added_to_cart.continue_shopping"}}
             </a>
 
             <a href="{{urls.cart}}" class="button">
-                {{lang 'cart.added_to_cart.view_or_edit_cart'}}
+                {{lang "cart.added_to_cart.view_or_edit_cart"}}
             </a>
         </section>
         <section class="productView">
@@ -100,7 +100,7 @@
     {{#if cart.suggested_products}}
         <section class="suggestiveCart">
             <h2>
-                {{lang 'cart.added_to_cart.you_might_also_like'}}&hellip;
+                {{lang "cart.added_to_cart.you_might_also_like"}}&hellip;
             </h2>
 
             <ul class="productGrid">

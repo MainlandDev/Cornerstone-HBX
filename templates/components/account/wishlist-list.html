@@ -8,31 +8,42 @@
         </tr>
     </thead>
     <tbody class="table-tbody">
-    {{#each customer.wishlists}}
-        <tr>
-            <td><a href="{{view_url}}">{{name}}</a></td>
-            <td>{{num_items}}</td>
-            <td>
-                {{#if is_public }}
-                    {{lang 'common.yes'}}
-                {{else}}
-                    {{lang 'common.no'}}
-                {{/if}}
-            </td>
-            <td class="table-actions">
-                <form method="post" action="{{delete_url}}" class="form">
-                    <fieldset class="form-fieldset">
-                        {{#if is_public}}
-                            <a href="{{share_url}}" class="button button--primary button--small"
-                           role="button">{{lang 'common.share'}}</a>
-                        {{/if}}
-                        <a href="{{edit_url}}" class="button button--small" data-wishlist>{{lang 'common.edit'}}</a>
-                        <input type="submit" value="{{lang 'common.delete'}}" class="button button--small" data-wishlist-delete>
-                    </fieldset>
-                </form>
-            </td>
-        </tr>
-    {{/each}}
+        {{#each customer.wishlists}}
+            <tr>
+                <td><a href="{{view_url}}">{{name}}</a></td>
+                <td>{{num_items}}</td>
+                <td>{{#if is_public}}{{lang "common.yes"}}{{else}}{{lang "common.no"}}{{/if}}
+                </td>
+                <td class="table-actions">
+                    <form
+                        class="form"
+                        action="{{delete_url}}"
+                        method="post"
+                    >
+                        <fieldset class="form-fieldset">
+                            {{#if is_public}}
+                                <a
+                                    href="{{share_url}}"
+                                    class="button button--primary button--small"
+                                    role="button"
+                                >{{lang "common.share"}}</a>
+                            {{/if}}
+                            <a
+                                href="{{edit_url}}"
+                                class="button button--small"
+                                data-wishlist
+                            >{{lang "common.edit"}}</a>
+                            <input
+                                type="submit"
+                                class="button button--small"
+                                data-wishlist-delete
+                                value="{{lang "common.delete"}}"
+                            >
+                        </fieldset>
+                    </form>
+                </td>
+            </tr>
+        {{/each}}
     </tbody>
 </table>
 <form
@@ -41,25 +52,31 @@
     method="post"
 >
     {{#unless customer.wishlists}}
-        <p class="form-actions">{{> "components/common/alert/alert-info" (lang "account.wishlists.you_have_none")}}</p>
+        <p class="form-actions">
+            {{> "components/common/alert/alert-info" (lang "account.wishlists.you_have_none")}}</p>
     {{/unless}}
     <div class="form-actions">
-        <a href="{{this.urls.account.wishlists.add}}" class="button button--primary" role="button" data-wishlist>{{lang 'account.wishlists.new'}}</a>
-        {{inject 'wishlistDelete' (lang 'account.wishlists.delete_alert')}}
+        <a
+            href="{{urls.account.wishlists.add}}"
+            class="button button--primary"
+            role="button"
+            data-wishlist
+        >{{lang "account.wishlists.new"}}</a>
+        {{inject "wishlistDelete" (lang "account.wishlists.delete_alert")}}
         {{#if customer.wishlists}}
             {{#each customer.wishlists}}
                 <input
                     type="hidden"
                     name="deletewishlist[]"
-                    value="{{this.id}}"
-                />
+                    value="{{id}}"
+                >
             {{/each}}
             <input
                 type="submit"
                 class="button"
                 data-wishlist-delete
                 value="{{lang "account.wishlists.delete_all"}}"
-            />
+            >
         {{/if}}
     </div>
 </form>

@@ -6,7 +6,7 @@
     </label>
 
     <select class="form-select form-select--small" name="attribute[{{this.id}}]" id="attribute_select_{{id}}" {{#if required}}required{{/if}}>
-        <option value="">{{lang 'products.choose_options'}}</option>
+        <option value="">{{lang "products.choose_options"}}</option>
         {{#each this.values}}
             <option data-product-attribute-value="{{id}}" value="{{id}}" {{#if selected}}selected data-default{{/if}}>{{label}}</option>
         {{/each}}

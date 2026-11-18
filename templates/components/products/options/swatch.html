@@ -7,7 +7,7 @@
     </label>
     <span
         class="swatch-option-message aria-description--hidden u-hidden">
-        {{ lang 'products.swatch_option_announcement' swatch_name=this.display_name}}
+        {{ lang "products.swatch_option_announcement" swatch_name=this.display_name}}
     </span>
 
     {{#unless required}}
@@ -17,11 +17,11 @@
             name="attribute[{{id}}]"
             value=""
             id="attribute_swatch_{{id}}_none"
-            checked="{{#if defaultValue '==' ''}}checked{{/if}}"
-            aria-label="{{lang 'products.none'}}"
+            checked="{{#if defaultValue "==" ""}}checked{{/if}}"
+            aria-label="{{lang "products.none"}}"
         >
         <label class="form-option form-option-swatch" for="attribute_swatch_{{id}}_none">
-            <span class='form-option-variant form-option-variant--none' title="{{lang 'products.none'}}">{{lang 'products.none'}}</span>
+            <span class="form-option-variant form-option-variant--none" title="{{lang "products.none"}}">{{lang "products.none"}}</span>
         </label>
     {{/unless}}
 
@@ -38,25 +38,25 @@
         >
         <label class="form-option form-option-swatch" for="attribute_swatch_{{../id}}_{{id}}" data-product-attribute-value="{{id}}">
             {{#if image}}
-                <span class='form-option-variant form-option-variant--pattern' title="{{this.label}}" style="background-image: url('{{getImage image "swatch_option_size"}}');"></span>
+                <span class="form-option-variant form-option-variant--pattern" title="{{this.label}}" style="background-image: url("{{getImage image "swatch_option_size"}}");"></span>
             {{/if}}
             {{#if data.[2]}}
-                <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
-                <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[1]}}"></span>
-                <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[2]}}"></span>
+                <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
+                <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[1]}}"></span>
+                <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[2]}}"></span>
             {{else}}
                 {{#if data.[1]}}
-                    <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
-                    <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[1]}}"></span>
+                    <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
+                    <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[1]}}"></span>
                 {{else}}
                     {{#if data.[0]}}
-                        <span class='form-option-variant form-option-variant--color' title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
+                        <span class="form-option-variant form-option-variant--color" title="{{this.label}}" style="background-color: #{{data.[0]}}"></span>
                     {{/if}}
                 {{/if}}
             {{/if}}
             {{#if pattern}}
                 <span class="form-option-expanded">
-                    <span class="form-option-image" style="background-image: url('{{getImage image 'core-swatch'}}');"></span>
+                    <span class="form-option-image" style="background-image: url("{{getImage image "core-swatch"}}");"></span>
                 </span>
             {{/if}}
         </label>

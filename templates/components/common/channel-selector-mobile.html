@@ -1,4 +1,4 @@
-{{#if theme_settings.channels.length '>' 1}}
+{{#if theme_settings.channels.length ">" 1}}
 <a href="#"
    class="navPages-action has-subMenu"
    data-collapsible="navPages-channel"
@@ -7,14 +7,14 @@
    aria-label="
     {{#each theme_settings.channels}}
         {{#if is_active}}
-            {{lang 'common.channel' code=code}}
+            {{lang "common.channel" code=code}}
         {{/if}}
     {{/each}}
    "
 >
     {{#each theme_settings.channels}}
         {{#if is_active}}
-            {{lang 'common.channel' code=code}}
+            {{lang "common.channel" code=code}}
         {{/if}}
     {{/each}}
     <i class="icon navPages-action-moreIcon" aria-hidden="true">
@@ -31,7 +31,7 @@
                class="navPage-subMenu-action navPages-action"
                aria-label="{{name}}"
                data-channel-code="{{{code}}}"
-               data-warning="{{lang 'common.channel_switch_warning'}}"
+               data-warning="{{lang "common.channel_switch_warning"}}"
             >
                 {{name}}
             </a>

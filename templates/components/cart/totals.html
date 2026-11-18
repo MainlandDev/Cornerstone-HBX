@@ -1,7 +1,7 @@
 <ul class="cart-totals {{#if cart.multi_coupon_ui_enabled}}cart-total-enhanced{{/if}}">
     <li class="cart-total">
         <div class="cart-total-label">
-            <strong>{{lang 'cart.checkout.subtotal'}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
+            <strong>{{lang "cart.checkout.subtotal"}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
         </div>
         <div class="cart-total-value">
             {{#or customer (unless settings.hide_price_from_guests)}}
@@ -15,7 +15,7 @@
         {{#or cart.coupons cart.display_discount_total.value}}
             <div class="cart-total cart-total-discounts">
                 <div class="cart-total-label" data-discount-toggle>
-                    <strong>{{lang 'cart.discounts'}}</strong>
+                    <strong>{{lang "cart.discounts"}}</strong>
                     <i class="icon cart-discount-icon" aria-hidden="true"><svg><use href="#icon-keyboard-arrow-up" /></svg></i>
                 </div>
                 <div class="cart-total-value" data-discount-toggle>
@@ -27,9 +27,9 @@
                             <div class="cart-discount-item-label">
                                 <i class="icon" aria-hidden="true"><svg><use href="#icon-promotions" /></svg></i>
                                 <span class="cart-coupon-name">
-                                    {{lang 'cart.automatic_discount'}}
+                                    {{lang "cart.automatic_discount"}}
                                     {{#if cart.order_based_auto_discount_max_limit_reached}}
-                                        <span class="cart-coupon-limit">{{lang 'cart.coupons.maximum_discount_applied'}}</span>
+                                        <span class="cart-coupon-limit">{{lang "cart.coupons.maximum_discount_applied"}}</span>
                                     {{/if}}
                                 </span>
                             </div>
@@ -42,7 +42,7 @@
                         <li class="cart-discount-item">
                             <div class="cart-discount-item-label">
                                 <i class="icon" aria-hidden="true"><svg><use href="#icon-promotions" /></svg></i>
-                                <span class="cart-coupon-name">{{lang 'cart.manual_discount'}}</span>
+                                <span class="cart-coupon-name">{{lang "cart.manual_discount"}}</span>
                             </div>
                             <div class="cart-discount-item-value">
                                 {{cart.manual_discount_total.formatted}}
@@ -60,12 +60,12 @@
                                         {{code}}
                                     {{/if}}
                                     {{#if has_max_limit_reached}}
-                                        <span class="cart-coupon-limit">{{lang 'cart.coupons.maximum_discount_applied'}}</span>
+                                        <span class="cart-coupon-limit">{{lang "cart.coupons.maximum_discount_applied"}}</span>
                                     {{/if}}
                                 </span>
                             </div>
                             <div class="cart-discount-item-value">
-                                {{#if discount.value '===' 0}}-{{/if}}{{discount.formatted}}
+                                {{#if discount.value "===" 0}}-{{/if}}{{discount.formatted}}
                             </div>
                         </li>
                     {{/each}}
@@ -76,7 +76,7 @@
     {{#if cart.gift_wrapping_cost.value}}
         <li class="cart-total">
             <div class="cart-total-label">
-                <strong>{{lang 'cart.checkout.gift_wrapping'}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
+                <strong>{{lang "cart.checkout.gift_wrapping"}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
             </div>
             <div class="cart-total-value">
                 <span>{{cart.gift_wrapping_cost.formatted}}</span>
@@ -109,7 +109,7 @@
         {{/each}}
         <li class="cart-total {{#if cart.multi_coupon_ui_enabled}}cart-total-shipping-estimator{{/if}}">
             <div class="cart-total-label">
-                <strong>{{lang 'cart.checkout.shipping'}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
+                <strong>{{lang "cart.checkout.shipping"}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
                 {{#if cart.multi_coupon_ui_enabled}}
                     {{> components/cart/shipping-estimator-trigger}}
                 {{/if}}
@@ -139,7 +139,7 @@
         {{#if cart.discount }}
             <li class="cart-total">
                 <div class="cart-total-label">
-                    <strong>{{lang 'cart.discount'}}:</strong>
+                    <strong>{{lang "cart.discount"}}:</strong>
                 </div>
                 <div class="cart-total-value">
                     {{cart.discount.formatted}}
@@ -150,9 +150,9 @@
             {{#each cart.coupons}}
                 <li class="cart-total">
                     <div class="cart-total-label">
-                        <strong>{{lang 'cart.coupons.code_label' code=code}}</strong>
+                        <strong>{{lang "cart.coupons.code_label" code=code}}</strong>
                         <div>
-                            <a href="{{remove_url}}">{{lang 'cart.coupons.remove'}}</a>
+                            <a href="{{remove_url}}">{{lang "cart.coupons.remove"}}</a>
                         </div>
                     </div>
                     <div class="cart-total-value">
@@ -163,7 +163,7 @@
         {{else}}
             <li class="cart-total">
                 <div class="cart-total-label">
-                    <strong>{{lang 'cart.coupon_code'}}:</strong>
+                    <strong>{{lang "cart.coupon_code"}}:</strong>
                 </div>
                 {{> components/cart/coupon-input}}
             </li>
@@ -174,9 +174,9 @@
             {{#each cart.gift_certificates}}
                 <li class="cart-total">
                     <div class="cart-total-label">
-                        <strong>{{lang 'cart.gift_certificates.code_label' code=code}}</strong>
+                        <strong>{{lang "cart.gift_certificates.code_label" code=code}}</strong>
                         <span>
-                            {{remaining.formatted}} | <a href="{{remove_url}}">{{lang 'cart.gift_certificates.remove'}}</a>
+                            {{remaining.formatted}} | <a href="{{remove_url}}">{{lang "cart.gift_certificates.remove"}}</a>
                         </span>
                     </div>
                     <div class="cart-total-value">
@@ -187,7 +187,7 @@
         {{/unless}}
         <li class="cart-total {{#if cart.multi_coupon_ui_enabled}}cart-total-gift-certificate{{/if}}">
             <div class="cart-total-label">
-                <strong>{{lang 'cart.gift_certificates.gift_certificate'}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
+                <strong>{{lang "cart.gift_certificates.gift_certificate"}}{{#unless cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
                 {{#if cart.multi_coupon_ui_enabled}}
                     {{> components/cart/gift-certificate}}
                 {{/if}}
@@ -206,7 +206,7 @@
                         {{#if remaining.value}}
                             <span>| {{remaining.formatted}} left</span>
                         {{/if}}
-                        <a href="{{remove_url}}">{{lang 'cart.gift_certificates.remove'}}</a>
+                        <a href="{{remove_url}}">{{lang "cart.gift_certificates.remove"}}</a>
                     </div>
                     <div class="cart-total-value">
                         {{used.formatted}}
@@ -218,13 +218,13 @@
     <li class="cart-total {{#if cart.multi_coupon_ui_enabled}}cart-total-with-savings{{/if}}">
         {{#if cart.multi_coupon_ui_enabled}}
             <div class="cart-total-label">
-                <strong>{{lang 'cart.checkout.total'}}</strong>
+                <strong>{{lang "cart.checkout.total"}}</strong>
             </div>
             <div class="cart-total-value cart-total-grandTotal">
                 {{#or customer (unless settings.hide_price_from_guests)}}
                     <span class="cart-total-amount">{{cart.grand_total.formatted}}</span>
                     {{#if cart.total_discount.value}}
-                        <span class="cart-total-savings">{{lang 'cart.checkout.you_saved'}} <span class="cart-savings-amount">{{cart.total_discount.formatted}}</span> {{lang 'cart.checkout.in_total'}}</span>
+                        <span class="cart-total-savings">{{lang "cart.checkout.you_saved"}} <span class="cart-savings-amount">{{cart.total_discount.formatted}}</span> {{lang "cart.checkout.in_total"}}</span>
                     {{/if}}
                 {{else}}
                     {{> components/common/login-for-pricing}}
@@ -232,7 +232,7 @@
             </div>
         {{else}}
             <div class="cart-total-label">
-                <strong>{{lang 'cart.checkout.grand_total'}}:</strong>
+                <strong>{{lang "cart.checkout.grand_total"}}:</strong>
             </div>
             <div class="cart-total-value cart-total-grandTotal">
                 {{#or customer (unless settings.hide_price_from_guests)}}
@@ -247,7 +247,7 @@
         {{#if included}}
             <li class="cart-total">
                 <div class="cart-total-label">
-                    <strong>{{concat name (lang 'cart.included_in_total')}}{{#unless ../cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
+                    <strong>{{concat name (lang "cart.included_in_total")}}{{#unless ../cart.multi_coupon_ui_enabled}}:{{/unless}}</strong>
                 </div>
                 <div class="cart-total-value">
                     <span>{{cost.formatted}}</span>

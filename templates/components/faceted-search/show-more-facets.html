@@ -7,11 +7,11 @@
         {{/if}}
     </h1>
     <div class="form-field" id="facetedSearch-filterItems">
-        <input class="form-input" type="search" placeholder="{{lang 'forms.search.search'}}">
+        <input class="form-input" type="search" placeholder="{{lang "forms.search.search"}}">
     </div>
     <ul class="navList facetedSearch-optionColumns">
         {{#each facets}}
-            {{#if facet '===' ../all_facets}}
+            {{#if facet "===" ../all_facets}}
                 {{#each items}}
                     <li class="navList-item">
                         <a

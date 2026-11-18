@@ -4,7 +4,7 @@
         data-product-variant
         data-name="{{product_name}}"
         >
-        {{lang 'cart.reconfigure_product' name=product_name}}
+        {{lang "cart.reconfigure_product" name=product_name}}
     </h2>
 </div>
 <div class="modal-body" data-product-option-change>
@@ -17,11 +17,11 @@
         <input type="hidden" name="item_id" value="{{quote_item_id}}">
         <div data-product-attributes-wrapper>
         {{#each options}}
-            {{{dynamicComponent 'components/products/options'}}}
+            {{{dynamicComponent "components/products/options"}}}
         {{/each}}
         </div>
         <div class="form-actions">
-            <input class="button button--primary" type="submit" value="{{lang 'common.save'}}">
+            <input class="button button--primary" type="submit" value="{{lang "common.save"}}">
         </div>
     </form>
 </div>

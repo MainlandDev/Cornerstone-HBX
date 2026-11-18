@@ -16,7 +16,7 @@
                            value=""
                            id="attribute_productlist_{{id}}_none"
                            {{#unless defaultValue}}checked{{/unless}}>
-                    <label class="form-label" for="attribute_productlist_{{id}}_none">{{lang 'products.none'}}</label>
+                    <label class="form-label" for="attribute_productlist_{{id}}_none">{{lang "products.none"}}</label>
                 </li>
             {{/unless}}
             {{#each values}}
@@ -26,7 +26,7 @@
                             {{> components/common/responsive-img
                                 image=image
                                 class="productOptions-list-item-image"
-                                lazyload='lazyload+lqip'
+                                lazyload="lazyload+lqip"
                             }}
                         </figure>
                     {{/if}}
@@ -55,7 +55,7 @@
                value="0"
                id="attribute_productlist_0_{{id}}"
                {{#unless defaultValue}}checked{{/unless}}>
-        <label class="form-label" for="attribute_productlist_0_{{id}}">{{lang 'products.none'}}</label>
+        <label class="form-label" for="attribute_productlist_0_{{id}}">{{lang "products.none"}}</label>
         {{/unless}}
         {{#each values}}
             <input

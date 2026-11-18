@@ -1,7 +1,4 @@
-<table
-    class="cart"
-    data-cart-quantity="{{cart.quantity}}"
->
+<table class="cart" data-cart-quantity="{{cart.quantity}}">
     <thead class="cart-header">
         <tr>
             <th class="cart-header-item" colspan="2">
@@ -22,7 +19,7 @@
                             src="{{cdn ../theme_settings.default_image_gift_certificate}}"
                             alt="{{lang "cart.gift_certificates.gift_certificate"}}"
                             title="{{lang "cart.gift_certificates.gift_certificate"}}"
-                        />
+                        >
                     {{else}}
                         {{> "components/common/responsive-img"
                             image=image
@@ -51,65 +48,58 @@
                                     {{#if is_file}}
                                         <a href="/viewfile.php?attributeId={{id}}&cartitem={{../id}}">{{value}}</a>
                                     {{else}}
-                                        {{> components/common/product-options}}
+                                        {{> "components/common/product-options"}}
                                     {{/if}}
                                 </dd>
                             {{/each}}
                         </dl>
-
                         {{#if can_modify}}
-                            <a href="#"
-                            data-item-edit="{{id}}"
-                            data-product-id="{{product_id}}"
-                            aria-label="{{lang 'products.change_product_options' name=name}}"
-                            >
-                                {{lang 'common.change'}}
-                            </a>
+                            <a
+                                href="#"
+                                data-item-edit="{{id}}"
+                                data-product-id="{{product_id}}"
+                                aria-label="{{lang "products.change_product_options" name=name}}"
+                            >{{lang "common.change"}}</a>
                         {{/if}}
                     {{/if}}
-
-                    {{#if type '==' 'GiftCertificate'}}
-                        <a href="{{edit_url}}"
-                           aria-label="{{lang 'cart.gift_certificates.change_gift_certificate' certificate_name=name}}"
-                        >
-                            {{lang 'common.change'}}
-                        </a>
+                    {{#if type "==" "GiftCertificate"}}
+                        <a
+                            href="{{edit_url}}"
+                            aria-label="{{lang "cart.gift_certificates.change_gift_certificate" certificate_name=name}}"
+                        >{{lang "common.change"}}</a>
                     {{/if}}
-                    {{> components/cart/item-giftwrap this}}
+                    {{> "components/cart/item-giftwrap" this}}
                     {{#if event_date}}
                         <dl class="cart-item-options">
-                            <dt class="cart-item-option-title">
-                                {{event_date.name}}
-                            </dt>
-
-                            <dd class="cart-item-option-description">
-                                {{event_date.date}}
-                            </dd>
+                            <dt class="cart-item-option-title">{{event_date.name}}</dt>
+                            <dd class="cart-item-option-description">{{event_date.date}}</dd>
                         </dl>
                     {{/if}}
                 </td>
                 <td class="cart-item-block cart-item-info">
-                    <span class="cart-item-label">{{lang 'cart.checkout.price'}}</span>
-                    {{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}
-                        <span class="cart-item-value {{#if price_discounted}}price--discounted{{/if}}">{{price.formatted}}</span>
+                    <span class="cart-item-label">{{lang "cart.checkout.price"}}</span>
+                    {{#or ../customer (unless ../settings.hide_price_from_guests) (if type "==" "GiftCertificate")}}
+                        <span
+                            class="cart-item-value {{#if price_discounted}}price--discounted{{/if}}"
+                        >{{price.formatted}}</span>
                         {{#if price_discounted}}
                             <span class="cart-item-value">{{price_discounted.formatted}}</span>
                         {{/if}}
                     {{else}}
-                        {{> components/common/login-for-pricing}}
+                        {{> "components/common/login-for-pricing"}}
                     {{/or}}
                 </td>
                 <td class="cart-item-block cart-item-info cart-item-quantity">
-
-                    <label class="form-label cart-item-label" for="qty-{{id}}">{{lang 'products.quantity'}}</label>
+                    <label class="form-label cart-item-label" for="qty-{{id}}">{{lang "products.quantity"}}</label>
                     <div class="form-increment">
                         {{#if can_modify}}
-                            <button class="button button--icon"
-                                    data-cart-update
-                                    data-cart-itemid="{{id}}"
-                                    data-action="dec"
+                            <button
+                                class="button button--icon"
+                                data-cart-update
+                                data-cart-itemid="{{id}}"
+                                data-action="dec"
                             >
-                                <span class="is-srOnly">{{lang 'products.quantity_decrease' name=name}}</span>
+                                <span class="is-srOnly">{{lang "products.quantity_decrease" name=name}}</span>
                                 <i class="icon" aria-hidden="true"><svg><use href="#icon-keyboard-arrow-down" /></svg></i>
                             </button>
                         {{/if}}
@@ -120,8 +110,8 @@
                                value="{{quantity}}"
                                data-quantity-min="{{min_purchase_quantity}}"
                                data-quantity-max="{{max_purchase_quantity}}"
-                               data-quantity-min-error="{{lang 'products.quantity_min' quantity=min_purchase_quantity}}"
-                               data-quantity-max-error="{{lang 'products.quantity_max' quantity=max_purchase_quantity}}"
+                               data-quantity-min-error="{{lang "products.quantity_min" quantity=min_purchase_quantity}}"
+                               data-quantity-max-error="{{lang "products.quantity_max" quantity=max_purchase_quantity}}"
                                min="1"
                                pattern="[0-9]*"
                                data-cart-itemid="{{id}}"
@@ -134,7 +124,7 @@
                                     data-cart-itemid="{{id}}"
                                     data-action="inc"
                             >
-                                <span class="is-srOnly">{{lang 'products.quantity_increase' name=name}}</span>
+                                <span class="is-srOnly">{{lang "products.quantity_increase" name=name}}</span>
                                 <i class="icon" aria-hidden="true"><svg><use href="#icon-keyboard-arrow-up" /></svg></i>
                             </button>
                         {{/if}}
@@ -142,12 +132,16 @@
                     {{#if stock_position}}
                         {{#if ../cart.inventory_settings.show_quantity_on_hand}}
                             {{#all stock_position.quantity_on_hand stock_position.quantity_backordered}}
-                                <p class="cart-item-backorder-message">{{lang 'products.quantity_on_hand' quantity=stock_position.quantity_on_hand}}</p>
+                                <p class="cart-item-backorder-message">
+                                    {{lang "products.quantity_on_hand" quantity=stock_position.quantity_on_hand}}
+                                </p>
                             {{/all}}
                         {{/if}}
                         {{#if ../cart.inventory_settings.show_quantity_on_backorder}}
                             {{#if stock_position.quantity_backordered}}
-                                <p class="cart-item-backorder-message">{{lang 'products.quantity_backordered' quantity=stock_position.quantity_backordered}}</p>
+                                <p class="cart-item-backorder-message">
+                                    {{lang "products.quantity_backordered" quantity=stock_position.quantity_backordered}}
+                                </p>
                             {{/if}}
                         {{/if}}
                         {{#if ../cart.inventory_settings.show_backorder_message}}
@@ -164,10 +158,14 @@
                                     <div class="cart-item-option-stock">
                                         <p class="cart-item-backorder-message"><strong>{{name}}:</strong></p>
                                         {{#if (getVar "showOnHandQty")}}
-                                            <p class="cart-item-backorder-message">{{lang 'products.quantity_on_hand' quantity=linked_bundled_item.stock_position.quantity_on_hand}}</p>
+                                            <p class="cart-item-backorder-message">
+                                                {{lang "products.quantity_on_hand" quantity=linked_bundled_item.stock_position.quantity_on_hand}}
+                                            </p>
                                         {{/if}}
                                         {{#if (getVar "showBackorderedQty")}}
-                                            <p class="cart-item-backorder-message">{{lang 'products.quantity_backordered' quantity=linked_bundled_item.stock_position.quantity_backordered}}</p>
+                                            <p class="cart-item-backorder-message">
+                                                {{lang "products.quantity_backordered" quantity=linked_bundled_item.stock_position.quantity_backordered}}
+                                            </p>
                                         {{/if}}
                                         {{#if (getVar "showBackorderMessage")}}
                                             <p class="cart-item-backorder-message">{{linked_bundled_item.stock_position.backorder_message}}</p>
@@ -178,10 +176,9 @@
                         {{/each}}
                     {{/if}}
                 </td>
-
                 <td class="cart-item-block cart-item-info">
-                    <span class="cart-item-label">{{lang 'cart.checkout.total'}}</span>
-                    {{#or ../customer (unless ../settings.hide_price_from_guests) (if type '==' 'GiftCertificate')}}
+                    <span class="cart-item-label">{{lang "cart.checkout.total"}}</span>
+                    {{#or ../customer (unless ../settings.hide_price_from_guests) (if type "==" "GiftCertificate")}}
                         <strong class="cart-item-value {{#if total_discounted}}price--discounted{{/if}}">{{total.formatted}}</strong>
                         {{#if total_discounted}}
                             <strong class="cart-item-value">{{total_discounted.formatted}}</strong>
@@ -189,11 +186,11 @@
                     {{else}}
                         --
                     {{/or}}
-                    {{#or can_modify (if type '==' 'GiftCertificate')}}
+                    {{#or can_modify (if type "==" "GiftCertificate")}}
                         <button class="cart-remove icon"
                                 data-cart-itemid="{{id}}"
-                                data-confirm-delete="{{lang 'cart.confirm_delete'}}"
-                                aria-label="{{lang 'cart.remove_item' name=name}}"
+                                data-confirm-delete="{{lang "cart.confirm_delete"}}"
+                                aria-label="{{lang "cart.remove_item" name=name}}"
                         >
                             <svg aria-hidden="true"><use href="#icon-close"></use></svg>
                         </button>

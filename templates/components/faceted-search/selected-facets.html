@@ -1,6 +1,6 @@
-<div class="facetedSearch-refineFilters sidebarBlock" role="region" aria-label="{{lang 'search.faceted.selected.facet-label'}}">
+<div class="facetedSearch-refineFilters sidebarBlock" role="region" aria-label="{{lang "search.faceted.selected.facet-label"}}">
     <h2 class="sidebarBlock-heading">
-        {{lang 'search.faceted.selected.title'}}
+        {{lang "search.faceted.selected.title"}}
     </h2>
 
     {{#if items}}
@@ -12,8 +12,8 @@
                        rel="nofollow"
                        data-faceted-search-facet
                     >
-                        {{#if facet '===' 'rating'}}
-                            {{lang 'search.faceted.selected.rating-label' rating=title}}
+                        {{#if facet "===" "rating"}}
+                            {{lang "search.faceted.selected.rating-label" rating=title}}
                         {{else}}
                             {{{sanitize title}}}
                         {{/if}}
@@ -26,12 +26,12 @@
             {{/each}}
         </ul>
     {{else}}
-        <p>{{lang 'search.faceted.selected.no-filters'}}</p>
+        <p>{{lang "search.faceted.selected.no-filters"}}</p>
     {{/if}}
 
     {{#if remove_all_url}}
         <a href="{{remove_all_url}}" data-faceted-search-facet>
-            {{lang 'search.faceted.selected.clear-all'}}
+            {{lang "search.faceted.selected.clear-all"}}
         </a>
     {{/if}}
 </div>

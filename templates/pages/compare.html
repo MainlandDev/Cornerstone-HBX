@@ -1,8 +1,8 @@
 {{#partial "page"}}
-{{inject 'comparisons' comparisons}}
-{{inject 'compareRemoveMessage' (lang 'compare.no_remove')}}
+{{inject "comparisons" comparisons}}
+{{inject "compareRemoveMessage" (lang "compare.no_remove")}}
 {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
-<h1 class="page-heading">{{lang 'compare.header' products=comparisons.length}}</h1>
+<h1 class="page-heading">{{lang "compare.header" products=comparisons.length}}</h1>
 <main class="page">
     <div class="page-content">
 
@@ -57,16 +57,16 @@
                     <td class="compareTable-action">
                         {{#if show_cart_action}}
                             {{#if has_options}}
-                                <a href="{{url}}" data-event-type="product-click" class="button button--primary" data-product-id="{{id}}">{{lang 'products.choose_options'}}</a>
+                                <a href="{{url}}" data-event-type="product-click" class="button button--primary" data-product-id="{{id}}">{{lang "products.choose_options"}}</a>
                             {{/if}}
                             {{#if pre_order}}
                                 <a href="{{url}}" data-event-type="product-click" class="button button--primary" data-product-id="{{id}}">
-                                    {{lang 'products.pre_order'}}
+                                    {{lang "products.pre_order"}}
                                 </a>
                             {{/if}}
                             {{#if add_to_cart_url}}
                                 <a href="{{add_to_cart_url}}" data-event-type="product-click" class="button button--primary" data-product-id="{{id}}">
-                                    {{lang 'products.add_to_cart'}}
+                                    {{lang "products.add_to_cart"}}
                                 </a>
                             {{/if}}
                             {{#if out_of_stock_message}}
@@ -78,7 +78,7 @@
             </tr>
             <tr class="compareTable-row">
                 <th class="compareTable-heading">
-                    <span class="compareTable-headingText">{{lang 'products.description'}}</span>
+                    <span class="compareTable-headingText">{{lang "products.description"}}</span>
                 </th>
                 {{#each comparisons}}
                 <td class="compareTable-item">{{{ summary }}}</td>
@@ -87,14 +87,14 @@
             {{#if settings.show_product_rating}}
                 <tr class="compareTable-row">
                     <th class="compareTable-heading">
-                        <span class="compareTable-headingText">{{lang 'products.reviews.rating_label'}}</span>
+                        <span class="compareTable-headingText">{{lang "products.reviews.rating_label"}}</span>
                     </th>
                     {{#each comparisons}}
                     <td class="compareTable-item">
                         {{#if rating}}
                             {{> components/products/ratings rating=rating}}
                         {{else}}
-                            {{lang 'products.reviews.no_reviews'}}
+                            {{lang "products.reviews.no_reviews"}}
                     {{/if}}
                     </td>
                     {{/each}}
@@ -102,21 +102,21 @@
             {{/if}}
             <tr class="compareTable-row">
                 <th class="compareTable-heading">
-                    <span class="compareTable-headingText">{{lang 'products.availability'}}</span>
+                    <span class="compareTable-headingText">{{lang "products.availability"}}</span>
                 </th>
                 {{#each comparisons}}
                 <td class="compareTable-item">
                     {{#if availability}}
                         {{ availability }}
                     {{else}}
-                        {{lang 'common.not_applicable'}}
+                        {{lang "common.not_applicable"}}
                     {{/if}}
                 </td>
                 {{/each}}
             </tr>
             <tr class="compareTable-row">
                 <th class="compareTable-heading">
-                    <span class="compareTable-headingText">{{lang 'common.other_details'}}</span>
+                    <span class="compareTable-headingText">{{lang "common.other_details"}}</span>
                 </th>
                 {{#each comparisons}}
                     <td class="compareTable-item">
@@ -127,7 +127,7 @@
                                 {{/each}}
                             </ul>
                         {{else}}
-                            {{lang 'common.not_applicable'}}
+                            {{lang "common.not_applicable"}}
                         {{/if}}
                     </td>
                 {{/each}}

@@ -12,9 +12,9 @@
             id="attribute_radio_{{id}}_none"
             name="attribute[{{id}}]"
             value=""
-            checked="{{#if defaultValue '==' ''}}checked{{/if}}"
+            checked="{{#if defaultValue "==" ""}}checked{{/if}}"
         >
-        <label class="form-label" for="attribute_radio_{{id}}_none">{{lang 'products.none'}}</label>
+        <label class="form-label" for="attribute_radio_{{id}}_none">{{lang "products.none"}}</label>
     {{/unless}}
 
     {{#each this.values}}

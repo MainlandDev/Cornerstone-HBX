@@ -13,15 +13,15 @@
             id="attribute_rectangle__{{id}}_none"
             name="attribute[{{id}}]"
             value=""
-            checked="{{#if defaultValue '==' ''}}checked{{/if}}"
+            checked="{{#if defaultValue "==" ""}}checked{{/if}}"
         >
         <label class="form-option" for="attribute_rectangle__{{id}}_none">
-            <span class="form-option-variant">{{lang 'products.none'}}</span>
+            <span class="form-option-variant">{{lang "products.none"}}</span>
         </label>
     {{/unless}}
 
     {{#each this.values}}
-    <div class="form-option-wrapper">    
+    <div class="form-option-wrapper">
         <input
             class="form-radio"
             type="radio"
