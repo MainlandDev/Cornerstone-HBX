@@ -62,10 +62,9 @@
     </ul>
 </div>
 {{else}}
-<a class="navPages-action{{#if is_active}} activePage{{/if}}"
-   href="{{url}}"
-   aria-label="{{name}}"
->
-    {{name}}
-</a>
+    <a
+        class="navPages-action{{#if is_active}} activePage{{/if}}"
+        href="{{url}}"
+        aria-label="{{name}}"
+    >{{name}}</a>
 {{/if}}

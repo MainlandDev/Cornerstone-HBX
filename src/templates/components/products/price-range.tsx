@@ -66,7 +66,7 @@ export default (_props: PartialProps) => {
                 b={price.price_range.max.with_tax}
                 $then={() => (
                     <>
-                        {/* Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page */}
+                        {$raw(`{{!-- Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page --}}`)}
                         <div className="price-section price-section--withTax non-sale-price--withTax" dangerouslyInlineAttributes={{attributes: hidden}}>
                             <span>{label("pdp-non-sale-price-label", "page_builder.pdp-non-sale-price-label")}</span>
                             <span data-product-non-sale-price-with-tax={""} className="price price--non-sale">
@@ -129,7 +129,7 @@ export default (_props: PartialProps) => {
                 b={price.price_range.max.without_tax}
                 $then={() => (
                     <>
-                        {/* Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page */}
+                        {$raw(`{{!-- Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page --}}`)}
                         <div
                             className={`price-section price-section--withoutTax non-sale-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
                             dangerouslyInlineAttributes={{attributes: hidden}}
@@ -162,7 +162,7 @@ export default (_props: PartialProps) => {
                     </>
                 )}
             />
-            {/* Never display the "saving price" element by default if there is a price range on the page to be shown */}
+            {$raw(`{{!-- Never display the "saving price" element by default if there is a price range on the page to be shown --}}`)}
             <$If
                 test={$pointer("page_type")}
                 operator={$string("===")}

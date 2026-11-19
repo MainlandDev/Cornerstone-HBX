@@ -42,6 +42,8 @@ export default (_props: PartialProps) => (
         <$Each
             list={$pointer<PaymentMethod[]>("customer.payment_methods")}
             $then={(method) => (
+                <>
+                {$raw("{{!-- Check that the current instrument type is within our whitelist to stop future ones automagically coming through --}}")}
                 <$InArray
                     array={$pointer("../theme_settings.supported_payment_methods")}
                     value={method.type}
@@ -63,6 +65,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_card")}
                                                             $then={() => (
                                                                 <>
+                                                                    {$raw("{{!-- If credit card STARTS --}}")}
                                                                     <$If
                                                                         test={inst.brand}
                                                                         $then={() => (
@@ -100,6 +103,7 @@ export default (_props: PartialProps) => (
                                                                             </>
                                                                         )}
                                                                     />
+                                                                    {$raw("{{!-- If credit card ENDS --}}")}
                                                                 </>
                                                             )}
                                                         />{" "}
@@ -110,6 +114,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_bank_account")}
                                                             $then={() => (
                                                                 <>
+                                                                    {$raw("{{!-- If bank_account STARTS --}}")}
                                                                     <$If
                                                                         test={$pointer("../methodId")}
                                                                         operator={$string("===")}
@@ -188,6 +193,7 @@ export default (_props: PartialProps) => (
                                                                             </>
                                                                         )}
                                                                     />
+                                                                    {$raw("{{!-- If bank_account ENDS --}}")}
                                                                 </>
                                                             )}
                                                         />{" "}
@@ -198,6 +204,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_paypal_account")}
                                                             $then={() => (
                                                                 <>
+                                                                    {$raw("{{!-- If paypal STARTS --}}")}
                                                                     <img
                                                                         className="methodHeader-icon"
                                                                         src={$cdn($string("img/payment-methods/paypal.svg"))}
@@ -205,6 +212,7 @@ export default (_props: PartialProps) => (
                                                                         title={$lang($string("account.payment_methods.paypal"))}
                                                                     />{" "}
                                                                     <span className="methodHeader-brand">{inst.email}</span>
+                                                                    {$raw("{{!-- If paypal ENDS --}}")}
                                                                 </>
                                                             )}
                                                         />
@@ -236,6 +244,7 @@ export default (_props: PartialProps) => (
                                                     test={inst.billing_address}
                                                     $then={() => (
                                                         <div className="paymentMethod-row">
+                                                            {$raw("{{!-- If there is an address STARTS --}}")}
                                                             <p className="methodDetails">
                                                                 <span className="methodDetails-label">
                                                                     <$Lang keyName={$string("account.payment_methods.billing_address")} />:
@@ -252,6 +261,7 @@ export default (_props: PartialProps) => (
                                                                     </span>
                                                                 </span>
                                                             </p>
+                                                            {$raw("{{!-- If there is an address ENDS --}}")}
                                                         </div>
                                                     )}
                                                 />
@@ -304,6 +314,7 @@ export default (_props: PartialProps) => (
                         </>
                     )}
                 />
+                </>
             )}
         />
     </>

@@ -62,7 +62,7 @@ export default (_props: PartialProps) => (
                                 $then={(country) => (
                                     <option
                                         dangerouslyInlineAttributes={{
-                                            attributes: `value="${country.id}"${$If({test: country.selected, $then: () => $raw(' selected="selected"')})}`,
+                                            attributes: `value="${country.id}"${$If({test: country.selected, $then: () => $raw('selected="selected"')})}`,
                                         }}
                                     >
                                         {country.name}
@@ -91,7 +91,7 @@ export default (_props: PartialProps) => (
                                         $then={(state) => (
                                             <option
                                                 dangerouslyInlineAttributes={{
-                                                    attributes: `value="${state.id}"${$If({test: state.selected, $then: () => $raw(' selected="selected"')})}`,
+                                                    attributes: `value="${state.id}"${$If({test: state.selected, $then: () => $raw('selected="selected"')})}`,
                                                 }}
                                             >
                                                 {state.name}

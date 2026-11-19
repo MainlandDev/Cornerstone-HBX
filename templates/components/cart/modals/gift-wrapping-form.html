@@ -2,24 +2,50 @@
     <h2 class="modal-header-title">{{lang "cart.gift_wrapping.title"}}</h2>
 </div>
 <div class="modal-body">
-
     {{#if quantity ">" 1}}
         <p>{{lang "cart.gift_wrapping.choose_how"}}</p>
     {{/if}}
-
-    <form class="form giftWrapping-form" action="{{urls.cart}}" method="post">
-        <input type="hidden" name="action" value="save_giftwrapping">
-        <input type="hidden" name="item_id" value="{{item_id}}">
+    <form
+        class="form giftWrapping-form"
+        action="{{urls.cart}}"
+        method="post"
+    >
+        <input
+            type="hidden"
+            name="action"
+            value="save_giftwrapping"
+        />
+        <input
+            type="hidden"
+            name="item_id"
+            value="{{item_id}}"
+        />
         <fieldset class="form-fieldset">
-
             <div class="form-field" {{#if quantity "===" 1}}style="display:none"{{/if}}>
-                <input type="radio" class="form-radio" name="giftwraptype" id="girftWrapping-radio-same" checked="checked" value="same">
-                <label class="form-label" for="girftWrapping-radio-same">{{lang "cart.gift_wrapping.option_same"}}</label>
-
-                <input type="radio" class="form-radio" name="giftwraptype" id="girftWrapping-radio-all" value="different">
-                <label class="form-label" for="girftWrapping-radio-all">{{lang "cart.gift_wrapping.option_different"}}</label>
+                <input
+                    type="radio"
+                    class="form-radio"
+                    name="giftwraptype"
+                    id="girftWrapping-radio-same"
+                    checked="checked"
+                    value="same"
+                />
+                <label
+                    class="form-label"
+                    for="girftWrapping-radio-same"
+                >{{lang "cart.gift_wrapping.option_same"}}</label>
+                <input
+                    type="radio"
+                    class="form-radio"
+                    id="girftWrapping-radio-all"
+                    name="giftwraptype"
+                    value="different"
+                />
+                <label
+                    class="form-label"
+                    for="girftWrapping-radio-all"
+                >{{lang "cart.gift_wrapping.option_different"}}</label>
             </div>
-
             <div class="giftWrapping-single">
                 <div class="form-field">
                     <label class="form-label" for="giftWrapping-select-same">
@@ -32,20 +58,36 @@
                             {{/if}}
                         {{/each}}
                     </label>
-                    <select class="form-select giftWrapping-select" name="giftwrapping[all]" id="giftWrapping-select-same" data-index="all">
+                    <select
+                        class="form-select giftWrapping-select"
+                        name="giftwrapping[all]"
+                        id="giftWrapping-select-same"
+                        data-index="all"
+                    >
                         <option value="">{{lang "cart.gift_wrapping.choose_type"}}</option>
                         {{#each gift_wrappings}}
-                            <option {{#if selected}}selected{{/if}} value="{{id}}" data-allow-message="{{allow_message}}">{{name}} - ({{price.formatted}})</option>
+                            <option
+                                {{#if selected}}selected {{/if}}
+                                value="{{id}}"
+                                data-allow-message="{{allow_message}}"
+                            >{{name}} - ({{price.formatted}})</option>
                         {{/each}}
                     </select>
                 </div>
-
-                <div class="form-field" id="giftWrapping-message-all" {{#unless selected_wrapping}}style="display:none"{{/unless}}>
+                <div
+                    class="form-field"
+                    id="giftWrapping-message-all"
+                    {{#unless selected_wrapping}}style="display:none"{{/unless}}
+                >
                     <label class="form-label" for="giftMessage">{{lang "cart.gift_wrapping.gift_message"}}</label>
-                    <textarea class="form-input" name="giftmessage[all]" id="giftMessage" rows="3">{{selected_wrapping.message}}</textarea>
+                    <textarea
+                        class="form-input"
+                        name="giftmessage[all]"
+                        id="giftMessage"
+                        rows="3"
+                    >{{selected_wrapping.message}}</textarea>
                 </div>
             </div>
-
             <div class="giftWrapping-multiple">
                 {{#for quantity this}}
                     <div class="form-field">
@@ -62,7 +104,11 @@
                         <select class="form-select giftWrapping-select" name="giftwrapping[{{$index}}]" id="giftWrapping-select-{{$index}}" data-index="{{$index}}">
                             <option value="">{{lang "cart.gift_wrapping.choose_type"}}</option>
                             {{#each gift_wrappings}}
-                                <option {{#if selected}}selected{{/if}} value="{{id}}" data-allow-message="{{allow_message}}">{{name}} - ({{price.formatted}})</option>
+                                <option
+                                    {{#if selected}}selected {{/if}}
+                                    value="{{id}}"
+                                    data-allow-message="{{allow_message}}"
+                                >{{name}} - ({{price.formatted}})</option>
                             {{/each}}
                         </select>
                     </div>
@@ -73,7 +119,6 @@
                     </div>
                 {{/for}}
             </div>
-
         </fieldset>
         <div class="form-actions">
             <button class="button button--primary" type="submit">{{lang "common.form_submit"}}</button>

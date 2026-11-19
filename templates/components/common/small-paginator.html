@@ -1,4 +1,8 @@
-<div class="pagination" role="region" aria-label="{{lang "common.pagination"}}">
+<div
+    class="pagination"
+    role="region"
+    aria-label="{{lang "common.pagination"}}"
+>
     <ul class="pagination-list pagination-list--small">
         {{#if previous}}
             <li class="pagination-item pagination-item--previous">
@@ -12,15 +16,13 @@
                 </a>
             </li>
         {{/if}}
-
-        {{#if this.links.length}}
-        {{#each this.links}}
-            <li class="pagination-item">
-                <a class="pagination-link" href="{{this.link}}">{{this.number}}</a>
-            </li>
-        {{/each}}
+        {{#if links.length}}
+            {{#each links}}
+                <li class="pagination-item">
+                    <a class="pagination-link" href="{{link}}">{{number}}</a>
+                </li>
+            {{/each}}
         {{/if}}
-
         {{#if next}}
             <li class="pagination-item pagination-item--next">
                 <a class="pagination-link" href="{{next}}" data-faceted-search-facet>
@@ -35,4 +37,3 @@
         {{/if}}
     </ul>
 </div>
-

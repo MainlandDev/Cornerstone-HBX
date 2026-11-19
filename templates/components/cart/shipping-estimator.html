@@ -1,6 +1,5 @@
 {{inject "shippingCountryErrorMessage" (lang "cart.shipping_estimator.empty_country_error")}}
 {{inject "shippingProvinceErrorMessage" (lang "cart.shipping_estimator.empty_province_error")}}
-
 {{#if shipping_cost}}
     <div class="cart-total-value">
         <div class="subtotal{{#unless multi_coupon_ui_enabled}} shipping-estimate-show{{/unless}}">
@@ -27,11 +26,18 @@
     <form class="form estimator-form" data-shipping-estimator>
         <dl>
             <dt class="estimator-form-label">
-                <label class="form-label" for="shipping-country">{{lang "cart.shipping_estimator.select_a_country"}}</label>
+                <label
+                    class="form-label"
+                    for="shipping-country"
+                >{{lang "cart.shipping_estimator.select_a_country"}}</label>
             </dt>
-
             <dd class="estimator-form-input">
-                <select class="form-select" id="shipping-country" name="shipping-country" data-field-type="Country">
+                <select
+                    class="form-select"
+                    id="shipping-country"
+                    name="shipping-country"
+                    data-field-type="Country"
+                >
                     <option>{{lang "cart.shipping_estimator.select_a_country"}}</option>
                     {{#each countries}}
                         <option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>
@@ -40,14 +46,17 @@
                     {{/each}}
                 </select>
             </dd>
-
             <dt class="estimator-form-label">
                 <label class="form-label" for="shipping-state">{{lang "cart.shipping_estimator.select_a_state"}}</label>
             </dt>
-
             <dd class="estimator-form-input">
                 {{#if states.length}}
-                    <select class="form-select" id="shipping-state" name="shipping-state" data-field-type="State">
+                    <select
+                        class="form-select"
+                        id="shipping-state"
+                        name="shipping-state"
+                        data-field-type="State"
+                    >
                         <option>{{lang "cart.shipping_estimator.select_a_state"}}</option>
                         {{#each states}}
                             <option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>

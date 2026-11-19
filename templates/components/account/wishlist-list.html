@@ -10,9 +10,16 @@
     <tbody class="table-tbody">
         {{#each customer.wishlists}}
             <tr>
-                <td><a href="{{view_url}}">{{name}}</a></td>
+                <td>
+                    <a href="{{view_url}}">{{name}}</a>
+                </td>
                 <td>{{num_items}}</td>
-                <td>{{#if is_public}}{{lang "common.yes"}}{{else}}{{lang "common.no"}}{{/if}}
+                <td>
+                    {{#if is_public}}
+                        {{lang "common.yes"}}
+                    {{else}}
+                        {{lang "common.no"}}
+                    {{/if}}
                 </td>
                 <td class="table-actions">
                     <form
@@ -31,14 +38,14 @@
                             <a
                                 href="{{edit_url}}"
                                 class="button button--small"
-                                data-wishlist
+                                data-wishlist=""
                             >{{lang "common.edit"}}</a>
                             <input
                                 type="submit"
                                 class="button button--small"
-                                data-wishlist-delete
+                                data-wishlist-delete=""
                                 value="{{lang "common.delete"}}"
-                            >
+                            />
                         </fieldset>
                     </form>
                 </td>
@@ -53,14 +60,15 @@
 >
     {{#unless customer.wishlists}}
         <p class="form-actions">
-            {{> "components/common/alert/alert-info" (lang "account.wishlists.you_have_none")}}</p>
+            {{> "components/common/alert/alert-info" (lang "account.wishlists.you_have_none")}}
+        </p>
     {{/unless}}
     <div class="form-actions">
         <a
             href="{{urls.account.wishlists.add}}"
             class="button button--primary"
             role="button"
-            data-wishlist
+            data-wishlist=""
         >{{lang "account.wishlists.new"}}</a>
         {{inject "wishlistDelete" (lang "account.wishlists.delete_alert")}}
         {{#if customer.wishlists}}
@@ -69,14 +77,14 @@
                     type="hidden"
                     name="deletewishlist[]"
                     value="{{id}}"
-                >
+                />
             {{/each}}
             <input
                 type="submit"
                 class="button"
-                data-wishlist-delete
+                data-wishlist-delete=""
                 value="{{lang "account.wishlists.delete_all"}}"
-            >
+            />
         {{/if}}
     </div>
 </form>

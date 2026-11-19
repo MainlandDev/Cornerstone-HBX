@@ -144,6 +144,10 @@ export default (_props: PartialProps) => {
                 />
 
                 <section className="productView-images" data-image-gallery={""}>
+                    {$raw(`{{!--
+            Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
+            for variant/rule image replacement
+        --}}`)}
                     {$raw("{{#if product.images.length '>' 1 }}")}
                     <CarouselContentAnnouncement />
                     {$raw("{{/if}}")}
@@ -155,6 +159,7 @@ export default (_props: PartialProps) => {
                         }}
                     >
                         <div className="productView-img-container">
+                            {$raw("{{!-- Remove the surrounding a-element if there is no main image. --}}")}
                             <$If
                                 test={product.main_image}
                                 $then={() => (
@@ -166,6 +171,7 @@ export default (_props: PartialProps) => {
                                 )}
                             />
                             <ResponsiveImg image={product.main_image} class={$string("productView-image--default")} fallback_size={theme.product_size} lazyload={theme.lazyload_mode} default_image={theme.default_image_product} otherAttributes={$string("data-main-image")} />
+                            {$raw("{{!-- Remove the surrounding a-element if there is no main image. --}}")}
                             <$If test={product.main_image} $then={() => $raw("</a>")} />
                         </div>
                     </figure>

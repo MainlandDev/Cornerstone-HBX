@@ -56,7 +56,8 @@ export default () => {
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
-                            __html: `window.lazySizesConfig = window.lazySizesConfig || {};
+                            __html: `${$raw("{{!-- Only load visible elements until the onload event fires, after which preload nearby elements. --}}")}
+            window.lazySizesConfig = window.lazySizesConfig || {};
             window.lazySizesConfig.loadMode = 1;`,
                         }}
                     />
@@ -101,7 +102,8 @@ export default () => {
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
-                            __html: `function onThemeBundleMain() {
+                            __html: `${$raw("{{!-- Exported in app.js --}}")}
+            function onThemeBundleMain() {
                 window.stencilBootstrap("${$pointer("page_type")}", ${$jsContext()}).load();
 
                 function browserSupportsFormData() {

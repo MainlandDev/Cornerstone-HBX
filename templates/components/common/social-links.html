@@ -3,11 +3,12 @@
         {{#each social_media}}
             {{#if display_name "===" "twitter"}}
                 <li class="socialLinks-item">
-                    <a class="icon icon--x"
-                    href="{{url}}"
-                    target="_blank"
-                    rel="noopener"
-                    title="X"
+                    <a
+                        class="icon icon--x"
+                        href="{{url}}"
+                        target="_blank"
+                        rel="noopener"
+                        title="X"
                     >
                         <span class="aria-description--hidden">X</span>
                         <svg>
@@ -17,11 +18,12 @@
                 </li>
             {{else}}
                 <li class="socialLinks-item">
-                    <a class="icon icon--{{display_name}}"
-                    href="{{url}}"
-                    target="_blank"
-                    rel="noopener"
-                    title="{{{capitalize display_name}}}"
+                    <a
+                        class="icon icon--{{display_name}}"
+                        href="{{url}}"
+                        target="_blank"
+                        rel="noopener"
+                        title="{{{capitalize display_name}}}"
                     >
                         <span class="aria-description--hidden">{{{capitalize display_name}}}</span>
                         <svg>

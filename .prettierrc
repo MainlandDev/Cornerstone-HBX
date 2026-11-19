@@ -9,6 +9,7 @@
     {
       "files": "*.html",
       "options": {
+        "parser": "glimmer",
         "printWidth": 120,
         "htmlWhitespaceSensitivity": "css",
         "singleAttributePerLine": true

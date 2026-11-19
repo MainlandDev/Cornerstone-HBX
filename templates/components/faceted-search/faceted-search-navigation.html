@@ -1,8 +1,9 @@
 <h2 class="accordion-heading accordion-nav-clear-holder">
-    <button type="button"
-         class="accordion-navigation toggleLink{{#unless start_collapsed}} is-open{{/unless}}"
-         data-collapsible="#facetedSearch-content--{{dashcase facet}}"
-         aria-label="{{lang "search.faceted.toggleSection" title=title}}"
+    <button
+        type="button"
+        class="accordion-navigation toggleLink{{#unless start_collapsed}} is-open{{/unless}}"
+        data-collapsible="#facetedSearch-content--{{dashcase facet}}"
+        aria-label="{{lang "search.faceted.toggleSection" title=title}}"
     >
         <span class="accordion-title">
             {{title}}
@@ -18,6 +19,10 @@
         </span>
     </button>
     {{#if selected}}
-        <a href="{{remove_url}}" class="facetedSearch-clearLink" data-faceted-search-facet>{{lang "search.faceted.clear"}}</a>
+        <a
+            href="{{remove_url}}"
+            class="facetedSearch-clearLink"
+            data-faceted-search-facet
+        >{{lang "search.faceted.clear"}}</a>
     {{/if}}
 </h2>

@@ -34,6 +34,11 @@ export default (_props: PartialProps) => {
     const price = $pointer<Price>("price");
     return (
         <>
+            {$raw(`{{!-- There are 2 code paths for generating the PDP pricing HTML determined by the following #and condition.
+If a "price_range" exists then we generate all HTML in price-range.html, otherwise it is defined here. Both code
+paths generate the same HTML structure with some differences in whether that element is displayed by default (css styling).
+
+If you are making a change here or in price-range.html, you probably want to make that change in both files. --}}`)}
             <$And a={$pointer("price.price_range")} b={$ifExpression($pointer("theme_settings.price_ranges"), $string("=="), $boolean(true))} $then={() => (<><ProductsPriceRange price={price} /></>)} $else={() => (<><div
                 className="price-section price-section--withTax rrp-price--withTax"
                 dangerouslyInlineAttributes={{
