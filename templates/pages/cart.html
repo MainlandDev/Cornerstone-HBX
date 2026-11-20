@@ -2,7 +2,6 @@
 cart: true
 ---
 {{inject "cancelButtonText" (lang "common.cancel")}}
-
 {{#partial "page"}}
     {{inject "invalidEntryMessage" (lang "cart.invalid_entry_message")}}
     {{inject "multiCouponUIEnabled" cart.multi_coupon_ui_enabled}}
@@ -11,7 +10,8 @@ cart: true
             {{> "components/common/breadcrumbs" breadcrumbs=breadcrumbs}}
             {{> "components/cart/page-title"}}
             <div data-cart-status>
-                {{> "components/cart/status-messages"}}</div>
+                {{> "components/cart/status-messages"}}
+            </div>
             {{#if cart.items.length}}
                 <div class="loadingOverlay"></div>
                 <div data-cart-content class="cart-content-padding-right">
@@ -34,12 +34,12 @@ cart: true
                                 href="{{urls.checkout.single_address}}"
                                 title="{{lang "cart.checkout.title"}}"
                                 data-primary-checkout-now-action
-                            >
-                                {{lang "cart.checkout.button"}}
-                            </a>
+                            >{{lang "cart.checkout.button"}}</a>
                             {{#if cart.show_multiple_address_shipping}}
-                                <a class="checkoutMultiple" href="{{urls.checkout.multiple_address}}">
-                                    {{lang "cart.preview.checkout_multiple"}} </a>
+                                <a
+                                    class="checkoutMultiple"
+                                    href="{{urls.checkout.multiple_address}}"
+                                >{{lang "cart.preview.checkout_multiple"}}</a>
                             {{/if}}
                         </div>
                     {{else}}
@@ -52,7 +52,10 @@ cart: true
                         </div>
                     {{/if}}
                     {{#if cart.additional_checkout_buttons}}
-                        <div data-cart-additional-checkout-buttons class="cart-additionalCheckoutButtons cart-content-padding-right">
+                        <div
+                            data-cart-additional-checkout-buttons
+                            class="cart-additionalCheckoutButtons cart-content-padding-right"
+                        >
                             {{> "components/cart/additional-checkout-buttons"}}
                         </div>
                     {{/if}}
@@ -71,5 +74,4 @@ cart: true
         </div>
     </div>
 {{/partial}}
-
 {{> "layout/base"}}

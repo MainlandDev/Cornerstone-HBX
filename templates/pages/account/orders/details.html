@@ -26,7 +26,6 @@
                     {{/each}}
                 </dl>
             </div>
-
             <aside class="account-sidebar">
                 <section class="account-sidebar-block">
                     <h3 class="account-heading">{{lang "account.orders.details.order_details"}}</h3>
@@ -41,19 +40,23 @@
                             <dt class="definitionList-key">{{lang "account.orders.details.payment_method"}}</dt>
                             <dd class="definitionList-value">
                                 {{order.payment_method}}
-                                {{#if order.card_number_last_four}}{{lang "account.orders.details.card_ending" card=order.card_number_last_four}}{{/if}}
+                                {{#if order.card_number_last_four}}
+                                    {{lang "account.orders.details.card_ending" card=order.card_number_last_four}}
+                                {{/if}}
                             </dd>
                         {{/if}}
                         {{#if order.order_instructions}}
                             <dt class="order-payments-description">{{lang "account.orders.details.how_to_pay"}}</dt>
-                            <dd class="order-payments-value order-payments-value--long">{{nl2br order.order_instructions}}</dd>
+                            <dd class="order-payments-value order-payments-value--long">
+                                {{nl2br order.order_instructions}}
+                            </dd>
                         {{/if}}
                     </dl>
-                    <button data-print-invoice="{{order.invoice_url}}" class="button">
-                        {{lang "account.orders.details.print_invoice"}}
-                    </button>
+                    <button
+                        data-print-invoice="{{order.invoice_url}}"
+                        class="button"
+                    >{{lang "account.orders.details.print_invoice"}}</button>
                 </section>
-
                 {{#if order.shipping_address}}
                     <section class="account-sidebar-block">
                         <h3 class="account-heading">{{lang "account.orders.details.ship_to"}}</h3>
@@ -63,13 +66,16 @@
                             <li>{{{sanitize order.shipping_address.address_lines.[0]}}}</li>
                             <li>{{{sanitize order.shipping_address.address_lines.[1]}}}</li>
                             <li>
-                                {{{sanitize order.shipping_address.city}}}, {{{sanitize order.shipping_address.state}}}
+                                {{{sanitize order.shipping_address.city}}},
+                                {{{sanitize order.shipping_address.state}}}
                                 {{{sanitize order.shipping_address.zip}}}
                             </li>
                             <li>{{{sanitize order.shipping_address.country}}}</li>
                         </ul>
                         {{#if order.backorder_shipping_expectation_message}}
-                            <p class="account-order-backorder-expectation">{{order.backorder_shipping_expectation_message}}</p>
+                            <p
+                                class="account-order-backorder-expectation"
+                            >{{order.backorder_shipping_expectation_message}}</p>
                         {{/if}}
                     </section>
                 {{/if}}
@@ -82,10 +88,16 @@
                                 <dd class="definitionList-value">{{sanitize pickup_method_display_name}}</dd>
                             </dl>
                             <ul class="account-order-address">
-                                <li><b>{{{sanitize location_name}}}</b></li>
+                                <li>
+                                    <b>{{{sanitize location_name}}}</b>
+                                </li>
                                 <li>{{{sanitize location_line_1}}}</li>
                                 <li>{{{sanitize location_line_2}}}</li>
-                                <li>{{{sanitize location_city}}}, {{{sanitize location_state}}}, {{{sanitize location_zip}}}</li>
+                                <li>
+                                    {{{sanitize location_city}}},
+                                    {{{sanitize location_state}}},
+                                    {{{sanitize location_zip}}}
+                                </li>
                                 <li>{{{sanitize location_country_name}}}</li>
                             </ul>
                             <dl class="definitionList">
@@ -99,7 +111,9 @@
                                 {{/if}}
                             </dl>
                             <ul class="account-order-address">
-                                <li><b>{{{lang "account.orders.details.opening_hours"}}}</b></li>
+                                <li>
+                                    <b>{{{lang "account.orders.details.opening_hours"}}}</b>
+                                </li>
                                 <li>{{{sanitize collection_time_description}}}</li>
                             </ul>
                         {{/each}}
@@ -108,14 +122,17 @@
                     {{#if order.has_multiple_shipping_addresses}}
                         <section class="account-sidebar-block">
                             <h3 class="account-heading">{{lang "account.orders.details.ship_to"}}</h3>
-                            <div class="account-order-address">{{lang "account.orders.details.ship_to_multi_text"}}</div>
+                            <div
+                                class="account-order-address"
+                            >{{lang "account.orders.details.ship_to_multi_text"}}</div>
                             {{#if order.backorder_shipping_expectation_message}}
-                                <p class="account-order-backorder-expectation">{{order.backorder_shipping_expectation_message}}</p>
+                                <p
+                                    class="account-order-backorder-expectation"
+                                >{{order.backorder_shipping_expectation_message}}</p>
                             {{/if}}
                         </section>
                     {{/if}}
                 {{/if}}
-
                 <section class="account-sidebar-block">
                     <h3 class="account-heading">{{lang "account.orders.details.bill_to"}}</h3>
                     <ul class="account-order-address">
@@ -124,32 +141,39 @@
                         <li>{{{sanitize order.billing_address.address_lines.[0]}}}</li>
                         <li>{{{sanitize order.billing_address.address_lines.[1]}}}</li>
                         <li>
-                            {{{sanitize order.billing_address.city}}}, {{{sanitize order.billing_address.state}}}
+                            {{{sanitize order.billing_address.city}}},
+                            {{{sanitize order.billing_address.state}}}
                             {{{sanitize order.billing_address.zip}}}
                         </li>
                         <li>{{{sanitize order.billing_address.country}}}</li>
                     </ul>
                 </section>
-
                 {{#if shipments}}
                     <section class="account-sidebar-block">
                         <h3 class="account-heading">{{lang "account.orders.details.shipments.header"}}</h3>
                         {{#each shipments}}
                             <dl class="definitionList">
-                                <dt class="definitionList-key">{{lang "account.orders.details.shipments.date"}}:</dt>
+                                <dt
+                                    class="definitionList-key"
+                                >{{lang "account.orders.details.shipments.date"}}:</dt>
                                 <dd class="definitionList-value">{{date_shipped}}</dd>
-                                <dt class="definitionList-key">{{lang "account.orders.details.shipments.method"}}:</dt>
+                                <dt
+                                    class="definitionList-key"
+                                >{{lang "account.orders.details.shipments.method"}}:</dt>
                                 <dd class="definitionList-value">{{shipping_provider}}</dd>
-                                <dt class="definitionList-key">{{lang "account.orders.details.shipments.link"}}:</dt>
+                                <dt
+                                    class="definitionList-key"
+                                >{{lang "account.orders.details.shipments.link"}}:</dt>
                                 <dd class="definitionList-value">
-                                    {{#if shipping_track.url}}
-                                        <a href="{{shipping_track.url}}">
-                                        {{/if}}
-                                        {{#if show_shipping_method}}{{shipping_track.number}} &mdash;
-                                            {{shipping_method}}{{else}}{{shipping_track.number}}{{/if}}
-                                        {{#if shipping_track.url}}
-                                        </a>
+                                    {{#if shipping_track.url}}<a href="{{shipping_track.url}}">{{/if}}
+                                    {{#if show_shipping_method}}
+                                        {{shipping_track.number}}
+                                        &mdash;
+                                        {{shipping_method}}
+                                    {{else}}
+                                        {{shipping_track.number}}
                                     {{/if}}
+                                    {{#if shipping_track.url}}</a>{{/if}}
                                 </dd>
                             </dl>
                         {{/each}}
@@ -161,7 +185,6 @@
                         <p>{{order.comments}}</p>
                     </section>
                 {{/if}}
-
                 <section class="account-sidebar-block">
                     <h3 class="account-heading">{{lang "account.orders.details.actions"}}</h3>
                     <div class="order-details-info">
@@ -189,7 +212,10 @@
                         </form>
                         {{#if settings.returns_enabled}}
                             {{#if order.is_complete}}
-                                <a href="{{order.return_url}}" class="button">{{lang "account.orders.details.return"}}</a>
+                                <a
+                                    href="{{order.return_url}}"
+                                    class="button"
+                                >{{lang "account.orders.details.return"}}</a>
                             {{/if}}
                         {{/if}}
                     </div>
@@ -198,5 +224,4 @@
         </div>
     </div>
 {{/partial}}
-
 {{> "layout/base"}}

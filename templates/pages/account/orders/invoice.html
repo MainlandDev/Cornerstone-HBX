@@ -1,7 +1,6 @@
 {{#partial "head"}}
     {{{stylesheet "/assets/css/invoice.css"}}}
 {{/partial}}
-
 {{#partial "page"}}
     <div class="Invoice">
         <h1>
@@ -28,17 +27,27 @@
                 <span class="header-logo-text">{{settings.store_logo.title}}</span>
             {{/if}}
         </h1>
-        <div class="InvoiceTitle">{{lang "invoice.for_order" name=settings.store_name id=order.id}}</div>
-        <address><strong>{{nl2br settings.address}}</strong></address>
+        <div class="InvoiceTitle">
+            {{lang "invoice.for_order" name=settings.store_name id=order.id}}
+        </div>
+        <address>
+            <strong>{{nl2br settings.address}}</strong>
+        </address>
         <div class="AddressRow">
             <div class="BillingAddress">
                 <h3>{{lang "account.orders.details.bill_to"}}</h3>
                 <ul>
-                    <li><strong>{{order.billing_address.full_name}}</strong></li>
+                    <li>
+                        <strong>{{order.billing_address.full_name}}</strong>
+                    </li>
                     <li>{{order.billing_address.company}}</li>
                     <li>{{order.billing_address.address_lines.[0]}}</li>
                     <li>{{order.billing_address.address_lines.[1]}}</li>
-                    <li>{{order.billing_address.city}}, {{order.billing_address.state}} {{order.billing_address.zip}}</li>
+                    <li>
+                        {{order.billing_address.city}},
+                        {{order.billing_address.state}}
+                        {{order.billing_address.zip}}
+                    </li>
                     <li>{{order.billing_address.country}}</li>
                     <li>&nbsp;</li>
                     <li>{{lang "invoice.phone" number=order.billing_address.phone}}</li>
@@ -52,12 +61,16 @@
                     <div class="ShippingAddress">
                         <h3>{{lang "account.orders.details.ship_to"}}</h3>
                         <ul>
-                            <li><strong>{{order.shipping_address.full_name}}</strong></li>
+                            <li>
+                                <strong>{{order.shipping_address.full_name}}</strong>
+                            </li>
                             <li>{{order.shipping_address.company}}</li>
                             <li>{{order.shipping_address.address_lines.[0]}}</li>
                             <li>{{order.shipping_address.address_lines.[1]}}</li>
                             <li>
-                                {{order.shipping_address.city}}, {{order.shipping_address.state}} {{order.shipping_address.zip}}
+                                {{order.shipping_address.city}},
+                                {{order.shipping_address.state}}
+                                {{order.shipping_address.zip}}
                             </li>
                             <li>{{order.shipping_address.country}}</li>
                             <li>&nbsp;</li>
@@ -75,7 +88,9 @@
                         <h3>{{lang "account.orders.details.pickup_details"}}</h3>
                         <ul>
                             {{#each order.pickup_addresses}}
-                                <li><strong>{{location_line_1}}</strong></li>
+                                <li>
+                                    <strong>{{location_line_1}}</strong>
+                                </li>
                                 <li>{{location_line_2}}</li>
                                 <li>{{location_city}}, {{location_state}} {{location_zip}}</li>
                                 <li>{{location_country_name}}</li>
@@ -125,12 +140,8 @@
                         <th class="ProductQuantity">{{lang "invoice.qty"}}</th>
                         <th class="ProductSku">{{lang "invoice.code"}}</th>
                         <th class="ProductDetails">{{lang "invoice.product_name"}}</th>
-                        <th class="ProductCost" align="right">
-                            {{lang "invoice.price"}}
-                        </th>
-                        <th class="ProductTotal" align="right">
-                            {{lang "invoice.total"}}
-                        </th>
+                        <th class="ProductCost" align="right">{{lang "invoice.price"}}</th>
+                        <th class="ProductTotal" align="right">{{lang "invoice.total"}}</th>
                     </tr>
                 </thead>
                 <tbody class="InvoiceItemList">
@@ -140,13 +151,19 @@
                                 <td class="ProductAddress">
                                     {{#each shipping_rows}}
                                         {{#if is_pickup}}
-                                            <div><b>{{lang "invoice.pickup"}}</b></div>
+                                            <div>
+                                                <b>{{lang "invoice.pickup"}}</b>
+                                            </div>
                                         {{/if}}
                                         {{#if is_shipping}}
-                                            <div><b>{{lang "invoice.shipping"}}</b></div>
+                                            <div>
+                                                <b>{{lang "invoice.shipping"}}</b>
+                                            </div>
                                         {{/if}}
                                         {{#if is_digital}}
-                                            <div><b>{{lang "invoice.digital"}}</b></div>
+                                            <div>
+                                                <b>{{lang "invoice.digital"}}</b>
+                                            </div>
                                         {{/if}}
                                         <div>{{address}}</div>
                                         <div>{{city}} {{state}} {{zip}}</div>
@@ -205,17 +222,16 @@
                 <tfoot class="InvoiceTotals">
                     {{#each order.total_rows}}
                         <tr class="InvoiceTotalRow">
-                            <td class="Title" colspan="{{#if ../order.has_multiple_shipping_addresses}}5{{else}}4{{/if}}">
-                                {{label}}
-                            </td>
+                            <td
+                                class="Title"
+                                colSpan="{{#if ../order.has_multiple_shipping_addresses}}5{{else}}4{{/if}}"
+                            >{{label}}</td>
                             <td class="Total">{{value.formatted}}</td>
                         </tr>
                         {{#if shipping_discounts}}
                             {{#each shipping_discounts}}
                                 <tr class="InvoiceTotalRow">
-                                    <td class="Title" colspan="5">
-                                        {{label}}
-                                    </td>
+                                    <td class="Title" colSpan="5">{{label}}</td>
                                 </tr>
                             {{/each}}
                         {{/if}}
@@ -228,9 +244,6 @@
             </div>
         </div>
     </div>
-    <script>
-        window.print();
-    </script>
+    <script>window.print();</script>
 {{/partial}}
-
 {{> "layout/empty"}}

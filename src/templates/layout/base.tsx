@@ -17,7 +17,8 @@ import {
     $string,
     $stylesheet,
     $unescaped,
-    $Inject,
+    $inject,
+    $wrapper,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export default () => {
@@ -37,6 +38,7 @@ export default () => {
 
                     <link href={$unescaped($pointer("head.favicon"))} rel="shortcut icon" />
                     {$raw('<meta name="viewport" content="width=device-width, initial-scale=1">')}
+                    {$raw('{{!-- Change document class from no-js to js so we can detect this in css --}}')}
 
                     <script
                         nonce={$nonce()}
@@ -52,6 +54,7 @@ export default () => {
                             __html: `window.consentManagerTranslations = \`${$unescaped($langJson($string("consent_manager")))}\`;`,
                         }}
                     />
+                    {$raw(`{{!-- Load Lazysizes script ASAP so images will appear --}}`)}
 
                     <script
                         nonce={$nonce()}
@@ -71,20 +74,20 @@ export default () => {
                     {" "}
                     {$unescaped($pointer("head.scripts"))}
 
-                    <$Inject keyName={$string("zoomSize")} value={settings.zoom_size} />
-                    <$Inject keyName={$string("productSize")} value={settings.product_size} />
-                    <$Inject keyName={$string("genericError")} value={$lang($string("common.generic_error"))} />
-                    <$Inject keyName={$string("urls")} value={$pointer("urls")} />
-                    <$Inject keyName={$string("secureBaseUrl")} value={$pointer("settings.secure_base_url")} />
-                    <$Inject keyName={$string("cartId")} value={$pointer("cart_id")} />
-                    <$Inject keyName={$string("template")} value={$pointer("template")} />
-                    <$Inject keyName={$string("validationDictionaryJSON")} value={$langJson($string("validation_messages"))} />
-                    <$Inject keyName={$string("validationFallbackDictionaryJSON")} value={$langJson($string("validation_fallback_messages"))} />
-                    <$Inject keyName={$string("validationDefaultDictionaryJSON")} value={$langJson($string("validation_default_messages"))} />
-                    <$Inject keyName={$string("carouselArrowAndDotAriaLabel")} value={$lang($string("carousel.arrow_and_dot_aria_label"))} />
-                    <$Inject keyName={$string("carouselActiveDotAriaLabel")} value={$lang($string("carousel.active_dot_aria_label"))} />
-                    <$Inject keyName={$string("carouselContentAnnounceMessage")} value={$lang($string("carousel.content_announce_message"))} />
-                    <$Inject keyName={$string("giftWrappingRemoveMessage")} value={$lang($string("cart.gift_wrapping.remove_confirm"))} />
+                    {$wrapper($inject($string("zoomSize"), settings.zoom_size), "{{~", "}}")}
+                    {$wrapper($inject($string("productSize"), settings.product_size), "{{~", "}}")}
+                    {$wrapper($inject($string("genericError"), $lang($string("common.generic_error"))), "{{~", "}}")}
+                    {$wrapper($inject($string("urls"), $pointer("urls")), "{{~", "}}")}
+                    {$wrapper($inject($string("secureBaseUrl"), $pointer("settings.secure_base_url")), "{{~", "}}")}
+                    {$wrapper($inject($string("cartId"), $pointer("cart_id")), "{{~", "}}")}
+                    {$wrapper($inject($string("template"), $pointer("template")), "{{~", "}}")}
+                    {$wrapper($inject($string("validationDictionaryJSON"), $langJson($string("validation_messages"))), "{{~", "}}")}
+                    {$wrapper($inject($string("validationFallbackDictionaryJSON"), $langJson($string("validation_fallback_messages"))), "{{~", "}}")}
+                    {$wrapper($inject($string("validationDefaultDictionaryJSON"), $langJson($string("validation_default_messages"))), "{{~", "}}")}
+                    {$wrapper($inject($string("carouselArrowAndDotAriaLabel"), $lang($string("carousel.arrow_and_dot_aria_label"))), "{{~", "}}")}
+                    {$wrapper($inject($string("carouselActiveDotAriaLabel"), $lang($string("carousel.active_dot_aria_label"))), "{{~", "}}")}
+                    {$wrapper($inject($string("carouselContentAnnounceMessage"), $lang($string("carousel.content_announce_message"))), "{{~", "}}")}
+                    {$wrapper($inject($string("giftWrappingRemoveMessage"), $lang($string("cart.gift_wrapping.remove_confirm"))), "{{~", "}}")}
                 </head>
                 <body>
                     <svg data-src={$cdn($string("img/icon-sprite.svg"))} className="icons-svg-sprite"></svg>

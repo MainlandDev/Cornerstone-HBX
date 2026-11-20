@@ -1,7 +1,16 @@
-<div id="facetedSearch" class="facetedSearch sidebarBlock" role="region" aria-label="{{lang "search.faceted.label"}}">
-    {{> components/faceted-search/selected-facets selected}}
-
-    <a href="#facetedSearch-navList" role="button" class="facetedSearch-toggle toggleLink" data-collapsible>
+<div
+    id="facetedSearch"
+    class="facetedSearch sidebarBlock"
+    role="region"
+    aria-label="{{lang "search.faceted.label"}}"
+>
+    {{> "components/faceted-search/selected-facets" selected}}
+    <a
+        href="#facetedSearch-navList"
+        role="button"
+        class="facetedSearch-toggle toggleLink"
+        data-collapsible
+    >
         <span class="facetedSearch-toggle-text">
             {{#if facets.length ">" 2}}
                 {{lang "search.faceted.browse-by"}}
@@ -21,24 +30,18 @@
                 }}
             {{/if}}
         </span>
-
-        <span class="facetedSearch-toggle-indicator">
-            <span class="toggleLink-text toggleLink-text--on">
+        <span class="facetedSearch-toggle-indicator"><span class="toggleLink-text toggleLink-text--on">
                 {{lang "search.faceted.hide-filters"}}
-
                 <i class="icon" aria-hidden="true">
-                    <svg><use href="#icon-keyboard-arrow-up"/></svg>
+                    <svg><use href="#icon-keyboard-arrow-up" /></svg>
                 </i>
             </span>
-
             <span class="toggleLink-text toggleLink-text--off">
                 {{lang "search.faceted.show-filters"}}
-
                 <i class="icon" aria-hidden="true">
-                    <svg><use href="#icon-keyboard-arrow-down"/></svg>
+                    <svg><use href="#icon-keyboard-arrow-down" /></svg>
                 </i>
-            </span>
-        </span>
+            </span></span>
     </a>
     {{#any facets visible=true}}
         <div id="facetedSearch-navList" class="facetedSearch-navList">

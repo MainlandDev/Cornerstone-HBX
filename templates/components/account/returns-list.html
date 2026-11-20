@@ -38,13 +38,16 @@
                             {{#each product.options}}
                                 <dt class="definitionList-key">{{name}}:</dt>
                                 <dd class="definitionList-value">
-                                    {{> "components/common/product-options"}}</dd>
+                                    {{> "components/common/product-options"}}
+                                </dd>
                             {{/each}}
                         </dl>
                     {{/if}}
                     <div class="account-product-details">
                         <div class="account-product-detail">
-                            <h6 class="account-product-detail-heading">{{lang "account.returns.date_requested"}}</h6>
+                            <h6
+                                class="account-product-detail-heading"
+                            >{{lang "account.returns.date_requested"}}</h6>
                             <span>{{date_requested}}</span>
                         </div>
                         <div class="account-product-detail">

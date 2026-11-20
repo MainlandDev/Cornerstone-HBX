@@ -3,12 +3,12 @@
         <a
             href="#"
             class="cart-coupon-link"
-            data-coupon-trigger=""
+            data-coupon-trigger
         >{{lang "cart.coupons.apply_coupon_code"}}</a>
     </div>
     <div
         class="cart-form coupon-code-form"
-        data-coupon-form=""
+        data-coupon-form
         style="display:none"
     >
         <form
@@ -24,18 +24,18 @@
                 placeholder="{{lang "cart.coupons.coupon_code"}}"
                 name="couponcode"
                 value=""
-            />
+            >
             <input
                 class="button button--primary button--small"
                 type="submit"
                 aria-label="{{lang "cart.coupons.apply_coupon"}}"
                 value="{{lang "cart.coupons.button"}}"
-            />
+            >
             <input
                 type="hidden"
                 name="action"
                 value="applycoupon"
-            />
+            >
         </form>
     </div>
     {{#if cart.coupons.length}}
@@ -44,9 +44,7 @@
                 {{#each cart.coupons}}
                     <li class="cart-coupon-item">
                         <i class="icon" aria-hidden="true">
-                            <svg>
-                                <use href="#icon-promotions"></use>
-                            </svg>
+                            <svg><use href="#icon-promotions" /></svg>
                         </i>
                         {{#if display_name}}
                             <span class="cart-coupon-name">{{display_name}} ({{code}})</span>
@@ -59,9 +57,7 @@
                             href="{{remove_url}}"
                         >
                             <i class="icon" aria-hidden="true">
-                                <svg>
-                                    <use href="#icon-close"></use>
-                                </svg>
+                                <svg><use href="#icon-close" /></svg>
                             </i>
                         </a>
                     </li>

@@ -38,14 +38,14 @@
                             <a
                                 href="{{edit_url}}"
                                 class="button button--small"
-                                data-wishlist=""
+                                data-wishlist
                             >{{lang "common.edit"}}</a>
                             <input
                                 type="submit"
                                 class="button button--small"
-                                data-wishlist-delete=""
+                                data-wishlist-delete
                                 value="{{lang "common.delete"}}"
-                            />
+                            >
                         </fieldset>
                     </form>
                 </td>
@@ -68,7 +68,7 @@
             href="{{urls.account.wishlists.add}}"
             class="button button--primary"
             role="button"
-            data-wishlist=""
+            data-wishlist
         >{{lang "account.wishlists.new"}}</a>
         {{inject "wishlistDelete" (lang "account.wishlists.delete_alert")}}
         {{#if customer.wishlists}}
@@ -77,14 +77,14 @@
                     type="hidden"
                     name="deletewishlist[]"
                     value="{{id}}"
-                />
+                >
             {{/each}}
             <input
                 type="submit"
                 class="button"
-                data-wishlist-delete=""
+                data-wishlist-delete
                 value="{{lang "account.wishlists.delete_all"}}"
-            />
+            >
         {{/if}}
     </div>
 </form>

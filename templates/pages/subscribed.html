@@ -7,7 +7,11 @@
                 role="status"
                 aria-live="assertive"
             >
-                {{#if subscription.error}}{{lang "newsletter.subscribed_heading_error"}}{{else}}{{lang "newsletter.subscribed_heading"}}{{/if}}
+                {{#if subscription.error}}
+                    {{lang "newsletter.subscribed_heading_error"}}
+                {{else}}
+                    {{lang "newsletter.subscribed_heading"}}
+                {{/if}}
             </h1>
             {{#if subscription.error}}
                 {{> "components/common/alert/alert-error" subscription.error}}
@@ -16,11 +20,9 @@
             {{/if}}
         </div>
     </section>
-
     <script>
-        const subscriptionStatusElement = document.querySelector(".page-content > .page-heading");
+        const subscriptionStatusElement = document.querySelector('.page-content > .page-heading');
         if (subscriptionStatusElement) subscriptionStatusElement.focus();
     </script>
 {{/partial}}
-
 {{> "layout/base"}}

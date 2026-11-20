@@ -30,7 +30,7 @@
                 <div
                     class="dropdown-menu"
                     id="storeCredit-dropdown"
-                    data-dropdown-content=""
+                    data-dropdown-content
                     aria-hidden="true"
                 >{{{lang "common.store_credit" store_credit=customer.store_credit.formatted}}}</div>
             </li>
@@ -39,9 +39,12 @@
             <a
                 class="navUser-action navUser-item--compare"
                 href="{{urls.compare}}"
-                data-compare-nav=""
+                data-compare-nav
                 aria-label="{{lang "common.compare"}}"
-            >{{lang "common.compare"}} <span class="countPill countPill--positive countPill--alt"></span></a>
+            >
+                {{lang "common.compare"}}
+                <span class="countPill countPill--positive countPill--alt"></span>
+            </a>
         </li>
         {{#if theme_settings.social_icon_placement_top}}
             <li class="navUser-item navUser-item--social">
@@ -99,7 +102,7 @@
         <li class="navUser-item navUser-item--cart">
             <a
                 class="navUser-action"
-                data-cart-preview=""
+                data-cart-preview
                 data-dropdown="cart-preview-dropdown"
                 data-options="align:right"
                 href="{{urls.cart}}"
@@ -112,17 +115,16 @@
             <div
                 class="dropdown-menu"
                 id="cart-preview-dropdown"
-                data-dropdown-content=""
+                data-dropdown-content
                 aria-hidden="true"
-            >
-            </div>
+            ></div>
         </li>
     </ul>
     <div
         class="dropdown dropdown--quickSearch"
         id="quickSearch"
         aria-hidden="true"
-        data-prevent-quick-search-close=""
+        data-prevent-quick-search-close
     >
         {{> "components/common/quick-search" name="nav-quick-search"}}
     </div>

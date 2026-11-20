@@ -1,5 +1,9 @@
 <div class="{{#unless cart.multi_coupon_ui_enabled}}cart-total-value{{/unless}}">
-    <button data-collapsible="add-shipping" class="shipping-estimate-show" aria-labelledby="estimator-add">
+    <button
+        data-collapsible="add-shipping"
+        class="shipping-estimate-show"
+        aria-labelledby="estimator-add"
+    >
         <span class="shipping-estimate-show__btn-name">
             {{#if cart.shipping_handling.shipping_cost}}
                 {{lang "cart.gift_wrapping.change"}}
@@ -10,8 +14,7 @@
                     {{lang "cart.shipping_estimator.add_info"}}
                 {{/if}}
             {{/if}}
-        </span>
-        <span id="estimator-add" class="u-hidden">
+        </span><span id="estimator-add" class="u-hidden">
             {{#if cart.shipping_handling.shipping_cost}}
                 {{lang "cart.gift_wrapping.change"}}
             {{else}}
@@ -21,7 +24,6 @@
                     {{lang "cart.shipping_estimator.add_info"}}
                 {{/if}}
             {{/if}}
-        </span>
-        <span id="estimator-close" class="u-hidden">{{lang "cart.shipping_estimator.cancel"}}</span>
+        </span><span id="estimator-close" class="u-hidden">{{lang "cart.shipping_estimator.cancel"}}</span>
     </button>
 </div>

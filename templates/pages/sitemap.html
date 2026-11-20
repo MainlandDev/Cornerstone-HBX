@@ -18,12 +18,13 @@
                         </li>
                     {{/each}}
                     {{#if show_all_link}}
-                        <li><a href="{{subsection_url}}">{{lang "sitemap.show_all_link"}}</a></li>
+                        <li>
+                            <a href="{{subsection_url}}">{{lang "sitemap.show_all_link"}}</a>
+                        </li>
                     {{/if}}
                 </ul>
             </li>
         {{/each}}
     </ul>
 {{/partial}}
-
 {{> "layout/base"}}

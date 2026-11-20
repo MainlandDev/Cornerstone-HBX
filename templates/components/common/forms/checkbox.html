@@ -15,7 +15,7 @@
             <input
                 type="checkbox"
                 id="{{name}}"
-                data-input=""
+                data-input
                 data-label="{{label}}"
                 class="form-checkbox"
                 aria-labelledby="{{id}}"
@@ -24,7 +24,7 @@
                 value="{{value}}"
                 {{#if checked}}checked{{/if}}
                 {{#if private_id}}data-field-type="{{private_id}}"{{/if}}
-            />
+            >
             <label class="form-label {{class}}" for="{{name}}">{{label}}</label>
         {{/each}}
     {{/if}}

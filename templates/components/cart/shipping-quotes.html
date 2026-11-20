@@ -1,4 +1,5 @@
-{{#if errors}}{{lang "errors.shipping_quote_failure"}}
+{{#if errors}}
+    {{lang "errors.shipping_quote_failure"}}
     <ul>
         {{#each errors}}
             <li>{{this}}</li>
@@ -26,7 +27,10 @@
                                     >{{provider_name}}</label>
                                 </dt>
                                 <dd class="estimator-form-input estimator-form-input--price">
-                                    <label for="shipping-quote-{{type}}-{{id}}"><span class="{{#if cost_after_discount}}price--discounted{{/if}}"><b>{{cost.formatted}}</b></span>
+                                    <label for="shipping-quote-{{type}}-{{id}}">
+                                        <span class="{{#if cost_after_discount}}price--discounted{{/if}}">
+                                            <b>{{cost.formatted}}</b>
+                                        </span>
                                         {{#if cost_after_discount}}
                                             <span><b>{{cost_after_discount.formatted}}</b></span>
                                         {{/if}}
@@ -37,7 +41,10 @@
                     {{/each}}
                 </ul>
                 {{#if quotes.ups_shipping_methods}}
-                    <a class="estimator-form-toggleUPSRate" href="#">{{lang "cart.shipping_estimator.show_ups_rates"}}</a>
+                    <a
+                        class="estimator-form-toggleUPSRate"
+                        href="#"
+                    >{{lang "cart.shipping_estimator.show_ups_rates"}}</a>
                 {{/if}}
             </div>
         {{/if}}
@@ -65,10 +72,17 @@
                                                 alt="{{description}}"
                                                 title="{{description}}"
                                             >
-                                        {{/if}}{{provider_name}} &mdash; {{description}}</label>
+                                        {{/if}}
+                                        {{provider_name}}
+                                        &mdash;
+                                        {{description}}
+                                    </label>
                                 </dt>
                                 <dd class="estimator-form-input estimator-form-input--price">
-                                    <label for="shipping-quote-{{type}}-{{id}}"><span class="{{#if cost_after_discount}}price--discounted{{/if}}"><b>{{cost.formatted}}</b></span>
+                                    <label for="shipping-quote-{{type}}-{{id}}">
+                                        <span class="{{#if cost_after_discount}}price--discounted{{/if}}">
+                                            <b>{{cost.formatted}}</b>
+                                        </span>
                                         {{#if cost_after_discount}}
                                             <span><b>{{cost_after_discount.formatted}}</b></span>
                                         {{/if}}
@@ -79,7 +93,10 @@
                     {{/each}}
                 </ul>
                 {{#if quotes.shipping_methods}}
-                    <a class="estimator-form-toggleUPSRate" href="#">{{lang "cart.shipping_estimator.hide_ups_rates"}}</a>
+                    <a
+                        class="estimator-form-toggleUPSRate"
+                        href="#"
+                    >{{lang "cart.shipping_estimator.hide_ups_rates"}}</a>
                 {{/if}}
             </div>
         {{/if}}

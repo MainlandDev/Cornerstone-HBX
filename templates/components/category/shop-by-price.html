@@ -1,6 +1,6 @@
 {{#if theme_settings.shop_by_price_visibility}}
     <div class="sidebarBlock">
-        <h2 class="sidebarBlock-heading heading-price" data-shop-by-price="">{{lang "category.shop_by_price"}}</h2>
+        <h2 class="sidebarBlock-heading heading-price" data-shop-by-price>{{lang "category.shop_by_price"}}</h2>
         {{> "components/faceted-search/range-form" shop_by_price=theme_settings.shop_by_price_visibility}}
         <div class="reset-filters">
             <a href="{{category.url}}" class="navList-action reset-btn">{{lang "category.reset"}}</a>

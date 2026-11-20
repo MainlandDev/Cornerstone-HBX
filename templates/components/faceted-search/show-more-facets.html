@@ -1,5 +1,10 @@
 <div class="modal-body">
-    <h1 class="facet-quick-heading">{{#if facet_title}}{{facet_title}}{{else}}{{all_facets}}{{/if}}
+    <h1 class="facet-quick-heading">
+        {{#if facet_title}}
+            {{facet_title}}
+        {{else}}
+            {{all_facets}}
+        {{/if}}
     </h1>
     <div class="form-field" id="facetedSearch-filterItems">
         <input
@@ -19,7 +24,8 @@
                             rel="nofollow"
                             data-id="{{id}}"
                             data-faceted-search-facet
-                        >{{{title}}}
+                        >
+                            {{{title}}}
                             {{#if ../show_product_counts}}
                                 {{#if count}}
                                     <span>({{count}})</span>

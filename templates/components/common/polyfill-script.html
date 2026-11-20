@@ -14,19 +14,19 @@
             && window.URLSearchParams
             && window.WeakMap
             // object-fit support
-            && ("objectFit" in document.documentElement.style);
+            && ('objectFit' in document.documentElement.style);
     }
 
     function loadScript(src) {
-        var js = document.createElement("script");
+        var js = document.createElement('script');
         js.src = src;
         js.onerror = function () {
-            console.error("Failed to load polyfill script " + src);
+            console.error('Failed to load polyfill script ' + src);
         };
         document.head.appendChild(js);
     }
 
     if (!browserSupportsAllFeatures()) {
-        loadScript("{{cdn "assets/dist/theme-bundle.polyfills.js"}}");
+        loadScript('{{cdn "assets/dist/theme-bundle.polyfills.js"}}');
     }
 </script>

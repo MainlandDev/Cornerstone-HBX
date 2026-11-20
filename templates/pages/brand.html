@@ -4,7 +4,6 @@ brand:
         limit: {{theme_settings.brandpage_products_per_page}}
 ---
 {{inject "brandProductsPerPage" theme_settings.brandpage_products_per_page}}
-
 {{#partial "head"}}
     {{#if pagination.brand.previous}}
         <link rel="prev" href="{{{pagination.brand.previous}}}">
@@ -13,7 +12,6 @@ brand:
         <link rel="next" href="{{{pagination.brand.next}}}">
     {{/if}}
 {{/partial}}
-
 {{#partial "page"}}
     {{> "components/common/breadcrumbs" breadcrumbs=breadcrumbs}}
     {{#if brand.image}}
@@ -31,7 +29,6 @@ brand:
         <aside class="page-sidebar" id="faceted-search-container">
             {{> "components/brand/sidebar"}}
         </aside>
-
         <main class="page-content" id="product-listing-container">
             {{#if brand.search_error}}
                 <p>{{lang "search.errorMessage"}}</p>
@@ -46,5 +43,4 @@ brand:
         </main>
     </div>
 {{/partial}}
-
 {{> "layout/base"}}

@@ -7,13 +7,14 @@
                         class="breadcrumb-label"
                         href="{{url}}"
                         {{#if @last}}aria-current="page"{{/if}}
-                    ><span>{{name}}</span></a>
+                    >
+                        <span>{{name}}</span>
+                    </a>
                 </li>
             {{/each}}
         {{/unless}}
     </ol>
 </nav>
-
 <script type="application/ld+json" nonce="{{nonce}}">
     {
         "@context": "https://schema.org",

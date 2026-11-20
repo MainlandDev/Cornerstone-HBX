@@ -12,14 +12,14 @@
                         href="{{url}}"
                         class="facetLabel"
                         rel="nofollow"
-                        data-faceted-search-facet=""
+                        data-faceted-search-facet
                     >
                         {{#if facet "===" "rating"}}
                             {{lang "search.faceted.selected.rating-label" rating=title}}
                         {{else}}
                             {{{sanitize title}}}
                         {{/if}}
-                        <svg class="icon"><use href="#icon-close"></use></svg>
+                        <svg class="icon"><use href="#icon-close" /></svg>
                     </a>
                 </li>
             {{/each}}
@@ -28,6 +28,6 @@
         <p>{{lang "search.faceted.selected.no-filters"}}</p>
     {{/if}}
     {{#if remove_all_url}}
-        <a href="{{remove_all_url}}" data-faceted-search-facet="">{{lang "search.faceted.selected.clear-all"}}</a>
+        <a href="{{remove_all_url}}" data-faceted-search-facet>{{lang "search.faceted.selected.clear-all"}}</a>
     {{/if}}
 </div>

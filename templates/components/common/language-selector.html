@@ -10,18 +10,16 @@
             aria-label="{{language_selector.active_language_code}}"
         >
             <span>
-                {{lang "common.locale"}} <strong>{{language_selector.active_language_code}}</strong>
-            </span>
-            <i class="icon" aria-hidden="true">
-                <svg>
-                    <use href="#icon-chevron-down"></use>
-                </svg>
+                {{lang "common.locale"}}
+                <strong>{{language_selector.active_language_code}}</strong>
+            </span><i class="icon" aria-hidden="true">
+                <svg><use href="#icon-chevron-down" /></svg>
             </i>
         </a>
         <ul
             class="dropdown-menu"
             id="languageSelection"
-            data-dropdown-content=""
+            data-dropdown-content
             aria-hidden="true"
             tabindex="-1"
         >

@@ -11,7 +11,6 @@
             {{> "components/common/alert/alert-error" forms.wishlist.errors}}
         {{/if}}
     </header>
-
     <form
         class="form wishlist-form"
         action="{{#if forms.wishlist.id}}{{urls.account.wishlists.edit}}{{else}}{{urls.account.wishlists.add}}&product_id={{forms.wishlist.product_id}}{{/if}}"
@@ -19,16 +18,17 @@
     >
         <input type="hidden" name="submit">
         <div class="form-field">
-            <label
-                class="form-label"
-                for="wishlistname"
-            >{{lang "forms.wishlist.name"}} <small>{{lang "common.required"}}</small></label>
+            <label class="form-label" for="wishlistname">
+                {{lang "forms.wishlist.name"}}
+                <small>{{lang "common.required"}}</small>
+            </label>
             <input
                 class="form-input"
                 id="wishlistname"
                 name="wishlistname"
                 value="{{forms.wishlist.name}}"
-            ></div>
+            >
+        </div>
         <div class="form-field">
             <input
                 type="checkbox"
