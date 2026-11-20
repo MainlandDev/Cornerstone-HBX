@@ -34,11 +34,11 @@ export default (_props: PartialProps) => {
     const price = $pointer<Price>("price");
     return (
         <>
-            {$raw(`{{!-- There are 2 code paths for generating the PDP pricing HTML determined by the following #and condition.
+            {/* There are 2 code paths for generating the PDP pricing HTML determined by the following #and condition.
 If a "price_range" exists then we generate all HTML in price-range.html, otherwise it is defined here. Both code
 paths generate the same HTML structure with some differences in whether that element is displayed by default (css styling).
 
-If you are making a change here or in price-range.html, you probably want to make that change in both files. --}}`)}
+If you are making a change here or in price-range.html, you probably want to make that change in both files. */}
             <$And a={$pointer("price.price_range")} b={$ifExpression($pointer("theme_settings.price_ranges"), $string("=="), $boolean(true))} $then={() => (<><ProductsPriceRange price={price} /></>)} $else={() => (<><div
                 className="price-section price-section--withTax rrp-price--withTax"
                 dangerouslyInlineAttributes={{
@@ -85,7 +85,7 @@ If you are making a change here or in price-range.html, you probably want to mak
                 />
             </div>
             <div
-                className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}
                 dangerouslyInlineAttributes={{
                     attributes: `${$Unless({test: price.rrp_without_tax, $then: () => $raw('style="display: none;"')})}`,
                 }}
@@ -98,7 +98,7 @@ If you are making a change here or in price-range.html, you probably want to mak
                 </span>
             </div>
             <div
-                className={`price-section price-section--withoutTax non-sale-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                className={`price-section price-section--withoutTax non-sale-price--withoutTax${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}
                 dangerouslyInlineAttributes={{
                     attributes: `${$Unless({test: price.non_sale_price_without_tax, $then: () => $raw('style="display: none;"')})}`,
                 }}
@@ -117,7 +117,7 @@ If you are making a change here or in price-range.html, you probably want to mak
                 <span className="price-now-label" dangerouslyInlineAttributes={{attributes: `${$Unless({test: price.non_sale_price_without_tax, $then: () => $raw('style="display: none;"')})}`}}>
                     <ProductsPriceLabel label_value={settings["pdp-sale-price-label"]} fallback={$lang($string("page_builder.pdp-sale-price-label"))} />
                 </span>
-                <span data-product-price-without-tax={""} className={`price${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}>
+                <span data-product-price-without-tax={""} className={`price${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}>
                     {price.without_tax.formatted}
                 </span>
                 <$If

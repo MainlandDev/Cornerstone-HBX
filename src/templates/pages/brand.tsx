@@ -10,7 +10,6 @@ import {
     $Lang,
     $Page,
     $pointer,
-    $raw,
     $region,
     $string,
     $unescaped,
@@ -35,13 +34,13 @@ export default () => {
                             <$If
                                 test={$pointer("pagination.brand.previous")}
                                 $then={() => (
-                                    <link rel="prev" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.brand.previous}}}")}"`}} />
+                                    <link rel="prev" href={$unescaped($pointer<string>("pagination.brand.previous"))} />
                                 )}
                             />
                             <$If
                                 test={$pointer("pagination.brand.next")}
                                 $then={() => (
-                                    <link rel="next" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.brand.next}}}")}"`}} />
+                                    <link rel="next" href={$unescaped($pointer<string>("pagination.brand.next"))} />
                                 )}
                             />
                         </>

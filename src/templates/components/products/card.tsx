@@ -18,11 +18,11 @@ import {
     $number,
     $Or,
     $pointer,
-    $raw,
     $region,
     $string,
     $unescaped,
-    $Unless, $unlessExpression,
+    $Unless,
+    $unlessExpression,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** `{{{region name="…"}}}` */
@@ -46,7 +46,7 @@ export default (_props: PartialProps) => {
     const showRating = $pointer<boolean>("show_rating");
     return (
         <article
-            className={`card ${$If({test: $pointer("alternate"), $then: () => $raw(" card--alternate")})}`}
+            className={`card ${$If({test: $pointer("alternate"), $then: () => " card--alternate"})}`}
             data-test={`card-${id}`}
             data-event-type={$pointer("event")}
             data-entity-id={id}
@@ -54,7 +54,7 @@ export default (_props: PartialProps) => {
             data-name={name}
             data-product-brand={brand.name}
             dangerouslyInlineAttributes={{
-                attributes: `data-product-category="${$Each({list: $pointer<string[]>("category"), $then: (item, loop) => ` ${$If({test: loop["@last"], $then: () => ` ${item} `, $else: () => ` ${item}, `})} `})}" data-product-price="${$raw("{{#or customer (unless settings.hide_price_from_guests)}} ")}${$If({test: price.with_tax, $then: () => ` ${price.with_tax.value} `, $else: () => ` ${price.without_tax.value} `})}${$raw(" {{else}} ")}${$lang($string("common.login_for_pricing"))}${$raw(" {{/or}}")}"`,
+                attributes: `data-product-category="${$Each({list: $pointer<string[]>("category"), $then: (item, loop) => ` ${$If({test: loop["@last"], $then: () => ` ${item} `, $else: () => ` ${item}, `})} `})}" data-product-price="${$Or({values: [$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))], $then: () => ` ${$If({test: price.with_tax, $then: () => ` ${price.with_tax.value} `, $else: () => ` ${price.without_tax.value} `})} `, $else: () => ` ${$lang($string("common.login_for_pricing"))} `})}"`,
             }}
         >
             <figure className="card-figure">

@@ -13,7 +13,10 @@ import {
     $raw,
     $string,
     $unescaped,
-    $Unless, $unlessExpression, $ifExpression, $Or,
+    $Unless,
+    $unlessExpression,
+    $ifExpression,
+    $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface CartItem {
@@ -108,7 +111,7 @@ export default (_props: PartialProps) => (
                                 )}
                             />
 
-                            <div className={`previewCartAction-viewCart${$Unless({test: $pointer("cart.show_primary_checkout_button"), $then: () => $raw(" previewCartAction-viewCart--sole")})}`}>
+                            <div className={`previewCartAction-viewCart${$Unless({test: $pointer("cart.show_primary_checkout_button"), $then: () => " previewCartAction-viewCart--sole"})}`}>
                                 <a href={$pointer("urls.cart")} className="button button--small button--action">
                                     <$Lang keyName={$string("cart.preview.view_cart")} />
                                 </a>

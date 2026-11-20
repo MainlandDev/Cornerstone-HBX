@@ -4,7 +4,7 @@ import CarouselContentAnnouncement from "./carousel-content-announcement.tsx";
 import CarouselPlayPauseButton from "./carousel-play-pause-button.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "./common/responsive-img.tsx";
-import {$add, $Each, $If, $Or, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $If, $Or, $lang, $number, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Slide {
     url: string;
@@ -40,7 +40,7 @@ export default (_props: PartialProps) => (
                 );
                 const body = (
                     <div
-                        className={`heroCarousel-slide ${$raw("{{#if ../theme_settings.homepage_stretch_carousel_images}}stretch{{/if}}")} ${$raw("{{#if @first}}heroCarousel-slide--first{{/if}}")}`}
+                        className={`heroCarousel-slide ${$If({test: $pointer("../theme_settings.homepage_stretch_carousel_images"), $then: () => "stretch"})} ${$If({test: loop["@first"], $then: () => "heroCarousel-slide--first"})}`}
                     >
                         <$If
                             test={$pointer("button_text")}

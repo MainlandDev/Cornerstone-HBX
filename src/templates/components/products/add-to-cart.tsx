@@ -104,20 +104,18 @@ export default (_props: PartialProps) => {
                 </div>
                 <p className="alertBox-column alertBox-message"></p>
             </div>
-            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><div className={`add-to-cart-buttons ${$If({test: product.pre_order, $then: () => $raw("pre-order-buttons")})}`}>
+            <$Or values={[$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))]} $then={() => (<><div className={`add-to-cart-buttons ${$If({test: product.pre_order, $then: () => "pre-order-buttons"})}`}>
                 <div className="form-action">
                     <input
                         id="form-action-addToCart"
                         data-wait-message={$lang($string("products.adding_to_cart"))}
                         className="button button--primary"
                         type="submit"
-                        dangerouslyInlineAttributes={{
-                            attributes: `value="${$If({
+                        value={$If({
                                 test: product.pre_order,
                                 $then: () => $lang($string("products.pre_order")),
                                 $else: () => $lang($string("products.add_to_cart")),
-                            })}"`,
-                        }}
+                            })}
                     />
                     <span className="product-status-message aria-description--hidden">
                         <$Lang keyName={$string("products.adding_to_cart")} /> <$Lang keyName={$string("category.add_cart_announcement")} />

@@ -1,7 +1,7 @@
 "use server";
 import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $pointer, $raw, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$add, $Each, $number, $pointer, $raw, $Unless, $If} from "@mainlanddev/hbx-bigcommerce";
 
 interface Breadcrumb {
     url: string;
@@ -19,8 +19,8 @@ export default (_props: PartialProps) => {
                         $then={() => (
                             <$Each
                                 list={$pointer<Breadcrumb[]>("breadcrumbs")}
-                                $then={(crumb) => (
-                                    <li className={`breadcrumb ${$raw("{{#if @last}}is-active{{/if}}")}`}>
+                                $then={(crumb, loop) => (
+                                    <li className={`breadcrumb ${$If({test: loop["@last"], $then: () => "is-active"})}`}>
                                         <a
                                             className="breadcrumb-label"
                                             href={crumb.url}
@@ -46,16 +46,11 @@ export default (_props: PartialProps) => {
     "@type": "BreadcrumbList",
     "itemListElement":
     [
-        ${$raw("{{#each breadcrumbs}}")}
-        {
-            "@type": "ListItem",
-            "position": ${$raw("{{add @index 1}}")},
-            "item": {
-                "@id": ${$raw("{{{JSONstringify url}}}")},
-                "name": ${$raw("{{{JSONstringify name}}}")}
-            }
-        }${$raw("{{#unless @last}},{{/unless}}")}
-        ${$raw("{{/each}}")}
+        ${$Each({
+            list: $pointer<Breadcrumb[]>("breadcrumbs"),
+            $then: (_crumb, loop) =>
+                `${$raw('\n        {\n            "@type": "ListItem",\n            "position": ')}${$add(loop["@index"], $number(1))}${$raw(',\n            "item": {\n                "@id": ')}${$raw("{{{JSONstringify url}}}")}${$raw(',\n                "name": ')}${$raw("{{{JSONstringify name}}}")}${$raw("\n            }\n        }")}${$Unless({test: loop["@last"], $then: () => ","})}${$raw("\n        ")}`,
+        })}
     ]
 }
 `,

@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Language {
     code: string;
@@ -37,7 +37,7 @@ export default (_props: PartialProps) => (
                             <a
                                 className="navPage-subMenu-action navPages-action"
                                 href={language.switch_url}
-                                dangerouslyInlineAttributes={{attributes: `data-locale-code="${$raw("{{{code}}}")}"`}}
+                                data-locale-code={$unescaped(language.code)}
                                 data-warning={$lang($string("common.locale_switch_warning"))}
                                 aria-label={language.code}
                             >

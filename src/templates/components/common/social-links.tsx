@@ -36,7 +36,7 @@ export default (_props: PartialProps) => (
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener"
-                                        dangerouslyInlineAttributes={{attributes: `title="${$unescaped($capitalize(social.display_name))}"`}}
+                                        title={$unescaped($capitalize(social.display_name))}
                                     >
                                         <span className="aria-description--hidden">{$unescaped($capitalize(social.display_name))}</span>
                                         <svg>

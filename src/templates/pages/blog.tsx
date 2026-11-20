@@ -8,9 +8,9 @@ import {
     $If,
     $Page,
     $pointer,
-    $raw,
     $this,
     $Unless,
+    $unescaped,
 } from "@mainlanddev/hbx-bigcommerce";
 
 export const frontmatter = $frontmatter.blog({blog: {posts: {limit: 5, pages: 3, summary: 200}}});
@@ -25,13 +25,13 @@ export default () => {
                         <$If
                             test={$pointer("pagination.blog.previous")}
                             $then={() => (
-                                <link rel="prev" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.blog.previous}}}")}"`}} />
+                                <link rel="prev" href={$unescaped($pointer<string>("pagination.blog.previous"))} />
                             )}
                         />
                         <$If
                             test={$pointer("pagination.blog.next")}
                             $then={() => (
-                                <link rel="next" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.blog.next}}}")}"`}} />
+                                <link rel="next" href={$unescaped($pointer<string>("pagination.blog.next"))} />
                             )}
                         />
                     </>

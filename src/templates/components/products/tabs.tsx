@@ -1,7 +1,7 @@
 "use server";
 import ProductsCarousel from "./carousel.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Lang, $number, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $number, $pointer, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 export default (_props: PartialProps) => {
     const relatedProducts = $pointer("product.related_products");
@@ -22,7 +22,7 @@ export default (_props: PartialProps) => {
                 <$If
                     test={similarByViews}
                     $then={() => (
-                        <li className={`tab${$Unless({test: relatedProducts, $then: () => $raw(" is-active")})}`} role="presentation">
+                        <li className={`tab${$Unless({test: relatedProducts, $then: () => " is-active"})}`} role="presentation">
                             <a
                                 className="tab-title"
                                 href="#tab-similar"
@@ -54,11 +54,9 @@ export default (_props: PartialProps) => {
                     $then={() => (
                         <div
                             role="tabpanel"
-                            className={`tab-content has-jsContent${$Unless({test: relatedProducts, $then: () => $raw(" is-active")})}`}
+                            className={`tab-content has-jsContent${$Unless({test: relatedProducts, $then: () => " is-active"})}`}
                             id="tab-similar"
-                            dangerouslyInlineAttributes={{
-                                attributes: `aria-hidden="${$If({test: relatedProducts, $then: () => "true", $else: () => "false"})}"`,
-                            }}
+                            aria-hidden={$If({test: relatedProducts, $then: () => "true", $else: () => "false"})}
                         >
                             <ProductsCarousel products={$pointer("product.similar_by_views")} columns={$number(6)} list={$string("Customers Also Viewed")} />
                         </div>

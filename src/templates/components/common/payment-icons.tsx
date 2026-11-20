@@ -1,6 +1,6 @@
 "use server";
-import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $lang, $Or, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import type {PartialProps, ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $lang, $Or, $pointer, $string, $With} from "@mainlanddev/hbx-bigcommerce";
 
 /** Each theme setting that shows a payment method, with its label and sprite icon. */
 const methods: ReadonlyArray<readonly [flag: string, label: string, icon: string]> = [
@@ -16,27 +16,30 @@ const methods: ReadonlyArray<readonly [flag: string, label: string, icon: string
 
 export default (_props: PartialProps) => (
     <>
-        {$raw("{{#with theme_settings}}")}
-        <$Or
-            values={methods.map(([flag]) => $pointer(flag))}
+        <$With
+            context={$pointer<ThemeSettingsObject>("theme_settings")}
             $then={() => (
-                <ul className="footer-payment-icons" aria-label={$lang($string("account.payment_methods.payment_icons_label"))}>
-                    {methods.map(([flag, label, icon]) => (
-                        <$If
-                            test={$pointer(flag)}
-                            $then={() => (
-                                <li>
-                                    <svg className="footer-payment-icon" role="img">
-                                        <title>{label}</title>
-                                        <use href={`#${icon}`}></use>
-                                    </svg>
-                                </li>
-                            )}
-                        />
-                    ))}
-                </ul>
+                <$Or
+                    values={methods.map(([flag]) => $pointer(flag))}
+                    $then={() => (
+                        <ul className="footer-payment-icons" aria-label={$lang($string("account.payment_methods.payment_icons_label"))}>
+                            {methods.map(([flag, label, icon]) => (
+                                <$If
+                                    test={$pointer(flag)}
+                                    $then={() => (
+                                        <li>
+                                            <svg className="footer-payment-icon" role="img">
+                                                <title>{label}</title>
+                                                <use href={`#${icon}`}></use>
+                                            </svg>
+                                        </li>
+                                    )}
+                                />
+                            ))}
+                        </ul>
+                    )}
+                />
             )}
         />
-        {$raw("{{/with}}")}
     </>
 );

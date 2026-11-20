@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface NavChild {
     id: string;
@@ -20,7 +20,7 @@ export default (_props: PartialProps) => (
         $then={() => (
             <>
                 <a
-                    className={`navPages-action has-subMenu${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`}
+                    className={`navPages-action has-subMenu${$If({test: $pointer("is_active"), $then: () => " activePage"})}`}
                     href={$pointer("url")}
                     data-collapsible={`navPages-${$pointer("id")}`}
                 >
@@ -51,16 +51,17 @@ export default (_props: PartialProps) => (
                                         $then={() => (
                                             <>
                                                 <a
-                                                    className={`navPage-subMenu-action navPages-action has-subMenu${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`}
+                                                    className={`navPage-subMenu-action navPages-action has-subMenu${$If({test: $pointer("is_active"), $then: () => " activePage"})}`}
                                                     href={child.url}
                                                     aria-label={child.name}
                                                 >
                                                     {child.name}
                                                     <span
                                                         className="collapsible-icon-wrapper"
-                                                        dangerouslyInlineAttributes={{
-                                                            attributes: `data-collapsible="navPages-${child.id}" data-collapsible-disabled-breakpoint="medium" data-collapsible-disabled-state="open" data-collapsible-enabled-state="closed"`,
-                                                        }}
+                                                        data-collapsible={`navPages-${child.id}`}
+                                                        data-collapsible-disabled-breakpoint="medium"
+                                                        data-collapsible-disabled-state="open"
+                                                        data-collapsible-enabled-state="closed"
                                                     >
                                                         <i className="icon navPages-action-moreIcon" aria-hidden="true">
                                                             <svg>
@@ -75,7 +76,7 @@ export default (_props: PartialProps) => (
                                                         $then={(grandchild) => (
                                                             <li className="navPage-childList-item">
                                                                 <a
-                                                                    className={`navPage-childList-action navPages-action${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`}
+                                                                    className={`navPage-childList-action navPages-action${$If({test: $pointer("is_active"), $then: () => " activePage"})}`}
                                                                     href={grandchild.url}
                                                                     aria-label={grandchild.name}
                                                                 >
@@ -89,7 +90,7 @@ export default (_props: PartialProps) => (
                                         )}
                                         $else={() => (
                                             <a
-                                                className={`navPage-subMenu-action navPages-action${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`}
+                                                className={`navPage-subMenu-action navPages-action${$If({test: $pointer("is_active"), $then: () => " activePage"})}`}
                                                 href={child.url}
                                                 aria-label={child.name}
                                             >
@@ -105,7 +106,7 @@ export default (_props: PartialProps) => (
             </>
         )}
         $else={() => (
-            <a className={`navPages-action${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`} href={$pointer("url")} aria-label={$pointer("name")}>
+            <a className={`navPages-action${$If({test: $pointer("is_active"), $then: () => " activePage"})}`} href={$pointer("url")} aria-label={$pointer("name")}>
                 {$pointer("name")}
             </a>
         )}

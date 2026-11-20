@@ -2,7 +2,7 @@
 import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import ProductsPriceLabel from "./price-label.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$And, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$And, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Money {
     formatted: string;
@@ -66,7 +66,7 @@ export default (_props: PartialProps) => {
                 b={price.price_range.max.with_tax}
                 $then={() => (
                     <>
-                        {$raw(`{{!-- Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page --}}`)}
+                        {/* Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page */}
                         <div className="price-section price-section--withTax non-sale-price--withTax" dangerouslyInlineAttributes={{attributes: hidden}}>
                             <span>{label("pdp-non-sale-price-label", "page_builder.pdp-non-sale-price-label")}</span>
                             <span data-product-non-sale-price-with-tax={""} className="price price--non-sale">
@@ -99,7 +99,7 @@ export default (_props: PartialProps) => {
                 b={price.retail_price_range.max.without_tax}
                 $then={() => (
                     <div
-                        className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                        className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}
                     >
                         <span>{label("pdp-retail-price-label", "page_builder.pdp-retail-price-label")}</span>
                         <span data-product-rrp-price-without-tax={""} className="price price--rrp">
@@ -112,7 +112,7 @@ export default (_props: PartialProps) => {
                         test={price.without_tax}
                         $then={() => (
                             <div
-                                className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                                className={`price-section price-section--withoutTax rrp-price--withoutTax${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}
                                 dangerouslyInlineAttributes={{attributes: hidden}}
                             >
                                 <span>{label("pdp-retail-price-label", "page_builder.pdp-retail-price-label")}</span>
@@ -129,9 +129,9 @@ export default (_props: PartialProps) => {
                 b={price.price_range.max.without_tax}
                 $then={() => (
                     <>
-                        {$raw(`{{!-- Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page --}}`)}
+                        {/* Never display the "non-sales price" if there is a price range to be shown, but we do want the element on the page */}
                         <div
-                            className={`price-section price-section--withoutTax non-sale-price--withoutTax${$If({test: price.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                            className={`price-section price-section--withoutTax non-sale-price--withoutTax${$If({test: price.with_tax, $then: () => " price-section--minor"})}`}
                             dangerouslyInlineAttributes={{attributes: hidden}}
                         >
                             <span>{label("pdp-non-sale-price-label", "page_builder.pdp-non-sale-price-label")}</span>
@@ -140,7 +140,7 @@ export default (_props: PartialProps) => {
                             </span>
                         </div>
                         <div
-                            className={`price-section price-section--withoutTax price--withoutTax${$And({a: ambientRange.min.with_tax, b: ambientRange.max.with_tax, $then: () => $raw(" price-section--minor")})}`}
+                            className={`price-section price-section--withoutTax price--withoutTax${$And({a: ambientRange.min.with_tax, b: ambientRange.max.with_tax, $then: () => " price-section--minor"})}`}
                         >
                             <span className="price-label">{settings["pdp-price-label"]}</span>
                             <span className="price-now-label" dangerouslyInlineAttributes={{attributes: hidden}}>
@@ -162,7 +162,7 @@ export default (_props: PartialProps) => {
                     </>
                 )}
             />
-            {$raw(`{{!-- Never display the "saving price" element by default if there is a price range on the page to be shown --}}`)}
+            {/* Never display the "saving price" element by default if there is a price range on the page to be shown */}
             <$If
                 test={$pointer("page_type")}
                 operator={$string("===")}

@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Channel {
     code: string;
@@ -44,9 +44,10 @@ export default (_props: PartialProps) => (
                                 <li className="navPage-subMenu-item">
                                     <a
                                         className="navPage-subMenu-action navPages-action"
-                                        dangerouslyInlineAttributes={{
-                                            attributes: `href="${$raw("{{{switch_url}}}")}" aria-label="${channel.name}" data-channel-code="${$raw("{{{code}}}")}" data-warning="${$lang($string("common.channel_switch_warning"))}"`,
-                                        }}
+                                        href={$unescaped(channel.switch_url)}
+                                        aria-label={channel.name}
+                                        data-channel-code={$unescaped(channel.code)}
+                                        data-warning={$lang($string("common.channel_switch_warning"))}
                                     >
                                         {channel.name}
                                     </a>

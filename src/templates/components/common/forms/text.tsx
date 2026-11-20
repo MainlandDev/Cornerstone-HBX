@@ -1,13 +1,14 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$ifAttribute} from "@/components/hbx/ifAttribute.ts";
 
 export default (_props: PartialProps) => (
     <div
         className="form-field"
         id={$pointer("id")}
         data-validation={$pointer("validation")}
-        dangerouslyInlineAttributes={{attributes: `${$raw("{{#if private_id}}data-type=\"{{private_id}}\"{{/if}}")}`}}
+        dangerouslyInlineAttributes={{attributes: `${$ifAttribute("data-type", "private_id")}`}}
     >
         <label className="form-label" htmlFor={`${$pointer("id")}_input`}>
             {$pointer("label")}
@@ -23,7 +24,7 @@ export default (_props: PartialProps) => (
             aria-labelledby={$pointer("id")}
             aria-live="polite"
             dangerouslyInlineAttributes={{
-                attributes: `name="${$pointer("name")}" ${$raw("{{#if value}} value=\"{{value}}\"{{/if}}")}${$raw("{{#if maxlength}}maxlength=\"{{maxlength}}\"{{/if}}")}${$raw("{{#if placeholder}} placeholder=\"{{placeholder}}\"{{/if}}")}${$raw("{{#if private_id}}data-field-type=\"{{private_id}}\"{{/if}}")}`,
+                attributes: `name="${$pointer("name")}" ${$ifAttribute("value", "value", " ")}${$ifAttribute("maxlength", "maxlength")}${$ifAttribute("placeholder", "placeholder", " ")}${$ifAttribute("data-field-type", "private_id")}`,
             }}
         />
     </div>

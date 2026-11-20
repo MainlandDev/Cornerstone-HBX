@@ -473,3 +473,23 @@ Library gaps found in Task 9 (part B):
 ## No `@root.` in templates (`forwardRoot` stays off)
 
 `@root.x` prints empty inside `{{#block}}` fills (every page body), so a port that reads `@root.theme_settings.x` or `@root.products` loses content (home lost its product sections; cards lost Quick view and the MSRP / Was / Now labels). The originals read `theme_settings.x` / `products` directly, and the ports now do too: use `$pointer<ThemeSettingsObject>("theme_settings")` instead of `$$themeSettings()`, and plain `$pointer("name")` instead of `$context()`. `forwardRoot` stays `false` in `vite.config.ts`. `scripts/hbx-parity.mjs` ignores `@root.` prefixes, so it cannot see this; check rendered output instead (render `templates/` and `dist/templates` with stencil-paper against `?debug=context` from `vite dev` and compare the DOM). Checked identical this way: home (also with a synthetic carousel), category (pages 1 and 2), brand, brands, product, cart, search (with and without results), blog, blog post, sitemap, login, compare, 404, and the signed-in orders, addresses, edit, inbox, payment methods, recent items, add address, edit address, wishlists, add wishlist, create-account and forgot-password pages.
+
+## Second pass: escape hatches replaced
+
+Checked with `npx vite build` and the token-compare parity script (restored from git history, `124a329f^`): 206 identical, 3 differs, the same as before the pass.
+
+- `$ifAttribute(name, path, before?, after?)` (`src/components/hbx/ifAttribute.ts`) prints `{{#if path}}name="{{path}}"{{/if}}` inside an inline-attribute carrier. Replaces the raw `private_id`, `value`, `maxlength`, `placeholder` fragments in `components/common/forms/*`.
+- `$raw("{{#if x}}…{{/if}}")` / `unless` / `or` became `$If` / `$Unless` / `$Or`; `{{#with}}` became `$With`; `getImage`, `getImageSrcset`, `moment`, `assignVar`, `encodeURI`, `lang` and `{{{x}}}` reads became `$getImage`, `$getImageSrcset`, `$moment`, `$AssignVar`, `$encodeURI`, `$lang` and `$unescaped(pointer)`.
+- Carriers that held only plain `name="…"` pairs became ordinary JSX props, except where the value holds `&` (`href` / `formaction` with a query string), because a prop prints `&amp;`.
+- Handlebars comments (`{{!-- --}}`) became JSX comments, so they no longer appear in `dist` (they printed nothing; the parity script ignores them). HTML entities in JSX text stay `$raw("&times;")`, because the parity script compares entity text.
+- Byte differences that the parity script normalises: quote style (`'x'` vs `"x"`) and `{{{this.code}}}` for `{{{code}}}`.
+- `$getImage` stays out of `store-logo`, `swatch` and `invoice`: it prints a trailing `""` default image, which the parity script reports as a difference.
+
+Still raw, and why:
+
+| fragment | reason |
+| --- | --- |
+| `{{{JSONstringify x}}}` (breadcrumbs, products/schema) | `$jsonStringify` is typed for objects, and these are string pointers. Library typing gap. |
+| `{{#each}}{{#if}}{{lang}}` inside the `aria-label` of channel-selector-mobile | whitespace between the standalone block tags is part of the output |
+| conditional attributes (`checked`, `selected`, `required`, `disabled`, `style`, `data-slick`) inside `dangerouslyInlineAttributes` | no typed conditional attribute exists; `$ifAttribute` covers the `name="{{x}}"` shape only |
+| `<!DOCTYPE html>`, `<meta viewport>`, `</a>`, `<!-- … -->` comments, `&amp;` inside attribute strings | not expressible as JSX |

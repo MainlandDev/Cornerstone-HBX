@@ -30,9 +30,11 @@ export default (_props: PartialProps) => {
                             $then={(banner) => (
                                 <div
                                     className="banner"
-                                    dangerouslyInlineAttributes={{
-                                        attributes: `data-event-type="promotion" data-entity-id="${banner.id}" data-name="${banner["banner-name"]}" data-position="${banner.location}" data-banner-id="${banner["banner-name"]}"`,
-                                    }}
+                                    data-event-type="promotion"
+                                    data-entity-id={banner.id}
+                                    data-name={banner["banner-name"]}
+                                    data-position={banner.location}
+                                    data-banner-id={banner["banner-name"]}
                                 >
                                     <div data-event-type="promotion-click">{$unescaped(banner.content)}</div>
                                 </div>

@@ -7,7 +7,7 @@ import LanguageSelectorMobile from "./language-selector-mobile.tsx";
 import ChannelSelectorMobile from "./channel-selector-mobile.tsx";
 import SocialLinks from "./social-links.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $And} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $Unless, $And, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Category {
     id: string;
@@ -19,6 +19,9 @@ interface ContentPage {
 }
 
 interface Currency {
+    code: string;
+    switch_url: string;
+    cart_currency_switch_url: string;
     name: string;
     is_active: boolean;
 }
@@ -108,7 +111,7 @@ export default (_props: PartialProps) => {
                                         <a
                                             className="navPage-subMenu-action navPages-action"
                                             dangerouslyInlineAttributes={{
-                                                attributes: `href="${$raw("{{{switch_url}}}")}" aria-label="${currency.name}" data-currency-code="${$raw("{{{code}}}")}" ${$raw("{{#if cart_currency_switch_url.length '>' 0 }}data-cart-currency-switch-url=\"{{{cart_currency_switch_url}}}\"{{/if}}")} data-warning="${$lang($string("common.currency_switch_promotion"))}"`,
+                                                attributes: `href="${$unescaped(currency.switch_url)}" aria-label="${currency.name}" data-currency-code="${$unescaped(currency.code)}" ${$If({test: $pointer<number>("cart_currency_switch_url.length"), operator: $string(">"), rvalue: $number(0), $then: () => `${$raw('data-cart-currency-switch-url="')}${$unescaped(currency.cart_currency_switch_url)}${$raw('"')}`})} data-warning="${$lang($string("common.currency_switch_promotion"))}"`,
                                             }}
                                         >
                                             <$If test={currency.is_active} $then={() => <strong>{currency.name}</strong>} $else={() => <>{currency.name}</>} />

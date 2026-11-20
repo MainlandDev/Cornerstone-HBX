@@ -9,7 +9,6 @@ import {
     $Inject,
     $Page,
     $pointer,
-    $raw,
     $region,
     $string,
     $unescaped,
@@ -40,13 +39,13 @@ export default () => {
                             <$If
                                 test={$pointer("pagination.category.previous")}
                                 $then={() => (
-                                    <link rel="prev" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.category.previous}}}")}"`}} />
+                                    <link rel="prev" href={$unescaped($pointer<string>("pagination.category.previous"))} />
                                 )}
                             />
                             <$If
                                 test={$pointer("pagination.category.next")}
                                 $then={() => (
-                                    <link rel="next" dangerouslyInlineAttributes={{attributes: `href="${$raw("{{{pagination.category.next}}}")}"`}} />
+                                    <link rel="next" href={$unescaped($pointer<string>("pagination.category.next"))} />
                                 )}
                             />
                         </>

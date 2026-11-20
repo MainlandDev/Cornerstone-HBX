@@ -1,7 +1,7 @@
 "use server";
 import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$And, $boolean, $cdn, $Each, $ellipsis, $getImage, $If, $json, $length, $number, $pointer, $raw, $sanitize, $string, $unescaped, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$And, $boolean, $cdn, $Each, $ellipsis, $getImage, $If, $json, $length, $number, $pointer, $raw, $sanitize, $string, $unescaped, $Unless, $moment} from "@mainlanddev/hbx-bigcommerce";
 
 interface Review {
     name: string;
@@ -93,7 +93,7 @@ export default (_props: PartialProps) => {
             $else: () => "InStock",
         })}",
         "url" : "${product.url}",
-        "priceValidUntil": "${$raw("{{moment (moment add='31536000000') 'YYYY-MM-DD' }}")}"
+        "priceValidUntil": "${$moment($moment({add: $string("31536000000")}), $string("YYYY-MM-DD"))}"
     }
 }
 `,

@@ -130,7 +130,7 @@ export default () => {
                                                     <>
                                                         <img
                                                             className="header-logo-image-unknown-size"
-                                                            dangerouslyInlineAttributes={{attributes: `src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
+                                                            src={$raw("{{getImage settings.store_logo.image 'logo_size'}}")}
                                                             alt={logoTitle}
                                                             title={logoTitle}
                                                         />
@@ -141,7 +141,8 @@ export default () => {
                                                         <div className="header-logo-image-container">
                                                             <img
                                                                 className="header-logo-image"
-                                                                dangerouslyInlineAttributes={{attributes: `data-sizes="auto" src="${$raw("{{getImage settings.store_logo.image 'logo_size'}}")}"`}}
+                                                                data-sizes="auto"
+                                                                src={$raw("{{getImage settings.store_logo.image 'logo_size'}}")}
                                                                 alt={logoTitle}
                                                                 title={logoTitle}
                                                             />

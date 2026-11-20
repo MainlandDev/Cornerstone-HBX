@@ -1,6 +1,6 @@
 "use server";
 import {$if, type PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 import type { $hb } from "@mainlanddev/hbx-bigcommerce/grammar";
 
 export default (_props: PartialProps) => (
@@ -40,9 +40,7 @@ export default (_props: PartialProps) => (
             role="status"
             aria-live="polite"
             className="aria-description--hidden"
-            dangerouslyInlineAttributes={{
-                attributes: `data-search-aria-message-predefined-text="${$raw("{{{lang 'search.results.quick_count_live'}}}")}"`,
-            }}
+            data-search-aria-message-predefined-text={$unescaped($lang($string("search.results.quick_count_live")))}
         ></p>
     </div>
 );

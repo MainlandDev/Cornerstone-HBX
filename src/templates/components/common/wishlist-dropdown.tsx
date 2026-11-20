@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Wishlist {
     name: string;
@@ -30,9 +30,7 @@ export default (_props: PartialProps) => (
                             <li>
                                 <input
                                     className={`button ${$If({test: $pointer("this.num_items"), operator: $string("!=="), rvalue: $string("0"), $then: () => "button--has-items"})}`}
-                                    dangerouslyInlineAttributes={{
-                                        attributes: `formaction="${wishlist.add_url}&product_id=${$raw("{{../product.id}}")}"`,
-                                    }}
+                                    dangerouslyInlineAttributes={{attributes: `formaction="${wishlist.add_url}&product_id=${$pointer("../product.id")}"`}}
                                     type="submit"
                                     value={wishlist.name}
                                 />

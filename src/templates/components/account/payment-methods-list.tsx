@@ -1,7 +1,7 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import AlertAlertInfo from "../common/alert/alert-info.tsx";
-import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
+import {$cdn, $concat, $Each, $If, $InArray, $lang, $Lang, $pointer, $string, $Unless, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 interface Instrument {
     type: string;
@@ -43,7 +43,7 @@ export default (_props: PartialProps) => (
             list={$pointer<PaymentMethod[]>("customer.payment_methods")}
             $then={(method) => (
                 <>
-                {$raw("{{!-- Check that the current instrument type is within our whitelist to stop future ones automagically coming through --}}")}
+                {/* Check that the current instrument type is within our whitelist to stop future ones automagically coming through */}
                 <$InArray
                     array={$pointer("../theme_settings.supported_payment_methods")}
                     value={method.type}
@@ -65,7 +65,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_card")}
                                                             $then={() => (
                                                                 <>
-                                                                    {$raw("{{!-- If credit card STARTS --}}")}
+                                                                    {/* If credit card STARTS */}
                                                                     <$If
                                                                         test={inst.brand}
                                                                         $then={() => (
@@ -103,7 +103,7 @@ export default (_props: PartialProps) => (
                                                                             </>
                                                                         )}
                                                                     />
-                                                                    {$raw("{{!-- If credit card ENDS --}}")}
+                                                                    {/* If credit card ENDS */}
                                                                 </>
                                                             )}
                                                         />{" "}
@@ -114,7 +114,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_bank_account")}
                                                             $then={() => (
                                                                 <>
-                                                                    {$raw("{{!-- If bank_account STARTS --}}")}
+                                                                    {/* If bank_account STARTS */}
                                                                     <$If
                                                                         test={$pointer("../methodId")}
                                                                         operator={$string("===")}
@@ -193,7 +193,7 @@ export default (_props: PartialProps) => (
                                                                             </>
                                                                         )}
                                                                     />
-                                                                    {$raw("{{!-- If bank_account ENDS --}}")}
+                                                                    {/* If bank_account ENDS */}
                                                                 </>
                                                             )}
                                                         />{" "}
@@ -204,7 +204,7 @@ export default (_props: PartialProps) => (
                                                             rvalue={$string("stored_paypal_account")}
                                                             $then={() => (
                                                                 <>
-                                                                    {$raw("{{!-- If paypal STARTS --}}")}
+                                                                    {/* If paypal STARTS */}
                                                                     <img
                                                                         className="methodHeader-icon"
                                                                         src={$cdn($string("img/payment-methods/paypal.svg"))}
@@ -212,7 +212,7 @@ export default (_props: PartialProps) => (
                                                                         title={$lang($string("account.payment_methods.paypal"))}
                                                                     />{" "}
                                                                     <span className="methodHeader-brand">{inst.email}</span>
-                                                                    {$raw("{{!-- If paypal ENDS --}}")}
+                                                                    {/* If paypal ENDS */}
                                                                 </>
                                                             )}
                                                         />
@@ -244,7 +244,7 @@ export default (_props: PartialProps) => (
                                                     test={inst.billing_address}
                                                     $then={() => (
                                                         <div className="paymentMethod-row">
-                                                            {$raw("{{!-- If there is an address STARTS --}}")}
+                                                            {/* If there is an address STARTS */}
                                                             <p className="methodDetails">
                                                                 <span className="methodDetails-label">
                                                                     <$Lang keyName={$string("account.payment_methods.billing_address")} />:
@@ -261,7 +261,7 @@ export default (_props: PartialProps) => (
                                                                     </span>
                                                                 </span>
                                                             </p>
-                                                            {$raw("{{!-- If there is an address ENDS --}}")}
+                                                            {/* If there is an address ENDS */}
                                                         </div>
                                                     )}
                                                 />

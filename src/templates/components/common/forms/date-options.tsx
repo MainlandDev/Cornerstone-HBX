@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Unless, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Unless, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface DateOption {
     value: string;
@@ -29,7 +29,7 @@ export default (_props: PartialProps) => (
                     $then={(item) => (
                         <option
                             dangerouslyInlineAttributes={{
-                                attributes: `${$If({test: $pointer("../this.value"), operator: $string("=="), rvalue: $pointer("value"), $then: () => $raw("selected ")})}`,
+                                attributes: `${$If({test: $pointer("../this.value"), operator: $string("=="), rvalue: $pointer("value"), $then: () => "selected "})}`,
                             }}
                             value={item.value}
                         >

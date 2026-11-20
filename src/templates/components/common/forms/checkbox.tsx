@@ -1,6 +1,7 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$ifAttribute} from "@/components/hbx/ifAttribute.ts";
 
 interface Checkbox {
     id: string;
@@ -15,7 +16,7 @@ export default (_props: PartialProps) => (
         className="form-field"
         id={$pointer("id")}
         data-validation={$pointer("validation")}
-        dangerouslyInlineAttributes={{attributes: `${$raw('{{#if private_id}}data-type="{{private_id}}"{{/if}}')}`}}
+        dangerouslyInlineAttributes={{attributes: `${$ifAttribute("data-type", "private_id")}`}}
     >
         <label className="form-label" htmlFor={$pointer("id")}>
             {$pointer("label")}
@@ -37,7 +38,7 @@ export default (_props: PartialProps) => (
                                 aria-labelledby={item.id}
                                 aria-live="polite"
                                 dangerouslyInlineAttributes={{
-                                    attributes: `name="${item.name}" value="${item.value}" ${$raw("{{#if checked}}checked{{/if}}")} ${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`,
+                                    attributes: `name="${item.name}" value="${item.value}" ${$If({test: $pointer("checked"), $then: () => "checked"})} ${$ifAttribute("data-field-type", "private_id")}`,
                                 }}
                             />
                             <label className={`form-label ${item.class}`} htmlFor={item.name}>

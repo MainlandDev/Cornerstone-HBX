@@ -4,7 +4,7 @@ import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import LoginForPricing from "../common/login-for-pricing.tsx";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
-import {$boolean, $Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $With, $unlessExpression, $Or} from "@mainlanddev/hbx-bigcommerce";
+import {$boolean, $Each, $If, $Lang, $pointer, $string, $unescaped, $With, $unlessExpression, $Or, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 interface AddedItem {
     name: string;

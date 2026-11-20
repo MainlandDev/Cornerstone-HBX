@@ -1,12 +1,13 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $number, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
 
 interface Currency {
     code: string;
     name: string;
     is_active: boolean;
     switch_url: string;
+    cart_currency_switch_url: string;
 }
 
 export default (_props: PartialProps) => (
@@ -38,7 +39,7 @@ export default (_props: PartialProps) => (
                                 <li className="dropdown-menu-item">
                                     <a
                                         dangerouslyInlineAttributes={{
-                                            attributes: `href="${$raw("{{{switch_url}}}")}" data-currency-code="${$raw("{{{code}}}")}" ${$raw("{{#if cart_currency_switch_url.length '>' 0 }}data-cart-currency-switch-url=\"{{{cart_currency_switch_url}}}\"{{/if}}")} data-warning="${$lang($string("common.currency_switch_promotion"))}"`,
+                                            attributes: `href="${$unescaped(currency.switch_url)}" data-currency-code="${$unescaped(currency.code)}" ${$If({test: $pointer<number>("cart_currency_switch_url.length"), operator: $string(">"), rvalue: $number(0), $then: () => `${$raw('data-cart-currency-switch-url="')}${$unescaped(currency.cart_currency_switch_url)}${$raw('"')}`})} data-warning="${$lang($string("common.currency_switch_promotion"))}"`,
                                         }}
                                     >
                                         <$If test={currency.is_active} $then={() => <strong>{currency.name}</strong>} $else={() => <>{currency.name}</>} />

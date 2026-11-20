@@ -1,7 +1,7 @@
 "use server";
 import NavigationDropdown from "./navigation-dropdown.tsx";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface NavChild {
     id: string;
@@ -27,7 +27,7 @@ export default (_props: PartialProps) => (
                             $then={() => (
                                 <>
                                     <a
-                                        className={`navPage-subMenu-action navPages-action navPages-action-depth-max has-subMenu${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`}
+                                        className={`navPage-subMenu-action navPages-action navPages-action-depth-max has-subMenu${$If({test: $pointer("is_active"), $then: () => " activePage"})}`}
                                         href={child.url}
                                         data-collapsible={`navPages-${child.id}`}
                                     >
@@ -42,7 +42,7 @@ export default (_props: PartialProps) => (
                                 </>
                             )}
                             $else={() => (
-                                <a className={`navPage-subMenu-action navPages-action${$If({test: $pointer("is_active"), $then: () => $raw(" activePage")})}`} href={child.url}>
+                                <a className={`navPage-subMenu-action navPages-action${$If({test: $pointer("is_active"), $then: () => " activePage"})}`} href={child.url}>
                                     {child.name}
                                 </a>
                             )}

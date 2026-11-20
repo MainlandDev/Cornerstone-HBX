@@ -1,6 +1,7 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$ifAttribute} from "@/components/hbx/ifAttribute.ts";
 
 interface Radio {
     id: string;
@@ -35,7 +36,7 @@ export default (_props: PartialProps) => {
                                     aria-labelledby={item.id}
                                     aria-live="polite"
                                     dangerouslyInlineAttributes={{
-                                        attributes: `name="${name}" value="${item.value}" ${$raw("{{#if checked}}checked{{/if}}")} ${$raw('{{#if private_id}}data-field-type="{{private_id}}"{{/if}}')}`,
+                                        attributes: `name="${name}" value="${item.value}" ${$If({test: $pointer("checked"), $then: () => "checked"})} ${$ifAttribute("data-field-type", "private_id")}`,
                                     }}
                                 />
                                 <label className="form-label" htmlFor={`${name}_${loop["@index"]}`}>

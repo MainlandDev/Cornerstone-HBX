@@ -2,7 +2,7 @@
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import ProductOptions from "../common/product-options.tsx";
-import {$Each, $If, $Lang, $pointer, $raw, $string, $unescaped, $Unless, $cdn} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $pointer, $string, $unescaped, $Unless, $cdn, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 interface ShippingRow {
     is_shipping: boolean;

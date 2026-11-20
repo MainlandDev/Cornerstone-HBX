@@ -54,12 +54,13 @@ export default () => {
                             __html: `window.consentManagerTranslations = \`${$unescaped($langJson($string("consent_manager")))}\`;`,
                         }}
                     />
-                    {$raw(`{{!-- Load Lazysizes script ASAP so images will appear --}}`)}
+                    {/* Load Lazysizes script ASAP so images will appear */}
 
+                    {/* Only load visible elements until the onload event fires, after which preload nearby elements. */}
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
-                            __html: `${$raw("{{!-- Only load visible elements until the onload event fires, after which preload nearby elements. --}}")}
+                            __html: `
             window.lazySizesConfig = window.lazySizesConfig || {};
             window.lazySizesConfig.loadMode = 1;`,
                         }}
@@ -102,10 +103,11 @@ export default () => {
                             __html: `window.__webpack_public_path__ = "${$cdn($string("assets/dist/"))}";`,
                         }}
                     />
+                    {/* Exported in app.js */}
                     <script
                         nonce={$nonce()}
                         dangerouslySetInnerHTML={{
-                            __html: `${$raw("{{!-- Exported in app.js --}}")}
+                            __html: `
             function onThemeBundleMain() {
                 window.stencilBootstrap("${$pointer("page_type")}", ${$jsContext()}).load();
 

@@ -36,7 +36,9 @@ import {
     $region,
     $string,
     $unescaped,
-    $Unless, $unlessExpression, $Or,
+    $Unless,
+    $unlessExpression,
+    $Or,
 } from "@mainlanddev/hbx-bigcommerce";
 
 /** The size a `getImageSrcset` descriptor accepts; the theme-settings type is a plain string (LIBRARY GAP, see PORT-NOTES.md). */
@@ -130,7 +132,7 @@ export default (_props: PartialProps) => {
                 data-entity-id={product.id}
                 data-name={product.title}
                 dangerouslyInlineAttributes={{
-                    attributes: `data-product-category="${$Each({list: $pointer<string[]>("product.category"), $then: (item, loop) => ` ${$If({test: loop["@last"], $then: () => `${item}`, $else: () => `${item}, `})} `})}" data-product-brand="${product.brand.name}" data-product-price="${$raw("{{#or customer (unless settings.hide_price_from_guests)}} ")}${$If({test: $pointer("product.price.with_tax"), $then: () => ` ${$pointer("product.price.with_tax.value")} `, $else: () => ` ${$pointer("product.price.without_tax.value")} `})}${$raw(" {{else}} ")}${$lang($string("common.login_for_pricing"))}${$raw(" {{/or}}")}" data-product-variant="single-product-option"`,
+                    attributes: `data-product-category="${$Each({list: $pointer<string[]>("product.category"), $then: (item, loop) => ` ${$If({test: loop["@last"], $then: () => `${item}`, $else: () => `${item}, `})} `})}" data-product-brand="${product.brand.name}" data-product-price="${$Or({values: [$pointer("customer"), $unlessExpression($pointer("settings.hide_price_from_guests"))], $then: () => ` ${$If({test: $pointer("product.price.with_tax"), $then: () => ` ${$pointer("product.price.with_tax.value")} `, $else: () => ` ${$pointer("product.price.without_tax.value")} `})} `, $else: () => ` ${$lang($string("common.login_for_pricing"))} `})}" data-product-variant="single-product-option"`,
                 }}
             >
                 <$Each
@@ -144,13 +146,11 @@ export default (_props: PartialProps) => {
                 />
 
                 <section className="productView-images" data-image-gallery={""}>
-                    {$raw(`{{!--
+                    {/*
             Note that these image sizes are coupled to image sizes used in /assets/js/theme/common/product-details.js
             for variant/rule image replacement
-        --}}`)}
-                    {$raw("{{#if product.images.length '>' 1 }}")}
-                    <CarouselContentAnnouncement />
-                    {$raw("{{/if}}")}
+        */}
+                    <$If test={$pointer("product.images.length")} operator={$string(">")} rvalue={$number(1)} $then={() => <CarouselContentAnnouncement />} />
                     <figure
                         className="productView-image"
                         data-image-gallery-main={""}
@@ -159,7 +159,7 @@ export default (_props: PartialProps) => {
                         }}
                     >
                         <div className="productView-img-container">
-                            {$raw("{{!-- Remove the surrounding a-element if there is no main image. --}}")}
+                            {/* Remove the surrounding a-element if there is no main image. */}
                             <$If
                                 test={product.main_image}
                                 $then={() => (
@@ -171,7 +171,7 @@ export default (_props: PartialProps) => {
                                 )}
                             />
                             <ResponsiveImg image={product.main_image} class={$string("productView-image--default")} fallback_size={theme.product_size} lazyload={theme.lazyload_mode} default_image={theme.default_image_product} otherAttributes={$string("data-main-image")} />
-                            {$raw("{{!-- Remove the surrounding a-element if there is no main image. --}}")}
+                            {/* Remove the surrounding a-element if there is no main image. */}
                             <$If test={product.main_image} $then={() => $raw("</a>")} />
                         </div>
                     </figure>

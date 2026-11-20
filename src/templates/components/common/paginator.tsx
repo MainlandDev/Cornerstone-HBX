@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $Unless} from "@mainlanddev/hbx-bigcommerce";
 
 interface PageLink {
     number: string;
@@ -18,7 +18,7 @@ export default (_props: PartialProps) => (
                             className="pagination-link"
                             href={$pointer("previous")}
                             dangerouslyInlineAttributes={{
-                                attributes: `${$raw("{{#unless reload}}data-faceted-search-facet{{/unless}}")} aria-label="${$lang($string("common.previous"))}"`,
+                                attributes: `${$Unless({test: $pointer("reload"), $then: () => "data-faceted-search-facet"})} aria-label="${$lang($string("common.previous"))}"`,
                             }}
                         >
                             <i className="icon" aria-hidden="true">
@@ -39,7 +39,7 @@ export default (_props: PartialProps) => (
                             className="pagination-link"
                             href={link.url}
                             dangerouslyInlineAttributes={{
-                                attributes: `${$raw("{{#unless reload}}data-faceted-search-facet{{/unless}}")} ${$If({test: $pointer("this.number"), operator: $string("=="), rvalue: $pointer("../current"), $then: () => $raw('aria-current="page" data-pagination-current-page-link')})} aria-label="${$raw("{{lang 'common.paginator.page_of' current=this.number total=../links.length}}")}"`,
+                                attributes: `${$Unless({test: $pointer("reload"), $then: () => "data-faceted-search-facet"})} ${$If({test: $pointer("this.number"), operator: $string("=="), rvalue: $pointer("../current"), $then: () => $raw('aria-current="page" data-pagination-current-page-link')})} aria-label="${$lang($string("common.paginator.page_of"), {current: $pointer("this.number"), total: $pointer("../links.length")})}"`,
                             }}
                         >
                             {link.number}
@@ -55,7 +55,7 @@ export default (_props: PartialProps) => (
                             className="pagination-link"
                             href={$pointer("next")}
                             dangerouslyInlineAttributes={{
-                                attributes: `${$raw("{{#unless reload}}data-faceted-search-facet{{/unless}}")} aria-label="${$lang($string("common.next"))}"`,
+                                attributes: `${$Unless({test: $pointer("reload"), $then: () => "data-faceted-search-facet"})} aria-label="${$lang($string("common.next"))}"`,
                             }}
                         >
                             <$Lang keyName={$string("common.next")} />

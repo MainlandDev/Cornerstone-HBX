@@ -1,6 +1,6 @@
 "use server";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
-import {$cdn, $Each, $If, $Lang, $pointer, $raw, $string} from "@mainlanddev/hbx-bigcommerce";
+import {$cdn, $Each, $If, $Lang, $pointer, $string} from "@mainlanddev/hbx-bigcommerce";
 
 interface Video {
     id: string;
@@ -41,7 +41,7 @@ export default (_props: PartialProps) => (
                     list={$pointer<Video[]>("this.list")}
                     $then={(video, loop) => (
                         <li className="videoGallery-item">
-                            <a href="#" className={`video ${$If({test: loop["@first"], $then: () => $raw("is-active")})}`} data-video-item={""} data-video-id={video.id}>
+                            <a href="#" className={`video ${$If({test: loop["@first"], $then: () => "is-active"})}`} data-video-item={""} data-video-id={video.id}>
                                 <div className="video-figure">
                                     <img
                                         className="lazyload"

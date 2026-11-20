@@ -132,9 +132,7 @@ export default (_props: PartialProps) => (
                                                                 test={option.is_file}
                                                                 $then={() => (
                                                                     <a
-                                                                        dangerouslyInlineAttributes={{
-                                                                            attributes: `href="/viewfile.php?attributeId=${$pointer("id")}&cartitem=${$pointer("../id")}"`,
-                                                                        }}
+                                                                        dangerouslyInlineAttributes={{attributes: `href="/viewfile.php?attributeId=${$pointer("id")}&cartitem=${$pointer("../id")}"`}}
                                                                     >
                                                                         {$pointer("value")}
                                                                     </a>

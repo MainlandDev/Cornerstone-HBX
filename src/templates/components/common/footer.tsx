@@ -13,10 +13,11 @@ import {
     $Nl2br,
     $number,
     $pointer,
-    $raw,
     $region,
     $string,
     $unescaped,
+    $moment,
+    $raw,
 } from "@mainlanddev/hbx-bigcommerce";
 
 interface Banner {
@@ -194,7 +195,7 @@ export default (_props: PartialProps) => {
                             <div className="footer-copyright">
                                 <p className="powered-by">
                                     {$raw("&copy; ")}
-                                    {$raw('{{moment format="YYYY"}}')} {$pointer("settings.store_name")}{" "}
+                                    {$moment({format: $string("YYYY")})} {$pointer("settings.store_name")}{" "}
                                 </p>
                             </div>
                         )}

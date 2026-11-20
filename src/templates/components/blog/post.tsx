@@ -3,7 +3,7 @@ import type {ThemeSettingsObject} from "@mainlanddev/hbx-bigcommerce";
 import type {PartialProps} from "@mainlanddev/hbx-bigcommerce";
 import ResponsiveImg from "../common/responsive-img.tsx";
 import Share from "../common/share.tsx";
-import {$Each, $If, $Lang, $lang, $pointer, $raw, $string, $unescaped} from "@mainlanddev/hbx-bigcommerce";
+import {$Each, $If, $Lang, $lang, $pointer, $string, $unescaped, $raw} from "@mainlanddev/hbx-bigcommerce";
 
 interface Tag {
     url: string;
